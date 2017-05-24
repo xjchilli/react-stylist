@@ -5,13 +5,12 @@ const webpackConfig = require("./webpack.config");
 
 const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
-    hot: true,
+    // hot: true,
     publicPath: webpackConfig.output.publicPath,//服务器资源路径
+    disableHostCheck: true,
     stats: {
         colors: true
     }
 });
 
-server.listen(9000, "127.0.0.1", function() {
-    console.log("Starting server on http://localhost:9000");
-});
+server.listen(9000);

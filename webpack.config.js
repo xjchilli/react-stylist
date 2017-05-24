@@ -10,10 +10,6 @@ module.exports = {
     // 入口文件
     // entry: './src/App.js',
     entry:[
-        './src/App.js',
-        'react-hot-loader/patch',
-        // 开启 React 代码的模块热替换(HMR)
-
         'webpack-dev-server/client?http://0.0.0.0:9000',
         // 为 webpack-dev-server 的环境打包代码
         // 然后连接到指定服务器域名与端口
@@ -21,7 +17,9 @@ module.exports = {
         'webpack/hot/only-dev-server',
         // 为热替换(HMR)打包好代码
         // only- 意味着只有成功更新运行代码才会执行热替换(HMR)
+        './src/App.js',
     ],
+    devtool: 'inline-source-map',
     // 出口文件
     output: {
         publicPath:publicPath,
