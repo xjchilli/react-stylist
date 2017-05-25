@@ -1,0 +1,624 @@
+/**
+ * 聊天
+ * Created by potato on 2017/5/17 0017.
+ */
+import React, {
+    Component
+} from 'react';
+import {
+    ToolDps
+} from '../ToolDps';
+import {
+    DataLoad
+} from '../Component/index'
+import merged from 'obj-merged';
+
+
+class List extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let {
+            list
+        } = this.props;
+        let data = [];
+        list.map((item, index) => {
+            let {
+                isSelf,
+                headUrl,
+                content
+            } = item;
+            let selfClass = '';
+            if (isSelf) {
+                selfClass = ' self';
+            }
+            data.push(
+                <li className={"friend-area"+selfClass} key={index}>
+                    <img src={headUrl} alt=""/>
+                    <div className="msgContent"  dangerouslySetInnerHTML={{__html: content}}></div>
+                </li>
+            )
+        });
+
+
+        return (
+            <ul className="chat-content">
+                {data}
+            </ul>
+        )
+    }
+}
+
+
+class Chat extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loadAnimation: true,
+            loadMsg: '正在加载中',
+            msgText: '', //消息内容
+            emotionFlag: false, //是否显示表情选择框
+            emotions: [],
+            list: [] //数据列表
+        };
+        let {
+            location: {
+                query: {
+                    selToID,
+                    headUrl,
+                    nickname
+                }
+            }
+        } = this.props;
+
+        this._time = 0;
+        this.d = this.debounce(500, this.preHistory.bind(this));
+        //保留服务器返回的最近消息时间和消息Key,用于下次向前拉取历史消息
+        this.getPrePageC2CHistroyMsgInfo = {
+            lastMsgTime: 0,
+            MsgKey: ''
+        };
+        this.selType = webim.SESSION_TYPE.C2C; //当前聊天类型:单聊
+        this.selToID = selToID; //好友帐号
+        this.friendHeadUrl = headUrl; //好友头像
+        this.nickname = nickname; //好友昵称
+        this.selSess = null; //当前聊天会话对象
+        this.reqMsgCount = 15; //每次请求的历史消息(c2c获取群)条数，仅demo用得到
+        //参数：loginInfo
+        this.loginInfo = {
+            'sdkAppID': '', //用户所属应用id,必填
+            'accountType': '', //用户所属应用帐号类型，必填
+            'identifier': '', //当前用户ID,必须是否字符串类型，必填
+            'userSig': '', //当前用户身份凭证，必须是字符串类型，必填
+            'identifierNick': '', //当前用户昵称，不用填写，登录接口会返回用户的昵称，如果没有设置SublimeCodeIntel，则返回用户的id
+            'headurl': '' //当前用户默认头像，选填，如果设置过头像，则可以通过拉取个人资料接口来得到头像信息
+        };
+        //参数：listeners
+        this.listeners = {
+            "onConnNotify": this.onConnNotify, //监听连接状态回调变化事件,必填
+            "onMsgNotify": this.onMsgNotify.bind(this) //监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件，必填
+        };
+        //参数:options
+        //初始化时，其他对象，选填
+        this.options = {
+            'isAccessFormalEnv': true, //是否访问正式环境，默认访问正式，选填
+            'isLogOn': false //是否开启控制台打印日志,默认开启，选填
+        }
+    }
+
+    componentDidMount() {
+        document.title = this.nickname;
+
+        ToolDps.get('/wx/tim/getSignature').then((res) => {
+            // console.log(res);
+            if (res.succ) {
+                let {
+                    data
+                } = res;
+                this.login(data);
+            } else {
+                alert('签名失败');
+            }
+
+        });
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this._time);
+    }
+
+    /**
+     * 登录
+     * @param data
+     */
+    login(data) {
+        //当前用户身份
+        this.loginInfo.sdkAppID = data.sdkAppId;
+        this.loginInfo.accountType = data.accountType;
+        this.loginInfo.identifier = data.identifier;
+        this.loginInfo.userSig = data.userSig;
+        this.loginInfo.identifierNick = data.identifierNick;
+        this.loginInfo.headurl = data.headUrl;
+
+        webim.login(
+            this.loginInfo, this.listeners, this.options,
+            (resp) => {
+                this.loginInfo.identifierNick = resp.identifierNick; //设置当前用户昵称
+                // console.log(resp);
+                this.getLastC2CHistoryMsgs(); //获取好友历史聊天记录
+                this.showEmotionDialog(); //初始化表情包
+            },
+            function(err) {
+                console.log(err.ErrorInfo);
+            }
+        );
+    }
+
+    /**
+     * 监听连接状态回调变化事件
+     */
+    onConnNotify(resp) {
+        let info;
+        switch (resp.ErrorCode) {
+            case webim.CONNECTION_STATUS.ON:
+                webim.Log.warn('建立连接成功: ' + resp.ErrorInfo);
+                break;
+            case webim.CONNECTION_STATUS.OFF:
+                info = '连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo;
+                // alert(info);
+                webim.Log.warn(info);
+                break;
+            case webim.CONNECTION_STATUS.RECONNECT:
+                info = '连接状态恢复正常: ' + resp.ErrorInfo;
+                // alert(info);
+                webim.Log.warn(info);
+                break;
+            default:
+                webim.Log.error('未知连接状态: =' + resp.ErrorInfo);
+                break;
+        }
+    }
+
+    /**
+     * 监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件
+     * newMsgList 为新消息数组，结构为[Msg]
+     *
+     */
+    onMsgNotify(newMsgList) {
+        let sess, newMsg;
+        //获取所有聊天会话
+        let sessMap = webim.MsgStore.sessMap();
+        // console.log(newMsgList);
+        for (var j in newMsgList) { //遍历新消息
+            newMsg = newMsgList[j];
+            if (newMsg.getSession().id() == this.selToID) { //为当前聊天对象的消息
+                //在聊天窗体中新增一条消息
+                console.log(newMsg);
+                this.addMsg(newMsg);
+            }
+        }
+        //消息已读上报，以及设置会话自动已读标记
+        webim.setAutoRead(this.selSess, true, true);
+    }
+
+
+    /**
+     * 获取好友聊天记录
+     */
+    getLastC2CHistoryMsgs(prepage) {
+        let options = {
+            'Peer_Account': this.selToID, //好友帐号
+            'MaxCnt': this.reqMsgCount, //拉取消息条数
+            'LastMsgTime': this.getPrePageC2CHistroyMsgInfo.lastMsgTime, //最近的消息时间，即从这个时间点向前拉取历史消息
+            'MsgKey': this.getPrePageC2CHistroyMsgInfo.MsgKey
+        };
+        webim.getC2CHistoryMsgs(
+            options,
+            (resp) => {
+                // console.log(resp);
+                this.getPrePageC2CHistroyMsgInfo.lastMsgTime = resp.LastMsgTime;
+                this.getPrePageC2CHistroyMsgInfo.MsgKey = resp.MsgKey;
+                if (resp.MsgList.length === 0) {
+                    this.setState({
+                        loadAnimation: false,
+                        loadMsg: '暂时没有聊天记录',
+                        msgText: '',
+                    });
+                    return;
+                }
+                this.getHistoryMsgCallback(resp.MsgList, prepage);
+            },
+        );
+    }
+
+    /**
+     * 获取历史消息
+     * @msgList 为消息数组，结构为[Msg]
+     */
+    getHistoryMsgCallback(msgList, prepage) {
+        let msg;
+        prepage = prepage || false;
+        //如果是加载前几页的消息，消息体需要prepend，所以先倒排一下
+        if (prepage) {
+            msgList.reverse();
+        }
+        for (let j in msgList) { //遍历新消息
+            msg = msgList[j];
+            if (msg.getSession().id() == this.selToID) { //为当前聊天对象的消息
+                this.selSess = msg.getSession();
+                //在聊天窗体中新增一条消息
+                this.addMsg(msg, prepage);
+            }
+        }
+        //消息已读上报，并将当前会话的消息设置成自动已读
+        webim.setAutoRead(this.selSess, true, true);
+    }
+
+    /**
+     * 聊天页面增加一条消息
+     * @prepend 是否是获取前一页数据
+     */
+    addMsg(msg, prepend) {
+        let isSelfSend, fromAccountImage;
+        isSelfSend = msg.getIsSend(); //消息是否为自己发的
+        if (isSelfSend) { //如果是自己发的消息
+            fromAccountImage = this.loginInfo.headurl; //获取头像
+        } else { //如果别人发的消息
+            fromAccountImage = this.friendHeadUrl; //获取头像
+        }
+        let contentHtml = this.convertMsgtoHtml(msg);
+
+        let list = Array.prototype.slice.apply(this.state.list);
+        let obj = {
+            isSelf: isSelfSend,
+            headUrl: fromAccountImage,
+            content: contentHtml
+        };
+        list.push(obj);
+        clearTimeout(this._time);
+        if (prepend) {
+            let li = document.createElement('li');
+            if (isSelfSend) {
+                li.className = "friend-area self"; //自己
+            } else {
+                li.className = "friend-area"; //好友
+            }
+
+            li.innerHTML = '<img src=' + fromAccountImage + ' alt=""><div class="msgContent">' + contentHtml + '</div>';
+            document.querySelector('.chat-content').insertBefore(li, document.querySelector('.chat-content').firstChild);
+            return;
+        } else {
+            this._time = setTimeout(() => {
+                this.refs.container.scrollTop = this.refs.container.scrollHeight;
+            }, 300);
+        }
+
+        this.setState({
+            loadAnimation: false,
+            loadMsg: '加载完成',
+            msgText: '',
+            list: list
+        })
+
+
+    }
+
+    /**
+     * 把消息转换成Html
+     */
+    convertMsgtoHtml(msg) {
+        let html = "",
+            elems, elem, type, content;
+        elems = msg.getElems(); //获取消息包含的元素数组
+        let count = elems.length;
+        for (let i = 0; i < count; i++) {
+            elem = elems[i];
+            type = elem.getType(); //获取元素类型
+            content = elem.getContent(); //获取元素对象
+            switch (type) {
+                case webim.MSG_ELEMENT_TYPE.TEXT:
+                    html += this.convertTextMsgToHtml(content);
+                    //转义，防XSS
+                    // html = webim.Tool.formatText2Html(html);
+                    break;
+                case webim.MSG_ELEMENT_TYPE.FACE:
+                    html += this.convertFaceMsgToHtml(content);
+                    break;
+                case webim.MSG_ELEMENT_TYPE.IMAGE:
+                    html += this.convertImageMsgToHtml(content);
+                    break;
+                default:
+                    webim.Log.error('未知消息元素类型: elemType=' + type);
+                    break;
+            }
+        }
+        return html;
+    }
+
+
+
+    /**
+     * 解析文本消息元素
+     * @param content
+     */
+    convertTextMsgToHtml(content) {
+        if (ToolDps.reg.isUrl(content.getText().trim())) {
+            return "<a href=" + content.getText().trim() + ">" + content.getText() + "</a>";
+        }
+        return content.getText();
+    }
+
+    //解析表情消息元素
+    convertFaceMsgToHtml(content) {
+        let faceUrl = null;
+        let data = content.getData();
+        let index = webim.EmotionDataIndexs[data];
+
+        let emotion = webim.Emotions[index];
+        if (emotion && emotion[1]) {
+            faceUrl = emotion[1];
+        }
+        if (faceUrl) {
+            return "<img src='" + faceUrl + "'/>";
+        } else {
+            return data;
+        }
+    }
+
+    /**
+     * 解析图片消息元素
+     * @param content
+     * @param imageName
+     * @returns {string}
+     */
+    convertImageMsgToHtml(content) {
+            var smallImage = content.getImage(webim.IMAGE_TYPE.SMALL); //小图
+            var bigImage = content.getImage(webim.IMAGE_TYPE.LARGE); //大图
+            var oriImage = content.getImage(webim.IMAGE_TYPE.ORIGIN); //原图
+            if (!bigImage) {
+                bigImage = smallImage;
+            }
+            if (!oriImage) {
+                oriImage = smallImage;
+            }
+            return "<img  src='" + smallImage.getUrl() + "#" + bigImage.getUrl() + "#" + oriImage.getUrl() + "'  id='" + content.getImageId() + "' bigImgUrl='" + bigImage.getUrl() + "' />";
+        }
+        /**
+         * 发送消息(文本或者表情)
+         */
+    onSendMsg() {
+        this.hideEmotion();
+        let msgContent = this.state.msgText;
+        if (msgContent.trim() === "") return;
+        this.handleMsgSend(msgContent);
+        this.setState({
+            emotionFlag: false
+        });
+
+    }
+
+    /**
+     * 发消息处理
+     */
+    handleMsgSend(msgContent) {
+        if (!this.selSess) {
+            this.selSess = new webim.Session(this.selType, this.selToID, this.nickname, this.friendHeadUrl, Math.round(new Date().getTime() / 1000));
+        }
+        let isSend = true; //是否为自己发送
+        let seq = -1; //消息序列，-1表示sdk自动生成，用于去重
+        let random = Math.round(Math.random() * 4294967296); //消息随机数，用于去重
+        let msgTime = Math.round(new Date().getTime() / 1000); //消息时间戳
+        let subType = webim.C2C_MSG_SUB_TYPE.COMMON; //消息子类型
+        let msg = new webim.Msg(this.selSess, isSend, seq, random, msgTime, this.loginInfo.identifier, subType, this.loginInfo.identifierNick);
+        let text_obj, face_obj, tmsg, emotionIndex, emotion, restMsgIndex;
+        //解析文本和表情
+        var expr = /\[[^[\]]{1,3}\]/mg;
+        var emotions = msgContent.match(expr);
+        if (!emotions || emotions.length < 1) {
+            text_obj = new webim.Msg.Elem.Text(msgContent);
+            msg.addText(text_obj);
+        } else {
+            for (let i = 0; i < emotions.length; i++) {
+                tmsg = msgContent.substring(0, msgContent.indexOf(emotions[i]));
+                if (tmsg) {
+                    text_obj = new webim.Msg.Elem.Text(tmsg);
+                    msg.addText(text_obj);
+                }
+                emotionIndex = webim.EmotionDataIndexs[emotions[i]];
+                emotion = webim.Emotions[emotionIndex];
+
+                if (emotion) {
+                    face_obj = new webim.Msg.Elem.Face(emotionIndex, emotions[i]);
+                    msg.addFace(face_obj);
+                } else {
+                    text_obj = new webim.Msg.Elem.Text(emotions[i]);
+                    msg.addText(text_obj);
+                }
+                restMsgIndex = msgContent.indexOf(emotions[i]) + emotions[i].length;
+                msgContent = msgContent.substring(restMsgIndex);
+            }
+            if (msgContent) {
+                text_obj = new webim.Msg.Elem.Text(msgContent);
+                msg.addText(text_obj);
+            }
+        }
+        msg.sending = 1;
+        msg.originContent = msgContent;
+        webim.sendMsg(msg, (resp) => {
+            this.addMsg(msg);
+        }, (err) => {
+            console.log(err.ErrorInfo);
+            //提示重发
+
+        });
+    }
+
+    /**
+     * 选择表情
+     */
+    selectEmotion(e) {
+        let id = e.target.id;
+        this.setState({
+            msgText: this.state.msgText + id
+        });
+
+    }
+
+    /**
+     * 打开表情窗体
+     */
+    showEmotionDialog() {
+        let emotionArr = [];
+        for (let index in webim.Emotions) {
+            emotionArr.push(<li key={index}><img id={webim.Emotions[index][0]} src={webim.Emotions[index][1]} alt="" onClick={this.selectEmotion.bind(this)}/></li>);
+            // console.log(webim.Emotions[index])
+        }
+        this.setState({
+            emotions: emotionArr
+        });
+    }
+
+    hideEmotion() {
+        this.setState({
+            emotionFlag: false
+        });
+    }
+
+    /**
+     * 获取上一页聊天记录
+     */
+    getChatHistory(e) {
+        let currEle = e.target;
+        this.d(currEle);
+    }
+
+    preHistory(currEle) {
+        if (currEle.scrollTop == 0) {
+            currEle.scrollTop = 10;
+            this.getPrePageC2CHistoryMsgs();
+        }
+    }
+
+
+    getPrePageC2CHistoryMsgs() {
+        this.getLastC2CHistoryMsgs(true);
+    }
+
+    /**
+     * 上传图片
+     */
+    uploadPic(e) {
+        this.setState({
+            emotionFlag: false
+        });
+        let files = merged(e.target.files);
+        e.target.value = '';
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            let businessType = webim.UPLOAD_PIC_BUSSINESS_TYPE.C2C_MSG; //业务类型2-向好友发图片
+            //封装上传图片请求
+            let opt = {
+                'file': file, //图片对象
+                // 'onProgressCallBack': onProgressCallBack, //上传图片进度条回调函数
+                'To_Account': this.selToID, //接收者
+                'businessType': businessType //业务类型
+            };
+            //上传图片
+            webim.uploadPic(opt,
+                (resp) => {
+                    this.sendPic(resp, file.name); //上传成功发送图片
+                },
+                (err) => {
+                    console.log(err.ErrorInfo);
+                }
+            );
+
+        }
+
+    }
+
+    /**
+     * 发送图片消息
+     * @param images
+     * @param imgName
+     */
+    sendPic(images, imgName) {
+        if (!this.selSess) {
+            this.selSess = new webim.Session(selType, selToID, selToID, friendHeadUrl, Math.round(new Date().getTime() / 1000));
+        }
+        let msg = new webim.Msg(this.selSess, true, -1, -1, -1, this.loginInfo.identifier, 0, this.loginInfo.identifierNick);
+        let images_obj = new webim.Msg.Elem.Images(images.File_UUID);
+        for (let i in images.URL_INFO) {
+            let img = images.URL_INFO[i];
+            let newImg;
+            let type;
+            switch (img.PIC_TYPE) {
+                case 1: //原图
+                    type = 1; //原图
+                    break;
+                case 2: //小图（缩略图）
+                    type = 3; //小图
+                    break;
+                case 4: //大图
+                    type = 2; //大图
+                    break;
+            }
+            newImg = new webim.Msg.Elem.Images.Image(type, img.PIC_Size, img.PIC_Width, img.PIC_Height, img.DownUrl);
+            images_obj.addImage(newImg);
+        }
+        msg.addImage(images_obj);
+        //调用发送图片消息接口
+        webim.sendMsg(msg, (resp) => {
+            this.addMsg(msg);
+        }, (err) => {
+            console.log(err.ErrorInfo);
+        });
+    }
+
+    /**
+     * 防抖
+     * @param idle   {number}    空闲时间，单位毫秒
+     * @param action {function}  请求关联函数，实际应用需要调用的函数
+     * @return {function}    返回客户调用函数
+     */
+    debounce(idle, action) {
+        let last;
+        return function() {
+            let ctx = this,
+                args = arguments;
+            clearTimeout(last);
+            last = setTimeout(function() {
+                action.apply(ctx, args)
+            }, idle)
+        }
+    }
+
+    render() {
+        return (
+            <section className="full-page chat-page">
+                <div ref='container' className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)}>
+                    {this.state.list.length > 0 ?  <List list={this.state.list}/> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg}/>}
+                </div>
+                <footer>
+                    <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={()=>{this.setState({emotionFlag:!this.state.emotionFlag})}}>
+                        <use xlinkHref="/assets/img/icon.svg#svg-face"/>
+                    </svg>
+                    <div className="upload-img">
+                        <svg viewBox="0 0 1024 1024" className="icon-svg-img" onClick={()=>{this.setState({emotionFlag:true})}}>
+                            <use xlinkHref="/assets/img/icon.svg#svg-img"/>
+                        </svg>
+                        <input type="file" className="img" accept="image/*" multiple={true} onChange={this.uploadPic.bind(this)}/>
+                    </div>
+                    <textarea type="text" value={this.state.msgText} onChange={(e)=>{this.setState({msgText:e.target.value})}} onFocus={this.hideEmotion.bind(this)}/>
+                    <button  className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
+                    {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
+
+                </footer>
+            </section>
+        )
+    }
+}
+
+export default Chat;

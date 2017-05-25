@@ -1,0 +1,65 @@
+.chat-page{
+  .container{height: 100%;padding-bottom: 50px;overflow-y: auto;}
+  .chat-content{
+      padding: 15px;
+  }
+  .friend-area{
+    position: relative;margin-bottom: 10px;
+    >img{float:left;width: 30px;height: 30px;border-radius: 50%;margin: 0 10px 0 0;}
+    &.self{
+      text-align: right;
+      >img{float: right;margin: 0 0 0 10px;}
+      .msgContent{
+        background-color: #b2e281;
+        &:before{
+          right: inherit;
+          left: 100%;
+          border-right-color: transparent;
+          border-left-color: #b2e281;
+        }
+      }
+    }
+  }
+  .msgContent{
+    display: inline-block;
+    position: relative;
+    padding: 5px 10px;
+    max-width: 80%;
+    min-height: 30px;
+    line-height: 2.5;
+    font-size: 12px;
+    text-align: left;
+    word-break: break-all;
+    background-color: #fafafa;
+    border-radius: 4px;
+    >img{display: inline-block;vertical-align: middle;max-width: 100%;}
+    &:before{
+      content: " ";
+      position: absolute;
+      top: 9px;
+      right: 100%;
+      border: 6px solid transparent;
+      border-right-color: #fafafa;
+    }
+
+  }
+  footer{
+    position: fixed;bottom: 0;left: 0;width: 100%;height: 50px;border-top:1px solid rgb(221,221,221);padding: 0 70px; background: rgb(242,242,242);
+    textarea{width: 100%;-webkit-appearance: none;height: 100%;border-width: 0;padding: 5px;resize: none;}
+    .send-btn{position: absolute;right: 5px;top: 50%;transform: translate(0,-50%);width: 60px;font-size: 14px;}
+    .upload-img,.icon-face{position: absolute;top:50%;transform: translate(0,-50%);}
+    .upload-img{
+      left: 7px;overflow: hidden;
+      .img{position:absolute;left:0;height: 100%;width: 100%;opacity: 0;}
+    }
+    .icon-face{left: 43px;}
+    .emotions-area{
+      position: absolute;top: -201px;left: 0;width: 100%;height:200px;background: @white;display: flex;padding: 10px 5px;overflow-y: auto;flex-wrap: wrap;
+      li{
+        flex:0 0 100/7%;text-align: center;
+        >img{display: inline-block;}
+      }
+    }
+  }
+
+}

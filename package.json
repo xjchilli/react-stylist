@@ -1,5 +1,5 @@
 {
-  "name": "stylist-subscription-account",
+  "name": "webpack2-build",
   "version": "1.0.0",
   "description": "",
   "main": "App.js",
@@ -23,8 +23,6 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "postcss-loader": "^2.0.5",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
     "react-hot-loader": "^3.0.0-beta.7",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
@@ -32,5 +30,16 @@
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "obj-merged": "^1.0.5",
+    "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
+  }
 }

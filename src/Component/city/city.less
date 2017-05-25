@@ -1,0 +1,29 @@
+.pick-city-area{
+  transform:translate3D(0,-1500px,0);opacity:0;position: absolute;left: 0;right: 0;bottom: 0;top: 0;background: rgba(0,0,0,.5);z-index: 99;transition: all 0.5s ease;
+  &.active{ transform:translate3D(0,0,0);opacity: 1;}
+  .select-city-area{
+    position: absolute;left: 0;right: 0;bottom: 0;top: 0;margin:auto; width: 90%;height: 250px;
+  }
+  .action-area{
+    position:relative;height: 50px;background: #f5f5f5;border-top: 1px solid #d1d1d1;
+    >button{
+      width: 100px;height: 49px;border-width: 0;background: @white;font-size: 14px;
+      &:last-child{position: absolute;right: 0;top:0;background:rgb(234, 60, 59);color: @white;}
+    }
+  }
+
+  .city-area{
+    display: flex;height: 200px;background: #f5f5f5;font-size: 14px;color: #000000;
+    .city-item{flex:0 0 33.3%;overflow: hidden;}
+    .swiper-wrapper{height: 200px;}
+    .swiper-container{background: #f5f5f5;}
+    .swiper-slide{
+      line-height:40px;height: 40px;text-align: center;
+    }
+    .swiper-slide-active{
+      background: @white;
+    }
+
+    .data-load-true{position: absolute;top: 0;left: 0;right: 0;bottom: 0;z-index: 99;}
+  }
+}

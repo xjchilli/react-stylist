@@ -1,0 +1,1 @@
+export const target = process.env.NODE_ENV !== 'production' ? '' : 'http://wx.dapeis.com'; //目标网站

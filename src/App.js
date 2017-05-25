@@ -1,14 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render }  from 'react-dom'
+import {Provider} from 'react-redux';
 
 
-require('./style/app.css');
+import store from './Config/Store';
+import route from './Config/Route';
+import  './Style/dps.less';
 
-const render = () => {
-    ReactDOM.render(
-       <div>1</div>,
-        document.getElementById('app')
-    );
-};
+render(
+    <Provider store={store}>
+        {route}
+    </Provider>,
+    document.getElementById('app')
+);
 
-render();
+

@@ -5,12 +5,20 @@ const webpackConfig = require("./webpack.config");
 
 const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
-    // hot: true,
+    proxy: { // proxy URLs to backend development server
+        '/wx': 'http://wx.dapeis.com'
+    },
     publicPath: webpackConfig.output.publicPath,//服务器资源路径
     disableHostCheck: true,
     stats: {
         colors: true
     }
+});
+
+//将其他路由，全部返回index.html
+server.app.get('*', function (req, res) {
+    res.sendFile(__dirname + '/index.html');//dev version
+    // res.sendFile(__dirname + '/assets/index.html');//live version
 });
 
 server.listen(9000);

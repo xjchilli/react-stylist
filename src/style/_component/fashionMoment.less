@@ -1,0 +1,48 @@
+.fashion-moment-area{
+  position: relative;
+  .fashion-moment-list{
+    li{
+      background: @white;min-height: 35rem;margin: 1rem;padding: 1rem;
+      .title{font-size: 1.9rem;color: @black;}
+      time{font-size: 1.2rem;color: #8c8c8c;}
+      .img-content{width: 100%;max-height: 100%;margin: 0.5rem 0;}
+      .description{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 1.5rem;color: #737373;}
+    }
+    .fashion-action-area{
+      position: relative;padding-top: 10px;
+      .read-origin-article{position: absolute;left: 0;font-size: 1.5rem;color: @black;}
+      .footer-area{
+        text-align: right;color: @black;font-size: 1.4rem;
+        .agree,.money{
+          padding-right: 1.2rem;
+          >svg{vertical-align: -2px;margin-right: 2px;}
+        }
+        .right-arrow{color: #8c8c8c;}
+      }
+    }
+  }
+
+}
+
+
+@keyframes bounce {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
