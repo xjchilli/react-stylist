@@ -9,12 +9,16 @@ import {
     Link
 } from 'react-router';
 import {
+    Tool
+} from '../Tool';
+import {
     ToolDps
 } from '../ToolDps'
 import {
     DataLoad
 } from '../Component/index'
 import merged from 'obj-merged';
+
 
 class FriendList extends Component {
     constructor(props) {
@@ -86,6 +90,8 @@ class MyDps extends Component {
         }
     }
     componentDidMount() {
+        document.title = "我的搭配师";
+
         ToolDps.get('/wx/tim/getSignature').then((res) => {
             // console.log(res);
             if (res.succ) {
@@ -99,6 +105,8 @@ class MyDps extends Component {
 
         });
     }
+
+
 
     /**
      * 登录
@@ -120,11 +128,12 @@ class MyDps extends Component {
                 // console.log(resp);
                 this.getFriends();
             },
-            function(err) {
+            (err) => {
                 console.log(err.ErrorInfo);
             }
         );
     }
+
 
     /**
      * 监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件
@@ -132,16 +141,10 @@ class MyDps extends Component {
      *
      */
     onMsgNotify(newMsgList) {
-        let sess;
-        //获取所有聊天会话
-        let sessMap = webim.MsgStore.sessMap();
-        // console.log(newMsgList);
-        for (let i in sessMap) {
-            sess = sessMap[i];
-            // console.log(sess._impl.msgs)
-            this.updateSessDiv(sess.id(), sess.unread(), sess._impl.msgs);
-        }
-
+        // console.log(newMsgList)
+        let sess = newMsgList[0].sess;
+        console.log(sess)
+        this.updateSessDiv(sess.id(), 1, sess._impl.msgs);
     }
 
     /**
@@ -189,11 +192,7 @@ class MyDps extends Component {
                             'unReadNum': '', //未读消息数量
                         };
                     }
-                    /*      let loadMsg = "加载完成";
-                          if (friends.length === 0) {
-                              loadMsg = "您暂时没有搭配师哦",
-                                  friendsInfo = null;
-                          }*/
+
 
                     this.initRecentContactList(); //获取最近会话数据
                     this.setState({
@@ -280,14 +279,20 @@ class MyDps extends Component {
     updateSessDiv(to_id, unread_msg_count, msgsArr) {
         if (unread_msg_count > 0 && to_id != "@TLS#144115198577104990") {
             if (unread_msg_count >= 100) {
-                unread_msg_count = '99+';
+                unread_msg_count = '99';
             }
             let lasMsg = this.convertMsgtoHtml(msgsArr[msgsArr.length - 1]);
             if (!this.state.friends) return;
             let friends = merged(this.state.friends);
             if (friends[to_id]) {
                 friends[to_id].lastMsg = lasMsg; //最新一条消息
-                friends[to_id].unReadNum = unread_msg_count; //未读消息数量
+                if (Number(friends[to_id].unReadNum) != "") {
+                    let newUnReadNum = unread_msg_count + friends[to_id].unReadNum;
+                    friends[to_id].unReadNum = newUnReadNum > 99 ? 99 : newUnReadNum; //未读消息数量
+                } else {
+                    friends[to_id].unReadNum = unread_msg_count; //未读消息数量
+                }
+
             }
 
             this.setState({

@@ -2,40 +2,45 @@
  * 咨询
  * Created by potato on 2017/3/20.
  */
-import React,{Component} from  'react'
+import React, {
+    Component
+} from 'react'
 import classNames from 'classnames';
 import GirlCategory from "./component/GirlCategory";
 import BoyCategory from "./component/BoyCategory";
 import MyWardrobe from "./component/MyWardrobe";
 import MatchScene from "./component/MatchScene";
-import {Msg} from "../Component/index";
-import { ToolDps } from '../ToolDps';
+import {
+    Msg
+} from "../Component/index";
+import {
+    ToolDps
+} from '../ToolDps';
 
 
 
-
-class Consult extends Component{
-    constructor(props){
+class Consult extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            btn:'发布',
-            msgShow:false,
-            msgText:'',//提示内容
-            myWardrobe:false,//我的衣橱
-            sex:2,//性别
-            scene:[],//场景
-            shop:[],//商品
-            costCode:'1',//预期花费价格
-            remark:'',//需求描述
-            garderobeArr:[],//选择的服装
+        this.state = {
+            btn: '发布',
+            msgShow: false,
+            msgText: '', //提示内容
+            myWardrobe: false, //我的衣橱
+            sex: 2, //性别
+            scene: [], //场景
+            shop: [], //商品
+            costCode: '1', //预期花费价格
+            remark: '', //需求描述
+            garderobeArr: [], //选择的服装
         }
-        this._time=0;
+        this._time = 0;
     }
-    componentDidMount(){
-
+    componentDidMount() {
+        document.title = "咨询";
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this._time);
     }
 
@@ -43,103 +48,103 @@ class Consult extends Component{
     /**
      * 关闭我的衣橱窗口
      */
-    closeMyWardrobe(){
+    closeMyWardrobe() {
         this.setState({
-            myWardrobe:false
+            myWardrobe: false
         })
     }
 
     /**
      * 搭配场景
      */
-    getScene(sceneArr){
+    getScene(sceneArr) {
         this.setState({
-            scene:sceneArr,
-            msgShow:false
+            scene: sceneArr,
+            msgShow: false
         });
     }
 
     /**
      * 获取选择场景的值
      */
-    getShop(shopArr){
+    getShop(shopArr) {
         this.setState({
-            shop:shopArr,
-            msgShow:false
+            shop: shopArr,
+            msgShow: false
         })
     }
 
     /**
      * 发布
      */
-    publish(){
-        if(this.state.scene.length === 0){
+    publish() {
+        if (this.state.scene.length === 0) {
             this.setState({
-                msgShow:true,
-                msgText:'请选择场景',//提示内容
+                msgShow: true,
+                msgText: '请选择场景', //提示内容
             });
             return;
         }
-        if(this.state.shop.length === 0){
+        if (this.state.shop.length === 0) {
             this.setState({
-                msgShow:true,
-                msgText:'请选择商品',//提示内容
-            });
-            return;
-        }
-
-
-        if(this.state.remark === ""){
-            this.setState({
-                msgShow:true,
-                msgText:'请填写需求描述',//提示内容
+                msgShow: true,
+                msgText: '请选择商品', //提示内容
             });
             return;
         }
 
-        if(this.state.garderobeArr.length===0){
+
+        if (this.state.remark === "") {
             this.setState({
-                msgShow:true,
-                msgText:'请选择搭配物品',//提示内容
+                msgShow: true,
+                msgText: '请填写需求描述', //提示内容
             });
             return;
         }
 
-        let garderobe_ids=[];
-        this.state.garderobeArr.forEach((item)=>{
+        if (this.state.garderobeArr.length === 0) {
+            this.setState({
+                msgShow: true,
+                msgText: '请选择搭配物品', //提示内容
+            });
+            return;
+        }
+
+        let garderobe_ids = [];
+        this.state.garderobeArr.forEach((item) => {
             garderobe_ids.push(item.id);
         });
 
-        let data={
-            remark:this.state.remark,//需求描述
-            costCode:this.state.costCode,
-            scene:this.state.scene,
-            sex:this.state.sex,
-            shop:this.state.shop,
-            garderobe_ids:garderobe_ids
+        let data = {
+            remark: this.state.remark, //需求描述
+            costCode: this.state.costCode,
+            scene: this.state.scene,
+            sex: this.state.sex,
+            shop: this.state.shop,
+            garderobe_ids: garderobe_ids
         }
         this.setState({
-            btn:'发布中...'
+            btn: '发布中...'
         });
         ToolDps.ajax({
-            url:'/wx/requirement/add_cons',
-            type:'post',
-            data:data
-        }).then((res)=>{
-            if(res.succ){
+            url: '/wx/requirement/add_cons',
+            type: 'post',
+            data: data
+        }).then((res) => {
+            if (res.succ) {
                 this.setState({
-                    btn:'发布',
-                    msgShow:true,
-                    msgText:'发布成功'
+                    btn: '发布',
+                    msgShow: true,
+                    msgText: '发布成功'
                 });
-                this._time=setTimeout(function () {
-                    this.context.router.push('/weixin/pay?orderId='+res.orderId+"&type=1");
-                }.bind(this),1000);
-            }else{
+                this._time = setTimeout(function() {
+                    this.context.router.push('/pay?orderId=' + res.orderId + "&type=1");
+                }.bind(this), 1000);
+            } else {
                 this.setState({
-                    btn:'发布',
-                    msgShow:true,
-                    msgText:'发布'
+                    btn: '发布',
+                    msgShow: true,
+                    msgText: '发布'
                 });
             }
         });
@@ -148,37 +153,37 @@ class Consult extends Component{
     /**
      * 添加选择的服装
      */
-    addCloth(cloths){
+    addCloth(cloths) {
         this.setState({
-            garderobeArr:cloths
+            garderobeArr: cloths
         });
     }
 
     /**
      * 删除服装
      * */
-    deleteCloth(e){
+    deleteCloth(e) {
         let id = e.currentTarget.getAttribute('data-id');
-        let newGarderobeArr=Array.prototype.slice.apply(this.state.garderobeArr);
-        for(let i=0;i<newGarderobeArr.length;i++){
-            if(newGarderobeArr[i].id == id){
-                newGarderobeArr.splice(i,1);
+        let newGarderobeArr = Array.prototype.slice.apply(this.state.garderobeArr);
+        for (let i = 0; i < newGarderobeArr.length; i++) {
+            if (newGarderobeArr[i].id == id) {
+                newGarderobeArr.splice(i, 1);
             }
         }
         this.setState({
-            garderobeArr:newGarderobeArr
+            garderobeArr: newGarderobeArr
         });
     }
 
-    render(){
-        let myWardrobe = classNames('full-page matchService',{
-            'remove-css-overflow-scrolling':this.state.myWardrobe
+    render() {
+        let myWardrobe = classNames('full-page matchService', {
+            'remove-css-overflow-scrolling': this.state.myWardrobe
         });
         let sexGirl = classNames({
-            'active':this.state.sex === 2
+            'active': this.state.sex === 2
         });
         let sexBoy = classNames({
-            'active':this.state.sex === 1
+            'active': this.state.sex === 1
         });
 
         return (
@@ -240,8 +245,8 @@ class Consult extends Component{
     }
 }
 
-Consult.contextTypes={
-    router:React.PropTypes.object.isRequired
+Consult.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
 
 

@@ -1,7 +1,7 @@
 
 const Webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
-const webpackConfig = require("./webpack.config");
+const webpackConfig = require("./webpack.config.dev");
 
 const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
@@ -21,4 +21,4 @@ server.app.get('*', function (req, res) {
     // res.sendFile(__dirname + '/assets/index.html');//live version
 });
 
-server.listen(9000);
+server.listen(8000);

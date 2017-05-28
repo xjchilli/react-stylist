@@ -2,10 +2,12 @@
  * Created by potato on 2017/4/28.
  */
 
-import React,{Component} from 'react';
+import React, {
+    Component
+} from 'react';
 
-class Son extends Component{
-    render(){
+class Son extends Component {
+    render() {
         this.props.doSomething()
         return (
             <div>son</div>
@@ -13,17 +15,19 @@ class Son extends Component{
     }
 }
 
-class Parent extends Component{
+class Parent extends Component {
 
     doSomething(value) {
         console.log('doSomething called by child with value:', value);
     }
 
-    render(){
+    render() {
         console.log(React.Children)
-       const childrenWithProps=React.Children.map(this.props.children,(child)=>{
-           return React.cloneElement(child, { doSomething: this.doSomething });
-       })
+        const childrenWithProps = React.Children.map(this.props.children, (child) => {
+            return React.cloneElement(child, {
+                doSomething: this.doSomething
+            });
+        })
         return (
             <div>
                 <h1>parent</h1>
@@ -36,12 +40,12 @@ class Parent extends Component{
     }
 }
 
-class Test extends Component{
-    constructor(props){
+class Test extends Component {
+    constructor(props) {
         super(props);
     }
 
-    render(){
+    render() {
         return (
             <div style={{fontSize:'30px'}}>
               <Parent>

@@ -1,39 +1,95 @@
-.full-page{position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: @bg;overflow-y: auto;margin: auto;max-width: 64rem;-webkit-overflow-scrolling:touch;}
-.bgWhite{background-color: @white;}
+.full-page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @bg;
+  overflow-y: auto;
+  margin: auto;
+  max-width: 64rem;
+  -webkit-overflow-scrolling: touch;
+}
+.bgWhite {
+  background-color: @white;
+}
 //icon删除
-.icon-svg-delete{
-  width: 20px;height: 20px;
+.icon-svg-delete {
+  width: 20px;
+  height: 20px;
 }
 //图片
-.icon-svg-img{width: 30px;height: 30px;}
-//加号
-.icon-svg-add{width: 40px;height: 40px;}
-//表情
-.icon-svg-face{width: 20px;height: 20px;}
-//铃铛
-.icon-svg-bell{width: 50px;height: 50px;}
-//点赞，打赏
-.icon-svg-zan,.icon-svg-reward{width: 15px;height: 15px;}
-.icon-svg-zan{
-  fill:gray;
-  &.active{fill:#cc5858;}
+.icon-svg-img {
+  width: 30px;
+  height: 30px;
 }
-//评论
-.icon-svg-comment{width: 20px;height: 20px;}
-//红包
-.icon-svg-redBag{width: 30px;height: 30px;}
-
+//加号
+.icon-svg-add {
+  width: 40px;
+  height: 40px;
+}
+//表情
+.icon-svg-face {
+  width: 20px;
+  height: 20px;
+}
 //铃铛
-.bell-link{
-  position: fixed;top: 30px;right: 30px;
-  .circle{display: none;}
-  &.active{
-    .icon-svg-bell{animation: bounce 0.5s linear infinite;}
-    .circle{display:block;position: absolute;top:0;right:0;width: 10px;height: 10px;background: rgb(234,60,59);border-radius: 50%;}
+.icon-svg-bell {
+  width: 50px;
+  height: 50px;
+}
+//点赞，打赏
+.icon-svg-zan, .icon-svg-reward {
+  width: 15px;
+  height: 15px;
+}
+.icon-svg-zan {
+  fill: gray;
+
+  &.active {
+    fill: #cc5858;
   }
 }
+//评论
+.icon-svg-comment {
+  width: 20px;
+  height: 20px;
+}
+//红包
+.icon-svg-redBag {
+  width: 30px;
+  height: 30px;
+}
+// 问号
+.icon-svg-question {
+  width: 15px;
+  height: 15px;
+}
+//铃铛《
+.bell-link {
+  position: fixed;
+  top: 30px;
+  right: 30px;
 
-
+  .circle {
+    display: none;
+  }
+  &.active {
+    .icon-svg-bell {
+      animation: bounce 0.5s linear infinite;
+    }
+    .circle {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 10px;
+      height: 10px;
+      background: rgb(234, 60, 59);
+      border-radius: 50%;
+    }
+  }
+}
 //loading
 .data-load {
   .msg {
@@ -42,7 +98,6 @@
     font-size: 14px;
   }
 }
-
 .data-load-true {
   margin: 20px auto 20px auto;
   position: relative;
@@ -52,21 +107,34 @@
   border: 4px solid #80bd01;
   border-right-color: transparent;
   border-radius: 50%;
+
   .msg {
     display: none;
   }
 }
-
 //button
-.btn{
-  display: block; -webkit-appearance:none;background: #ea3c3b;border-radius: 0.5rem;
-  color: #ffffff;font-size: 1.7rem;width: 13rem;height: 3.5rem;line-height: 3.5rem;
-   border-width:0;
+.btn {
+  display: block;
+  -webkit-appearance: none;
+  background: #ea3c3b;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 1.7rem;
+  width: 13rem;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  border-width: 0;
 }
-
-.text-center{text-align: center;}
-.no-record{padding: 15px;font-size: 14px;}
-
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.no-record {
+  padding: 15px;
+  font-size: 14px;
+}
 @keyframes rotate-forever {
   0% {
     transform: rotate(0deg)
@@ -75,20 +143,37 @@
     transform: rotate(360deg)
   }
 }
-
 //form input layout
-.form-ground{
-  display: flex;margin-bottom: 15px;
-  .item{
-    font-size: 16px;height:30px;
-    &:first-child{ flex:0 0 50px;padding-left: 10px;line-height: 30px;}
-    &:last-child{ flex:auto;}
-    input{-webkit-appearance:none;width: 100%;height: 100%;border: 1px solid gray;border-radius: 0;font-size: 16px;background: @white;text-indent: 5px;}
+.form-ground {
+  display: flex;
+  margin-bottom: 15px;
+
+  .item {
+    font-size: 16px;
+    height: 30px;
+
+    &:first-child {
+      flex: 0 0 50px;
+      padding-left: 10px;
+      line-height: 30px;
+    }
+    &:last-child {
+      flex: auto;
+    }
+    input {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 100%;
+      border: 1px solid gray;
+      border-radius: 0;
+      font-size: 16px;
+      background: @white;
+      text-indent: 5px;
+    }
   }
 }
-
-@media all and (max-width: 320px) {
-  .form-ground{
+@media all and (max-width:320px) {
+  .form-ground {
     margin-bottom: 5px;
   }
 }

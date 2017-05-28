@@ -22,6 +22,7 @@ import {
     Msg
 } from "../Component/index";
 
+
 /**
  * 搭配师信息
  */
@@ -188,7 +189,7 @@ class ToReward extends Component {
         if (this.state.money == "") {
             this.setState({
                 msgShow: true,
-                msgText: '金额格式有误', //提示内容
+                msgText: '请输入打赏金额', //提示内容
             });
             return
         };
@@ -492,6 +493,7 @@ class FashionMomentDetail extends Component {
     }
 
     componentDidMount() {
+        document.title = "时尚圈详情";
         ToolDps.get('/wx/tim/getSignature').then((res) => {
             // console.log(res);
             if (res.succ) {
@@ -665,16 +667,6 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
-        let {
-            location
-        } = props;
-        let {
-            planId,
-            isReload
-        } = location.query;
-        if (!isReload) {
-            window.location.href = '/weixin/fashionMomentDetail?planId=' + planId + '&isReload=yes';
-        }
     }
 
     render() {

@@ -3,17 +3,28 @@
  *
  * Created by potato on 2017/3/15.
  */
-import React, { Component } from 'react';
-import {Link} from 'react-router';
-import {DataLoad,GetData} from '../Component/index';
+import React, {
+    Component
+} from 'react';
+import {
+    Link
+} from 'react-router-dom';
+import {
+    DataLoad,
+    GetData
+} from '../Component/index';
 
-class Main extends Component{
-    constructor(props){
+class Main extends Component {
+    constructor(props) {
         super(props);
     }
 
-    render(){
-        let {data, loadAnimation, loadMsg} = this.props.state;
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
         let main = data.succ ? <Profile data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
 
         return (
@@ -24,21 +35,39 @@ class Main extends Component{
     }
 }
 
-class Profile extends Component{
-    constructor(props){
+class Profile extends Component {
+    constructor(props) {
         super(props);
 
     }
-    componentDidMount(){
-
+    componentDidMount() {
+        document.title = "个人信息";
     }
 
-    render(){
-        let {headImg,nickName,info} = this.props.data;
-        let {sex,birthday,city,professional,heigh,weight,chest,waist,hip,faceshpe,colorofskin,bodySize,lifeImgs} = info ? info : {};
-        let faceshpeImgSrc="/assets/img/face"+faceshpe+".png";//脸型图片地址
-        let colorofskinImgSrc="/assets/img/skin"+colorofskin+".png";//肤色图片地址
-        let bodyImgSrc="/assets/img/body"+bodySize+".png";
+    render() {
+        let {
+            headImg,
+            nickName,
+            info
+        } = this.props.data;
+        let {
+            sex,
+            birthday,
+            city,
+            professional,
+            heigh,
+            weight,
+            chest,
+            waist,
+            hip,
+            faceshpe,
+            colorofskin,
+            bodySize,
+            lifeImgs
+        } = info ? info : {};
+        let faceshpeImgSrc = "/assets/img/face" + faceshpe + ".png"; //脸型图片地址
+        let colorofskinImgSrc = "/assets/img/skin" + colorofskin + ".png"; //肤色图片地址
+        let bodyImgSrc = "/assets/img/body" + bodySize + ".png";
 
         return (
             <section className="full-page profile-container" >
@@ -112,10 +141,14 @@ class Profile extends Component{
 
 
 export default GetData({
-    id: 'Profile',  //应用关联使用的redux
+    id: 'Profile', //应用关联使用的redux
     component: Main, //接收数据的组件入口
     url: '/wx/user/info',
-    data: '',//发送给服务器的数据
-    success: (state) => { return state; }, //请求成功后执行的方法
-    error: (state) => { return state } //请求失败后执行的方法
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+            return state
+        } //请求失败后执行的方法
 });

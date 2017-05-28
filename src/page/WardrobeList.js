@@ -2,23 +2,30 @@
  * 我的衣橱
  * Created by potato on 2017/5/3 0003.
  */
-import React,{Component} from  'react';
-import {Link} from 'react-router';
+import React, {
+    Component
+} from 'react';
+import {
+    Link
+} from 'react-router-dom';
 import classNames from 'classnames';
 import Msg from "../Component/tips/msg";
-import { ToolDps } from '../ToolDps';
+import {
+    ToolDps
+} from '../ToolDps';
 
 
-class SwiperSlide extends Component{
-    constructor(props){
+class SwiperSlide extends Component {
+    constructor(props) {
         super(props);
     }
 
-    componentWillMount(){
-    }
+    componentWillMount() {}
 
-    render(){
-        let {data} = this.props;
+    render() {
+        let {
+            data
+        } = this.props;
         return (
 
             <div className="swiper-slide">
@@ -34,24 +41,27 @@ class SwiperSlide extends Component{
     }
 }
 
-class ClothCategory extends Component{
-    constructor(props){
+class ClothCategory extends Component {
+    constructor(props) {
         super(props);
     }
 
-    componentDidMount(){
-        new Swiper('.J-consult-my-wardrobe',{
+    componentDidMount() {
+        document.title = "我的衣橱";
+        new Swiper('.J-consult-my-wardrobe', {
             slidesPerView: 3,
-            spaceBetween : 10,
-            slidesOffsetBefore : 30,
-            slidesOffsetAfter : 30,
-            observer:true,
+            spaceBetween: 10,
+            slidesOffsetBefore: 30,
+            slidesOffsetAfter: 30,
+            observer: true,
         });
     }
 
 
-    render(){
-        let {data} = this.props;
+    render() {
+        let {
+            data
+        } = this.props;
         return (
             <div className="cloth-category">
                 <h4 className="wardrobe-title" data-code={data.typeCode}>{data.typeName}</h4>
@@ -69,77 +79,77 @@ class ClothCategory extends Component{
     }
 }
 
-class WardrobeList extends Component{
-    constructor(props){
+class WardrobeList extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            serachTip:'加载中...',
-            uploadBtn:'确认上传',
-            msgShow:false,
-            msgText:'',//提示内容
-            uploadClothing:false,//上传服装
-            name:'',//商品名称
-            remark:'',//描述
-            typeCode:'',//类别Code
-            file:'',//图片文件
-            imgSrc:'',//图片地址
-            data:[],
+        this.state = {
+            serachTip: '加载中...',
+            uploadBtn: '确认上传',
+            msgShow: false,
+            msgText: '', //提示内容
+            uploadClothing: false, //上传服装
+            name: '', //商品名称
+            remark: '', //描述
+            typeCode: '', //类别Code
+            file: '', //图片文件
+            imgSrc: '', //图片地址
+            data: [],
         }
-        this.reader=new FileReader();
+        this.reader = new FileReader();
     }
 
-    componentDidMount(){
-        ToolDps.get('/wx/garderobe/list').then((data)=>{
-            if(data.succ){
-                if(data.list.length === 0){
+    componentDidMount() {
+        ToolDps.get('/wx/garderobe/list').then((data) => {
+            if (data.succ) {
+                if (data.list.length === 0) {
                     this.setState({
-                        serachTip:'暂时没有您的数据'
+                        serachTip: '暂时没有您的数据'
                     })
-                }else{
+                } else {
                     this.setState({
-                        data:data.list
+                        data: data.list
                     })
                 }
             }
-        }).catch(()=>{
+        }).catch(() => {
             this.setState({
-                serachTip:'加载失败'
+                serachTip: '加载失败'
             })
         });
 
     }
 
-    componentWillUnmount(){
-        this.reader.removeEventListener('load',this.preview);
+    componentWillUnmount() {
+        this.reader.removeEventListener('load', this.preview);
     }
 
 
     /**
      * 显示上传服装窗口
      */
-    showUploadClothWindow(){
+    showUploadClothWindow() {
         this.setState({
-            uploadClothing:true
+            uploadClothing: true
         });
     }
 
     /**
      * 隐藏上传服装窗口
      */
-    hideUploadClothWindow(){
+    hideUploadClothWindow() {
         this.setState({
-            uploadClothing:false
+            uploadClothing: false
         });
     }
 
     /**
      * 预览图片
      */
-    previewImg(e){
-        let files=e.target.files;
-        if(files && files[0]){
+    previewImg(e) {
+        let files = e.target.files;
+        if (files && files[0]) {
             if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
-            this.reader.addEventListener('load',this.preview.bind(this,files[0]));
+            this.reader.addEventListener('load', this.preview.bind(this, files[0]));
             this.reader.readAsDataURL(files[0]);
         }
     }
@@ -148,10 +158,10 @@ class WardrobeList extends Component{
      * 预览
      * @param file
      */
-    preview(file){
+    preview(file) {
         this.setState({
-            file:file,
-            imgSrc:this.reader.result
+            file: file,
+            imgSrc: this.reader.result
         })
 
     }
@@ -159,60 +169,62 @@ class WardrobeList extends Component{
     /**
      * 删除当前预览的图片
      */
-    deleteCurrImg(){
-        this.refs.uploadImg.value='';
+    deleteCurrImg() {
+        this.refs.uploadImg.value = '';
         this.setState({
-            file:'',
-            imgSrc:''
+            file: '',
+            imgSrc: ''
         })
     }
 
-    upload(){
-        if(this.state.typeCode === ""){
+    upload() {
+        if (this.state.typeCode === "") {
             this.setState({
-                msgShow:true,
-                msgText:'请选择物品分类'
+                msgShow: true,
+                msgText: '请选择物品分类'
             });
             return;
         }
 
-        if(this.state.file === ""){
+        if (this.state.file === "") {
             this.setState({
-                msgShow:true,
-                msgText:'请上传图片'
+                msgShow: true,
+                msgText: '请上传图片'
             });
             return;
         }
 
         this.setState({
-            uploadBtn:'上传中...'
+            uploadBtn: '上传中...'
         });
 
-        let formdata=new FormData();
-        formdata.append('typeCode',this.state.typeCode);
-        formdata.append('img',this.state.file);
-        formdata.append('name',this.state.name);
-        formdata.append('remark',this.state.remark);
+        let formdata = new FormData();
+        formdata.append('typeCode', this.state.typeCode);
+        formdata.append('img', this.state.file);
+        formdata.append('name', this.state.name);
+        formdata.append('remark', this.state.remark);
 
-        ToolDps.post('/wx/garderobe/add',formdata,{'Content-Type':'multipart/form-data'}).then((data)=>{
-            if(data.succ){
-                let resetData={
-                    typeCode:data.typeCode,
-                    typeName:data.typeName,
-                    list:[]
+        ToolDps.post('/wx/garderobe/add', formdata, {
+            'Content-Type': 'multipart/form-data'
+        }).then((data) => {
+            if (data.succ) {
+                let resetData = {
+                    typeCode: data.typeCode,
+                    typeName: data.typeName,
+                    list: []
                 };
                 resetData.list.push(data.garderobe);
 
-                let newData=Array.prototype.slice.apply(this.state.data);
-                if(newData.length == 0){
+                let newData = Array.prototype.slice.apply(this.state.data);
+                if (newData.length == 0) {
                     newData.push(resetData);
-                }else{
-                    for(let i=0;i<this.state.data.length;i++){
-                        if(newData[i].typeCode == data.typeCode){
+                } else {
+                    for (let i = 0; i < this.state.data.length; i++) {
+                        if (newData[i].typeCode == data.typeCode) {
                             newData[i].list.push(data.garderobe);
                             break;
                         }
-                        if(i==newData.length-1 && newData[i].typeCode != data.typeCode){
+                        if (i == newData.length - 1 && newData[i].typeCode != data.typeCode) {
                             newData.push(resetData);
                         }
                     }
@@ -220,22 +232,22 @@ class WardrobeList extends Component{
 
 
                 this.setState({
-                    name:'',//商品名称
-                    remark:'',//描述
-                    typeCode:'',//类别Code
-                    file:'',//图片文件
-                    imgSrc:'',//图片地址
-                    msgShow:true,
-                    msgText:'上传成功',
-                    uploadBtn:'确认上传',
-                    uploadClothing:false,
-                    data:newData
+                    name: '', //商品名称
+                    remark: '', //描述
+                    typeCode: '', //类别Code
+                    file: '', //图片文件
+                    imgSrc: '', //图片地址
+                    msgShow: true,
+                    msgText: '上传成功',
+                    uploadBtn: '确认上传',
+                    uploadClothing: false,
+                    data: newData
                 });
-            }else{
+            } else {
                 this.setState({
-                    msgShow:true,
-                    msgText:'上传失败',
-                    uploadBtn:'确认上传'
+                    msgShow: true,
+                    msgText: '上传失败',
+                    uploadBtn: '确认上传'
                 });
             }
         });
@@ -243,12 +255,12 @@ class WardrobeList extends Component{
 
     }
 
-    render(){
-        let content = classNames('content',{
-            'remove-css-overflow-scrolling':this.state.uploadClothing
+    render() {
+        let content = classNames('content', {
+            'remove-css-overflow-scrolling': this.state.uploadClothing
         });
-        let uploadClothing = classNames('upload-clothing-bg',{
-            'active':this.state.uploadClothing
+        let uploadClothing = classNames('upload-clothing-bg', {
+            'active': this.state.uploadClothing
         });
 
 

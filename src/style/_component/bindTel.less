@@ -1,14 +1,51 @@
-.bind-tel-container{
-  z-index: 9;
-  .box{position: absolute;top: 0;right: 0;bottom: 0;left: 0;margin: auto;width: 100%;height: 200px;}
-  .form-ground{
-    .item{
-      padding: 0 15px;position: relative;height: 40px;
-      .getCodeBtn{
-      position: absolute;right: 17px;top: 50%;line-height: 30px;transform: translate(0,-50%);background: rgb(111,185,34);color: @white;font-size: 14px;padding: 2px 8px;border-radius: 5px;
-      }
+.bind-tel-container
+{
+    z-index: 9;
+    .box
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        height: 200px;
+        margin: auto;
     }
-  }
-  .bindBtn{margin:20px auto;}
-  .tips{font-size: 1.4rem;}
+    .form-ground
+    {
+        .item
+        {
+            position: relative;
+
+            height: 40px;
+            padding: 0 15px;
+            .getCodeBtn
+            {
+                font-size: 14px;
+                line-height: 30px;
+
+                position: absolute;
+                top: 50%;
+                right: 17px;
+
+                padding: 2px 8px;
+
+                transform: translate(0,-50%);
+
+                color: @white;
+                border-radius: 5px;
+                background: rgb(111,185,34);
+            }
+        }
+    }
+    .bindBtn
+    {
+        margin: 20px auto;
+    }
+    .tips
+    {
+        font-size: 1.4rem;
+    }
 }

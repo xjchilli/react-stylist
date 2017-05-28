@@ -2,53 +2,65 @@
  * 搭配测试
  * Created by potato on 2017/4/18 0018.
  */
-import React, { Component, PropTypes } from 'react';
+import React, {
+    Component,
+    PropTypes
+} from 'react';
 import merged from 'obj-merged';
-import {connect} from 'react-redux';
-import {ToolDps} from '../ToolDps';
+import {
+    connect
+} from 'react-redux';
+import {
+    ToolDps
+} from '../ToolDps';
 import action from '../Action/Index';
 import classNames from 'classnames';
-import {Msg,City} from '../Component/index';
+import {
+    Msg,
+    City
+} from '../Component/index';
 
 //女-脸型
-class GilrFace extends Component{
-    constructor(props){
+class GilrFace extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            face1:true,//鹅蛋脸
-            face2:false,//圆脸
-            face3:false,//瓜子脸
-            face4:false,//方脸
-            faceshpe:'1'//脸型
+        this.state = {
+            face1: true, //鹅蛋脸
+            face2: false, //圆脸
+            face3: false, //瓜子脸
+            face4: false, //方脸
+            faceshpe: '1' //脸型
         };
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
 
     }
 
-    componentWillUpdate(nextProps,nextState){
-       this.myData.data.faceshpe=nextState.faceshpe;
-       this.props.setState(this.myData);
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.faceshpe = nextState.faceshpe;
+        this.props.setState(this.myData);
     }
 
-    shouldComponentUpdate(nextProps,nextState){
-        return nextState.face1 !== this.state.face1 ||  nextState.face2 !== this.state.face2 || nextState.face3 !== this.state.face3 || nextState.face4 !== this.state.face4;
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.face1 !== this.state.face1 || nextState.face2 !== this.state.face2 || nextState.face3 !== this.state.face3 || nextState.face4 !== this.state.face4;
     }
 
-    render(){
-        let face1 = classNames('img-area',{
-            'active':this.state.face1
+    render() {
+        let face1 = classNames('img-area', {
+            'active': this.state.face1
         });
-        let face2 = classNames('img-area',{
-            'active':this.state.face2
+        let face2 = classNames('img-area', {
+            'active': this.state.face2
         });
-        let face3 = classNames('img-area',{
-            'active':this.state.face3
+        let face3 = classNames('img-area', {
+            'active': this.state.face3
         });
-        let face4 = classNames('img-area',{
-            'active':this.state.face4
+        let face4 = classNames('img-area', {
+            'active': this.state.face4
         });
 
         return (
@@ -81,46 +93,48 @@ class GilrFace extends Component{
     }
 }
 //女-肤色
-class  GirlSkin extends  Component{
-    constructor(props){
+class GirlSkin extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            skin1:true,//晶莹白皙
-            skin2:false,//自然红润
-            skin3:false,//自然偏黄
-            skin4:false,//活力小麦
-            colorofskin: '1',//肤色
+        this.state = {
+            skin1: true, //晶莹白皙
+            skin2: false, //自然红润
+            skin3: false, //自然偏黄
+            skin4: false, //活力小麦
+            colorofskin: '1', //肤色
         }
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
     }
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.colorofskin=nextState.colorofskin;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.colorofskin = nextState.colorofskin;
         this.props.setState(this.myData);
     }
 
-   shouldComponentUpdate(nextProps,nextState){
+    shouldComponentUpdate(nextProps, nextState) {
         return nextState.skin1 !== this.state.skin1 || nextState.skin2 !== this.state.skin2 || nextState.skin3 !== this.state.skin3 || nextState.skin4 !== this.state.skin4;
-   }
-   render(){
-       let skin1 = classNames('img-area',{
-           'active':this.state.skin1
-       });
-       let skin2 = classNames('img-area',{
-           'active':this.state.skin2
-       });
-       let skin3 = classNames('img-area',{
-           'active':this.state.skin3
-       });
-       let skin4 = classNames('img-area',{
-           'active':this.state.skin4
-       });
+    }
+    render() {
+        let skin1 = classNames('img-area', {
+            'active': this.state.skin1
+        });
+        let skin2 = classNames('img-area', {
+            'active': this.state.skin2
+        });
+        let skin3 = classNames('img-area', {
+            'active': this.state.skin3
+        });
+        let skin4 = classNames('img-area', {
+            'active': this.state.skin4
+        });
 
-       return (
-           <div className="swiper-slide" >
+        return (
+            <div className="swiper-slide" >
                <h2 className="title">选择你的肤色</h2>
                <section className="skin-area">
                    <section className="item">
@@ -145,50 +159,52 @@ class  GirlSkin extends  Component{
                    </section>
                </section>
            </div>
-       )
-   }
+        )
+    }
 }
 //女-身型
-class GirlBody extends  Component{
-    constructor(props){
+class GirlBody extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            body1:true,//沙漏型
-            body2:false,//梨型
-            body3:false,//苹果型
-            body4:false,//直筒型
-            body5:false,//倒三角
-            bodySize: '1',//体型
+        this.state = {
+            body1: true, //沙漏型
+            body2: false, //梨型
+            body3: false, //苹果型
+            body4: false, //直筒型
+            body5: false, //倒三角
+            bodySize: '1', //体型
         }
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
     }
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.bodySize=nextState.bodySize;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.bodySize = nextState.bodySize;
         this.props.setState(this.myData);
     }
 
-    shouldComponentUpdate(nextProps,nextState){
+    shouldComponentUpdate(nextProps, nextState) {
         return nextState.body1 !== this.state.body1 || nextState.body2 !== this.state.body2 || nextState.body3 !== this.state.body3 || nextState.body4 !== this.state.body4 || nextState.body5 !== this.state.body5;
     }
-    render(){
-        let body1 = classNames('img-area',{
-            'active':this.state.body1
+    render() {
+        let body1 = classNames('img-area', {
+            'active': this.state.body1
         });
-        let body2 = classNames('img-area',{
-            'active':this.state.body2
+        let body2 = classNames('img-area', {
+            'active': this.state.body2
         });
-        let body3 = classNames('img-area',{
-            'active':this.state.body3
+        let body3 = classNames('img-area', {
+            'active': this.state.body3
         });
-        let body4 = classNames('img-area',{
-            'active':this.state.body4
+        let body4 = classNames('img-area', {
+            'active': this.state.body4
         });
 
-        let body5 = classNames('img-area',{
-            'active':this.state.body5
+        let body5 = classNames('img-area', {
+            'active': this.state.body5
         });
 
         return (
@@ -226,94 +242,98 @@ class GirlBody extends  Component{
     }
 }
 //女-希望搭配能解决什么
-class GirlResolve extends  Component{
-    constructor(props){
+class GirlResolve extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            resolve1:false,//脸大
-            resolve2:false,//肩宽
-            resolve3:false,//胳膊粗
-            resolve4:true,//小粗腿
-            resolve5:false,//脖子粗
-            resolve6:false,//大胸
-            resolve7:false,//平胸
-            resolve8:false,//PP大
-            resolve9:false,//小短腿
+        this.state = {
+            resolve1: false, //脸大
+            resolve2: false, //肩宽
+            resolve3: false, //胳膊粗
+            resolve4: true, //小粗腿
+            resolve5: false, //脖子粗
+            resolve6: false, //大胸
+            resolve7: false, //平胸
+            resolve8: false, //PP大
+            resolve9: false, //小短腿
         }
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
     }
-    componentWillUpdate(nextProps,nextState){
-        let problem=[];
-        if(nextState.resolve1){
+    componentWillUpdate(nextProps, nextState) {
+        let problem = [];
+        if (nextState.resolve1) {
             problem.push('1');
         }
-        if(nextState.resolve2){
+        if (nextState.resolve2) {
             problem.push('2');
         }
-        if(nextState.resolve3){
+        if (nextState.resolve3) {
             problem.push('3');
         }
-        if(nextState.resolve4){
+        if (nextState.resolve4) {
             problem.push('4');
         }
-        if(nextState.resolve5){
+        if (nextState.resolve5) {
             problem.push('5');
         }
-        if(nextState.resolve6){
+        if (nextState.resolve6) {
             problem.push('6');
         }
-        if(nextState.resolve7){
+        if (nextState.resolve7) {
             problem.push('7');
         }
-        if(nextState.resolve8){
+        if (nextState.resolve8) {
             problem.push('8');
         }
-        if(nextState.resolve9){
+        if (nextState.resolve9) {
             problem.push('9');
         }
-        this.myData.data.problem=problem;
+        this.myData.data.problem = problem;
         this.props.setState(this.myData);
     }
 
 
-    select(type){
-        this.setState({[type]:!this.state[type]});
+    select(type) {
+        this.setState({
+            [type]: !this.state[type]
+        });
     }
 
-    render(){
-        let resolve1 = classNames('resolve resolve1',{
-            'active':this.state.resolve1
+    render() {
+        let resolve1 = classNames('resolve resolve1', {
+            'active': this.state.resolve1
         });
-        let resolve2 = classNames('resolve resolve2',{
-            'active':this.state.resolve2
+        let resolve2 = classNames('resolve resolve2', {
+            'active': this.state.resolve2
         });
-        let resolve3 = classNames('resolve resolve3',{
-            'active':this.state.resolve3
+        let resolve3 = classNames('resolve resolve3', {
+            'active': this.state.resolve3
         });
-        let resolve4 = classNames('resolve resolve4',{
-            'active':this.state.resolve4
-        });
-
-        let resolve5 = classNames('resolve resolve5',{
-            'active':this.state.resolve5
+        let resolve4 = classNames('resolve resolve4', {
+            'active': this.state.resolve4
         });
 
-        let resolve6 = classNames('resolve resolve6',{
-            'active':this.state.resolve6
+        let resolve5 = classNames('resolve resolve5', {
+            'active': this.state.resolve5
         });
 
-        let resolve7 = classNames('resolve resolve7',{
-            'active':this.state.resolve7
+        let resolve6 = classNames('resolve resolve6', {
+            'active': this.state.resolve6
         });
 
-        let resolve8 = classNames('resolve resolve8',{
-            'active':this.state.resolve8
+        let resolve7 = classNames('resolve resolve7', {
+            'active': this.state.resolve7
         });
 
-        let resolve9 = classNames('resolve resolve9',{
-            'active':this.state.resolve9
+        let resolve8 = classNames('resolve resolve8', {
+            'active': this.state.resolve8
+        });
+
+        let resolve9 = classNames('resolve resolve9', {
+            'active': this.state.resolve9
         });
 
         return (
@@ -336,71 +356,75 @@ class GirlResolve extends  Component{
     }
 }
 //女-风格
-class GirlStyle extends Component{
-    constructor(props){
+class GirlStyle extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            style1:false,//韩系女主角
-            style2:false,//日系小清新
-            style3:false,//轻熟OL西
-            style4:false,//欧美出街范
-            style5:false,//中性运动风
-            style6:false,//文艺复古情怀
+        this.state = {
+            style1: false, //韩系女主角
+            style2: false, //日系小清新
+            style3: false, //轻熟OL西
+            style4: false, //欧美出街范
+            style5: false, //中性运动风
+            style6: false, //文艺复古情怀
         }
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
     }
 
-    componentWillUpdate(nextProps,nextState){
-        let style=[];
-        if(nextState.style1){
+    componentWillUpdate(nextProps, nextState) {
+        let style = [];
+        if (nextState.style1) {
             style.push('1');
         }
-        if(nextState.style2){
+        if (nextState.style2) {
             style.push('2');
         }
-        if(nextState.style3){
+        if (nextState.style3) {
             style.push('3');
         }
-        if(nextState.style4){
+        if (nextState.style4) {
             style.push('4');
         }
-        if(nextState.style5){
+        if (nextState.style5) {
             style.push('5');
         }
-        if(nextState.style6){
+        if (nextState.style6) {
             style.push('6');
         }
-        this.myData.data.style=style;
+        this.myData.data.style = style;
         this.props.setState(this.myData);
     }
 
-    select(type){
-        this.setState({[type]:!this.state[type]});
+    select(type) {
+        this.setState({
+            [type]: !this.state[type]
+        });
     }
 
-    render(){
-        let style1 = classNames('img-area',{
-            'active':this.state.style1
+    render() {
+        let style1 = classNames('img-area', {
+            'active': this.state.style1
         });
-        let style2 = classNames('img-area',{
-            'active':this.state.style2
+        let style2 = classNames('img-area', {
+            'active': this.state.style2
         });
-        let style3 = classNames('img-area',{
-            'active':this.state.style3
+        let style3 = classNames('img-area', {
+            'active': this.state.style3
         });
-        let style4 = classNames('img-area',{
-            'active':this.state.style4
-        });
-
-        let style5 = classNames('img-area',{
-            'active':this.state.style5
+        let style4 = classNames('img-area', {
+            'active': this.state.style4
         });
 
-        let style6 = classNames('img-area',{
-            'active':this.state.style6
+        let style5 = classNames('img-area', {
+            'active': this.state.style5
+        });
+
+        let style6 = classNames('img-area', {
+            'active': this.state.style6
         });
 
         return (
@@ -443,139 +467,141 @@ class GirlStyle extends Component{
     }
 }
 //女-基础信息
-class GirlBaseInfo extends Component{
-    constructor(props){
+class GirlBaseInfo extends Component {
+    constructor(props) {
         super(props);
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
     }
-    componentDidMount(){
+    componentDidMount() {
         //身高
         new Swiper('.J-height', {
-            initialSlide:15,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let heigh=swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.myData.data.heigh=heigh;
+            initialSlide: 15,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let heigh = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.myData.data.heigh = heigh;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let heigh=swiper.slides[swiper.activeIndex].textContent.trim();
-                this.myData.data.heigh=heigh;
+            onTransitionEnd: (swiper) => { //slide改变
+                let heigh = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.myData.data.heigh = heigh;
                 this.props.setState(this.myData);
             }
         });
         //体重
         new Swiper('.J-weight', {
-            initialSlide:25,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let weight=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.weight=weight;
+            initialSlide: 25,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let weight = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.weight = weight;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let weight=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.weight=weight;
+            onTransitionEnd: (swiper) => { //slide改变
+                let weight = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.weight = weight;
                 this.props.setState(this.myData);
             }
         });
         //胸围
         new Swiper('.J-chest', {
-            initialSlide:10,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let chest=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.chest=chest;
+            initialSlide: 10,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let chest = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.chest = chest;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let chest=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.chest=chest;
+            onTransitionEnd: (swiper) => { //slide改变
+                let chest = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.chest = chest;
                 this.props.setState(this.myData);
             }
         });
         //腰围
         new Swiper('.J-waistline', {
-            initialSlide:20,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let waist=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.waist=waist;
+            initialSlide: 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let waist = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.waist = waist;
                 this.props.setState(this.waist);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let waist=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.waist=waist;
+            onTransitionEnd: (swiper) => { //slide改变
+                let waist = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.waist = waist;
                 this.props.setState(this.myData);
             }
         });
         //臀围
         new Swiper('.J-hipline', {
-            initialSlide:10,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let hip=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.hip=hip;
+            initialSlide: 10,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let hip = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.hip = hip;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let hip=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.hip=hip;
+            onTransitionEnd: (swiper) => { //slide改变
+                let hip = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.hip = hip;
                 this.props.setState(this.myData);
             }
         });
     }
-    render(){
+    render() {
         //身高
-        let hegithArr=[];
-        for(let i=0;i<=35;i++){
+        let hegithArr = [];
+        for (let i = 0; i <= 35; i++) {
             hegithArr.push(<div className="swiper-slide" key={i}>{145+i}</div>);
         }
 
         //体重
-        let weightArr=[];
-        for(let i=0;i<=40;i++){
+        let weightArr = [];
+        for (let i = 0; i <= 40; i++) {
             weightArr.push(<div className="swiper-slide" key={i}>{35+i}</div>);
         }
 
         //胸围
-        let chestArr=[];
-        for(let i=0;i<=40;i++){
+        let chestArr = [];
+        for (let i = 0; i <= 40; i++) {
             chestArr.push(<div className="swiper-slide" key={i}>{70+i}</div>);
         }
 
         //腰围
-        let waistlineArr=[];
-        for(let i=0;i<=40;i++){
+        let waistlineArr = [];
+        for (let i = 0; i <= 40; i++) {
             waistlineArr.push(<div className="swiper-slide" key={i}>{50+i}</div>);
         }
 
         //臀围
-        let hiplineArr=[];
-        for(let i=0;i<=30;i++){
+        let hiplineArr = [];
+        for (let i = 0; i <= 30; i++) {
             hiplineArr.push(<div className="swiper-slide" key={i}>{80+i}</div>);
         }
 
@@ -619,50 +645,52 @@ class GirlBaseInfo extends Component{
     }
 }
 //女-其他信息
-class GirlOtherinfo extends Component{
-    constructor(props){
+class GirlOtherinfo extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            photoList:[]//生活照片
+        this.state = {
+            photoList: [] //生活照片
         }
-        this._time=0;
-        let {path}=this.props.state;
-        this.myData=path['/customSuitGirl'];
+        this._time = 0;
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitGirl'];
         this.myData.path = '/customSuitGirl';
     }
 
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.lifeImg=nextState.photoList;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.lifeImg = nextState.photoList;
         this.props.setState(this.myData);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this._time);
     }
 
 
-    uploadPhoto(e){
-        let self=this;
-        let files=e.target.files;
-        if(files){
-            if(files.length + this.state.photoList.length >5){
+    uploadPhoto(e) {
+        let self = this;
+        let files = e.target.files;
+        if (files) {
+            if (files.length + this.state.photoList.length > 5) {
                 alert('最多上传5张照片哦');
                 return;
             }
-            for(let i=0;i<files.length;i++){
+            for (let i = 0; i < files.length; i++) {
                 if (!/\/(?:jpeg|jpg|png)/i.test(files[i].type)) return;
-                let readFile=new FileReader();
-                readFile.onload=function () {
-                    let imgObj={
-                        url:this.result,
-                        file:files[i]
+                let readFile = new FileReader();
+                readFile.onload = function() {
+                    let imgObj = {
+                        url: this.result,
+                        file: files[i]
                     };
-                    let newPhotoList=Array.prototype.slice.apply(self.state.photoList);
+                    let newPhotoList = Array.prototype.slice.apply(self.state.photoList);
                     newPhotoList.push(imgObj);
-                    self.refs.file.value='';
+                    self.refs.file.value = '';
                     self.setState({
-                        photoList:newPhotoList
+                        photoList: newPhotoList
                     });
                 };
                 readFile.readAsDataURL(e.target.files[i]);
@@ -670,63 +698,65 @@ class GirlOtherinfo extends Component{
         }
     }
 
-    deletePhoto(e){
-        let index=e.currentTarget.getAttribute('data-index');
-        let newPhotoList=this.state.photoList;
-        newPhotoList.splice(index,1);
+    deletePhoto(e) {
+        let index = e.currentTarget.getAttribute('data-index');
+        let newPhotoList = this.state.photoList;
+        newPhotoList.splice(index, 1);
         this.setState({
-           photoList:newPhotoList
+            photoList: newPhotoList
         });
     }
 
-    sendForm(e){
+    sendForm(e) {
         let {
-            sex,//性别
-            faceshpe,//脸型
-            colorofskin,//肤色
-            bodySize,//体型
-            problem,//解决问题
-            style,//风格
-            heigh,//身高
-            weight,//体重
-            chest,//胸围
-            waist,//腰围
-            hip,//臀围
-            professional,//职业
-            cityCode,//城市
-            birthday,//生日
-            lifeImg//生活照
-        }=this.props.state.path['/customSuitGirl'].data;
-        let formdata=new FormData();
-        formdata.append('sex',sex);
-        formdata.append('faceshpe',faceshpe);
-        formdata.append('colorofskin',colorofskin);
-        formdata.append('bodySize',bodySize);
-        formdata.append('problem',problem);
-        formdata.append('style',style);
-        formdata.append('heigh',heigh);
-        formdata.append('weight',weight);
-        formdata.append('problems',problem);
-        formdata.append('chest',chest);
-        formdata.append('waist',waist);
-        formdata.append('hip',hip);
-        formdata.append('professional',professional);
-        formdata.append('cityCode',cityCode);
-        formdata.append('birthday',birthday);
-        lifeImg.forEach((item,index)=>{
-            formdata.append('lifeImg',item.file);
+            sex, //性别
+            faceshpe, //脸型
+            colorofskin, //肤色
+            bodySize, //体型
+            problem, //解决问题
+            style, //风格
+            heigh, //身高
+            weight, //体重
+            chest, //胸围
+            waist, //腰围
+            hip, //臀围
+            professional, //职业
+            cityCode, //城市
+            birthday, //生日
+            lifeImg //生活照
+        } = this.props.state.path['/customSuitGirl'].data;
+        let formdata = new FormData();
+        formdata.append('sex', sex);
+        formdata.append('faceshpe', faceshpe);
+        formdata.append('colorofskin', colorofskin);
+        formdata.append('bodySize', bodySize);
+        formdata.append('problem', problem);
+        formdata.append('style', style);
+        formdata.append('heigh', heigh);
+        formdata.append('weight', weight);
+        formdata.append('problems', problem);
+        formdata.append('chest', chest);
+        formdata.append('waist', waist);
+        formdata.append('hip', hip);
+        formdata.append('professional', professional);
+        formdata.append('cityCode', cityCode);
+        formdata.append('birthday', birthday);
+        lifeImg.forEach((item, index) => {
+            formdata.append('lifeImg', item.file);
         });
 
         console.log(this.props.state.path['/customSuitGirl']);
 
-        ToolDps.post('/wx/user/save',formdata,{'Content-Type':'multipart/form-data'}).then((res)=>{
-            if(res.succ){
-                this.props.showMsg(true,'提交成功');
-                this._time=setTimeout(()=>{
+        ToolDps.post('/wx/user/save', formdata, {
+            'Content-Type': 'multipart/form-data'
+        }).then((res) => {
+            if (res.succ) {
+                this.props.showMsg(true, '提交成功');
+                this._time = setTimeout(() => {
                     this.context.router.push('/fashionMoment');
-                },1000);
-            }else{
-                this.props.showMsg(true,'提交失败');
+                }, 1000);
+            } else {
+                this.props.showMsg(true, '提交失败');
             }
         });
 
@@ -736,29 +766,31 @@ class GirlOtherinfo extends Component{
     /**
      * 获取职业
      * */
-    getProfessional(e){
-        this.myData.data.professional=e.target.value;
+    getProfessional(e) {
+        this.myData.data.professional = e.target.value;
         this.props.setState(this.myData);
     }
 
     /**
      * 获取城市代码
      * */
-    getCity(city){
-        let {currCity} = city;
-        this.myData.data.cityCode=currCity;
+    getCity(city) {
+        let {
+            currCity
+        } = city;
+        this.myData.data.cityCode = currCity;
         this.props.setState(this.myData);
     }
 
     /**
      * 获取生日
      * */
-    getBirthDate(e){
-        this.myData.data.birthday=e.target.value;
+    getBirthDate(e) {
+        this.myData.data.birthday = e.target.value;
         this.props.setState(this.myData);
     }
 
-    render(){
+    render() {
         return (
             <div className="swiper-slide" >
                 <section className="otherinfo-area">
@@ -813,49 +845,51 @@ class GirlOtherinfo extends Component{
 }
 
 
-GirlOtherinfo.contextTypes={
-    router:React.PropTypes.object.isRequired
+GirlOtherinfo.contextTypes = {
+    router: React.PropTypes.object.isRequired
 };
 
 //男-脸型
-class BoyFace extends Component{
-    constructor(props){
+class BoyFace extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            face1:true,//鹅蛋脸
-            face2:false,//圆脸
-            face3:false,//瓜子脸
-            face4:false,//方脸
-            faceshpe:'1'//脸型
+        this.state = {
+            face1: true, //鹅蛋脸
+            face2: false, //圆脸
+            face3: false, //瓜子脸
+            face4: false, //方脸
+            faceshpe: '1' //脸型
         };
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
 
     }
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.faceshpe=nextState.faceshpe;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.faceshpe = nextState.faceshpe;
         this.props.setState(this.myData);
     }
 
-    shouldComponentUpdate(nextProps,nextState){
-        return nextState.face1 !== this.state.face1 ||  nextState.face2 !== this.state.face2 || nextState.face3 !== this.state.face3 || nextState.face4 !== this.state.face4;
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.face1 !== this.state.face1 || nextState.face2 !== this.state.face2 || nextState.face3 !== this.state.face3 || nextState.face4 !== this.state.face4;
     }
 
-    render(){
-        let face1 = classNames('img-area',{
-            'active':this.state.face1
+    render() {
+        let face1 = classNames('img-area', {
+            'active': this.state.face1
         });
-        let face2 = classNames('img-area',{
-            'active':this.state.face2
+        let face2 = classNames('img-area', {
+            'active': this.state.face2
         });
-        let face3 = classNames('img-area',{
-            'active':this.state.face3
+        let face3 = classNames('img-area', {
+            'active': this.state.face3
         });
-        let face4 = classNames('img-area',{
-            'active':this.state.face4
+        let face4 = classNames('img-area', {
+            'active': this.state.face4
         });
 
         return (
@@ -888,42 +922,44 @@ class BoyFace extends Component{
     }
 }
 //男-肤色
-class  BoySkin extends  Component{
-    constructor(props){
+class BoySkin extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            skin1:true,//晶莹白皙
-            skin2:false,//自然红润
-            skin3:false,//自然偏黄
-            skin4:false,//活力小麦
-            colorofskin: '1',//肤色
+        this.state = {
+            skin1: true, //晶莹白皙
+            skin2: false, //自然红润
+            skin3: false, //自然偏黄
+            skin4: false, //活力小麦
+            colorofskin: '1', //肤色
         }
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
     }
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.colorofskin=nextState.colorofskin;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.colorofskin = nextState.colorofskin;
         this.props.setState(this.myData);
     }
 
-    shouldComponentUpdate(nextProps,nextState){
+    shouldComponentUpdate(nextProps, nextState) {
         return nextState.skin1 !== this.state.skin1 || nextState.skin2 !== this.state.skin2 || nextState.skin3 !== this.state.skin3 || nextState.skin4 !== this.state.skin4;
     }
-    render(){
-        let skin1 = classNames('img-area',{
-            'active':this.state.skin1
+    render() {
+        let skin1 = classNames('img-area', {
+            'active': this.state.skin1
         });
-        let skin2 = classNames('img-area',{
-            'active':this.state.skin2
+        let skin2 = classNames('img-area', {
+            'active': this.state.skin2
         });
-        let skin3 = classNames('img-area',{
-            'active':this.state.skin3
+        let skin3 = classNames('img-area', {
+            'active': this.state.skin3
         });
-        let skin4 = classNames('img-area',{
-            'active':this.state.skin4
+        let skin4 = classNames('img-area', {
+            'active': this.state.skin4
         });
 
         return (
@@ -956,46 +992,48 @@ class  BoySkin extends  Component{
     }
 }
 //男-身型
-class BoyBody extends  Component{
-    constructor(props){
+class BoyBody extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            body1:true,//沙漏型
-            body2:false,//梨型
-            body3:false,//苹果型
-            body4:false,//直筒型
-            body5:false,//倒三角
-            bodySize: '1',//体型
+        this.state = {
+            body1: true, //沙漏型
+            body2: false, //梨型
+            body3: false, //苹果型
+            body4: false, //直筒型
+            body5: false, //倒三角
+            bodySize: '1', //体型
         }
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
     }
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.bodySize=nextState.bodySize;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.bodySize = nextState.bodySize;
         this.props.setState(this.myData);
     }
 
-    shouldComponentUpdate(nextProps,nextState){
+    shouldComponentUpdate(nextProps, nextState) {
         return nextState.body1 !== this.state.body1 || nextState.body2 !== this.state.body2 || nextState.body3 !== this.state.body3 || nextState.body4 !== this.state.body4 || nextState.body5 !== this.state.body5;
     }
-    render(){
-        let body1 = classNames('img-area',{
-            'active':this.state.body1
+    render() {
+        let body1 = classNames('img-area', {
+            'active': this.state.body1
         });
-        let body2 = classNames('img-area',{
-            'active':this.state.body2
+        let body2 = classNames('img-area', {
+            'active': this.state.body2
         });
-        let body3 = classNames('img-area',{
-            'active':this.state.body3
+        let body3 = classNames('img-area', {
+            'active': this.state.body3
         });
-        let body4 = classNames('img-area',{
-            'active':this.state.body4
+        let body4 = classNames('img-area', {
+            'active': this.state.body4
         });
 
-        let body5 = classNames('img-area',{
-            'active':this.state.body5
+        let body5 = classNames('img-area', {
+            'active': this.state.body5
         });
 
         return (
@@ -1033,94 +1071,98 @@ class BoyBody extends  Component{
     }
 }
 //男-希望搭配能解决什么
-class BoyResolve extends  Component{
-    constructor(props){
+class BoyResolve extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            resolve1:false,//脸大
-            resolve2:false,//肩宽
-            resolve3:false,//胳膊粗
-            resolve4:true,//小粗腿
-            resolve5:false,//脖子粗
-            resolve6:false,//大胸
-            resolve7:false,//平胸
-            resolve8:false,//PP大
-            resolve9:false,//小短腿
+        this.state = {
+            resolve1: false, //脸大
+            resolve2: false, //肩宽
+            resolve3: false, //胳膊粗
+            resolve4: true, //小粗腿
+            resolve5: false, //脖子粗
+            resolve6: false, //大胸
+            resolve7: false, //平胸
+            resolve8: false, //PP大
+            resolve9: false, //小短腿
         }
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
     }
-    componentWillUpdate(nextProps,nextState){
-        let problem=[];
-        if(nextState.resolve1){
+    componentWillUpdate(nextProps, nextState) {
+        let problem = [];
+        if (nextState.resolve1) {
             problem.push('1');
         }
-        if(nextState.resolve2){
+        if (nextState.resolve2) {
             problem.push('2');
         }
-        if(nextState.resolve3){
+        if (nextState.resolve3) {
             problem.push('3');
         }
-        if(nextState.resolve4){
+        if (nextState.resolve4) {
             problem.push('4');
         }
-        if(nextState.resolve5){
+        if (nextState.resolve5) {
             problem.push('5');
         }
-        if(nextState.resolve6){
+        if (nextState.resolve6) {
             problem.push('6');
         }
-        if(nextState.resolve7){
+        if (nextState.resolve7) {
             problem.push('7');
         }
-        if(nextState.resolve8){
+        if (nextState.resolve8) {
             problem.push('8');
         }
-        if(nextState.resolve9){
+        if (nextState.resolve9) {
             problem.push('9');
         }
-        this.myData.data.problem=problem;
+        this.myData.data.problem = problem;
         this.props.setState(this.myData);
     }
 
 
-    select(type){
-        this.setState({[type]:!this.state[type]});
+    select(type) {
+        this.setState({
+            [type]: !this.state[type]
+        });
     }
 
-    render(){
-        let resolve1 = classNames('resolve resolve1',{
-            'active':this.state.resolve1
+    render() {
+        let resolve1 = classNames('resolve resolve1', {
+            'active': this.state.resolve1
         });
-        let resolve2 = classNames('resolve resolve2',{
-            'active':this.state.resolve2
+        let resolve2 = classNames('resolve resolve2', {
+            'active': this.state.resolve2
         });
-        let resolve3 = classNames('resolve resolve3',{
-            'active':this.state.resolve3
+        let resolve3 = classNames('resolve resolve3', {
+            'active': this.state.resolve3
         });
-        let resolve4 = classNames('resolve resolve4',{
-            'active':this.state.resolve4
-        });
-
-        let resolve5 = classNames('resolve resolve5',{
-            'active':this.state.resolve5
+        let resolve4 = classNames('resolve resolve4', {
+            'active': this.state.resolve4
         });
 
-        let resolve6 = classNames('resolve resolve6',{
-            'active':this.state.resolve6
+        let resolve5 = classNames('resolve resolve5', {
+            'active': this.state.resolve5
         });
 
-        let resolve7 = classNames('resolve resolve7',{
-            'active':this.state.resolve7
+        let resolve6 = classNames('resolve resolve6', {
+            'active': this.state.resolve6
         });
 
-        let resolve8 = classNames('resolve resolve8',{
-            'active':this.state.resolve8
+        let resolve7 = classNames('resolve resolve7', {
+            'active': this.state.resolve7
         });
 
-        let resolve9 = classNames('resolve resolve9',{
-            'active':this.state.resolve9
+        let resolve8 = classNames('resolve resolve8', {
+            'active': this.state.resolve8
+        });
+
+        let resolve9 = classNames('resolve resolve9', {
+            'active': this.state.resolve9
         });
 
         return (
@@ -1143,71 +1185,75 @@ class BoyResolve extends  Component{
     }
 }
 //男-风格
-class BoyStyle extends Component{
-    constructor(props){
+class BoyStyle extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            style1:false,//韩系女主角
-            style2:false,//日系小清新
-            style3:false,//轻熟OL西
-            style4:false,//欧美出街范
-            style5:false,//中性运动风
-            style6:false,//文艺复古情怀
+        this.state = {
+            style1: false, //韩系女主角
+            style2: false, //日系小清新
+            style3: false, //轻熟OL西
+            style4: false, //欧美出街范
+            style5: false, //中性运动风
+            style6: false, //文艺复古情怀
         }
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
     }
 
-    componentWillUpdate(nextProps,nextState){
-        let style=[];
-        if(nextState.style1){
+    componentWillUpdate(nextProps, nextState) {
+        let style = [];
+        if (nextState.style1) {
             style.push('1');
         }
-        if(nextState.style2){
+        if (nextState.style2) {
             style.push('2');
         }
-        if(nextState.style3){
+        if (nextState.style3) {
             style.push('3');
         }
-        if(nextState.style4){
+        if (nextState.style4) {
             style.push('4');
         }
-        if(nextState.style5){
+        if (nextState.style5) {
             style.push('5');
         }
-        if(nextState.style6){
+        if (nextState.style6) {
             style.push('6');
         }
-        this.myData.data.style=style;
+        this.myData.data.style = style;
         this.props.setState(this.myData);
     }
 
-    select(type){
-        this.setState({[type]:!this.state[type]});
+    select(type) {
+        this.setState({
+            [type]: !this.state[type]
+        });
     }
 
-    render(){
-        let style1 = classNames('img-area',{
-            'active':this.state.style1
+    render() {
+        let style1 = classNames('img-area', {
+            'active': this.state.style1
         });
-        let style2 = classNames('img-area',{
-            'active':this.state.style2
+        let style2 = classNames('img-area', {
+            'active': this.state.style2
         });
-        let style3 = classNames('img-area',{
-            'active':this.state.style3
+        let style3 = classNames('img-area', {
+            'active': this.state.style3
         });
-        let style4 = classNames('img-area',{
-            'active':this.state.style4
-        });
-
-        let style5 = classNames('img-area',{
-            'active':this.state.style5
+        let style4 = classNames('img-area', {
+            'active': this.state.style4
         });
 
-        let style6 = classNames('img-area',{
-            'active':this.state.style6
+        let style5 = classNames('img-area', {
+            'active': this.state.style5
+        });
+
+        let style6 = classNames('img-area', {
+            'active': this.state.style6
         });
 
         return (
@@ -1250,139 +1296,141 @@ class BoyStyle extends Component{
     }
 }
 //男-基础信息
-class BoyBaseInfo extends Component{
-    constructor(props){
+class BoyBaseInfo extends Component {
+    constructor(props) {
         super(props);
 
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
     }
-    componentDidMount(){
+    componentDidMount() {
         //身高
         new Swiper('.J-height', {
-            initialSlide:20,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let heigh=swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.myData.data.heigh=heigh;
+            initialSlide: 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let heigh = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.myData.data.heigh = heigh;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let heigh=swiper.slides[swiper.activeIndex].textContent.trim();
-                this.myData.data.heigh=heigh;
+            onTransitionEnd: (swiper) => { //slide改变
+                let heigh = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.myData.data.heigh = heigh;
                 this.props.setState(this.myData);
             }
         });
         //体重
         new Swiper('.J-weight', {
-            initialSlide:20,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let weight=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.weight=weight;
+            initialSlide: 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let weight = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.weight = weight;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let weight=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.weight=weight;
+            onTransitionEnd: (swiper) => { //slide改变
+                let weight = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.weight = weight;
                 this.props.setState(this.myData);
             }
         });
         //胸围
         new Swiper('.J-chest', {
-            initialSlide:10,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let chest=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.chest=chest;
+            initialSlide: 10,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let chest = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.chest = chest;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let chest=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.chest=chest;
+            onTransitionEnd: (swiper) => { //slide改变
+                let chest = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.chest = chest;
                 this.props.setState(this.myData);
             }
         });
         //腰围
         new Swiper('.J-waistline', {
-            initialSlide:20,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let waist=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.waist=waist;
+            initialSlide: 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let waist = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.waist = waist;
                 this.props.setState(this.waist);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let waist=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.waist=waist;
+            onTransitionEnd: (swiper) => { //slide改变
+                let waist = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.waist = waist;
                 this.props.setState(this.myData);
             }
         });
         //臀围
         new Swiper('.J-hipline', {
-            initialSlide:10,
-            slidesPerView : 5,
-            centeredSlides : true,
-            freeMode : true,
-            freeModeSticky : true,
-            onTap:(swiper)=>{
-                swiper.slideTo(swiper.clickedIndex,100,false);
-                let hip=swiper.slides[swiper.clickedIndex].textContent;
-                this.myData.data.hip=hip;
+            initialSlide: 10,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let hip = swiper.slides[swiper.clickedIndex].textContent;
+                this.myData.data.hip = hip;
                 this.props.setState(this.myData);
             },
-            onTransitionEnd:(swiper)=> {//slide改变
-                let hip=swiper.slides[swiper.activeIndex].textContent;
-                this.myData.data.hip=hip;
+            onTransitionEnd: (swiper) => { //slide改变
+                let hip = swiper.slides[swiper.activeIndex].textContent;
+                this.myData.data.hip = hip;
                 this.props.setState(this.myData);
             }
         });
     }
-    render(){
+    render() {
         //身高
-        let hegithArr=[];
-        for(let i=0;i<=40;i++){
+        let hegithArr = [];
+        for (let i = 0; i <= 40; i++) {
             hegithArr.push(<div className="swiper-slide" key={i}>{150+i}</div>);
         }
 
         //体重
-        let weightArr=[];
-        for(let i=0;i<=40;i++){
+        let weightArr = [];
+        for (let i = 0; i <= 40; i++) {
             weightArr.push(<div className="swiper-slide" key={i}>{40+i}</div>);
         }
 
         //胸围
-        let chestArr=[];
-        for(let i=0;i<=40;i++){
+        let chestArr = [];
+        for (let i = 0; i <= 40; i++) {
             chestArr.push(<div className="swiper-slide" key={i}>{70+i}</div>);
         }
 
         //腰围
-        let waistlineArr=[];
-        for(let i=0;i<=40;i++){
+        let waistlineArr = [];
+        for (let i = 0; i <= 40; i++) {
             waistlineArr.push(<div className="swiper-slide" key={i}>{50+i}</div>);
         }
 
         //臀围
-        let hiplineArr=[];
-        for(let i=0;i<=30;i++){
+        let hiplineArr = [];
+        for (let i = 0; i <= 30; i++) {
             hiplineArr.push(<div className="swiper-slide" key={i}>{80+i}</div>);
         }
 
@@ -1426,49 +1474,51 @@ class BoyBaseInfo extends Component{
     }
 }
 //男-其他信息
-class BoyOtherinfo extends Component{
-    constructor(props){
+class BoyOtherinfo extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            photoList:[]//生活照片
+        this.state = {
+            photoList: [] //生活照片
         }
-        this._time=0;
-        let {path}=this.props.state;
-        this.myData=path['/customSuitBoy'];
+        this._time = 0;
+        let {
+            path
+        } = this.props.state;
+        this.myData = path['/customSuitBoy'];
         this.myData.path = '/customSuitBoy';
     }
 
 
-    componentWillUpdate(nextProps,nextState){
-        this.myData.data.lifeImg=nextState.photoList;
+    componentWillUpdate(nextProps, nextState) {
+        this.myData.data.lifeImg = nextState.photoList;
         this.props.setState(this.myData);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this._time);
     }
 
-    uploadPhoto(e){
-        let self=this;
-        let files=e.target.files;
-        if(files){
-            if(files.length + this.state.photoList.length >5){
+    uploadPhoto(e) {
+        let self = this;
+        let files = e.target.files;
+        if (files) {
+            if (files.length + this.state.photoList.length > 5) {
                 alert('最多上传5张照片哦');
                 return;
             }
-            for(let i=0;i<files.length;i++){
+            for (let i = 0; i < files.length; i++) {
                 if (!/\/(?:jpeg|jpg|png)/i.test(files[i].type)) return;
-                let readFile=new FileReader();
-                readFile.onload=function () {
-                    let imgObj={
-                        url:this.result,
-                        file:files[i]
+                let readFile = new FileReader();
+                readFile.onload = function() {
+                    let imgObj = {
+                        url: this.result,
+                        file: files[i]
                     };
-                    let newPhotoList=Array.prototype.slice.apply(self.state.photoList);
+                    let newPhotoList = Array.prototype.slice.apply(self.state.photoList);
                     newPhotoList.push(imgObj);
-                    self.refs.file.value='';
+                    self.refs.file.value = '';
                     self.setState({
-                        photoList:newPhotoList
+                        photoList: newPhotoList
                     });
                 };
                 readFile.readAsDataURL(e.target.files[i]);
@@ -1476,63 +1526,65 @@ class BoyOtherinfo extends Component{
         }
     }
 
-    deletePhoto(e){
-        let index=e.currentTarget.getAttribute('data-index');
-        let newPhotoList=this.state.photoList;
-        newPhotoList.splice(index,1);
+    deletePhoto(e) {
+        let index = e.currentTarget.getAttribute('data-index');
+        let newPhotoList = this.state.photoList;
+        newPhotoList.splice(index, 1);
         this.setState({
-            photoList:newPhotoList
+            photoList: newPhotoList
         });
     }
 
-    sendForm(e){
+    sendForm(e) {
         let {
-            sex,//性别
-            faceshpe,//脸型
-            colorofskin,//肤色
-            bodySize,//体型
-            problem,//解决问题
-            style,//风格
-            heigh,//身高
-            weight,//体重
-            chest,//胸围
-            waist,//腰围
-            hip,//臀围
-            professional,//职业
-            cityCode,//城市
-            birthday,//生日
-            lifeImg//生活照
-        }=this.props.state.path['/customSuitBoy'].data;
-        let formdata=new FormData();
-        formdata.append('sex',sex);
-        formdata.append('faceshpe',faceshpe);
-        formdata.append('colorofskin',colorofskin);
-        formdata.append('bodySize',bodySize);
-        formdata.append('problem',problem);
-        formdata.append('style',style);
-        formdata.append('heigh',heigh);
-        formdata.append('weight',weight);
-        formdata.append('problems',problem);
-        formdata.append('chest',chest);
-        formdata.append('waist',waist);
-        formdata.append('hip',hip);
-        formdata.append('professional',professional);
-        formdata.append('cityCode',cityCode);
-        formdata.append('birthday',birthday);
-        lifeImg.forEach((item,index)=>{
-            formdata.append('lifeImg',item.file);
+            sex, //性别
+            faceshpe, //脸型
+            colorofskin, //肤色
+            bodySize, //体型
+            problem, //解决问题
+            style, //风格
+            heigh, //身高
+            weight, //体重
+            chest, //胸围
+            waist, //腰围
+            hip, //臀围
+            professional, //职业
+            cityCode, //城市
+            birthday, //生日
+            lifeImg //生活照
+        } = this.props.state.path['/customSuitBoy'].data;
+        let formdata = new FormData();
+        formdata.append('sex', sex);
+        formdata.append('faceshpe', faceshpe);
+        formdata.append('colorofskin', colorofskin);
+        formdata.append('bodySize', bodySize);
+        formdata.append('problem', problem);
+        formdata.append('style', style);
+        formdata.append('heigh', heigh);
+        formdata.append('weight', weight);
+        formdata.append('problems', problem);
+        formdata.append('chest', chest);
+        formdata.append('waist', waist);
+        formdata.append('hip', hip);
+        formdata.append('professional', professional);
+        formdata.append('cityCode', cityCode);
+        formdata.append('birthday', birthday);
+        lifeImg.forEach((item, index) => {
+            formdata.append('lifeImg', item.file);
         });
 
         console.log(this.props.state.path['/customSuitBoy'].data)
 
-        ToolDps.post('/wx/user/save',formdata,{'Content-Type':'multipart/form-data'}).then((res)=>{
-            if(res.succ){
-                this.props.showMsg(true,'提交成功');
-                this._time=setTimeout(()=>{
+        ToolDps.post('/wx/user/save', formdata, {
+            'Content-Type': 'multipart/form-data'
+        }).then((res) => {
+            if (res.succ) {
+                this.props.showMsg(true, '提交成功');
+                this._time = setTimeout(() => {
                     this.context.router.push('/fashionMoment');
-                },1000);
-            }else{
-                this.props.showMsg(true,'提交失败');
+                }, 1000);
+            } else {
+                this.props.showMsg(true, '提交失败');
             }
         });
 
@@ -1542,29 +1594,31 @@ class BoyOtherinfo extends Component{
     /**
      * 获取职业
      * */
-    getProfessional(e){
-        this.myData.data.professional=e.target.value;
+    getProfessional(e) {
+        this.myData.data.professional = e.target.value;
         this.props.setState(this.myData);
     }
 
     /**
      * 获取城市代码
      * */
-    getCity(city){
-        let {currCity} = city;
-        this.myData.data.cityCode=currCity;
+    getCity(city) {
+        let {
+            currCity
+        } = city;
+        this.myData.data.cityCode = currCity;
         this.props.setState(this.myData);
     }
 
     /**
      * 获取生日
      * */
-    getBirthDate(e){
-        this.myData.data.birthday=e.target.value;
+    getBirthDate(e) {
+        this.myData.data.birthday = e.target.value;
         this.props.setState(this.myData);
     }
 
-    render(){
+    render() {
         return (
             <div className="swiper-slide" >
                 <section className="otherinfo-area">
@@ -1618,24 +1672,27 @@ class BoyOtherinfo extends Component{
     }
 }
 
-BoyOtherinfo.contextTypes={
-    router:React.PropTypes.object.isRequired
+BoyOtherinfo.contextTypes = {
+    router: React.PropTypes.object.isRequired
 };
 
 //生活照
-class LifePhoto extends Component{
-    constructor(props){
+class LifePhoto extends Component {
+    constructor(props) {
         super(props);
     }
 
 
-    delete(e){
+    delete(e) {
         this.props.deletePhoto(e);
     }
-    render(){
-        let {url,index} =this.props;
+    render() {
+        let {
+            url,
+            index
+        } = this.props;
 
-        let svgHtml=(
+        let svgHtml = (
             <svg viewBox="0 0 100 100" className="icon-svg-delete" data-index={index} onClick={this.delete.bind(this)}>
                 <use xlinkHref="/assets/img/icon.svg#svg-delete"/>
             </svg>
@@ -1655,15 +1712,15 @@ class LifePhoto extends Component{
 class CustomSuit extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            msgShow:false,
-            msgText:'',//提示内容
-            girl:true,
-            boy:false,
-            sex:2,//性别
+        this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
+            girl: true,
+            boy: false,
+            sex: 2, //性别
         };
 
-        this.copyMyData=merged(props.state.defaults);//复制对象
+        this.copyMyData = merged(props.state.defaults); //复制对象
 
         let myData = props.state.defaults;
         myData.path = '/customSuitGirl';
@@ -1672,52 +1729,53 @@ class CustomSuit extends Component {
         this.props.setState(myData);
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        document.title = "填写个人信息";
         //用户信息
         new Swiper('.J-custom-info', {
-            initialSlide:0,
-            direction : 'vertical',
+            initialSlide: 0,
+            direction: 'vertical',
             pagination: '.swiper-pagination',
-            paginationType : 'progress',
-            observer:true,
+            paginationType: 'progress',
+            observer: true,
         });
     }
 
-    componentWillUpdate(nextProps, nextState){
-        if(this.state.msgShow !== nextState.msgShow){//
-            return;
-        }
+    componentWillUpdate(nextProps, nextState) {
+            if (this.state.msgShow !== nextState.msgShow) { //
+                return;
+            }
 
-        let myData=merged(this.copyMyData);
-        if(nextState.sex === 1){//男
-            myData.path = '/customSuitBoy';
-        }else{//女
-            myData.path = '/customSuitGirl';
-        }
+            let myData = merged(this.copyMyData);
+            if (nextState.sex === 1) { //男
+                myData.path = '/customSuitBoy';
+            } else { //女
+                myData.path = '/customSuitGirl';
+            }
 
-        myData.data.sex=nextState.sex;
-        this.props.setState(myData);
-    }
-    /**
-     * 当选择性别时前后2次选择不同是才会触发render
-     * */
-    shouldComponentUpdate(nextProps,nextState){
+            myData.data.sex = nextState.sex;
+            this.props.setState(myData);
+        }
+        /**
+         * 当选择性别时前后2次选择不同是才会触发render
+         * */
+    shouldComponentUpdate(nextProps, nextState) {
         return nextState.girl !== this.state.girl || nextState.boy !== this.state.boy || nextState.msgShow !== this.state.msgShow;
     }
 
-    showMsg(isShow,tipText){
+    showMsg(isShow, tipText) {
         this.setState({
-            msgShow:isShow,
-            msgText:tipText,
+            msgShow: isShow,
+            msgText: tipText,
         });
     }
 
-    render(){
-        let girlSex = classNames('img-area',{
-            'active':this.state.girl
+    render() {
+        let girlSex = classNames('img-area', {
+            'active': this.state.girl
         });
-        let boySex = classNames('img-area',{
-            'active':this.state.boy
+        let boySex = classNames('img-area', {
+            'active': this.state.boy
         });
 
         return (
@@ -1769,4 +1827,8 @@ class CustomSuit extends Component {
 }
 
 
-export default connect((state)=>{return {state: state['CustomSuit']}},action('CustomSuit'))(CustomSuit);
+export default connect((state) => {
+    return {
+        state: state['CustomSuit']
+    }
+}, action('CustomSuit'))(CustomSuit);

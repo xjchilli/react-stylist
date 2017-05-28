@@ -61,7 +61,8 @@ class Chat extends Component {
             msgText: '', //消息内容
             emotionFlag: false, //是否显示表情选择框
             emotions: [],
-            list: [] //数据列表
+            list: [], //数据列表
+            containerHeight:500//聊天内容高度
         };
         let {
             location: {
@@ -73,6 +74,7 @@ class Chat extends Component {
             }
         } = this.props;
 
+        this.currScrollHeight=0;//默认当前滚动条高度
         this._time = 0;
         this.d = this.debounce(500, this.preHistory.bind(this));
         //保留服务器返回的最近消息时间和消息Key,用于下次向前拉取历史消息
@@ -111,6 +113,13 @@ class Chat extends Component {
     componentDidMount() {
         document.title = this.nickname;
 
+
+        window.addEventListener('resize',this.resetChatHeight.bind(this));
+
+        //重置聊天内容高度
+        this.resetChatHeight();
+
+
         ToolDps.get('/wx/tim/getSignature').then((res) => {
             // console.log(res);
             if (res.succ) {
@@ -124,6 +133,7 @@ class Chat extends Component {
 
         });
     }
+
 
     componentWillUnmount() {
         clearTimeout(this._time);
@@ -150,7 +160,7 @@ class Chat extends Component {
                 this.getLastC2CHistoryMsgs(); //获取好友历史聊天记录
                 this.showEmotionDialog(); //初始化表情包
             },
-            function(err) {
+            (err) => {
                 console.log(err.ErrorInfo);
             }
         );
@@ -217,7 +227,7 @@ class Chat extends Component {
         webim.getC2CHistoryMsgs(
             options,
             (resp) => {
-                // console.log(resp);
+                // console.log(resp); TODO
                 this.getPrePageC2CHistroyMsgInfo.lastMsgTime = resp.LastMsgTime;
                 this.getPrePageC2CHistroyMsgInfo.MsgKey = resp.MsgKey;
                 if (resp.MsgList.length === 0) {
@@ -288,6 +298,9 @@ class Chat extends Component {
 
             li.innerHTML = '<img src=' + fromAccountImage + ' alt=""><div class="msgContent">' + contentHtml + '</div>';
             document.querySelector('.chat-content').insertBefore(li, document.querySelector('.chat-content').firstChild);
+            //50代表一条聊天记录默认高度
+            this.refs.container.scrollTop = this.refs.container.scrollHeight -   this.currScrollHeight -50;
+
             return;
         } else {
             this._time = setTimeout(() => {
@@ -385,9 +398,10 @@ class Chat extends Component {
             }
             return "<img  src='" + smallImage.getUrl() + "#" + bigImage.getUrl() + "#" + oriImage.getUrl() + "'  id='" + content.getImageId() + "' bigImgUrl='" + bigImage.getUrl() + "' />";
         }
-        /**
-         * 发送消息(文本或者表情)
-         */
+
+    /**
+     * 发送消息(文本或者表情)
+     */
     onSendMsg() {
         this.hideEmotion();
         let msgContent = this.state.msgText;
@@ -497,6 +511,12 @@ class Chat extends Component {
     preHistory(currEle) {
         if (currEle.scrollTop == 0) {
             currEle.scrollTop = 10;
+
+            this.currScrollHeight=this.refs.container.scrollHeight -  this.refs.container.scrollTop;
+            /*console.log(this.refs.container.scrollTop)
+            console.log(this.refs.container.scrollHeight)*/
+
+
             this.getPrePageC2CHistoryMsgs();
         }
     }
@@ -595,10 +615,21 @@ class Chat extends Component {
         }
     }
 
+    /**
+     * 重置聊天高度
+     */
+    resetChatHeight(){
+        // console.log(window.innerHeight);
+        //重置聊天内容高度
+        this.setState({
+            containerHeight:window.innerHeight - 50
+        });
+    }
+
     render() {
         return (
-            <section className="full-page chat-page">
-                <div ref='container' className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)}>
+            <div  className="full-page chat-page">
+                <div ref='container' className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{height:this.state.containerHeight}}>
                     {this.state.list.length > 0 ?  <List list={this.state.list}/> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg}/>}
                 </div>
                 <footer>
@@ -616,7 +647,7 @@ class Chat extends Component {
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
 
                 </footer>
-            </section>
+            </div>
         )
     }
 }

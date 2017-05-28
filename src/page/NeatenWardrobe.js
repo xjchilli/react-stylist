@@ -2,121 +2,130 @@
  * 整理衣橱
  * Created by potato on 2017/4/25 0025.
  */
-import React,{Component} from  'react'
-import { ToolDps } from '../ToolDps';
-import {City,Msg} from "../Component/index";
+import React, {
+    Component
+} from 'react'
+import {
+    ToolDps
+} from '../ToolDps';
+import {
+    City,
+    Msg
+} from "../Component/index";
 
 
 
-class NeatenWardrobe extends Component{
-    constructor(props){
+class NeatenWardrobe extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            btn:'发布',
-            msgShow:false,
-            msgText:'',//提示内容
-            date:'',//日期
-            time:'',//时间
-            currArea:'',//当前选择区域
-            addres:'',//详细地址
-            remark:'',//需求描述
+        this.state = {
+            btn: '发布',
+            msgShow: false,
+            msgText: '', //提示内容
+            date: '', //日期
+            time: '', //时间
+            currArea: '', //当前选择区域
+            addres: '', //详细地址
+            remark: '', //需求描述
         }
-        this._time=0;
+        this._time = 0;
     }
 
-    componentDidMount(){
-
+    componentDidMount() {
+        document.title = "整理衣橱";
     }
 
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this._time);
     }
 
     /**
      * 获取城市数据
      */
-    getCity(data){
-        let {currArea} = data;
+    getCity(data) {
+        let {
+            currArea
+        } = data;
         this.setState({
-            currArea:currArea,
-            msgShow:false
+            currArea: currArea,
+            msgShow: false
         });
     }
 
     /**
      * 发布
      */
-    publish(){
-        if(this.state.date === "" || this.state.time === ""){
+    publish() {
+        if (this.state.date === "" || this.state.time === "") {
             this.setState({
-                msgShow:true,
-                msgText:'请选择约定时间',//提示内容
+                msgShow: true,
+                msgText: '请选择约定时间', //提示内容
             });
             return;
         }
-        if(this.state.currArea === ""){
+        if (this.state.currArea === "") {
             this.setState({
-                msgShow:true,
-                msgText:'请选择城市',//提示内容
-            });
-            return;
-        }
-
-        if(this.state.addres === ""){
-            this.setState({
-                msgShow:true,
-                msgText:'请填写详细地址',//提示内容
+                msgShow: true,
+                msgText: '请选择城市', //提示内容
             });
             return;
         }
 
-        if(this.state.remark === ""){
+        if (this.state.addres === "") {
             this.setState({
-                msgShow:true,
-                msgText:'请填写需求描述',//提示内容
+                msgShow: true,
+                msgText: '请填写详细地址', //提示内容
+            });
+            return;
+        }
+
+        if (this.state.remark === "") {
+            this.setState({
+                msgShow: true,
+                msgText: '请填写需求描述', //提示内容
             });
             return;
         }
 
 
-        let data={
-            time:this.state.date + ' ' +this.state.time,//时间
-            cityCode:this.state.currArea,//当前选择区域
-            addres:this.state.addres,//详细地址
-            remark:this.state.remark,//需求描述
+        let data = {
+            time: this.state.date + ' ' + this.state.time, //时间
+            cityCode: this.state.currArea, //当前选择区域
+            addres: this.state.addres, //详细地址
+            remark: this.state.remark, //需求描述
         }
 
         this.setState({
-            btn:'发布中...'
+            btn: '发布中...'
         });
 
         ToolDps.ajax({
-            url:'/wx/requirement/add_finishing',
-            type:'post',
-            data:data
-        }).then((res)=>{
-            if(res.succ){
+            url: '/wx/requirement/add_finishing',
+            type: 'post',
+            data: data
+        }).then((res) => {
+            if (res.succ) {
                 this.setState({
-                    btn:'发布',
-                    msgShow:true,
-                    msgText:'发布成功'
+                    btn: '发布',
+                    msgShow: true,
+                    msgText: '发布成功'
                 });
-                this._time=setTimeout(function () {
-                    this.context.router.push('/weixin/pay?orderId='+res.orderId+"&type=4");
-                }.bind(this),1000);
-            }else{
+                this._time = setTimeout(function() {
+                    this.context.router.push('/pay?orderId=' + res.orderId + "&type=4");
+                }.bind(this), 1000);
+            } else {
                 this.setState({
-                    btn:'发布',
-                    msgShow:true,
-                    msgText:'发布失败'
+                    btn: '发布',
+                    msgShow: true,
+                    msgText: '发布失败'
                 });
             }
         });
 
     }
 
-    render(){
+    render() {
         return (
             <section className="full-page matchService">
                 <section className="box">
@@ -143,11 +152,9 @@ class NeatenWardrobe extends Component{
     }
 }
 
-NeatenWardrobe.contextTypes={
-    router:React.PropTypes.object.isRequired
+NeatenWardrobe.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
-
-
 
 
 

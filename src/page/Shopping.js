@@ -2,38 +2,46 @@
  * 购物
  * Created by potato on 2017/4/24 0024.
  */
-import React,{Component} from  'react'
+import React, {
+    Component
+} from 'react'
 import classNames from 'classnames';
-import {Tips} from '../Component/index'
+import {
+    Tips
+} from '../Component/index'
 import GirlCategory from "./component/GirlCategory";
 import BoyCategory from "./component/BoyCategory";
 import MatchScene from "./component/MatchScene";
-import { ToolDps } from '../ToolDps';
-import {Msg} from "../Component/index";
+import {
+    ToolDps
+} from '../ToolDps';
+import {
+    Msg
+} from "../Component/index";
 
 
 
-class Shopping extends Component{
-    constructor(props){
+class Shopping extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            btn:'发布',
-            msgShow:false,
-            msgText:'',//提示内容
-            sex:2,//性别
-            remark:'',//需求描述
-            costCode:'1',//预期花费价格
-            scene:[],//场景
-            shop:[],//商品
+        this.state = {
+            btn: '发布',
+            msgShow: false,
+            msgText: '', //提示内容
+            sex: 2, //性别
+            remark: '', //需求描述
+            costCode: '1', //预期花费价格
+            scene: [], //场景
+            shop: [], //商品
         }
-        this._time=0;
+        this._time = 0;
     }
-    componentDidMount(){
-
+    componentDidMount() {
+        document.title = "购物";
     }
 
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this._time);
     }
 
@@ -42,93 +50,93 @@ class Shopping extends Component{
     /**
      * 搭配场景
      */
-    getScene(sceneArr){
+    getScene(sceneArr) {
+            this.setState({
+                scene: sceneArr,
+                msgShow: false
+            });
+        }
+        /**
+         * 获取选择场景的值
+         */
+    getShop(shopArr) {
         this.setState({
-            scene:sceneArr,
-            msgShow:false
-        });
-    }
-    /**
-     * 获取选择场景的值
-     */
-    getShop(shopArr){
-        this.setState({
-            shop:shopArr,
-            msgShow:false
+            shop: shopArr,
+            msgShow: false
         })
     }
 
     /**
      * 发布
      */
-    publish(){
-        if(this.state.scene.length === 0){
+    publish() {
+        if (this.state.scene.length === 0) {
             this.setState({
-                msgShow:true,
-                msgText:'请选择搭配场景',//提示内容
+                msgShow: true,
+                msgText: '请选择搭配场景', //提示内容
             });
             return;
         }
-        if(this.state.shop.length === 0){
+        if (this.state.shop.length === 0) {
             this.setState({
-                msgShow:true,
-                msgText:'请选择商品',//提示内容
-            });
-            return;
-        }
-
-        if(this.state.remark === ""){
-            this.setState({
-                msgShow:true,
-                msgText:'请填写需求描述',//提示内容
+                msgShow: true,
+                msgText: '请选择商品', //提示内容
             });
             return;
         }
 
+        if (this.state.remark === "") {
+            this.setState({
+                msgShow: true,
+                msgText: '请填写需求描述', //提示内容
+            });
+            return;
+        }
 
-        let data={
-            sex:this.state.sex,
-            scene:this.state.scene,
-            shop:this.state.shop,
-            costCode:this.state.costCode,
-            remark:this.state.remark,//需求描述
+
+        let data = {
+            sex: this.state.sex,
+            scene: this.state.scene,
+            shop: this.state.shop,
+            costCode: this.state.costCode,
+            remark: this.state.remark, //需求描述
         }
 
         this.setState({
-            btn:'发布中...'
+            btn: '发布中...'
         });
 
         ToolDps.ajax({
-            url:'/wx/requirement/add_buy',
-            type:'post',
-            data:data
-        }).then((res)=>{
-            if(res.succ){
+            url: '/wx/requirement/add_buy',
+            type: 'post',
+            data: data
+        }).then((res) => {
+            if (res.succ) {
                 this.setState({
-                    btn:'发布',
-                    msgShow:true,
-                    msgText:'发布成功'
+                    btn: '发布',
+                    msgShow: true,
+                    msgText: '发布成功'
                 });
-                this._time=setTimeout(function () {
-                    this.context.router.push('/weixin/pay?orderId='+res.orderId+"&type=2");
-                }.bind(this),1000);
-            }else{
+                this._time = setTimeout(function() {
+                    this.context.router.push('/pay?orderId=' + res.orderId + "&type=2");
+                }.bind(this), 1000);
+            } else {
                 this.setState({
-                    btn:'发布',
-                    msgShow:true,
-                    msgText:'发布失败'
+                    btn: '发布',
+                    msgShow: true,
+                    msgText: '发布失败'
                 });
             }
         });
 
     }
 
-    render(){
+    render() {
         let sexGirl = classNames({
-            'active':this.state.sex === 2
+            'active': this.state.sex === 2
         });
         let sexBoy = classNames({
-            'active':this.state.sex === 1
+            'active': this.state.sex === 1
         });
         return (
             <section className="full-page matchService">
@@ -169,8 +177,8 @@ class Shopping extends Component{
     }
 }
 
-Shopping.contextTypes={
-    router:React.PropTypes.object.isRequired
+Shopping.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
 
 

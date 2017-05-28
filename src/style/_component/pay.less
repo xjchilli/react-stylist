@@ -1,28 +1,68 @@
-.pay-msg{
-  background-color: @white;margin: 10px;border-radius: 5px;
-  .header{
-    display: flex;font-size: 1.6rem;
-    .item{
-      flex: auto;padding: 15px 0;
-      &:first-child{padding-left: 40px;}
-      &:last-child{text-align: center;}
+.pay-msg
+{
+    margin: 10px;
+
+    border-radius: 5px;
+    background-color: @white;
+    .header
+    {
+        font-size: 1.6rem;
+
+        display: flex;
+        .item
+        {
+            padding: 15px 0;
+
+            flex: auto;
+            &:first-child
+            {
+                padding-left: 40px;
+            }
+            &:last-child
+            {
+                text-align: center;
+            }
+        }
     }
-  }
-  .content{
-    margin:0 10px;border-top: 0.1rem dashed rgb(188,188,188);font-size: 1.4rem;padding:30px 0 100px 30px;
-    .ground{line-height: 2rem;}
-    label{padding-right: 20px;}
-  }
+    .content
+    {
+        font-size: 1.4rem;
+
+        margin: 0 10px;
+        padding: 30px 0 100px 30px;
+
+        border-top: .1rem dashed rgb(188,188,188);
+        .ground
+        {
+            line-height: 2rem;
+        }
+        label
+        {
+            padding-right: 20px;
+        }
+    }
 }
 
-.pay-btn{
-  margin:20px auto;
+.pay-btn
+{
+    margin: 20px auto;
 }
 
-.service-note-title{
-  font-size: 1.4rem;color: rgb(161,161,161);margin:0 1.5rem;
+.service-note-title
+{
+    font-size: 1.4rem;
+
+    margin: 0 1.5rem;
+
+    color: rgb(161,161,161);
 }
 
-.pay-note-content{
-  font-size: 1.2rem;color: rgb(161,161,161);margin:0 1.5rem;line-height: 2rem;
+.pay-note-content
+{
+    font-size: 1.2rem;
+    line-height: 2rem;
+
+    margin: 0 1.5rem;
+
+    color: rgb(161,161,161);
 }

@@ -97,18 +97,18 @@
         this.startCall(el);
         let url = this.getUrl();
 
-        let user=localStorage.getItem('User');
+        let user = localStorage.getItem('User');
         let openId = null;
-        if(user){
-            openId = JSON.parse(user).openId;//获取opendId
+        if (user) {
+            openId = JSON.parse(user).openId; //获取opendId
         }
         this.xhr = new XMLHttpRequest(); //创建http请求对象
         this.xhr.open('GET', url, true); //异步请求
-        if(openId){
-            this.xhr.setRequestHeader('openId',openId);
+        if (openId) {
+            this.xhr.setRequestHeader('openId', openId);
         }
         this.xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        this.xhr.onloadend=this.loadend.bind(this);
+        this.xhr.onloadend = this.loadend.bind(this);
         // this.xhr.addEventListener('readystatechange', this.readystatechange, false);
         this.xhr.send(); //发送请求
 
@@ -120,8 +120,8 @@
      */
     GetNextPage.prototype.loadend = function() {
         let xhr = this.xhr;
-        if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
-           let response = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+            let response = JSON.parse(xhr.responseText);
             this.loadCall(response, xhr);
             if (this.data[this.pageName] && response.pager.arrays.length > 0) this.data[this.pageName]++;
         }

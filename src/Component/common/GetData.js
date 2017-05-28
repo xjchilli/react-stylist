@@ -1,11 +1,20 @@
 /**
  * Created by potato on 2017/4/15.
  */
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {
+    Component
+} from 'react';
+import {
+    connect
+} from 'react-redux';
 import action from '../../Action/Index';
-import { Tool, merged } from '../../Tool';
-import { ToolDps } from '../../ToolDps';
+import {
+    Tool,
+    merged
+} from '../../Tool';
+import {
+    ToolDps
+} from '../../ToolDps';
 
 
 /**
@@ -15,7 +24,7 @@ import { ToolDps } from '../../ToolDps';
  * @returns
  */
 
-const Main =(mySeting)=>{
+const Main = (mySeting) => {
     var seting = {
         id: '', //应用唯一id表示
         type: 'GET', //请求类型
@@ -23,8 +32,12 @@ const Main =(mySeting)=>{
         stop: false, //true 拦截请求，false不拦截请求
         data: null, //发送给服务器的数据
         component: <div></div>, //数据回调给的组件
-        success: (state) => { return state; }, //请求成功后执行的方法
-        error: (state) => { return state; } //请求失败后执行的方法
+        success: (state) => {
+            return state;
+        }, //请求成功后执行的方法
+        error: (state) => {
+                return state;
+            } //请求失败后执行的方法
     };
 
     /**
@@ -40,8 +53,8 @@ const Main =(mySeting)=>{
      * @class Index
      * @extends {Component}
      */
-    class Index extends Component{
-        constructor(props){
+    class Index extends Component {
+        constructor(props) {
             super(props);
 
             /**
@@ -50,8 +63,14 @@ const Main =(mySeting)=>{
              * @param {Object} props
              */
             this.initState = (props) => {
-                let {state, location} = props;
-                let {pathname, search} = location;
+                let {
+                    state,
+                    location
+                } = props;
+                let {
+                    pathname,
+                    search
+                } = location;
                 this.path = pathname + search;
 
                 if (typeof state.path[this.path] === 'object' && state.path[this.path].path === this.path) {
@@ -64,17 +83,20 @@ const Main =(mySeting)=>{
             }
 
 
-            this.redayDOM = ()=>{
-                let {success, error} = this.props.seting;
-                this.get=ToolDps.get(this.getUrl(), this.getData()).then((res)=>{
+            this.redayDOM = () => {
+                let {
+                    success,
+                    error
+                } = this.props.seting;
+                this.get = ToolDps.get(this.getUrl(), this.getData()).then((res) => {
                     this.state.loadMsg = '加载成功';
-                    if(!res.succ){
+                    if (!res.succ) {
                         this.state.loadMsg = '加载失败';
                     }
                     this.state.loadAnimation = false;
-                     this.state.data = res;
+                    this.state.data = res;
                     this.props.setState(success(this.state) || this.state);
-                }).catch(()=>{
+                }).catch(() => {
                     this.state.loadMsg = '加载失败';
                     this.state.loadAnimation = false;
                     this.props.setState(success(this.state) || this.state);
@@ -88,7 +110,9 @@ const Main =(mySeting)=>{
              * @returns Object
              */
             this.getUrl = () => {
-                var {url} = this.props.seting;
+                var {
+                    url
+                } = this.props.seting;
                 if (typeof url === 'function') {
                     return url(this.props, this.state);
                 } else if (url && typeof url === 'string') {
@@ -105,7 +129,9 @@ const Main =(mySeting)=>{
              * @returns
              */
             this.getData = () => {
-                var {data} = this.props.seting;
+                var {
+                    data
+                } = this.props.seting;
                 if (typeof data === 'function') {
                     return data(this.props, this.state);
                 } else if (data && typeof data === 'string') {
@@ -118,18 +144,24 @@ const Main =(mySeting)=>{
             this.initState(this.props);
         }
 
-        componentDidMount(){
+        componentDidMount() {
             this.redayDOM();
         }
 
-        render(){
+        render() {
             return <this.props.seting.component {...this.props} state={this.state}/>
         }
     }
 
-    Index.defaultProps={seting};
+    Index.defaultProps = {
+        seting
+    };
 
-    return connect((state)=>{return {state:state[seting.id]}},action(seting.id))(Index); //连接redux
+    return connect((state) => {
+        return {
+            state: state[seting.id]
+        }
+    }, action(seting.id))(Index); //连接redux
 }
 
 

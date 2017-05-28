@@ -1,0 +1,125 @@
+.promotionCode-area {
+	header {
+		padding-bottom: 10px;
+		background: @white;
+
+		.help-link-area {
+			padding: 5px 10px 0 0;
+
+			a {
+				font-size: 12px;
+				color: rgb(153, 153, 153);
+			}
+			svg {
+				vertical-align: middle;
+				fill: rgb(153, 153, 153);
+			}
+		}
+		// 兑换优惠码
+		.exchange-code-area {
+			position: relative;
+			width: 200px;
+			height: 40px;
+			margin: 10px auto;
+
+			input, .code {
+				font-size: 14px;
+				width: 100%;
+				height: 100%;
+				text-indent: 5px;
+				border: 1px solid rgb(221, 221, 221);
+				appearance: none;
+			}
+			button {
+				font-size: 12px;
+				line-height: 30px;
+				position: absolute;
+				top: 50%;
+				right: 5px;
+				width: 60px;
+				height: 30px;
+				transform: translate3d(0, -50%, 0);
+			}
+		}
+		//发布需求
+		.publish-link {
+			font-size: 14px;
+			line-height: 34px;
+			position: relative;
+			display: block;
+			width: 96px;
+			margin: 10px auto;
+			padding: 0 10px 0 30px;
+			color: @white;
+			border-radius: 5px;
+			background: #696;
+
+			&:after {
+				position: absolute;
+				z-index: 1;
+				top: 50%;
+				left: 8px;
+				content: '';
+				transform: translate3d(0, -50%, 0);
+				.cicle();
+				background: @white;
+			}
+			&:before {
+				position: absolute;
+				z-index: 9;
+				top: 13px;
+				left: 11px;
+				content: '';
+				.yes();
+				border-color: #696;
+			}
+		}
+		// 我的分享码
+		.my-share-code {
+			.code {
+				text-align: center;
+				color: #FF0000;
+				font-weight: bold;
+				line-height: 40px;
+			}
+		}
+		.tips {
+			color: rgb(153, 153, 153);
+		}
+	}
+	//优惠卷列表	
+	.promotion-list-area {
+		padding-bottom: 60px;
+
+		li {
+			position: relative;
+			margin: 15px 15px 0 15px;
+			padding: 10px 15px;
+			border-bottom: 4px solid rgb(51, 51, 51);
+			border-radius: 5px;
+			background: @white;
+
+			h5 {
+				font-size: 16px;
+				color: rgb(51, 51, 51);
+			}
+			.time, .tips {
+				font-size: 12px;
+				color: rgb(153, 153, 153);
+			}
+			.tips {
+				margin-top: 50px;
+			}
+			.price-area {
+				font-size: 32px;
+				position: absolute;
+				top: 5px;
+				right: 5px;
+
+				small {
+					font-size: 14px;
+				}
+			}
+		}
+	}
+}

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import {
     Link
-} from 'react-router-dom';
+} from 'react-router';
 import {
     GetNextPage
 } from '../Component/index';
@@ -15,6 +15,7 @@ import {
     ToolDps
 } from '../ToolDps';
 import classNames from 'classnames';
+
 
 
 /**
@@ -86,7 +87,7 @@ class ListItem extends Component {
 
         return (
             <li>
-                <Link to={"/weixin/fashionMomentDetail?planId="+id}>
+                <Link to={"/fashionMomentDetail?planId="+id}>
                     <h2 className="title">{planName}</h2>
                     <time>{createTime}</time>
                     <img src={masterImage} className="img-content" alt=""/>
@@ -159,6 +160,8 @@ class FashionMoment extends Component {
 
         });
     }
+
+
 
     /**
      * 登录
