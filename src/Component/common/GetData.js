@@ -7,6 +7,7 @@ import React, {
 import {
     connect
 } from 'react-redux';
+import { withRouter } from 'react-router'
 import action from '../../Action/Index';
 import {
     Tool,
@@ -157,11 +158,11 @@ const Main = (mySeting) => {
         seting
     };
 
-    return connect((state) => {
+    return withRouter(connect((state) => {
         return {
             state: state[seting.id]
         }
-    }, action(seting.id))(Index); //连接redux
+    }, action(seting.id))(Index)); //连接redux
 }
 
 

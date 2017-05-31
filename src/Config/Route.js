@@ -12,50 +12,42 @@ import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/Wardro
 import WardrobeModifyContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeModify';
 import ProfileContainer from 'bundle-loader?lazy&name=[name]!../page/Profile';
 import Home from '../page/Home'
-// import Profile from '../page/Profile';
 import NeedMatch from '../page/NeedMatch';
-// import WardrobeList from '../page/WardrobeList';
-// import WardrobeModify from '../page/WardrobeModify';
-// import PromotionCode from '../page/PromotionCode';
 
-
-let _routerProps=null;
 
 const Profile = () => (
     <Bundle load={ProfileContainer} >
-        {(Profile) => <Profile {..._routerProps} />}
+        {(Profile) => <Profile />}
     </Bundle>
 )
 
 
 const WardrobeList = () => (
     <Bundle load={WardrobeListContainer} >
-        {(WardrobeList) => <WardrobeList {..._routerProps} />}
+        {(WardrobeList) => <WardrobeList  />}
     </Bundle>
 )
 
 const WardrobeModify = () => (
     <Bundle load={WardrobeModifyContainer} >
-        {(WardrobeModify) => <WardrobeModify {..._routerProps} />}
+        {(WardrobeModify) => <WardrobeModify />}
     </Bundle>
 )
 
 const PromotionCode = () => (
     <Bundle load={PromotionCodeContainer}>
-        {(PromotionCode) => <PromotionCode {..._routerProps} />}
+        {(PromotionCode) => <PromotionCode  />}
     </Bundle>
 )
 
 const RouteConfig = (
     <Router>
         <Route render={({...props})=> {
-            _routerProps=props;
-            console.log(props);
             return (<ReactCSSTransitionGroup
                 transitionName="fade"
                 transitionEnterTimeout={300}
                 transitionLeaveTimeout={300}>
-                <div key={location.pathname}>
+                <div key={props.location.pathname}>
                     <Route exact path="/" component={Home}/>
                     <Route  path="/profile"  component={Profile} />
                     <Route path="/needMatch" component={NeedMatch} />

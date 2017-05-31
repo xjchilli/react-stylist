@@ -8,6 +8,7 @@ import React, {
 import {
     Link
 } from 'react-router-dom';
+import { withRouter } from 'react-router'
 import classNames from 'classnames';
 import Msg from "../Component/tips/msg";
 import {
@@ -327,4 +328,4 @@ class WardrobeList extends Component {
 }
 
 
-export default WardrobeList;
+export default withRouter(WardrobeList);
