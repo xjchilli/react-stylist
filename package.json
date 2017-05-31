@@ -34,6 +34,7 @@
     "webpack-parallel-uglify-plugin": "^0.4.1"
   },
   "dependencies": {
+    "bundle-loader": "^0.5.5",
     "classnames": "^2.2.5",
     "obj-merged": "^1.0.5",
     "prop-types": "^15.5.10",

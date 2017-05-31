@@ -3,7 +3,7 @@
  */
 var path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');//css单独打包
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 
 
@@ -12,54 +12,51 @@ var p = path.resolve(__dirname + '/assets');
 
 module.exports = {
     //入口文件
-    entry:{
+    entry: {
         app: './src/App.js',
-        vendors: [ 'webpack-dev-server/client?http://0.0.0.0:8000', 'webpack/hot/only-dev-server'],
+        vendors: ['webpack-dev-server/client?http://0.0.0.0:8000', 'webpack/hot/only-dev-server'],
     },
     devtool: 'inline-source-map',
     // 出口文件
     output: {
-        publicPath:publicPath,
+        publicPath: publicPath,
         path: p,
-        filename: 'js/[name].js'
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].[chunkhash:5].min.js'
     },
     module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        query: {
-                            presets: ['es2015','stage-0', 'react'],
-                            cacheDirectory: true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.css|less$/,
-                exclude: /^node_modules$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader","postcss-loader","less-loader"]
-                })
-            },
-        ]
+        rules: [{
+            test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: [{
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'stage-0', 'react'],
+                    cacheDirectory: true
+                }
+            }]
+        }, {
+            test: /\.css|less$/,
+            exclude: /^node_modules$/,
+            use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: ["css-loader", "postcss-loader", "less-loader"]
+            })
+        }, ]
     },
     plugins: [
         new ExtractTextPlugin({
-            filename:'css/[name].css'
-        }),//css单独打包
-        new HtmlWebpackPlugin({ //根据模板插入css/js等生成最终HTML
+            filename: 'css/[name].css'
+        }), //css单独打包
+        new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML
             filename: 'index.html', //生成的html存放路径，相对于 path
             template: './src/template/index.html', //html模板路径
-            hash: true, //为静态资源生成hash值
+            hash: true,
+              //为静态资源生成hash值
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name:'vendors',
-            filename:'js/vendors.js'
+            name: 'vendors',
+            filename: 'js/vendors.js'
         }), //所有公用js文件打包到vendors.js
         new webpack.HotModuleReplacementPlugin(),
         // 开启全局的模块热替换(HMR)
@@ -68,7 +65,7 @@ module.exports = {
 
     ],
     resolve: {
-        extensions: [ '.js', '.jsx','.css','.less',".json"],
+        extensions: ['.js', '.jsx', '.css', '.less', ".json"],
         modules: [path.resolve(__dirname, "src"), "node_modules"],
         alias: {
             'react': path.resolve(__dirname + '/node_modules/react'),
