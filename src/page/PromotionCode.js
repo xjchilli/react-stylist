@@ -9,6 +9,7 @@ import React, {
 import {
 	Link
 } from "react-router-dom";
+import {withRouter} from 'react-router';
 
 class PromotionCode extends Component {
 	constructor(props) {
@@ -94,4 +95,4 @@ class PromotionCode extends Component {
 }
 
 
-export default PromotionCode;
+export default withRouter(PromotionCode);
