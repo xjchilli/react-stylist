@@ -1,5 +1,5 @@
 import React from 'react';
-/*import {
+import {
 	render
 } from 'react-dom'
 import {
@@ -16,15 +16,4 @@ render(
         {route}
     </Provider>,
 	document.getElementById('app')
-);*/
-
-
-export default class App extends React.Component {
-	render() {
-		return (
-			<div>
-        <h1>Todos</h1>
-      </div>
-		);
-	}
-}
+);
