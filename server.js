@@ -6,7 +6,10 @@ const webpackConfig = require("./webpack.config.dev");
 const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
     proxy: { // proxy URLs to backend development server
-        '/wx': 'http://wx.dapeis.com'
+          '/wx': {
+            target:'http://wxapi.dapeis.net',
+            changeOrigin:true
+        }
     },
     publicPath: webpackConfig.output.publicPath,//服务器资源路径
     disableHostCheck: true,

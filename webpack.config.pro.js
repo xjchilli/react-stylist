@@ -69,7 +69,7 @@ module.exports = {
             id: 'less',
             loaders: ['css-loader!postcss-loader!less-loader'],
             threadPool: happyThreadPool,
-            cache: true,
+            cache: false,
             verbose: true
         }),
         new HappyPack({
