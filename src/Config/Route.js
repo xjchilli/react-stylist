@@ -11,6 +11,7 @@ import PromotionCodeContainer from 'bundle-loader?lazy&name=[name]!../page/Promo
 import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeList';
 import WardrobeModifyContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeModify';
 import ProfileContainer from 'bundle-loader?lazy&name=[name]!../page/Profile';
+import TestContainer from 'bundle-loader?lazy&name=[name]!../page/Test';
 import Home from '../page/Home'
 import NeedMatch from '../page/NeedMatch';
 
@@ -40,6 +41,12 @@ const PromotionCode = () => (
     </Bundle>
 )
 
+const Test = () => (
+    <Bundle load={TestContainer}>
+        {(Test) => <Test />}
+    </Bundle>
+)
+
 const RouteConfig = (
     <Router>
         <Route render={({...props})=> {
@@ -56,6 +63,7 @@ const RouteConfig = (
                     {/*衣橱修改*/}
                     <Route path='/wardrobeModify/:gid' component={WardrobeModify}/>
                     <Route path="/promotionCode" component={PromotionCode} />
+                    <Route path="/test" component={Test} />
                 </div>
             </ReactCSSTransitionGroup>)
         }}/>
