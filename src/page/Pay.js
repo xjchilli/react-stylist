@@ -2,19 +2,16 @@
  * 支付
  * Created by potato on 2017/4/28 0028.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    ToolDps
-} from '../ToolDps';
-import {
-    DataLoad
-} from '../Component/index';
-import {
-    Msg,
-    Tips
-} from "../Component/index";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { ToolDps } from '../ToolDps';
+import { Msg, Tips, DataLoad } from "../Component/index";
+// import { CSSTransitionGroup } from 'react-transition-group';
+import classNames from "classnames";
+import UseFulPromotionCode from './component/UseFulPromotionCode';
+
+
+
 
 class Main extends Component {
     constructor(props) {
@@ -22,42 +19,39 @@ class Main extends Component {
         this.state = {
             loadAnimation: true,
             loadMsg: '加载中...',
-            type: '', //服务类型
+            isQueryCoupons: false, //订单查询是否成功
             data: null,
-            price: '0.00', //价格
             jsapiSigna: false //js签名是否成功
         }
 
     }
     componentDidMount() {
-        let {
-            location
-        } = this.props;
-        let {
-            orderId,
-            type
-        } = location.query;
+        let { orderId } = this.props.location.query;
 
-        ToolDps.post('/wx/order/getUnified', {
+        //订单查询
+        ToolDps.get('/wx/order/queryCoupons', {
             orderId: orderId
         }).then((res) => {
             if (res.succ) {
                 this.setState({
-                    loadAnimation: false,
-                    loadMsg: '加载成功',
-                    type: type,
-                    data: res.payInfo,
-                    price: res.price
-                })
+                    loadAnimation: true,
+                    loadMsg: '查询成功',
+                    isQueryCoupons: res.succ,
+                    data: res.data
+                });
             } else {
                 this.setState({
                     loadAnimation: false,
-                    loadMsg: '加载失败',
-                })
+                    loadMsg: '查询失败',
+                    isQueryCoupons: res.succ
+                });
             }
 
         });
 
+      
+
+        //jsapi签名
         ToolDps.get('/wx/user/getJsapiSigna', {
             url: encodeURIComponent(window.location.href.split('#')[0])
         }).then((res) => {
@@ -72,9 +66,9 @@ class Main extends Component {
                     nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
                     signature: jsapiSignature.signature, // 必填，签名，见附录1
                     jsApiList: [
-                            'checkJsApi',
-                            'chooseWXPay'
-                        ] // 必填
+                        'checkJsApi',
+                        'chooseWXPay'
+                    ] // 必填
                 });
 
 
@@ -90,9 +84,9 @@ class Main extends Component {
 
 
     render() {
-        let main = this.state.data && this.state.jsapiSigna ? <Pay type={this.state.type} data={this.state.data} price={this.state.price}/> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
+        let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <Pay data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
         return (
-            <div className="full-page">
+            <div>
                 {main}
             </div>
         )
@@ -107,19 +101,16 @@ class Pay extends Component {
             type
         } = this.props;
         this.state = {
+            isShowPromotionCode: false, //是否显示优惠券
+            couponsId: '', //优惠卷id
+            promotionPrice: '', //优惠价
             msgShow: false,
             msgText: '', //提示内容
-            type: type || '', //服务类型
-            tipsShow: false, //是否显示tips
-            appId: data.appId || '',
-            callback_url: data.callback_url || '',
-            nonceStr: data.nonceStr || '', //支付签名随机串
-            package: data.package || '', //统一支付接口返回的prepay_id参数值
-            paySign: data.paySign || '', //paySign
-            signType: data.signType || '', //签名方式
-            status: data.status || '',
-            timeStamp: data.timeStamp || '' //支付签名时间戳
+            tipsShow: false,
+            userInfo: '', //是否填写过个人信息 0：没填 1：已经填写
         }
+
+        this._time = 0;
 
     }
 
@@ -127,42 +118,85 @@ class Pay extends Component {
         document.title = "支付";
     }
 
+    componentWillReceiveProps(nextProps) {
+        clearTimeout(this._time);
+    }
+
     /**
      * 支付
      */
     pay() {
-
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady);
-                document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
-            }
-        } else {
-            this.onBridgeReady();
+        let data = {}
+        data.orderId = this.props.data.orderId;
+        if (this.state.couponsId) {
+            data.couponsId = this.state.couponsId;
         }
+
+        ToolDps.post('/wx/order/updateCoupons', data).then((res) => {
+            if (res.succ) {
+                this.setState({
+                    userInfo: res.userInfo
+                });
+
+                if (res.goPay === "1") {
+                    if (typeof WeixinJSBridge == "undefined") {
+                        if (document.addEventListener) {
+                            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
+                        } else if (document.attachEvent) {
+                            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                        }
+                    } else {
+                        this.onBridgeReady(res.payInfo);
+                    }
+                } else {
+                    this.setState({
+                        msgShow: true,
+                        msgText: '支付成功', //提示内容
+                        tipsShow: res.userInfo == "0"
+                    });
+
+                    this._time = setTimeout(function () {
+                        this.context.router.push('/fashionMoment');
+                    }.bind(this), 1500);
+                }
+
+
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: '获取支付签名失败', //提示内容
+                });
+            }
+
+        });
+
 
 
     }
 
-    onBridgeReady() {
+    onBridgeReady(signatureInfo) {
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
-                "appId": this.state.appId, //公众号名称，由商户传入
-                "timeStamp": this.state.timeStamp, //时间戳，自1970年以来的秒数
-                "nonceStr": this.state.nonceStr, //随机串
-                "package": this.state.package,
-                "signType": this.state.signType, //微信签名方式：
-                "paySign": this.state.paySign //微信签名
+                "appId": signatureInfo.appId, //公众号名称，由商户传入
+                "timeStamp": signatureInfo.timeStamp, //时间戳，自1970年以来的秒数
+                "nonceStr": signatureInfo.nonceStr, //随机串
+                "package": signatureInfo.package,
+                "signType": signatureInfo.signType, //微信签名方式：
+                "paySign": signatureInfo.paySign //微信签名
             },
             (res) => {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                     this.setState({
-                        tipsShow: true,
-                        msgShow: true,
-                        msgText: '支付成功啦！', //提示内容
+                        // msgShow: true,
+                        // msgText: '支付成功啦！', //提示内容
+                        tipsShow: this.state.userInfo == "0"
                     });
+                    if (this.state.userInfo == "1") {
+                        this._time = setTimeout(function () {
+                            this.context.router.push('/fashionMoment');
+                        }.bind(this), 1500);
+                    }
                 } else if (res.err_msg == "get_brand_wcpay_request:fail") {
                     this.setState({
                         msgShow: true,
@@ -173,18 +207,51 @@ class Pay extends Component {
         );
     }
 
-    render() {
-        let serviceType = '';
-        if (this.props.type === "1") {
-            serviceType = '咨询';
-        } else if (this.props.type === "2") {
-            serviceType = '购物';
-        } else if (this.props.type === "3") {
-            serviceType = '陪逛';
-        } else if (this.props.type === "4") {
-            serviceType = '整理';
-        }
 
+    /**
+     * [giveUpPromotion 放弃优惠券]
+     * @Author   potato
+     * @DateTime 2017-06-02T11:01:56+0800
+     * @return   {[type]}                 [description]
+     */
+    giveUpPromotion() {
+        this.setState({
+            couponsId: '',
+            isShowPromotionCode: false,
+            promotionPrice: ''
+        });
+    }
+
+    /**
+     * [selectPromotion 选择优惠卷]
+     * @Author   potato
+     * @DateTime 2017-06-05T13:33:54+0800
+     * @param    {[type]}                 id    [优惠卷id]
+     * @param    {[type]}                 price [优惠价]
+     * @return   {[type]}                       [description]
+     */
+    selectPromotion(id, price) {
+        this.setState({
+            couponsId: id,
+            isShowPromotionCode: false,
+            promotionPrice: price
+        })
+    }
+
+    render() {
+        let {
+            requiremntTypeName,
+            price,
+            coupons
+        } = this.props.data;
+
+        let payPrice = price;
+        if (this.state.couponsId && this.state.promotionPrice) {
+            payPrice = Number(price) - Number(this.state.promotionPrice);
+            if (payPrice == 0 || payPrice < 0) {
+                payPrice = '0.00';
+            }
+        }
 
         return (
             <section className="full-page">
@@ -192,13 +259,22 @@ class Pay extends Component {
                     <div className="header">
                         <div className="item">付款金额</div>
                         <div className="item">
-                            <strong>￥<span>{this.props.price}</span></strong>
+                            <strong>￥<span>{payPrice}</span></strong>
                         </div>
                     </div>
                     <div className="content">
                         <div className="ground">
-                            <label>服务类型</label><span>{serviceType}服务</span>
+                            <label>服务类型</label>
+                            <span>{requiremntTypeName}</span>
                         </div>
+                        {
+                            coupons.length > 0 ? (
+                                <div className="ground">
+                                    <label className="promotion-lable">优 惠 券</label>
+                                    <span className="promotion-num" onClick={() => { this.setState({ isShowPromotionCode: true }) }}>{this.state.couponsId ? '已使用优惠卷' : `${coupons.length}张可用`}</span>
+                                </div>
+                            ) : null
+                        }
                     </div>
                 </section>
                 <button className="btn pay-btn" onClick={this.pay.bind(this)}>确认支付</button>
@@ -209,13 +285,21 @@ class Pay extends Component {
                     <ol>3.线上订单:未被抢单可以取消，若搭配师已抢单，并进行相关服务，则概不退款</ol>
                     <ol>4.若对服务不满意或产生纠纷，请联系客服邮箱aaron@dapeis.com 工作日 10:00~18:00</ol>
                 </ul>
-                {this.state.msgShow ? <Msg  msgShow={()=>{this.setState({msgShow:false})}} text={this.state.msgText}/> : null}
-                <Tips isShow={this.state.tipsShow}  skipPath="/fashionMoment" perfectPath="/customSuit" hideTips={()=>{this.setState({tipsShow:false})}}/>
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+                <Tips isShow={this.state.tipsShow} skipPath="/fashionMoment" perfectPath="/customSuit" hideTips={() => { this.setState({ tipsShow: false }) }} />
+                {/*优惠码暂时隐藏*/}
+                {/* <CSSTransitionGroup transitionName="move" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+                    {this.state.isShowPromotionCode ? <UseFulPromotionCode data={coupons} couponsId={this.state.couponsId} selectPromotion={this.selectPromotion.bind(this)} giveUpPromotion={this.giveUpPromotion.bind(this)} /> : null}
+                </CSSTransitionGroup> */}
             </section>
         )
     }
 }
 
+
+Pay.contextTypes = {
+    router: PropTypes.object.isRequired
+}
 
 
 export default Main;

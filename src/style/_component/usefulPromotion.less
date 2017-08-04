@@ -1,0 +1,44 @@
+//优惠码
+.pay-select-promotion {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    .promotion-list-area {
+        padding-bottom: 100px;
+
+        li {
+            .icon-svg-promotion-code {
+                display: none;
+                bottom: -6px;
+            }
+            &.active {
+                border-bottom-color: #ED0000;
+
+                .icon-svg-promotion-code {
+                    display: block;
+                }
+            }
+        }
+    }
+    .action-area {
+        background: #f0f0f0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 6rem;
+        box-shadow: 5px 5px 15px #000000;
+
+        button {
+            width: 16rem;
+            margin: 1.25rem auto 0;
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+}

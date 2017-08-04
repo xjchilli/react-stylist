@@ -2,18 +2,12 @@
  * 衣橱修改
  * Created by potato on 2017/5/3 0003.
  */
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-    ToolDps
-} from '../ToolDps';
-import {
-    DataLoad,
-    GetData,
-    Msg
-} from '../Component/index';
+import qs from 'query-string';
+import { ToolDps } from '../ToolDps';
+import { DataLoad, GetData, Msg } from '../Component/index';
+
 
 
 
@@ -29,7 +23,7 @@ class Main extends Component {
             loadAnimation,
             loadMsg
         } = this.props.state;
-        let main = data ? <WardrobeModify {...this.props}  /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = data && data.succ ? <WardrobeModify data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
         return (
             <div>
                 {main}
@@ -41,25 +35,26 @@ class Main extends Component {
 class WardrobeModify extends Component {
     constructor(props) {
         super(props);
+        let data = props.data;
         this.state = {
+            sex: 2,//性别1：男 2:女
+            girlCategory: [{ key: '100', value: '裙子' }, { key: '101', value: '上衣' }, { key: '102', value: '裤子' }, { key: '103', value: '内衣' }, { key: '104', value: '鞋' }, { key: '105', value: '包' }, { key: '106', value: '配饰' }, { key: '107', value: '美妆' }],//女分类
+            boyCategory: [{ key: '200', value: '上衣' }, { key: '201', value: '裤子' }, { key: '202', value: '内衣' }, { key: '203', value: '外套' }, { key: '204', value: '鞋' }, { key: '205', value: '包' }, { key: '206', value: '配饰' }],//男分类
             msgShow: false,
             msgText: '', //提示内容
-            gid: '', //衣橱ID
-            name: '', //商品名称
-            remark: '', //描述
-            typeCode: '', //类别Code
+            gid: data.id || '', //衣橱ID
+            name: data.name || '', //商品名称
+            remark: data.remark || '', //描述
+            typeCode: data.typeCode || '', //类别Code
             file: null, //图片,不修改时 为null
-            imgSrc: '', //图片地址
+            imgSrc: data.imgUrl || '', //图片地址sa
         }
         this.reader = new FileReader();
         this._time = 0;
     }
 
-    componentWillMount() {
-        document.title = "衣橱详情";
-        let {
-            data
-        } = this.props.state;
+    componentWillReceiveProps(nextProps) {
+        let { data } = nextProps;
         this.setState({
             gid: data.id, //衣橱ID
             name: data.name, //商品名称
@@ -67,6 +62,29 @@ class WardrobeModify extends Component {
             typeCode: data.typeCode, //类别Code
             imgSrc: data.imgUrl, //图片地址
         });
+    }
+
+    componentDidMount() {
+        document.title = "衣橱修改";
+        ToolDps.get('/wx/user/info').then((data) => {
+            if (data.succ) {
+                this.setState({
+                    sex: data.info.sex
+                });
+            } else {
+                this.setState({
+                    msgShow: false,
+                    msgText: '获取个人信息失败', //提示内容
+                })
+            }
+        }).catch(() => {
+            this.setState({
+                msgShow: false,
+                msgText: '获取个人信息失败', //提示内容
+            })
+        });
+
+
     }
 
     componentWillUnmount() {
@@ -81,7 +99,7 @@ class WardrobeModify extends Component {
     previewImg(e) {
         let files = e.target.files;
         if (files && files[0]) {
-            if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
+            // if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
             this.reader.addEventListener('load', this.preview.bind(this, files[0]));
             this.reader.readAsDataURL(files[0]);
         }
@@ -140,6 +158,7 @@ class WardrobeModify extends Component {
         formdata.append('img', this.state.file);
         formdata.append('name', this.state.name);
         formdata.append('remark', this.state.remark);
+        formdata.append('sex', this.state.sex);
 
         ToolDps.post('/wx/garderobe/modify', formdata, {
             'Content-Type': 'multipart/form-data'
@@ -190,39 +209,38 @@ class WardrobeModify extends Component {
     }
 
     render() {
+        let categories = [];
+        this.state.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
         return (
             <section className="full-page">
                 <div className='upload-clothing-bg wardrobe-modify'>
                     <div className="box">
                         <div className="group">
                             <div className="item">
-                                <input type="text"  placeholder="物品名称" className="goods-name" accept="image/*" onChange={(e)=>{this.setState({name:e.target.value})}} value={this.state.name}/>
+                                <input type="text" placeholder="物品名称" className="goods-name" accept="image/*" onChange={(e) => { this.setState({ name: e.target.value }) }} value={this.state.name} />
                             </div>
                             <div className="item category-area">
-                                <select className="category" onChange={(e)=>{this.setState({typeCode:e.target.value})}} value={this.state.typeCode}>
+                                <select className="category" onChange={(e) => { this.setState({ typeCode: e.target.value }) }} value={this.state.typeCode}>
                                     <option value="">物品分类</option>
-                                    <option value="1">内衣</option>
-                                    <option value="2">配饰</option>
-                                    <option value="3">裙装</option>
-                                    <option value="4">鞋靴</option>
-                                    <option value="5">彩妆</option>
-                                    <option value="6">上衣</option>
-                                    <option value="7">包袋</option>
-                                    <option value="8">裤装</option>
+                                    {
+                                        categories.map((item, index) => {
+                                            return <option key={index} value={item.key}>{item.value}</option>
+                                        })
+                                    }
                                 </select>
                             </div>
                         </div>
                         <div className="group">
                             <div className="item img-show">
                                 <svg viewBox="5 0 209.6 200" className="icon-svg-cloth" >
-                                    <use xlinkHref="/assets/img/icon.svg#svg-cloth"/>
+                                    <use xlinkHref="/assets/img/icon.svg#svg-cloth" />
                                 </svg>
-                                {this.state.imgSrc !== "" ? <img src={this.state.imgSrc} className="preview-img" alt=""/> : null}
-                                <input type="file" ref='uploadImg' className="upload-file" onChange={this.previewImg.bind(this)}/>
-                                {this.state.imgSrc !== "" ? <svg viewBox="0 0 100 100" className="icon-svg-delete close" onClick={this.deleteCurrImg.bind(this)}><use xlinkHref="/assets/img/icon.svg#svg-delete"/></svg> : null}
+                                {this.state.imgSrc !== "" ? <img src={this.state.imgSrc} className="preview-img" alt="" /> : null}
+                                <input type="file" ref='uploadImg' accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
+                                {this.state.imgSrc !== "" ? <svg viewBox="0 0 100 100" className="icon-svg-delete close" onClick={this.deleteCurrImg.bind(this)}><use xlinkHref="/assets/img/icon.svg#svg-delete" /></svg> : null}
                             </div>
                             <div className="item">
-                                <textarea placeholder="添加物品描述" maxLength={300} onChange={(e)=>{this.setState({remark:e.target.value})}} value={this.state.remark}></textarea>
+                                <textarea placeholder="添加物品描述" maxLength={300} onChange={(e) => { this.setState({ remark: e.target.value }) }} value={this.state.remark}></textarea>
                             </div>
                         </div>
                         <div className="action-area">
@@ -231,7 +249,7 @@ class WardrobeModify extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.msgShow ? <Msg  msgShow={()=>{this.setState({msgShow:false})}} text={this.state.msgText}/> : null}
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
@@ -246,14 +264,13 @@ export default GetData({
     component: Main, //接收数据的组件入口
     url: '/wx/garderobe/detail',
     data: (props, state) => {
-        return {
-            gid: props.match.params.gid
-        }
+        let { gid } = qs.parse(props.location.search);
+        return { gid: gid }
     }, //发送给服务器的数据
     success: (state) => {
         return state;
     }, //请求成功后执行的方法
     error: (state) => {
-            return state
-        } //请求失败后执行的方法
+        return state
+    } //请求失败后执行的方法
 });

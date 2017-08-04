@@ -1,7 +1,9 @@
 .customsuit-swiper-box{
   height: 100%;background: @white;
-  .title{font-size: 1.5rem;text-align: center;padding: 1rem 0;}
-  .swiper-slide{overflow: hidden;}
+  .swiper-slide{
+    overflow: hidden;
+     >.title{position:absolute;top:0;left:0;width:100%;font-size: 1.5rem;text-align: center;padding: 1rem 0;color: #0d0d0d;}
+  }
   //性别
   .sex-area{
       position: absolute; left: 0;right: 0; bottom: 0;top: 0; margin: auto; width: 100%;height: 15rem;text-align: center;
@@ -31,8 +33,8 @@
   }
   //脸型
   .face-area{
-    display: flex;flex-wrap: wrap;
-    .item{flex: 0 0 50%;height: 170px;text-align: center;margin-bottom: 10px;}
+    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+    .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
     .img-area{
       position:relative;display: inline-block;width: 115px;height: 170px;
       >img{width: 115px;height: 170px;}
@@ -56,8 +58,8 @@
   }
   //肤色
   .skin-area{
-    display: flex;flex-wrap: wrap;
-    .item{flex: 0 0 50%;height: 135px;text-align: center;margin-bottom: 10px;}
+    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+    .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
     .img-area{
       position:relative;display: inline-block;width: 105px;height: 135px;
       >img{width: 105px;height: 135px;}
@@ -81,11 +83,11 @@
   }
   //身型
   .body-area{
-    display: flex;flex-wrap: wrap;
-    .item{flex: 0 0 50%;height: 130px;text-align: center;margin-bottom: 10px;}
+    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+    .item{flex: 0 0 50%;height:33.3%;text-align: center;display: flex;align-items: center;justify-content: center;padding:10px 0;}
     .img-area{
-      position:relative;display: inline-block;width: 75px;height: 130px;
-      >img{width: 75px;height: 130px;}
+      position:relative;display: inline-block;width: 75px;
+      >img{width: 75px;max-height: 100%;}
       &.active:after{
         content: '';
         position: absolute;
@@ -128,22 +130,29 @@
       }
     }
     .resolve1{left: 15px;top: 35px;}
+    .resolveBoy.resolve1{top: 25px;}
     .resolve2{left: 15px;top: 65px;}
+    .resolveBoy.resolve2{top: 61px;}
     .resolve3{left: 15px;top: 97px;}
+    .resolveBoy.resolve3{top: 195px;}
     .resolve4{left: 15px;top: 193px;}
+    .resolveBoy.resolve4{left:auto;right: 0;top: 43px;}
     .resolve5{right: 0;top: 31px;}
+    .resolveBoy.resolve5{left:15px;right: auto;top:137px;}
     .resolve6{right: 0;top: 67px;}
+    .resolveBoy.resolve6{top:260px;}
     .resolve7{right: 0;top: 100px;}
+    .resolveBoy.resolve7{top:168px;}
     .resolve8{right: 0;top: 163px;}
     .resolve9{right: 0;top: 252px;}
   }
   //风格
   .style-area{
-    display: flex;flex-wrap: wrap;
-    .item{flex: 0 0 50%;height: 105px;text-align: center;margin-bottom: 10px;}
+    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+    .item{flex: 0 0 50%;height: 33.3%;text-align: center;display: flex;align-items: center;justify-content: center;}
     .img-area{
-      position:relative;display: inline-block;width: 100px;height: 105px;
-      >img{width: 100px;height: 105px;}
+      position:relative;display: inline-block;width: 100px;
+      >img{width: 100px;max-height: 100%;}
       &.active:after{
         content: '';
         position: absolute;
@@ -164,17 +173,30 @@
   }
   //基础信息
   .baseinfo-area{
-      padding: 0 10px;
+      display:flex;flex-direction:column;padding-top:44px;height:100%;
+      .item{flex: auto;}
       .swiper-container{
-        background: #f5f5f5;height: 40px;
-        .swiper-slide{line-height: 40px;text-align: center;font-size: 14px;}
-        .swiper-slide-active{background: @white;}
+        height:3.8rem;border:0.1rem solid #cccccc;border-width:0.1rem 0 0.1rem 0;
+        .swiper-slide{
+            position: relative; line-height: 3.8rem;text-align: center;font-size: 1.2rem;color: #cccccc;font-family:Arial;
+            &:after{
+              content:'';position:absolute;left: 50%;top:0;width:0.1rem;height: 0.7rem;background: #999999;transition: all ease 0.3s;
+            }
+          }
+        .swiper-slide-prev,.swiper-slide-next{
+           &:after{background:#999999; }
+        }
+        .swiper-slide-active{
+          font-size: 1.5rem;color: #01b5bb;line-height:4.8rem;
+          &:after{height: 1.2rem;background:#01b5bb;}
+          }
       }
-     .title{font-size: 14px;text-align: left;padding-left: 15px;}
+     .title{font-size: 14px;text-align: left;padding-left: 2rem;margin:8px 0 5px;}
   }
   //其他信息
   .otherinfo-area{
     padding-top: 15px;
+    .birthDate{line-height: 30px;border: 1px solid gray;text-indent: 5px;}
     .life-photo-title{
       padding-top: 20px;
       >label{font-size: 16px;}
@@ -229,10 +251,6 @@
 
 @media all and (max-width: 320px) {
   .customsuit-swiper-box{
-    .body-area{
-      transform:translate(0,-30px) scale(0.8);
-    }
-    .baseinfo-area{transform:translate(0,-40px) scale(0.9);}
     .sendBtn{margin: auto;}
   }
 }

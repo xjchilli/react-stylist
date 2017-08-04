@@ -3,16 +3,9 @@
  *
  * Created by potato on 2017/3/15.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    Link
-} from 'react-router-dom';
-import {
-    DataLoad,
-    GetData
-} from '../Component/index';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { DataLoad, GetData, PreviewImg } from '../Component/index';
 
 class Main extends Component {
     constructor(props) {
@@ -27,17 +20,17 @@ class Main extends Component {
         } = this.props.state;
         let main = data.succ ? <Profile data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
 
-        return (
-            <div className="full-page">
-                {main}
-            </div>
-        )
+        return main;
     }
 }
 
 class Profile extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: '',//大图url
+        }
 
     }
     componentDidMount() {
@@ -52,8 +45,8 @@ class Profile extends Component {
         } = this.props.data;
         let {
             sex,
-            birthday,
-            city,
+            age,
+            cityName,
             professional,
             heigh,
             weight,
@@ -65,22 +58,23 @@ class Profile extends Component {
             bodySize,
             lifeImgs
         } = info ? info : {};
-        let faceshpeImgSrc = "/assets/img/face" + faceshpe + ".png"; //脸型图片地址
-        let colorofskinImgSrc = "/assets/img/skin" + colorofskin + ".png"; //肤色图片地址
-        let bodyImgSrc = "/assets/img/body" + bodySize + ".png";
+        let isBoyImg = sex === 1 ? '-boy' : '';
+        let faceshpeImgSrc = "/assets/img/face" + faceshpe + "" + isBoyImg + ".jpg"; //脸型图片地址
+        let colorofskinImgSrc = "/assets/img/skin" + colorofskin + "" + isBoyImg + ".jpg"; //肤色图片地址
+        let bodyImgSrc = "/assets/img/body" + bodySize + "" + isBoyImg + ".jpg";
 
         return (
-            <section className="full-page profile-container" >
+            <section className="full-page profile-container">
                 <header>
                     <div className="head-img">
-                        <img src={headImg} alt=""/>
+                        <img src={headImg} alt="" />
                         {sex ? <span className="sex">{sex === 1 ? '♂' : '♀'}</span> : null}
                     </div>
                 </header>
                 <p className="name">{nickName}</p>
                 <div className="base-info-area">
-                    {birthday ? <span>{birthday}</span> : null}
-                    {city ? <span>{city}</span> : null}
+                    {age ? <span>{age}</span> : null}
+                    {cityName ? <span>{cityName}</span> : null}
                     {professional ? <span>{professional}</span> : null}
                 </div>
                 <div className="figure-info-area">
@@ -97,21 +91,21 @@ class Profile extends Component {
                         {
                             faceshpe ? (
                                 <div className="item">
-                                    <img src={faceshpeImgSrc} alt=""/>
+                                    <img src={faceshpeImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }} />
                                 </div>
-                             ) : null
+                            ) : null
                         }
                         {
                             colorofskin ? (
                                 <div className="item">
-                                    <img src={colorofskinImgSrc} alt=""/>
+                                    <img src={colorofskinImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }}  />
                                 </div>
                             ) : null
                         }
                         {
                             bodySize ? (
                                 <div className="item">
-                                    <img src={bodyImgSrc} alt=""/>
+                                    <img src={bodyImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }}  />
                                 </div>
                             ) : null
                         }
@@ -122,10 +116,10 @@ class Profile extends Component {
                     <div className="photo-area">
                         {
                             lifeImgs ? (
-                                lifeImgs.map((lifeImg,index)=>{
+                                lifeImgs.map((lifeImg, index) => {
                                     return (
                                         <div className="item" key={index}>
-                                            <img src={lifeImg} alt=""/>
+                                            <img src={lifeImg.imgPath} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: lifeImg.imgPath }) }} />
                                         </div>
                                     )
                                 })
@@ -133,6 +127,7 @@ class Profile extends Component {
                         }
                     </div>
                 </div>
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section>
         );
     }
@@ -149,6 +144,6 @@ export default GetData({
         return state;
     }, //请求成功后执行的方法
     error: (state) => {
-            return state
-        } //请求失败后执行的方法
+        return state
+    } //请求失败后执行的方法
 });

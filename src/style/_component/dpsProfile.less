@@ -1,0 +1,41 @@
+.dps-profile-page{
+    header{
+        display: flex;padding:1.9rem 0 1.4rem;
+        .item{
+            &:nth-of-type(1){ flex: 0 0 9.5rem;}
+            &:nth-of-type(2){ flex:auto;}
+        }
+        .head-img{
+            position:relative;width: 6.7rem;height: 6.7rem;margin:auto;
+            >img{width: 6.7rem;height: 6.7rem;border-radius: 50%;border:0.1rem solid @white;}
+            .sex{position: absolute;right: 0.2rem;bottom: 0.2rem;width: 1.5rem;height: 1.5rem;line-height:1.5rem;border-radius:50%;background: @white;color: #01b5bb;}
+        }
+
+        .dps-info{
+            font-size: 1.2rem;color:#666666;padding-right:1.8rem;
+            .nickName{margin: 0.4rem 0 0.8rem 0;color: #333333;}
+            .style{margin-bottom: 0.6rem;}
+        }
+    }
+    .photo-wall{
+        margin: 1rem;background: @white;padding:0.8rem 0.8rem 1rem 0.8rem;
+        .title{color: #333333;font-size:1.2rem;border-bottom:0.1rem dashed #cccccc;padding-bottom:0.8rem;}
+        .flex-box{
+            padding: 1rem 0.5rem 0;
+            .item-2{
+                display: block;position:relative;margin-bottom:1rem;
+                &:nth-of-type(odd){padding-right: 0.7rem;}
+                &:nth-of-type(even){padding-left: 0.7rem;}
+                >span{position: absolute;top:0;right: 0;bottom: 0;left: 0;margin: auto;width: 4.5rem;height:1.7rem;line-height: 1.7rem;font-size:1.2rem;color: #333333;background: rgba(255,255,255,0.9);}
+               .fashion-img{height: 8rem;max-width: 100%;margin: auto;}
+            }
+        } 
+    }
+    .statistics{
+        position: relative;color:#666666;font-size:1.2rem;
+        .icon-svg-comment{width: 1.5rem;height: 1.5rem;}
+        .agree{padding-left: 0.6rem;}
+        .comment{position: absolute;right: 0.6rem;}
+        svg{margin-right: 0.5rem;vertical-align: middle;}
+    }
+}

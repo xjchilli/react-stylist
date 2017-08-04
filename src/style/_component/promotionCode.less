@@ -1,4 +1,12 @@
 .promotionCode-area {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	top: 0;
+	margin: auto;
+    background: @bg;
+
 	header {
 		padding-bottom: 10px;
 		background: @white;
@@ -41,85 +49,12 @@
 				transform: translate3d(0, -50%, 0);
 			}
 		}
-		//发布需求
-		.publish-link {
-			font-size: 14px;
-			line-height: 34px;
-			position: relative;
-			display: block;
-			width: 96px;
-			margin: 10px auto;
-			padding: 0 10px 0 30px;
-			color: @white;
-			border-radius: 5px;
-			background: #696;
-
-			&:after {
-				position: absolute;
-				z-index: 1;
-				top: 50%;
-				left: 8px;
-				content: '';
-				transform: translate3d(0, -50%, 0);
-				.cicle();
-				background: @white;
-			}
-			&:before {
-				position: absolute;
-				z-index: 9;
-				top: 13px;
-				left: 11px;
-				content: '';
-				.yes();
-				border-color: #696;
-			}
-		}
-		// 我的分享码
-		.my-share-code {
-			.code {
-				text-align: center;
-				color: #FF0000;
-				font-weight: bold;
-				line-height: 40px;
-			}
-		}
 		.tips {
 			color: rgb(153, 153, 153);
 		}
 	}
 	//优惠卷列表	
 	.promotion-list-area {
-		padding-bottom: 60px;
-
-		li {
-			position: relative;
-			margin: 15px 15px 0 15px;
-			padding: 10px 15px;
-			border-bottom: 4px solid rgb(51, 51, 51);
-			border-radius: 5px;
-			background: @white;
-
-			h5 {
-				font-size: 16px;
-				color: rgb(51, 51, 51);
-			}
-			.time, .tips {
-				font-size: 12px;
-				color: rgb(153, 153, 153);
-			}
-			.tips {
-				margin-top: 50px;
-			}
-			.price-area {
-				font-size: 32px;
-				position: absolute;
-				top: 5px;
-				right: 5px;
-
-				small {
-					font-size: 14px;
-				}
-			}
-		}
+		padding-bottom: 150px;
 	}
 }

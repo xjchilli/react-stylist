@@ -5,6 +5,8 @@ import {GetNextPage,GetData,DataLoad} from './common/index';
 import City from './city/index';
 import Slider from './slider/index';
 import {Tips,Msg} from './tips/index';
+import PreviewImg from './preview/index';
+import ToReward from './reward/index'
 
 export {
     GetNextPage,
@@ -13,5 +15,7 @@ export {
     City,
     Slider,
     Tips,
-    Msg
+    Msg,
+    PreviewImg,
+    ToReward
 }

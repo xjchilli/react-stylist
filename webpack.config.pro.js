@@ -19,15 +19,16 @@ var p = path.resolve(__dirname + '/assets');
 
 module.exports = {
     //入口文件
-    entry:{
+    entry: {
         app: './src/App.js',
         vendors: ['react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-addons-css-transition-group'],
     },
     // 出口文件
     output: {
-        publicPath:publicPath,
+        publicPath: publicPath,
         path: p,
-        filename: 'js/[name].js'
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].[chunkhash:5].min.js'
     },
     module: {
         rules: [
@@ -57,7 +58,7 @@ module.exports = {
             }
         }),
         new ExtractTextPlugin({
-            filename:'css/[name].css'
+            filename: 'css/[name].css'
         }),//css单独打包
         new HtmlWebpackPlugin({ //根据模板插入css/js等生成最终HTML
             filename: 'index.html', //生成的html存放路径，相对于 path
@@ -92,13 +93,13 @@ module.exports = {
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name:'vendors',
-            filename:'js/vendors.js'
+            name: 'vendors',
+            filename: 'js/vendors.js'
         }), //所有公用js文件打包到vendors.js
 
     ],
     resolve: {
-        extensions: [ '.js', '.jsx','.css','.less',".json"],
+        extensions: ['.js', '.jsx', '.css', '.less', ".json"],
         modules: [path.resolve(__dirname, "src"), "node_modules"],
         alias: {
             'react': path.resolve(__dirname + '/node_modules/react'),
@@ -107,7 +108,11 @@ module.exports = {
             'react-redux': path.resolve(__dirname + '/node_modules/react-redux'),
             'redux': path.resolve(__dirname + '/node_modules/redux'),
             'redux-thunk': path.resolve(__dirname + '/node_modules/redux-thunk'),
-            'react-addons-css-transition-group': path.resolve(__dirname + '/node_modules/react-addons-css-transition-group'),
+            'react-transition-group': path.resolve(__dirname + '/node_modules/react-transition-group'),
+            'prop-types': path.resolve(__dirname + '/node_modules/prop-types'),
+            'obj-merged': path.resolve(__dirname + '/node_modules/obj-merged'),
+            'classnames': path.resolve(__dirname + '/node_modules/classnames'),
+            'swiper': path.resolve(__dirname + '/node_modules/swiper'),
         }
     }
 };

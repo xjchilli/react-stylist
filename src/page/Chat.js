@@ -2,22 +2,46 @@
  * 聊天
  * Created by potato on 2017/5/17 0017.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    ToolDps
-} from '../ToolDps';
-import {
-    DataLoad
-} from '../Component/index'
+import React, { Component } from 'react';
+import { ToolDps } from '../ToolDps';
+import { DataLoad, PreviewImg } from '../Component/index';
 import merged from 'obj-merged';
-
+import IM from './component/IM';
 
 class List extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: ''//大图url
+        }
+
+        /**
+         * 预览大图 
+         */
+        this.previewBigImg = (e) => {
+            if (ToolDps.CName.hasClass(e.target, 'previewBigImg')) {
+                let url = e.target.getAttribute('bigimgurl');
+                this.setState({
+                    previewBigImg: true,
+                    bigImgUrl: url
+                });
+            }
+
+        }
+
     }
+
+    componentDidMount() {
+        //绑定图片点击事件
+        document.querySelector('.chat-content').addEventListener('click', this.previewBigImg);
+    }
+
+    componentWillUnmount() {
+        //取消图片点击事件
+        document.querySelector('.chat-content').removeEventListener('click', this.previewBigImg);
+    }
+
 
     render() {
         let {
@@ -35,24 +59,27 @@ class List extends Component {
                 selfClass = ' self';
             }
             data.push(
-                <li className={"friend-area"+selfClass} key={index}>
-                    <img src={headUrl} alt=""/>
-                    <div className="msgContent"  dangerouslySetInnerHTML={{__html: content}}></div>
+                <li className={"friend-area" + selfClass} key={index}>
+                    <img src={headUrl} alt="" />
+                    <div className="msgContent" dangerouslySetInnerHTML={{ __html: content }}></div>
                 </li>
             )
         });
 
 
         return (
-            <ul className="chat-content">
-                {data}
-            </ul>
+            <div>
+                <ul className="chat-content">
+                    {data}
+                </ul>
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
+            </div>
         )
     }
 }
 
 
-class Chat extends Component {
+class Chat extends IM {
     constructor(props) {
         super(props);
         this.state = {
@@ -62,19 +89,19 @@ class Chat extends Component {
             emotionFlag: false, //是否显示表情选择框
             emotions: [],
             list: [], //数据列表
-            containerHeight:500//聊天内容高度
+            containerHeight: 500 //聊天内容高度
         };
         let {
             location: {
                 query: {
                     selToID,
-                    headUrl,
-                    nickname
+            headUrl,
+            nickname
                 }
             }
-        } = this.props;
+        } = props;
 
-        this.currScrollHeight=0;//默认当前滚动条高度
+        this.currScrollHeight = 0; //默认当前滚动条高度
         this._time = 0;
         this.d = this.debounce(500, this.preHistory.bind(this));
         //保留服务器返回的最近消息时间和消息Key,用于下次向前拉取历史消息
@@ -88,50 +115,27 @@ class Chat extends Component {
         this.nickname = nickname; //好友昵称
         this.selSess = null; //当前聊天会话对象
         this.reqMsgCount = 15; //每次请求的历史消息(c2c获取群)条数，仅demo用得到
-        //参数：loginInfo
-        this.loginInfo = {
-            'sdkAppID': '', //用户所属应用id,必填
-            'accountType': '', //用户所属应用帐号类型，必填
-            'identifier': '', //当前用户ID,必须是否字符串类型，必填
-            'userSig': '', //当前用户身份凭证，必须是字符串类型，必填
-            'identifierNick': '', //当前用户昵称，不用填写，登录接口会返回用户的昵称，如果没有设置SublimeCodeIntel，则返回用户的id
-            'headurl': '' //当前用户默认头像，选填，如果设置过头像，则可以通过拉取个人资料接口来得到头像信息
-        };
-        //参数：listeners
-        this.listeners = {
-            "onConnNotify": this.onConnNotify, //监听连接状态回调变化事件,必填
-            "onMsgNotify": this.onMsgNotify.bind(this) //监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件，必填
-        };
-        //参数:options
-        //初始化时，其他对象，选填
-        this.options = {
-            'isAccessFormalEnv': true, //是否访问正式环境，默认访问正式，选填
-            'isLogOn': false //是否开启控制台打印日志,默认开启，选填
-        }
+
+
+
     }
 
     componentDidMount() {
         document.title = this.nickname;
 
 
-        window.addEventListener('resize',this.resetChatHeight.bind(this));
+        window.addEventListener('resize', this.resetChatHeight.bind(this));
 
         //重置聊天内容高度
         this.resetChatHeight();
 
-
-        ToolDps.get('/wx/tim/getSignature').then((res) => {
-            // console.log(res);
-            if (res.succ) {
-                let {
-                    data
-                } = res;
-                this.login(data);
-            } else {
-                alert('签名失败');
-            }
-
+        this.signature((data) => {
+            this.login(data, () => {
+                this.getLastC2CHistoryMsgs(); //获取好友历史聊天记录
+                this.showEmotionDialog(); //初始化表情包
+            });
         });
+
     }
 
 
@@ -139,57 +143,7 @@ class Chat extends Component {
         clearTimeout(this._time);
     }
 
-    /**
-     * 登录
-     * @param data
-     */
-    login(data) {
-        //当前用户身份
-        this.loginInfo.sdkAppID = data.sdkAppId;
-        this.loginInfo.accountType = data.accountType;
-        this.loginInfo.identifier = data.identifier;
-        this.loginInfo.userSig = data.userSig;
-        this.loginInfo.identifierNick = data.identifierNick;
-        this.loginInfo.headurl = data.headUrl;
 
-        webim.login(
-            this.loginInfo, this.listeners, this.options,
-            (resp) => {
-                this.loginInfo.identifierNick = resp.identifierNick; //设置当前用户昵称
-                // console.log(resp);
-                this.getLastC2CHistoryMsgs(); //获取好友历史聊天记录
-                this.showEmotionDialog(); //初始化表情包
-            },
-            (err) => {
-                console.log(err.ErrorInfo);
-            }
-        );
-    }
-
-    /**
-     * 监听连接状态回调变化事件
-     */
-    onConnNotify(resp) {
-        let info;
-        switch (resp.ErrorCode) {
-            case webim.CONNECTION_STATUS.ON:
-                webim.Log.warn('建立连接成功: ' + resp.ErrorInfo);
-                break;
-            case webim.CONNECTION_STATUS.OFF:
-                info = '连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo;
-                // alert(info);
-                webim.Log.warn(info);
-                break;
-            case webim.CONNECTION_STATUS.RECONNECT:
-                info = '连接状态恢复正常: ' + resp.ErrorInfo;
-                // alert(info);
-                webim.Log.warn(info);
-                break;
-            default:
-                webim.Log.error('未知连接状态: =' + resp.ErrorInfo);
-                break;
-        }
-    }
 
     /**
      * 监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件
@@ -205,7 +159,7 @@ class Chat extends Component {
             newMsg = newMsgList[j];
             if (newMsg.getSession().id() == this.selToID) { //为当前聊天对象的消息
                 //在聊天窗体中新增一条消息
-                console.log(newMsg);
+                // console.log(newMsg);
                 this.addMsg(newMsg);
             }
         }
@@ -299,7 +253,7 @@ class Chat extends Component {
             li.innerHTML = '<img src=' + fromAccountImage + ' alt=""><div class="msgContent">' + contentHtml + '</div>';
             document.querySelector('.chat-content').insertBefore(li, document.querySelector('.chat-content').firstChild);
             //50代表一条聊天记录默认高度
-            this.refs.container.scrollTop = this.refs.container.scrollHeight -   this.currScrollHeight -50;
+            this.refs.container.scrollTop = this.refs.container.scrollHeight - this.currScrollHeight - 50;
 
             return;
         } else {
@@ -380,6 +334,8 @@ class Chat extends Component {
         }
     }
 
+
+
     /**
      * 解析图片消息元素
      * @param content
@@ -387,17 +343,17 @@ class Chat extends Component {
      * @returns {string}
      */
     convertImageMsgToHtml(content) {
-            var smallImage = content.getImage(webim.IMAGE_TYPE.SMALL); //小图
-            var bigImage = content.getImage(webim.IMAGE_TYPE.LARGE); //大图
-            var oriImage = content.getImage(webim.IMAGE_TYPE.ORIGIN); //原图
-            if (!bigImage) {
-                bigImage = smallImage;
-            }
-            if (!oriImage) {
-                oriImage = smallImage;
-            }
-            return "<img  src='" + smallImage.getUrl() + "#" + bigImage.getUrl() + "#" + oriImage.getUrl() + "'  id='" + content.getImageId() + "' bigImgUrl='" + bigImage.getUrl() + "' />";
+        var smallImage = content.getImage(webim.IMAGE_TYPE.SMALL); //小图
+        var bigImage = content.getImage(webim.IMAGE_TYPE.LARGE); //大图
+        var oriImage = content.getImage(webim.IMAGE_TYPE.ORIGIN); //原图
+        if (!bigImage) {
+            bigImage = smallImage;
         }
+        if (!oriImage) {
+            oriImage = smallImage;
+        }
+        return "<img class='previewBigImg' src=" + smallImage.getUrl() + "#" + bigImage.getUrl() + "#" + oriImage.getUrl() + "  id=" + content.getImageId() + " bigImgUrl=" + bigImage.getUrl() + " />";
+    }
 
     /**
      * 发送消息(文本或者表情)
@@ -486,7 +442,7 @@ class Chat extends Component {
     showEmotionDialog() {
         let emotionArr = [];
         for (let index in webim.Emotions) {
-            emotionArr.push(<li key={index}><img id={webim.Emotions[index][0]} src={webim.Emotions[index][1]} alt="" onClick={this.selectEmotion.bind(this)}/></li>);
+            emotionArr.push(<li key={index}><img id={webim.Emotions[index][0]} src={webim.Emotions[index][1]} alt="" onClick={this.selectEmotion.bind(this)} /></li>);
             // console.log(webim.Emotions[index])
         }
         this.setState({
@@ -512,7 +468,7 @@ class Chat extends Component {
         if (currEle.scrollTop == 0) {
             currEle.scrollTop = 10;
 
-            this.currScrollHeight=this.refs.container.scrollHeight -  this.refs.container.scrollTop;
+            this.currScrollHeight = this.refs.container.scrollHeight - this.refs.container.scrollTop;
             /*console.log(this.refs.container.scrollTop)
             console.log(this.refs.container.scrollHeight)*/
 
@@ -566,7 +522,7 @@ class Chat extends Component {
      */
     sendPic(images, imgName) {
         if (!this.selSess) {
-            this.selSess = new webim.Session(selType, selToID, selToID, friendHeadUrl, Math.round(new Date().getTime() / 1000));
+            this.selSess = new webim.Session(this.selType, this.selToID, this.selToID, this.friendHeadUrl, Math.round(new Date().getTime() / 1000));
         }
         let msg = new webim.Msg(this.selSess, true, -1, -1, -1, this.loginInfo.identifier, 0, this.loginInfo.identifierNick);
         let images_obj = new webim.Msg.Elem.Images(images.File_UUID);
@@ -605,11 +561,11 @@ class Chat extends Component {
      */
     debounce(idle, action) {
         let last;
-        return function() {
+        return function () {
             let ctx = this,
                 args = arguments;
             clearTimeout(last);
-            last = setTimeout(function() {
+            last = setTimeout(function () {
                 action.apply(ctx, args)
             }, idle)
         }
@@ -618,32 +574,32 @@ class Chat extends Component {
     /**
      * 重置聊天高度
      */
-    resetChatHeight(){
+    resetChatHeight() {
         // console.log(window.innerHeight);
         //重置聊天内容高度
         this.setState({
-            containerHeight:window.innerHeight - 50
+            containerHeight: window.innerHeight - 50
         });
     }
 
     render() {
         return (
-            <div  className="full-page chat-page">
-                <div ref='container' className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{height:this.state.containerHeight}}>
-                    {this.state.list.length > 0 ?  <List list={this.state.list}/> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg}/>}
+            <div className="full-page chat-page">
+                <div ref='container' className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
+                    {this.state.list.length > 0 ? <List list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer>
-                    <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={()=>{this.setState({emotionFlag:!this.state.emotionFlag})}}>
-                        <use xlinkHref="/assets/img/icon.svg#svg-face"/>
+                    <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>
+                        <use xlinkHref="/assets/img/icon.svg#svg-face" />
                     </svg>
                     <div className="upload-img">
-                        <svg viewBox="0 0 1024 1024" className="icon-svg-img" onClick={()=>{this.setState({emotionFlag:true})}}>
-                            <use xlinkHref="/assets/img/icon.svg#svg-img"/>
+                        <svg viewBox="0 0 1024 1024" className="icon-svg-img" onClick={() => { this.setState({ emotionFlag: true }) }}>
+                            <use xlinkHref="/assets/img/icon.svg#svg-img" />
                         </svg>
-                        <input type="file" className="img" accept="image/*" multiple={true} onChange={this.uploadPic.bind(this)}/>
+                        <input type="file" className="img" accept="image/*" multiple={true} onChange={this.uploadPic.bind(this)} />
                     </div>
-                    <textarea type="text" value={this.state.msgText} onChange={(e)=>{this.setState({msgText:e.target.value})}} onFocus={this.hideEmotion.bind(this)}/>
-                    <button  className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
+                    <textarea type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
+                    <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
 
                 </footer>

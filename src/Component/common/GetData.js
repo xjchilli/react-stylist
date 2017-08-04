@@ -1,21 +1,12 @@
 /**
  * Created by potato on 2017/4/15.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    connect
-} from 'react-redux';
-import { withRouter } from 'react-router'
+import React from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import action from '../../Action/Index';
-import {
-    Tool,
-    merged
-} from '../../Tool';
-import {
-    ToolDps
-} from '../../ToolDps';
+import merged from 'obj-merged';
+import { ToolDps } from '../../ToolDps';
 
 
 /**
@@ -37,8 +28,8 @@ const Main = (mySeting) => {
             return state;
         }, //请求成功后执行的方法
         error: (state) => {
-                return state;
-            } //请求失败后执行的方法
+            return state;
+        } //请求失败后执行的方法
     };
 
     /**
@@ -54,7 +45,7 @@ const Main = (mySeting) => {
      * @class Index
      * @extends {Component}
      */
-    class Index extends Component {
+    class Index extends React.Component {
         constructor(props) {
             super(props);
 
@@ -64,14 +55,8 @@ const Main = (mySeting) => {
              * @param {Object} props
              */
             this.initState = (props) => {
-                let {
-                    state,
-                    location
-                } = props;
-                let {
-                    pathname,
-                    search
-                } = location;
+                let { state, location } = props;
+                let { pathname, search } = location;
                 this.path = pathname + search;
 
                 if (typeof state.path[this.path] === 'object' && state.path[this.path].path === this.path) {
@@ -150,7 +135,7 @@ const Main = (mySeting) => {
         }
 
         render() {
-            return <this.props.seting.component {...this.props} state={this.state}/>
+            return <this.props.seting.component {...this.props} state={this.state} />
         }
     }
 

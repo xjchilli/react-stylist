@@ -2,14 +2,10 @@
  * 绑定手机号
  * Created by potato on 2017/5/5 0005.
  */
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types';
-import {
-  ToolDps
-} from '../../ToolDps';
-import Msg from "../../Component/tips/msg";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import { ToolDps } from '../../ToolDps';
+import {Msg} from "../../Component/index";
 
 class BindTel extends Component {
   constructor(props) {
@@ -69,7 +65,7 @@ class BindTel extends Component {
       } else {
         this.setState({
           msgShow: true,
-          msgText: '发送失败', //提示内容
+          msgText: res.msg, //提示内容
         });
       }
     }).catch(() => {
@@ -115,7 +111,7 @@ class BindTel extends Component {
       } else {
         this.setState({
           msgShow: true,
-          msgText: '请检查手机号和验证码', //提示内容
+          msgText: res.msg, //提示内容
         });
       }
     }).catch(() => {
@@ -131,7 +127,7 @@ class BindTel extends Component {
    */
   startTimer() {
     let second = this.state.second; //秒
-    this._time = setInterval(function() {
+    this._time = setInterval(function () {
       second--;
       this.setState({
         second: second,
@@ -154,23 +150,23 @@ class BindTel extends Component {
   render() {
     return (
       <section className="full-page bind-tel-container">
-                <div className="box">
-                    <div className="form-ground">
-                        <div className="item">
-                            <input type="tel" placeholder="手机号" maxLength={11} value={this.state.tel} onChange={(e)=>{this.setState({tel:e.target.value})}}/>
-                            <span className="getCodeBtn" onClick={this.getCodeBtn.bind(this)}>{this.state.getCodeBtnText}</span>
-                        </div>
-                    </div>
-                    <div className="form-ground">
-                        <div className="item">
-                            <input type="tel" placeholder="验证码" maxLength={4} value={this.state.verifyCode} onChange={(e)=>{this.setState({verifyCode:e.target.value})}}/>
-                        </div>
-                    </div>
-                    <button className="btn bindBtn" onClick={this.bindTel.bind(this)}>绑定</button>
-                    <p className="text-center tips">绑定后可体验更多服务</p>
-                </div>
-              {this.state.msgShow ? <Msg msgShow={()=>{this.setState({msgShow:false})}} text={this.state.msgText}/> : null}
-          </section>
+        <div className="box">
+          <div className="form-ground">
+            <div className="item">
+              <input type="tel" placeholder="手机号" maxLength={11} value={this.state.tel} onChange={(e) => { this.setState({ tel: e.target.value }) }} />
+              <span className="getCodeBtn" onClick={this.getCodeBtn.bind(this)}>{this.state.getCodeBtnText}</span>
+            </div>
+          </div>
+          <div className="form-ground">
+            <div className="item">
+              <input type="tel" placeholder="验证码" maxLength={4} value={this.state.verifyCode} onChange={(e) => { this.setState({ verifyCode: e.target.value }) }} />
+            </div>
+          </div>
+          <button className="btn bindBtn" onClick={this.bindTel.bind(this)}>绑定</button>
+          <p className="text-center tips">绑定后可体验更多服务</p>
+        </div>
+        {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+      </section>
     )
   }
 

@@ -1,3 +1,23 @@
+.order-list-page{
+  padding-top:3.8rem;
+}
+.order-list-nav{
+  position:fixed;top:0;width:100%;background: #01b5bb;color: #FFFFFF;font-size: 1.5rem;text-align: center;line-height: 3.8rem;
+  .swiper-slide{
+    >span{padding: 0.2rem 0.4rem;border-radius:0.5rem;}
+    &.active{
+      >span{background: rgba(0,0,0,.2);}
+    }
+    &+.swiper-slide::after{
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 0;
+      content: "";
+      border-right: 1px solid @white;
+    }
+  }
+}
 .order-list-area{
   li{
     position:relative;background: @white;min-height: 40px;padding: 10px 15px;border-bottom: 1px solid rgb(215,215,215);

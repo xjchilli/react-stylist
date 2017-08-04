@@ -1,116 +1,276 @@
-.fashionMomentDetailArea{
-  overflow: hidden; 
-  .box{width:100%;height:100%;overflow-y:auto;padding: 0 15px;}
-  //搭配师信息
-  header{
-     position: relative; display: flex;padding: 10px 0;border-bottom: 1px solid rgb(238,238,238);align-items: center;
-    .item{
-      flex: auto;position: relative;
-      &:first-child{flex: 0 0 40px;}
-      &:last-child{padding-left: 10px;overflow: hidden;}
-      .gender{position: absolute;bottom:-4px;right: -4px;width:15px;height:15px;line-height:10px;color:@white;font-size:12px;text-align:center;font-style: normal;background: rgb(255,00,128);border-radius: 50%;padding: 2px;}
-      >img{width: 40px;height: 40px;border-radius: 50%;}
-      .nickname{font-size: 14px;padding-right: 15px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: black; }
-      >time{font-size: 14px;display: inline-block;padding-top: 8px;}
-    }
-    &:after{content: '';position: absolute;right:0.5rem;top:50%;margin-top:-4px;width: 8px;height: 8px;border: 1px solid #000000;border-width:1px 1px 0 0;transform: rotate(45deg);}
-  }
-
-  //方案内容
-  .content{
-     border-bottom: 1px solid rgb(238,238,238);padding-bottom: 30px;overflow: hidden;
-     h1{font-size: 16px;font-weight: bold;text-align: center;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin: 20px 0 5px;}
-    time{display: inline-block;margin-bottom: 20px;}
-    img{max-width: 100%;max-height: 100%;margin:10px auto 0;}
-    .text{font-size: 14px;padding-top:10px;word-break: break-all; }
-  }
-
-  //打赏
-  .reward-area{
-      padding: 30px 0 20px;
-      .btn{margin: auto;}
-      p{text-align: center;font-size: 12px;color: rgb(215,215,215);padding-top:10px; }
-  }
-
-  .money-area{
-    position:fixed;z-index: 99;padding: 15px;
-    .money{
-      background: @white;min-height: 135px;padding-top: 15px;
-      .input-group{
-        position:relative;margin: auto;width: 200px;
-        label{position: absolute;left: 5px;top: 50%;transform: translate3d(0,-50%,0)}
-        input{width: 200px;height: 50px;-webkit-appearance: none;border: 1px solid rgb(221,221,221);font-size: 14px;text-indent: 40px;}
-      }
-      .option-money{
-          display: flex;width: 200px;margin: auto;
-          .item{
-            flex: auto;padding-top: 15px;
-            >.btn{width: 60px;height: 30px;line-height: 30px;background: rgb(51,51,51);}
-          }
-      }
-    }
-    .action-area{
-        padding-top: 30px;
-        .btn{
-          width: 110px;display: inline-block;margin-right: 10px;
-          &:last-child{margin-right: 0;}
-        }
-    }
-  }
-
-  //评论
-  .comment-area{
-      .user-comment{
+.fashionMomentDetailArea {
+    //overflow: hidden;
+    .box {
+        padding: 0 15px;
+    } //width:100%;height:100%;overflow-y:auto;
+    //搭配师信息
+    header {
+        position: relative;
         display: flex;
-        .item{
-          flex: auto;
-          &:first-child{
-            padding-right: 10px;
-            input{width: 100%;height: 3.5rem;-webkit-appearance: none;border: 1px solid rgb(238,238,238);text-indent: 5px;font-size: 14px;}
-          }
-          &:last-child{
-            flex: 0 0 60px;
-            button{width: 70px;}
-          }
+        padding: 10px 0;
+        border-bottom: 1px solid rgb(238, 238, 238);
+        align-items: center;
+        .item {
+            flex: auto;
+            position: relative;
+            &:first-child {
+                flex: 0 0 40px;
+            }
+            &:last-child {
+                padding-left: 10px;
+                overflow: hidden;
+            }
+            .gender {
+                position: absolute;
+                bottom: -4px;
+                right: -4px;
+                width: 15px;
+                height: 15px;
+                line-height: 10px;
+                color: @white;
+                font-size: 12px;
+                text-align: center;
+                font-style: normal;
+                background: rgb(255, 00, 128);
+                border-radius: 50%;
+                padding: 2px;
+            }
+            >img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+            }
+            .nickname {
+                font-size: 14px;
+                padding-right: 15px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                color: black;
+            }
+            >time {
+                font-size: 14px;
+                display: inline-block;
+                padding-top: 8px;
+            }
         }
-      }
-
-    .comment-list{
-        padding-bottom: 80px;
-        li{
-          position: relative; display: flex;padding: 10px 0;border-bottom: 1px solid rgb(238,238,238);
-          &:last-child{border-width: 0;}
-          .item{
-            flex: auto;position: relative;
-            &:first-child{flex: 0 0 40px;height: 40px;}
-            &:last-child{padding-left: 10px;overflow: hidden;}
-            .gender{position: absolute;bottom:-4px;right: -4px;width:15px;height:15px;line-height:10px;color:@white;font-size:12px;text-align:center;font-style: normal;background: rgb(255,00,128);border-radius: 50%;padding: 2px;}
-            >img{width: 40px;height: 40px;border-radius: 50%;}
-            .nickname{font-size: 14px;padding-right: 15px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; }
-            >time{font-size: 14px;display: inline-block;padding-top: 2px;color: rgb(174,174,147);}
-            .comment-content{font-size: 12px;word-break: break-all;color: rgb(105,167,203);}
-          }
+        &:after {
+            content: '';
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            margin-top: -4px;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #000000;
+            border-width: 1px 1px 0 0;
+            transform: rotate(45deg);
         }
-    }
-  }
-
-  //底部内容
-  footer{
-      position: fixed;bottom: 0;left: 0;width: 100%;height: 50px;background: rgb(242,242,242);display: flex;text-align: center;padding-top: 6px;
-    .item{
-      flex: auto;
-      .agree{
-        svg{width: 20px;height: 20px;}
-      }
-      .num{color: rgb(126,126,126);font-size: 14px;}
-    }
-  }
-
-}
-
-
-@media screen and (max-width: 330px) {
-   .fashionMomentDetailArea{
-      -webkit-overflow-scrolling:auto!important;
+    } //方案内容
+    .content {
+        border-bottom: 1px solid rgb(238, 238, 238);
+        padding-bottom: 30px;
+        overflow: hidden;
+        h1 {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin: 20px 0 5px;
+        }
+        time {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .dp-img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 10px auto 0;
+        }
+        .text {
+            font-size: 14px;
+            padding-top: 10px;
+            word-break: break-all;
+            img {
+                display: block;
+                max-width: 100%;
+                margin: auto;
+                width: auto;
+                height: auto;
+            }
+        }
+    } //打赏
+    .reward-area {
+        padding: 30px 0 20px;
+        p {
+            text-align: center;
+            font-size: 12px;
+            color: rgb(215, 215, 215);
+            padding-bottom: 10px;
+        }
+        .btn {
+            margin: auto;
+        }
+        .reward-num {
+            padding-top: 10px;
+        }
+        .reward-person {
+            text-align: center;
+            width: 195px;
+            max-height: 75px;
+            overflow: hidden;
+            margin: auto;
+            font-size: 0;
+            >img {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                margin-right: 5px;
+                margin-bottom: 5px;
+                &:nth-child(8n) {
+                    margin-right: 0;
+                }
+            }
+        }
+    } //评论
+    .comment-area {
+        .user-comment {
+            display: flex;
+            .item {
+                flex: auto;
+                &:first-child {
+                    padding-right: 10px;
+                    input {
+                        width: 100%;
+                        height: 3.5rem;
+                        -webkit-appearance: none;
+                        border: 1px solid rgb(238, 238, 238);
+                        text-indent: 5px;
+                        font-size: 14px;
+                    }
+                }
+                &:last-child {
+                    flex: 0 0 60px;
+                    button {
+                        width: 70px;
+                    }
+                }
+            }
+        }
+        .comment-list {
+            padding-bottom: 80px;
+            li {
+                position: relative;
+                display: flex;
+                padding: 10px 0;
+                border-bottom: 1px solid rgb(238, 238, 238);
+                &:last-child {
+                    border-width: 0;
+                }
+                .item {
+                    flex: auto;
+                    position: relative;
+                    &:first-child {
+                        flex: 0 0 40px;
+                        height: 40px;
+                    }
+                    &:last-child {
+                        padding-left: 10px;
+                        overflow: hidden;
+                    }
+                    .gender {
+                        position: absolute;
+                        bottom: -4px;
+                        right: -4px;
+                        width: 15px;
+                        height: 15px;
+                        line-height: 10px;
+                        color: @white;
+                        font-size: 12px;
+                        text-align: center;
+                        font-style: normal;
+                        background: rgb(255, 00, 128);
+                        border-radius: 50%;
+                        padding: 2px;
+                    }
+                    >img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                    }
+                    .nickname {
+                        font-size: 14px;
+                        padding-right: 15px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    >time {
+                        font-size: 14px;
+                        display: inline-block;
+                        padding-top: 2px;
+                        color: rgb(174, 174, 147);
+                    }
+                    .comment-content {
+                        font-size: 12px;
+                        word-break: break-all;
+                        color: rgb(105, 167, 203);
+                    }
+                }
+            }
+        }
+    } //作者回复
+    .reply-area {
+       margin-top: 0.5rem;
+        &:nth-of-type(1) {
+            border-top: 0.1rem solid #eeeeee;
+        }
+        .author-nickname {
+            border-left: 0.2rem solid rgb(0,187,0);
+            margin:0.2rem 0; 
+            padding-left: 0.3rem;
+            font-size: 14px;
+            padding-right: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        >time {
+            font-size: 14px;
+            display: inline-block;
+            padding-top: 2px;
+            color: rgb(174, 174, 147);
+        }
+        .comment-content {
+            font-size: 12px;
+            word-break: break-all;
+            color: rgb(105, 167, 203);
+        }
+    } //底部内容
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: rgb(242, 242, 242);
+        display: flex;
+        text-align: center;
+        padding-top: 6px;
+        .item {
+            flex: auto;
+            .agree {
+                svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+            .num {
+                color: rgb(126, 126, 126);
+                font-size: 14px;
+            }
+        }
     }
 }

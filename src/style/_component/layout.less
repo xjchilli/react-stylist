@@ -1,3 +1,10 @@
+//优惠码列表
+@import './promotion-list';
+//我的优惠码
+@import './myPromotionCode';
+//可用的优惠码
+@import './usefulPromotion';
+
 .full-page {
   position: absolute;
   top: 0;
@@ -14,7 +21,7 @@
   background-color: @white;
 }
 //icon删除
-.icon-svg-delete {
+.icon-svg-delete,.icon-svg-close {
   width: 20px;
   height: 20px;
 }
@@ -65,11 +72,25 @@
   width: 15px;
   height: 15px;
 }
-//铃铛《
+//优惠码状态、分享按钮
+.icon-svg-promotion-code {
+  width: 50px;
+  height: 50px;
+}
+//分享按钮
+.icon-svg-share-btn {
+  width: 40px;
+  height: 40px;
+}
+.icon-svg-share-tips {
+  width: 250px;
+  height: 250px;
+}
+//铃铛
 .bell-link {
   position: fixed;
-  top: 30px;
-  right: 30px;
+  top: 40px;
+  right: 40px;
 
   .circle {
     display: none;
@@ -90,7 +111,13 @@
     }
   }
 }
-//loading
+
+//微信logo
+.icon-svg-weixin{
+  width: 20px;height: 20px;
+  fill:rgb(214,214,214);
+}
+//loading start
 .data-load {
   .msg {
     line-height: 70px;
@@ -112,6 +139,16 @@
     display: none;
   }
 }
+// 过渡 end
+@keyframes rotate-forever {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+//loading end
 //button
 .btn {
   display: block;
@@ -135,14 +172,32 @@
   padding: 15px;
   font-size: 14px;
 }
-@keyframes rotate-forever {
-  0% {
-    transform: rotate(0deg)
-  }
-  100% {
-    transform: rotate(360deg)
+// 左滑动start
+.move-enter {
+  transform: translate3d(100%, 0, 0);
+
+  &.move-enter-active {
+    transform: translate3d(0, 0, 0);
+    transition: all 500ms ease-in;
   }
 }
+.move-leave {
+  transform: translate3d(0, 0, 0);
+
+  &.move-leave-active {
+    transform: translate3d(100%, 0, 0);
+    transition: all 300ms ease-in;
+  }
+}
+// 左滑动 end
+// 淡入淡出 start
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+// 淡入淡出 end
 //form input layout
 .form-ground {
   display: flex;
@@ -177,3 +232,16 @@
     margin-bottom: 5px;
   }
 }
+.pd15 {
+  padding: 15px;
+}
+
+//flex layout start
+.flex-box{
+   display: flex;flex-wrap: wrap;
+   >.item-2{flex: 0 0 50%;}
+   >.item-3{flex: 0 0 100/3%;}
+}
+
+//flex layout end
+
