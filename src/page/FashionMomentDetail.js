@@ -3,11 +3,12 @@
  * 时尚圈详情
  * Created by potato on 2017/5/22 0022.
  */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
-import { target } from '../Config/Config';
+// import { target } from '../Config/Config';
 import classNames from 'classnames';
 import { DataLoad, GetData, Msg, PreviewImg, ToReward } from "../Component/index";
 import IM from './component/IM';
@@ -17,7 +18,7 @@ import ShareConfig from './component/ShareConfig';
 /**
  * 搭配师信息
  */
-class DapeisInfo extends Component {
+class DapeisInfo extends React.Component {
     render() {
         let {
             headImg,
@@ -44,7 +45,7 @@ class DapeisInfo extends Component {
 /**
  * 方案内容
  */
-class Content extends Component {
+class Content extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,7 +74,7 @@ class Content extends Component {
 /**
  * 打赏
  */
-class ReWard extends Component {
+class ReWard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -130,7 +131,7 @@ class ReWard extends Component {
 /**
  * 评论
  */
-class Comment extends Component {
+class Comment extends React.Component {
 
     constructor(props) {
         super(props);
@@ -211,11 +212,11 @@ class Comment extends Component {
                                         <time>{item.time}</time>
                                         <p className="comment-content">{item.content}</p>
                                         {
-                                            item.reply.map((data,i) => {
-                                                return <AuthorReply data={data} key={i}/>
+                                            item.reply.map((data, i) => {
+                                                return <AuthorReply data={data} key={i} />
                                             })
                                         }
-                                        
+
                                     </div>
                                 </li>
                             )
@@ -232,14 +233,14 @@ class Comment extends Component {
 /**
  * 作者回复
  */
-class AuthorReply extends Component {
+class AuthorReply extends React.Component {
     render() {
         let data = this.props.data;
         return (
             <section className="reply-area">
-                 <p className="author-nickname">作者回复</p>
+                <p className="author-nickname">作者回复</p>
                 <time>{data.createTime}</time>
-                <p className="comment-content">{data.content}</p> 
+                <p className="comment-content">{data.content}</p>
             </section>
         )
     }
@@ -248,7 +249,7 @@ class AuthorReply extends Component {
 /**
  * 方案底部内容
  */
-class Footer extends Component {
+class Footer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -480,7 +481,7 @@ class FashionMomentDetail extends IM {
 }
 
 
-class Main extends Component {
+class Main extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -509,7 +510,7 @@ export default GetData({
     url: '/wx/fashion/detail',
     data: (props, state) => { //发送给服务器的数据
         ToolDps.reloadUrl();
-        let { planId } = props.location.query;
+        let { planId } = qs.parse(props.location.search);
         return {
             planId: planId
         }

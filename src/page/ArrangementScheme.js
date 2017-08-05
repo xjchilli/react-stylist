@@ -2,7 +2,8 @@
  * 搭配方案
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import qs from 'query-string';
 import { DataLoad, GetData, PreviewImg } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
@@ -49,7 +50,7 @@ class ArrangementScheme extends Component {
         return (
             <div className="full-page scheme-area">
                 <img src={scenario.masterImg} alt="" />
-                <Link to={"/dpsProfile/" + collocation.id}>
+                <Link to={"/dpsProfile?collocationId=" + collocation.id}>
                     <div className="dps-info">
                         <img src={collocation.headImg} alt="" />
                         <p className="nickname">{collocation.nickName}</p>
@@ -88,7 +89,7 @@ export default GetData({
     id: 'Profile', //应用关联使用的redux
     component: Main, //接收数据的组件入口
     url: (props, state) => {
-        let { id } = props.location.query;
+        let { id } = qs.parse(props.location.search);
         return "/wx/fashion/" + id + "/qrcode/detail";
     },
     data: '', //发送给服务器的数据

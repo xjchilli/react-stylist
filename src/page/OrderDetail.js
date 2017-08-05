@@ -5,8 +5,9 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'query-string';
 import { DataLoad, GetData, Msg, ToReward, PreviewImg } from '../Component/index';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import MyPromotionCode from './component/MyPromotionCode';
 // import { CSSTransitionGroup } from 'react-transition-group';
@@ -231,7 +232,7 @@ class ToPay extends Component {
                     msgText: '取消成功', //提示内容
                 });
                 this._time = setTimeout(() => {
-                    this.context.router.push('/orderList');
+                    this.context.router.history.push('/orderList');
                 }, 1500);
             }
         });
@@ -340,7 +341,7 @@ class PublishCancel extends Component {
                     msgText: '取消成功', //提示内容
                 });
                 this._time = setTimeout(() => {
-                    this.context.router.push('/orderList');
+                    this.context.router.history.push('/orderList');
                 }, 1500);
             }
         });
@@ -716,7 +717,7 @@ export default GetData({
     url: '/wx/order/detail',
     data: (props, state) => {
         ToolDps.reloadUrl();
-        let { orderId } = props.location.query;
+        let { orderId } = qs.parse(props.location.search);
         return {
             orderId: orderId
         }

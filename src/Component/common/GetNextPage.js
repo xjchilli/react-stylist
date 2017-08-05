@@ -1,18 +1,13 @@
 /**
  * Created by potato on 2016/12/5.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    connect
-} from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import action from '../../Action/Index';
 import merged from 'obj-merged';
 import GetNextPage from './get-next-page';
-import {
-    DataLoad
-} from './index';
+import { DataLoad } from './index';
 
 /*import {
     target
@@ -47,7 +42,7 @@ const Main = (mySetting) => {
         setting[key] = mySetting[key];
     }
 
-    class Index extends Component {
+    class Index extends React.Component {
         constructor(props) {
             super(props);
             /**

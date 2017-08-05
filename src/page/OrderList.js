@@ -4,7 +4,7 @@
  * Created by potato on 2017/5/9 0009.
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 

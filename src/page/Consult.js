@@ -2,11 +2,11 @@
  * 咨询
  * Created by potato on 2017/3/20.
  */
-import React, {
-    Component
-} from 'react'
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import qs from 'query-string';
 import GirlCategory from "./component/GirlCategory";
 import BoyCategory from "./component/BoyCategory";
 import MyWardrobe from "./component/MyWardrobe";
@@ -20,8 +20,9 @@ import { ToolDps } from '../ToolDps';
 class Consult extends Component {
     constructor(props) {
         super(props);
+        let { serverId } = qs.parse(props.location.search);
         this.state = {
-            serverId: props.location.query['serverId'] || '',//服务id 只有在搭配师服务入口才有
+            serverId: serverId || '',//服务id 只有在搭配师服务入口才有
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
@@ -133,7 +134,7 @@ class Consult extends Component {
                     msgText: '发布成功'
                 });
                 this._time = setTimeout(function () {
-                    this.context.router.push('/pay?orderId=' + res.orderId);
+                    this.context.router.history.push('/pay?orderId=' + res.orderId);
                 }.bind(this), 1000);
             } else {
                 this.setState({
@@ -246,4 +247,4 @@ Consult.contextTypes = {
 
 
 
-export default Consult;
+export default withRouter(Consult);

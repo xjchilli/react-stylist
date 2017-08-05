@@ -2,7 +2,7 @@
  * Created by potato on 2017/4/15.
  */
 import React from 'react';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import merged from 'obj-merged';

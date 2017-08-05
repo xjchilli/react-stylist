@@ -2,18 +2,20 @@
  * 支付
  * Created by potato on 2017/4/28 0028.
  */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import qs from 'query-string';
+import { withRouter } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import { Msg, Tips, DataLoad } from "../Component/index";
-// import { CSSTransitionGroup } from 'react-transition-group';
 import classNames from "classnames";
+// import { CSSTransitionGroup } from 'react-transition-group';
 import UseFulPromotionCode from './component/UseFulPromotionCode';
 
 
 
 
-class Main extends Component {
+class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +28,7 @@ class Main extends Component {
 
     }
     componentDidMount() {
-        let { orderId } = this.props.location.query;
+        let { orderId } = qs.parse(this.props.location.search);
 
         //订单查询
         ToolDps.get('/wx/order/queryCoupons', {
@@ -49,7 +51,7 @@ class Main extends Component {
 
         });
 
-      
+
 
         //jsapi签名
         ToolDps.get('/wx/user/getJsapiSigna', {
@@ -85,15 +87,11 @@ class Main extends Component {
 
     render() {
         let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <Pay data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
-        return (
-            <div>
-                {main}
-            </div>
-        )
+        return main;
     }
 }
 
-class Pay extends Component {
+class Pay extends React.Component {
     constructor(props) {
         super(props);
         let {
@@ -194,7 +192,7 @@ class Pay extends Component {
                     });
                     if (this.state.userInfo == "1") {
                         this._time = setTimeout(function () {
-                            this.context.router.push('/fashionMoment');
+                            this.context.router.history.push('/fashionMoment');
                         }.bind(this), 1500);
                     }
                 } else if (res.err_msg == "get_brand_wcpay_request:fail") {
@@ -302,4 +300,4 @@ Pay.contextTypes = {
 }
 
 
-export default Main;
+export default withRouter(Main);

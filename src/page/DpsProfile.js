@@ -3,7 +3,8 @@
  * Created by potato on 2017/5/23 0023.
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import qs from 'query-string';
+import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
 
 
@@ -116,7 +117,7 @@ export default GetData({
     id: 'DpsProfile', //应用关联使用的redux
     component: Main, //接收数据的组件入口
     url: (props, state) => {
-        let { collocationId } = props.location.query;
+        let { collocationId } = qs.parse(props.location.search);
         return "/wx/fashion/" + collocationId + "/dps";
     },
     data: '', //发送给服务器的数据

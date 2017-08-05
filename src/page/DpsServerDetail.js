@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 
 

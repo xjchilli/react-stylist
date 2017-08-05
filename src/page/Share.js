@@ -2,7 +2,8 @@
  * 分享
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import qs from 'query-string';
 import { DataLoad, GetData } from "../Component/index";
 import { ToolDps } from '../ToolDps';
 
@@ -77,7 +78,8 @@ export default GetData({
 	id: 'Profile', //应用关联使用的redux
 	component: Main, //接收数据的组件入口
 	url: (props, state) => {
-		const { userId } = props.location.query;
+		debugger
+		const { userId } = qs.parse(props.location.search);
 		return "/wx/user/" + userId + "/share";
 	},
 	data: '', //发送给服务器的数据

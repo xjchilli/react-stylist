@@ -38,7 +38,7 @@ class Home extends React.Component {
                 <br />
                 <Link to="/promotionCode">优惠码</Link>
                 <br />
-                <Link to="/share/52">分享</Link>
+                <Link to="/share?userId=52">分享</Link>
                 <br />
                 <Link to="/arrangementScheme?id=11">搭配方案</Link>
                 <br />

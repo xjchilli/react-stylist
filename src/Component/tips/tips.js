@@ -24,33 +24,33 @@
  *
  *
  */
-import React, { Component } from 'react';
-import {Link} from 'react-router';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-class Tips extends Component{
-    static defaultProps={
-        isShow:false//是否显示tips
+class Tips extends React.Component {
+    static defaultProps = {
+        isShow: false//是否显示tips
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            isShow:this.props.isShow
+        this.state = {
+            isShow: this.props.isShow
         }
     }
 
-    componentDidMount(){
-        this.refs.dpsTips.addEventListener('click',this.hideTips.bind(this));
+    componentDidMount() {
+        this.refs.dpsTips.addEventListener('click', this.hideTips.bind(this));
     }
     /**
      * 隐藏tips窗口
      *
      */
-    hideTips(e){
-        let bgEle=e.target.getAttribute('data-bg');
-        if(bgEle){
-            const newState=false;
+    hideTips(e) {
+        let bgEle = e.target.getAttribute('data-bg');
+        if (bgEle) {
+            const newState = false;
             this.props.hideTips(newState);//更新父组件状态
         }
 
@@ -61,27 +61,27 @@ class Tips extends Component{
      *
      * @param nextProps
      */
-    componentWillReceiveProps(nextProps){
-       this.setState({
-           isShow:nextProps.isShow
-       });
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            isShow: nextProps.isShow
+        });
     }
 
-    render(){
-        let tips = classNames('dps-tips',{
-            'active':this.state.isShow
+    render() {
+        let tips = classNames('dps-tips', {
+            'active': this.state.isShow
         });
         return (
-                <div ref="dpsTips" className={tips} data-bg="true">
-                    <div className="dps-tips-box">
-                        <p>填写完整信息</p>
-                        <p>让我们更了解你～</p>
-                        <div className="dps-tips-btn-area">
-                            <Link to={this.props.skipPath}>跳过</Link>
-                            <Link to={this.props.perfectPath}>去完善</Link>
-                        </div>
+            <div ref="dpsTips" className={tips} data-bg="true">
+                <div className="dps-tips-box">
+                    <p>填写完整信息</p>
+                    <p>让我们更了解你～</p>
+                    <div className="dps-tips-btn-area">
+                        <Link to={this.props.skipPath}>跳过</Link>
+                        <Link to={this.props.perfectPath}>去完善</Link>
                     </div>
                 </div>
+            </div>
         );
     }
 }

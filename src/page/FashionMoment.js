@@ -3,7 +3,7 @@
  * Created by potato on 2017/4/8.
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { GetNextPage } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 import classNames from 'classnames';
