@@ -2,54 +2,82 @@
  * 整理衣橱
  * Created by potato on 2017/4/25 0025.
  */
-import React, {
-    Component
-} from 'react'
-import {
-    ToolDps
-} from '../ToolDps';
-import {
-    City,
-    Msg
-} from "../Component/index";
-
-
+import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+import { ToolDps } from '../ToolDps';
+import { City, Msg } from "../Component/index";
+import flatpickr from 'flatpickr';
+const zh = require("flatpickr/dist/l10n/zh.js").zh;
 
 class NeatenWardrobe extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            serverId: props.location.query['serverId'] || '', //服务id 只有在搭配师服务入口才有
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
-            date: '', //日期
-            time: '', //时间
-            currArea: '', //当前选择区域
+            date: null, //日期
+            currArea: '', //选择的城市
             addres: '', //详细地址
             remark: '', //需求描述
+            cityShow: false, //是否显示城市窗口
+            provinceCode: '330000', //省代码
+            cityCode: '330100', //市代码
+            countyCode: '330106', //区代码
+            fullCityName: '' //省市区名称
         }
         this._time = 0;
     }
 
     componentDidMount() {
         document.title = "整理衣橱";
+        let nowDate = new Date();
+        this.flatpickr = flatpickr("#date", {
+            locale: zh,
+            minDate: nowDate,
+            disableMobile: "true",
+            enableTime: true,
+            onChange: (selectedDates, dateStr, instance) => {
+                nowDate = selectedDates[0];
+                this.setState({
+                    date: dateStr
+                });
+            },
+            onOpen: () => {
+                this.setState({
+                    date: ToolDps.convertDate(nowDate, 'YYYY-MM-DD hh:mm')
+                });
+            }
+        });
     }
 
 
     componentWillUnmount() {
         clearTimeout(this._time);
+        this.flatpickr.destroy();
     }
+
 
     /**
      * 获取城市数据
      */
-    getCity(data) {
+    getCity(city) {
         let {
-            currArea
-        } = data;
+            currProvince,
+            currCity,
+            currArea,
+            provinceName,
+            cityName,
+            areaName
+        } = city;
         this.setState({
-            currArea: currArea,
-            msgShow: false
+            provinceCode: currProvince, //省代码
+            cityCode: currCity, //市代码
+            currArea: currArea, //区代码
+            countyCode: currArea, //区代码
+            fullCityName: provinceName + cityName + areaName, //省市区名称
+            cityShow: false
         });
     }
 
@@ -57,7 +85,7 @@ class NeatenWardrobe extends Component {
      * 发布
      */
     publish() {
-        if (this.state.date === "" || this.state.time === "") {
+        if (!this.state.date) {
             this.setState({
                 msgShow: true,
                 msgText: '请选择约定时间', //提示内容
@@ -90,10 +118,14 @@ class NeatenWardrobe extends Component {
 
 
         let data = {
-            time: this.state.date + ' ' + this.state.time, //时间
-            cityCode: this.state.currArea, //当前选择区域
+            time: this.state.date, //时间
+            countyCode: this.state.currArea, //当前选择区域
             addres: this.state.addres, //详细地址
             remark: this.state.remark, //需求描述
+        }
+
+        if (this.state.serverId) {
+            data['shopId'] = this.state.serverId;
         }
 
         this.setState({
@@ -111,9 +143,9 @@ class NeatenWardrobe extends Component {
                     msgShow: true,
                     msgText: '发布成功'
                 });
-                this._time = setTimeout(function() {
-                    this.context.router.push('/pay?orderId=' + res.orderId + "&type=4");
-                }.bind(this), 1000);
+                this._time = setTimeout(function () {
+                    this.context.router.push('/pay?orderId=' + res.orderId);
+                }.bind(this), 1500);
             } else {
                 this.setState({
                     btn: '发布',
@@ -130,30 +162,30 @@ class NeatenWardrobe extends Component {
             <section className="full-page matchService">
                 <section className="box">
                     <h4 className="title">约定时间</h4>
-                    <div className="date-area">
-                        <input type="date" onChange={(e)=>{this.setState({date:e.target.value})}}/>
-                        <input type="time" onChange={(e)=>{this.setState({time:e.target.value})}}/>
+                    <div id="date" className={this.state.date ? "date-area t-active" : "date-area"}>
+                        {this.state.date ? this.state.date : '请选择约定时间'}
                     </div>
                     <h4 className="title">约定地址</h4>
                     <div className="agreement-address-area">
-                        <City defaultPlaceholder="请选择城市" getCity={this.getCity.bind(this)}/>
+                        <input id="city" type="text" value={this.state.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
+                        {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
                     </div>
                     <h4 className="title">详细地址</h4>
                     <div className="agreement-address-area">
-                        <input type="text" placeholder="请填写详细地址" onChange={(e)=>{this.setState({addres:e.target.value})}}/>
+                        <input type="text" placeholder="请填写详细地址" onChange={(e) => { this.setState({ addres: e.target.value }) }} />
                     </div>
                     <h4 className="title">需求描述</h4>
-                    <textarea  rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e)=>{this.setState({remark:e.target.value})}}></textarea>
+                    <textarea rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
                 </section>
                 <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
-                {this.state.msgShow ? <Msg msgShow={()=>{this.setState({msgShow:false})}} text={this.state.msgText}/> : null}
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         );
     }
 }
 
 NeatenWardrobe.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 }
 
 

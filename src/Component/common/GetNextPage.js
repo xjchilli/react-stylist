@@ -2,8 +2,7 @@
  * Created by potato on 2016/12/5.
  */
 import React, {
-    Component,
-    PropTypes
+    Component
 } from 'react';
 import {
     connect
@@ -15,10 +14,10 @@ import {
     DataLoad
 } from './index';
 
-import {
+/*import {
     target
 } from '../../Config/Config';
-
+*/
 
 /**
  * 主模块入口
@@ -37,8 +36,8 @@ const Main = (mySetting) => {
             return state;
         }, //请求成功后执行的方法
         error: (state) => {
-                return state;
-            } //请求失败后执行的方法
+            return state;
+        } //请求失败后执行的方法
     };
 
     /**
@@ -56,52 +55,52 @@ const Main = (mySetting) => {
              * @param props
              */
             this.initState = (props) => {
-                    var {
+                var {
                         state,
-                        location
+                    location
                     } = props;
-                    var {
+                var {
                         pathname,
-                        search
+                    search
                     } = location;
-                    this.path = pathname + search;
+                this.path = pathname + search;
 
-                    if (typeof this.action == 'undefined' && location.action == 'PUSH') {
-                        this.action = false;
-                    } else {
-                        this.action = true;
-                    }
-
-                    if (typeof state.path[this.path] === 'object' && state.path[this.path].path === this.path && this.action) {
-                        this.state = state.path[this.path];
-                    } else {
-                        this.state = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
-                        this.state.path = this.path;
-                    }
-
+                if (typeof this.action == 'undefined' && location.action == 'PUSH') {
+                    this.action = false;
+                } else {
+                    this.action = true;
                 }
-                /**
-                 * DOM初始化完成后执行回调
-                 */
+
+                if (typeof state.path[this.path] === 'object' && state.path[this.path].path === this.path && this.action) {
+                    this.state = state.path[this.path];
+                } else {
+                    this.state = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
+                    this.state.path = this.path;
+                }
+
+            }
+            /**
+             * DOM初始化完成后执行回调
+             */
             this.redayDOM = () => {
-                    var {
+                var {
                         scrollX,
-                        scrollY
+                    scrollY
                     } = this.state;
-                    window.scrollTo(scrollX, scrollY);
-                    this.get = new GetNextPage(this.refs.dataload, {
-                        url: target + this.getUrl(),
-                        data: this.getData(),
-                        start: this.start,
-                        load: this.load,
-                        error: this.error
-                    });
-                }
-                /**
-                 * 获取ajax 请求url
-                 *
-                 * @returns Object
-                 */
+                window.scrollTo(scrollX, scrollY);
+                this.get = new GetNextPage(this.refs.dataload, {
+                    url: this.getUrl(),
+                    data: this.getData(),
+                    start: this.start,
+                    load: this.load,
+                    error: this.error
+                });
+            }
+            /**
+             * 获取ajax 请求url
+             *
+             * @returns Object
+             */
             this.getUrl = () => {
                 var {
                     url
@@ -159,7 +158,7 @@ const Main = (mySetting) => {
                 } = res;
                 if (!pager.arrays.length && pager.arrays.length < 10) {
                     state.nextBtn = false;
-                    state.loadMsg = '没有了';
+                    state.loadMsg = '- end -';
                     this.get.end();
                 } else {
                     state.nextBtn = true;
@@ -191,12 +190,11 @@ const Main = (mySetting) => {
                 loadMsg
             } = this.state;
             return (
-                <div className="full-page">
-                    <this.props.setting.component {...this.props} state={this.state}/>
+                <this.props.setting.component {...this.props} state={this.state}>
                     <div ref='dataload'>
                         <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />
                     </div>
-                </div>
+                </this.props.setting.component>
             );
         }
     }
@@ -205,11 +203,11 @@ const Main = (mySetting) => {
         setting
     };
 
-    return connect((state) => {
+    return withRouter(connect((state) => {
         return {
             state: state[setting.id]
         }
-    }, action(setting.id))(Index);
+    }, action(setting.id))(Index));
 }
 
 

@@ -3,33 +3,117 @@
  *
  * Created by potato on 2017/5/9 0009.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    Link
-} from 'react-router';
-import {
-    DataLoad,
-    GetData
-} from '../Component/index';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { DataLoad, GetData } from '../Component/index';
+import { ToolDps } from '../ToolDps';
+
+
+class Nav extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            status: '-1'//-1:全部 0 : 待付款  1:发布中  2 :服务中 3:待评价 10 :已完成 
+        }
+    }
+
+    componentDidMount() {
+        new Swiper('.order-list-nav', {
+            slidesPerView: 4
+        });
+    }
+
+
+    select(status) {
+        this.setState({
+            status: status
+        });
+        this.props.getData(status === "-1" ? '' : status);
+    }
+
+    render() {
+        return (
+            <div className="swiper-container order-list-nav">
+                <div className="swiper-wrapper">
+                    <div className={this.state.status === "-1" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.select.bind(this, '-1')}>
+                        <span>全部</span>
+                    </div>
+                    <div className={this.state.status === "0" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.select.bind(this, '0')}>
+                        <span>待付款</span>
+                    </div>
+                    <div className={this.state.status === "1" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.select.bind(this, '1')}>
+                        <span>发布中</span>
+                    </div>
+                    <div className={this.state.status === "2" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.select.bind(this, '2')}>
+                        <span>服务中</span>
+                    </div>
+                    <div className={this.state.status === "3" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.select.bind(this, '3')}>
+                        <span>待评价</span>
+                    </div>
+                    <div className={this.state.status === "10" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.select.bind(this, '10')}>
+                        <span>已完成</span>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
 
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            data: [],
+            loadAnimation: true,
+            loadMsg: '正在加载中'
+        }
     }
 
+    componentDidMount() {
+        document.title = "订单列表";
+        this.getData();
+      
+    }
+
+    getData(status) {
+        this.setState({
+            data: [],
+            loadAnimation: true,
+            loadMsg: '正在加载中'
+        });
+        ToolDps.get('/wx/order/getMy', {
+            status: status ? status : ''
+        }).then((res) => {
+            if (res.succ) {
+                let msg = '加载完成';
+                if (res.list.length === 0) {
+                    msg = "暂时没有您的订单";
+                }
+                this.setState({
+                    data: res.list,
+                    loadAnimation: false,
+                    loadMsg: msg
+                });
+            } else {
+                this.setState({
+                    loadAnimation: false,
+                    loadMsg: '加载失败'
+                });
+            }
+        }).catch(() => {
+            this.setState({
+                loadAnimation: false,
+                loadMsg: '加载失败'
+            });
+        });
+    }
 
     render() {
-        let {
-            data,
-            loadAnimation,
-            loadMsg
-        } = this.props.state;
-        let main = data.succ ? <OrderList data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg}/>;
+        let main = this.state.data.length > 0 ? <OrderList data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
 
         return (
-            <div className="full-page">
+            <div className="full-page order-list-page">
+                <Nav getData={this.getData.bind(this)} />
                 {main}
             </div>
         )
@@ -41,52 +125,29 @@ class OrderList extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        document.title = "订单列表";
-
-    }
 
     render() {
-        let {
-            list
-        } = this.props.data;
         return (
-            <section className="full-page">
-                <ul className="order-list-area">
-                    {
+            <ul className="order-list-area">
+                {
+                    this.props.data.map((item, index) => {
+                        return (
+                            <li key={index}>
+                                <Link to={"/orderDetail?orderId=" + item.orderId} className="link">
+                                    <span className="service-type">{item.title}&nbsp;{"(￥" + item.originalPrice + ")"}</span><br />
+                                    <time className="time">{item.time}</time><br />
+                                    <span className="dps-name">{item.dpsName}</span><br />
+                                    <span className="status">{item.status}</span>
+                                </Link>
+                            </li>
+                        )
+                    })
 
-                        list.length === 0 ? <p className="text-center no-record">暂时没有您的订单</p> : (
-                                list.map((item,index)=>{
-                                    return (
-                                        <li key={index}>
-                                            <Link to={"/orderDetail?orderId="+item.orderId} className="link">
-                                                <span className="service-type">{item.title}</span><br/>
-                                                <time className="time">{item.time}</time><br/>
-                                                <span className="dps-name">{item.dpsName}</span><br/>
-                                                <span className="status">{item.status}</span>
-                                            </Link>
-                                        </li>
-                                    )
-                                })
-                            )
-                        
-                    }
-                </ul>
-            </section>
+                }
+            </ul>
         )
     }
 }
 
 
-export default GetData({
-    id: 'OrderList', //应用关联使用的redux
-    component: Main, //接收数据的组件入口
-    url: '/wx/order/getMy',
-    data: '', //发送给服务器的数据
-    success: (state) => {
-        return state;
-    }, //请求成功后执行的方法
-    error: (state) => {
-            return state
-        } //请求失败后执行的方法
-});;
+export default Main;

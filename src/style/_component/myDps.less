@@ -10,11 +10,14 @@
       .no-read-num{position: absolute;right: 1rem;top: 1rem;width: 1.5rem;height: 1.5rem;line-height:1.5rem;border-radius: 50%;background: red;color: @white;font-size: 1.2rem;}
     }
     .introduce{
-      flex:1 1 auto;padding: 1rem 0;overflow: hidden;
+      flex:1 1 auto;padding: 1rem 0;overflow: hidden;position:relative;
       .name{font-size: 1.5rem;color: #333333;padding-right: 0.7rem;white-space: nowrap;text-overflow: ellipsis;overflow: hidden; }
       .msgText{
         color: #333333;padding-top: 10px;word-break: break-all;white-space: nowrap;text-overflow: ellipsis;overflow: hidden; font-size: 12px;
         >img{display: inline-block;vertical-align: middle;}
+      }
+      .time{
+         position:Absolute; right: 10px;top:50%;transform: translate3d(0,-50%,0);
       }
     }
   }

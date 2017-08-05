@@ -2,26 +2,20 @@
  * 我的衣橱
  * Created by potato on 2017/5/3 0003.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    Link
-} from 'react-router-dom';
-import { withRouter } from 'react-router'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import Msg from "../Component/tips/msg";
-import {
-    ToolDps
-} from '../ToolDps';
+import { ToolDps } from '../ToolDps';
 
 
-class SwiperSlide extends Component {
+
+class SwiperSlide extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    componentWillMount() {}
+    componentWillMount() { }
 
     render() {
         let {
@@ -30,11 +24,11 @@ class SwiperSlide extends Component {
         return (
 
             <div className="swiper-slide">
-                <Link to={'/wardrobeModify/'+data.id} >
-                <div className='img-area' >
-                    <img src={data.imgUrl}  alt=""/>
-                    <p className="img-describe">{data.name}</p>
-                </div>
+                <Link to={'/wardrobeModify?gid=' + data.id} >
+                    <div className='img-area' >
+                        <img src={data.imgUrl} alt="" />
+                        <p className="img-describe">{data.name}</p>
+                    </div>
                 </Link>
             </div>
 
@@ -42,7 +36,7 @@ class SwiperSlide extends Component {
     }
 }
 
-class ClothCategory extends Component {
+class ClothCategory extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -69,7 +63,7 @@ class ClothCategory extends Component {
                 <div className="swiper-container  J-consult-my-wardrobe">
                     <div className="swiper-wrapper">
                         {
-                            data.list.map((slider,index)=>{
+                            data.list.map((slider, index) => {
                                 return <SwiperSlide data={slider} key={index} />
                             })
                         }
@@ -80,10 +74,13 @@ class ClothCategory extends Component {
     }
 }
 
-class WardrobeList extends Component {
+class WardrobeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            sex: 2,//性别1：男 2:女
+            girlCategory: [{ key: '100', value: '裙子' }, { key: '101', value: '上衣' }, { key: '102', value: '裤子' }, { key: '103', value: '内衣' }, { key: '104', value: '鞋' }, { key: '105', value: '包' }, { key: '106', value: '配饰' }, { key: '107', value: '美妆' }],//女分类
+            boyCategory: [{ key: '200', value: '上衣' }, { key: '201', value: '裤子' }, { key: '202', value: '内衣' }, { key: '203', value: '外套' }, { key: '204', value: '鞋' }, { key: '205', value: '包' }, { key: '206', value: '配饰' }],//男分类
             serachTip: '加载中...',
             uploadBtn: '确认上传',
             msgShow: false,
@@ -100,7 +97,41 @@ class WardrobeList extends Component {
     }
 
     componentDidMount() {
-        ToolDps.get('/wx/garderobe/list').then((data) => {
+        document.title = '我的衣橱';
+        ToolDps.get('/wx/user/info').then((data) => {
+            if (data.succ) {
+                this.setState({
+                    sex: data.info.sex
+                });
+
+                this.getGarderobeList(data.info.sex);
+            } else {
+                this.setState({
+                    msgShow: false,
+                    msgText: '获取个人信息失败', //提示内容
+                })
+            }
+        }).catch(() => {
+            this.setState({
+                msgShow: false,
+                msgText: '获取个人信息失败', //提示内容
+            })
+        });
+
+
+
+    }
+
+
+    componentWillUnmount() {
+        this.reader.removeEventListener('load', this.preview);
+    }
+
+    /**
+     * 获取衣橱列表
+     */
+    getGarderobeList(sex) {
+        ToolDps.get('/wx/garderobe/list', { sex: sex }).then((data) => {
             if (data.succ) {
                 if (data.list.length === 0) {
                     this.setState({
@@ -111,17 +142,16 @@ class WardrobeList extends Component {
                         data: data.list
                     })
                 }
+            } else {
+                this.setState({
+                    serachTip: '加载失败'
+                })
             }
         }).catch(() => {
             this.setState({
                 serachTip: '加载失败'
             })
         });
-
-    }
-
-    componentWillUnmount() {
-        this.reader.removeEventListener('load', this.preview);
     }
 
 
@@ -149,7 +179,7 @@ class WardrobeList extends Component {
     previewImg(e) {
         let files = e.target.files;
         if (files && files[0]) {
-            if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
+            // if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
             this.reader.addEventListener('load', this.preview.bind(this, files[0]));
             this.reader.readAsDataURL(files[0]);
         }
@@ -204,6 +234,7 @@ class WardrobeList extends Component {
         formdata.append('img', this.state.file);
         formdata.append('name', this.state.name);
         formdata.append('remark', this.state.remark);
+        formdata.append('sex', this.state.sex);
 
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
@@ -264,18 +295,20 @@ class WardrobeList extends Component {
             'active': this.state.uploadClothing
         });
 
+        let categories = [];
+        this.state.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
 
         return (
             <section className="consult-my-wardrobe full-page wardrobe-list-container">
                 <section className={content}>
                     {
-                        this.state.data.map((clothCategory,index)=>{
+                        this.state.data.map((clothCategory, index) => {
                             return <ClothCategory key={index} data={clothCategory} />;
                         })
                     }
 
                     {
-                        this.state.data.length == 0 ? <p style={{textAlign:'center',fontSize:'1.8rem'}}>{this.state.serachTip}</p> : null
+                        this.state.data.length == 0 ? <p style={{ textAlign: 'center', fontSize: '1.8rem' }}>{this.state.serachTip}</p> : null
                     }
 
                     <div className="action-area">
@@ -285,33 +318,30 @@ class WardrobeList extends Component {
                         <div className="box">
                             <div className="group">
                                 <div className="item">
-                                    <input type="text"  placeholder="物品名称" className="goods-name" accept="image/*" onChange={(e)=>{this.setState({name:e.target.value})}} value={this.state.name}/>
+                                    <input type="text" placeholder="物品名称" className="goods-name" accept="image/*" onChange={(e) => { this.setState({ name: e.target.value }) }} value={this.state.name} />
                                 </div>
                                 <div className="item category-area">
-                                    <select className="category" onChange={(e)=>{this.setState({typeCode:e.target.value})}} value={this.state.typeCode}>
+                                    <select className="category" onChange={(e) => { this.setState({ typeCode: e.target.value }) }} value={this.state.typeCode}>
                                         <option value="">物品分类</option>
-                                        <option value="1">内衣</option>
-                                        <option value="2">配饰</option>
-                                        <option value="3">裙装</option>
-                                        <option value="4">鞋靴</option>
-                                        <option value="5">彩妆</option>
-                                        <option value="6">上衣</option>
-                                        <option value="7">包袋</option>
-                                        <option value="8">裤装</option>
+                                        {
+                                            categories.map((item, index) => {
+                                                return <option key={index} value={item.key}>{item.value}</option>
+                                            })
+                                        }
                                     </select>
                                 </div>
                             </div>
                             <div className="group">
                                 <div className="item img-show">
                                     <svg viewBox="5 0 209.6 200" className="icon-svg-cloth" >
-                                        <use xlinkHref="/assets/img/icon.svg#svg-cloth"/>
+                                        <use xlinkHref="/assets/img/icon.svg#svg-cloth" />
                                     </svg>
-                                    {this.state.file !== "" ? <img src={this.state.imgSrc} className="preview-img" alt=""/> : null}
-                                    <input type="file" ref='uploadImg' className="upload-file" onChange={this.previewImg.bind(this)}/>
-                                    {this.state.file !== "" ? <svg viewBox="0 0 100 100" className="icon-svg-delete close" onClick={this.deleteCurrImg.bind(this)}><use xlinkHref="/assets/img/icon.svg#svg-delete"/></svg> : null}
+                                    {this.state.file !== "" ? <img src={this.state.imgSrc} className="preview-img" alt="" /> : null}
+                                    <input type="file" ref='uploadImg' accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
+                                    {this.state.file !== "" ? <svg viewBox="0 0 100 100" className="icon-svg-delete close" onClick={this.deleteCurrImg.bind(this)}><use xlinkHref="/assets/img/icon.svg#svg-delete" /></svg> : null}
                                 </div>
                                 <div className="item">
-                                    <textarea placeholder="添加物品描述" onChange={(e)=>{this.setState({remark:e.target.value})}} value={this.state.remark}></textarea>
+                                    <textarea placeholder="添加物品描述" onChange={(e) => { this.setState({ remark: e.target.value }) }} value={this.state.remark}></textarea>
                                 </div>
                             </div>
                             <div className="action-area">
@@ -321,11 +351,11 @@ class WardrobeList extends Component {
                         </div>
                     </div>
                 </section>
-                {this.state.msgShow ? <Msg  msgShow={()=>{this.setState({msgShow:false})}} text={this.state.msgText}/> : null}
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
 }
 
 
-export default withRouter(WardrobeList);
+export default WardrobeList;

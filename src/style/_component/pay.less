@@ -1,68 +1,70 @@
-.pay-msg
-{
+.pay-msg {
     margin: 10px;
-
     border-radius: 5px;
     background-color: @white;
-    .header
-    {
+
+    .header {
         font-size: 1.6rem;
-
         display: flex;
-        .item
-        {
-            padding: 15px 0;
 
+        .item {
+            padding: 15px 0;
             flex: auto;
-            &:first-child
-            {
+
+            &:first-child {
                 padding-left: 40px;
             }
-            &:last-child
-            {
+            &:last-child {
                 text-align: center;
             }
         }
     }
-    .content
-    {
+    .content {
         font-size: 1.4rem;
-
         margin: 0 10px;
         padding: 30px 0 100px 30px;
+        border-top: .1rem dashed rgb(188, 188, 188);
 
-        border-top: .1rem dashed rgb(188,188,188);
-        .ground
-        {
+        .ground {
             line-height: 2rem;
         }
-        label
-        {
+        label {
             padding-right: 20px;
+        }
+        // 优惠码信息
+        .promotion-lable {
+            word-spacing: 3px;
+        }
+        .promotion-num {
+            position: relative;
+            display: inline-block;
+
+            &:after {
+                content: '';
+                position: absolute;
+                right: -1.5rem;
+                top: 50%;
+                margin-top: -4px;
+                width: 8px;
+                height: 8px;
+                border: 1px solid #000000;
+                border-width: 1px 1px 0 0;
+                transform: rotate(45deg);
+            }
         }
     }
 }
-
-.pay-btn
-{
+.pay-btn {
     margin: 20px auto;
 }
-
-.service-note-title
-{
+.service-note-title {
     font-size: 1.4rem;
-
     margin: 0 1.5rem;
-
-    color: rgb(161,161,161);
+    color: rgb(161, 161, 161);
 }
-
-.pay-note-content
-{
+.pay-note-content {
     font-size: 1.2rem;
     line-height: 2rem;
-
     margin: 0 1.5rem;
-
-    color: rgb(161,161,161);
+    color: rgb(161, 161, 161);
 }

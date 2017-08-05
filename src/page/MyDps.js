@@ -2,22 +2,13 @@
  * 我的搭配师
  * Created by potato on 2017/3/30.
  */
-import React, {
-    Component
-} from 'react';
-import {
-    Link
-} from 'react-router';
-import {
-    Tool
-} from '../Tool';
-import {
-    ToolDps
-} from '../ToolDps'
-import {
-    DataLoad
-} from '../Component/index'
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { ToolDps } from '../ToolDps'
+import { DataLoad } from '../Component/index'
 import merged from 'obj-merged';
+import IM from './component/IM';
+
 
 
 class FriendList extends Component {
@@ -33,17 +24,18 @@ class FriendList extends Component {
         for (let userId in friends) {
             friendArr.push(
                 <li key={userId}>
-                   <Link to={"/chat?selToID="+userId+"&headUrl="+friends[userId].image+"&nickname="+friends[userId].nickname}>
-                       <div className="img">
-                           <img src={friends[userId].image} className="head-img" width={60} height={60} alt=""/>
-                           {friends[userId].unReadNum ? <span className="no-read-num">{friends[userId].unReadNum}</span> : null}
-                       </div>
-                       <div className="introduce">
-                           <p className="name">{friends[userId].nickname}</p>
-                           <p className="msgText" dangerouslySetInnerHTML={{__html:friends[userId].lastMsg}}/>
-                       </div>
-                   </Link>
-               </li>
+                    <Link to={"/chat?selToID=" + userId + "&headUrl=" + friends[userId].image + "&nickname=" + friends[userId].nickname}>
+                        <div className="img">
+                            <img src={friends[userId].image} className="head-img" width={60} height={60} alt="" />
+                            {friends[userId].unReadNum ? <span className="no-read-num">{friends[userId].unReadNum}</span> : null}
+                        </div>
+                        <div className="introduce">
+                            <p className="name">{friends[userId].nickname}</p>
+                            <p className="msgText" dangerouslySetInnerHTML={{ __html: friends[userId].lastMsg }} />
+                            <p className="time">{friends[userId].time}</p>
+                        </div>
+                    </Link>
+                </li>
             )
         };
 
@@ -58,7 +50,7 @@ class FriendList extends Component {
 }
 
 
-class MyDps extends Component {
+class MyDps extends IM {
     constructor(props) {
         super(props);
         this.state = {
@@ -68,71 +60,22 @@ class MyDps extends Component {
         };
         this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
         this.totalCount = 500; //每次接口请求的条数，分页时用到
-        //参数：loginInfo
-        this.loginInfo = {
-            'sdkAppID': '', //用户所属应用id,必填
-            'accountType': '', //用户所属应用帐号类型，必填
-            'identifier': '', //当前用户ID,必须是否字符串类型，必填
-            'userSig': '', //当前用户身份凭证，必须是字符串类型，必填
-            'identifierNick': '', //当前用户昵称，不用填写，登录接口会返回用户的昵称，如果没有设置，则返回用户的id
-            'headurl': '' //当前用户默认头像，选填，如果设置过头像，则可以通过拉取个人资料接口来得到头像信息
-        };
-        //参数：listeners
-        this.listeners = {
-            "onConnNotify": this.onConnNotify, //监听连接状态回调变化事件,必填
-            "onMsgNotify": this.onMsgNotify.bind(this) //监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件，必填
-        };
-        //参数:options
-        //初始化时，其他对象，选填
-        this.options = {
-            'isAccessFormalEnv': true, //是否访问正式环境，默认访问正式，选填
-            'isLogOn': false //是否开启控制台打印日志,默认开启，选填
-        }
     }
+
+
     componentDidMount() {
         document.title = "我的搭配师";
 
-        ToolDps.get('/wx/tim/getSignature').then((res) => {
-            // console.log(res);
-            if (res.succ) {
-                let {
-                    data
-                } = res;
-                this.login(data);
-            } else {
-                alert('签名失败');
-            }
-
-        });
-    }
-
-
-
-    /**
-     * 登录
-     * @param data
-     */
-    login(data) {
-        //当前用户身份
-        this.loginInfo.sdkAppID = data.sdkAppId;
-        this.loginInfo.accountType = data.accountType;
-        this.loginInfo.identifier = data.identifier;
-        this.loginInfo.userSig = data.userSig;
-        this.loginInfo.identifierNick = data.identifierNick;
-        this.loginInfo.headurl = data.headUrl;
-
-        webim.login(
-            this.loginInfo, this.listeners, this.options,
-            (resp) => {
-                this.loginInfo.identifierNick = resp.identifierNick; //设置当前用户昵称
-                // console.log(resp);
+        this.signature((data) => {
+            this.login(data, () => {
                 this.getFriends();
-            },
-            (err) => {
-                console.log(err.ErrorInfo);
-            }
-        );
+            });
+        });
+
+  
+
     }
+
 
 
     /**
@@ -143,8 +86,8 @@ class MyDps extends Component {
     onMsgNotify(newMsgList) {
         // console.log(newMsgList)
         let sess = newMsgList[0].sess;
-        console.log(sess)
-        this.updateSessDiv(sess.id(), 1, sess._impl.msgs);
+        // console.log(sess)
+        this.updateSessDiv(sess.id(), 1, sess._impl.msgs, sess.time());
     }
 
     /**
@@ -190,6 +133,7 @@ class MyDps extends Component {
                             'image': friend_image, //头像
                             'lastMsg': '', //最新未读消息
                             'unReadNum': '', //未读消息数量
+                            'time': ''//会话时间
                         };
                     }
 
@@ -213,30 +157,7 @@ class MyDps extends Component {
         );
     }
 
-    /**
-     * 监听连接状态回调变化事件
-     */
-    onConnNotify(resp) {
-        let info;
-        switch (resp.ErrorCode) {
-            case webim.CONNECTION_STATUS.ON:
-                webim.Log.warn('建立连接成功: ' + resp.ErrorInfo);
-                break;
-            case webim.CONNECTION_STATUS.OFF:
-                info = '连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo;
-                // alert(info);
-                webim.Log.warn(info);
-                break;
-            case webim.CONNECTION_STATUS.RECONNECT:
-                info = '连接状态恢复正常: ' + resp.ErrorInfo;
-                // alert(info);
-                webim.Log.warn(info);
-                break;
-            default:
-                webim.Log.error('未知连接状态: =' + resp.ErrorInfo);
-                break;
-        }
-    }
+
 
     /**
      * 初始化聊天界面最近会话列表
@@ -267,7 +188,7 @@ class MyDps extends Component {
         for (let i in sessMap) {
             sess = sessMap[i];
             // console.log(sess._impl.msgs)
-            this.updateSessDiv(sess.id(), sess.unread(), sess._impl.msgs);
+            this.updateSessDiv(sess.id(), sess.unread(), sess._impl.msgs, sess.time());
         }
     }
 
@@ -275,8 +196,10 @@ class MyDps extends Component {
      * 更新最近会话的未读消息数
      * @param to_id 好友用户id
      * @param unread_msg_count  未读条数
+     * @msgsArr 会话
+     * @time 消息时间
      */
-    updateSessDiv(to_id, unread_msg_count, msgsArr) {
+    updateSessDiv(to_id, unread_msg_count, msgsArr, time) {
         if (unread_msg_count > 0 && to_id != "@TLS#144115198577104990") {
             if (unread_msg_count >= 100) {
                 unread_msg_count = '99';
@@ -286,6 +209,7 @@ class MyDps extends Component {
             let friends = merged(this.state.friends);
             if (friends[to_id]) {
                 friends[to_id].lastMsg = lasMsg; //最新一条消息
+                friends[to_id].time = ToolDps.formatDate(time * 1000).toString();//消息时间
                 if (Number(friends[to_id].unReadNum) != "") {
                     let newUnReadNum = unread_msg_count + friends[to_id].unReadNum;
                     friends[to_id].unReadNum = newUnReadNum > 99 ? 99 : newUnReadNum; //未读消息数量
@@ -362,7 +286,7 @@ class MyDps extends Component {
 
 
     render() {
-        let main = this.state.friends ? <FriendList friends={this.state.friends}/> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg}/>;
+        let main = this.state.friends ? <FriendList friends={this.state.friends} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
         return (
             <section className="full-page">
                 {main}
