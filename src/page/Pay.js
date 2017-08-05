@@ -155,7 +155,7 @@ class Pay extends React.Component {
                     });
 
                     this._time = setTimeout(function () {
-                        this.context.router.push('/fashionMoment');
+                        this.context.router.history.push('/fashionMoment');
                     }.bind(this), 1500);
                 }
 

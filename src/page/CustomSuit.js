@@ -34,9 +34,9 @@ class Face extends Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
+    // }
 
     //选择脸型
     select(face) {
@@ -90,9 +90,6 @@ class Skin extends Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
 
     //选择肤色
     select(skin) {
@@ -146,9 +143,6 @@ class Body extends Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
 
     //选择体型
     select(body) {
@@ -202,9 +196,6 @@ class Resolve extends Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
 
     select(resolve) {
         let myProblemArr = Array.prototype.slice.apply(this.state.problems);
@@ -271,10 +262,6 @@ class Style extends Component {
         this.setState({
             styles: nextProps.data.styles
         });
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     }
 
 
@@ -453,10 +440,6 @@ class BaseInfo extends Component {
         });
 
 
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     }
 
     render() {
@@ -661,7 +644,7 @@ class Otherinfo extends Component {
             if (res.succ) {
                 this.props.showMsg(true, '提交成功');
                 this._time = setTimeout(() => {
-                    this.context.router.push('/fashionMoment');
+                    this.context.router.history.push('/fashionMoment');
                 }, 1000);
             } else {
                 this.props.showMsg(true, '提交失败');

@@ -105,7 +105,7 @@ class BindTel extends Component {
         });
 
         this._time2 = setTimeout(() => {
-          this.context.router.push(this.state.path);
+          this.context.router.history.push(this.state.path);
         }, 1000);
 
       } else {

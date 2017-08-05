@@ -197,7 +197,7 @@ class WardrobeModify extends Component {
                     msgText: '删除成功',
                 });
                 this._time = setTimeout(() => {
-                    this.context.router.push('/wardrobeList');
+                    this.context.router.history.push('/wardrobeList');
                 }, 1000);
             } else {
                 this.setState({

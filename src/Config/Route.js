@@ -42,7 +42,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            auth: true
+            auth: false
         };
         this.setAuth = () => {
             this.setState({
@@ -52,6 +52,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        // localStorage.setItem('User',JSON.stringify({openId:'oGHrAv2QLJaScmtYKnK-oVvF81S8'}));
         this.state.auth ? null : wechatAuth(this.props, this.setAuth);
     }
 

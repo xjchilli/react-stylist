@@ -98,14 +98,14 @@ class Profile extends Component {
                         {
                             colorofskin ? (
                                 <div className="item">
-                                    <img src={colorofskinImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }}  />
+                                    <img src={colorofskinImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }}  />
                                 </div>
                             ) : null
                         }
                         {
                             bodySize ? (
                                 <div className="item">
-                                    <img src={bodyImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }}  />
+                                    <img src={bodyImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }}  />
                                 </div>
                             ) : null
                         }

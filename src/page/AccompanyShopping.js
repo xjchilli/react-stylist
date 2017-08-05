@@ -5,6 +5,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
+import qs from 'query-string';
 import City from "../Component/city/city";
 import GirlCategory from "./component/GirlCategory";
 import BoyCategory from "./component/BoyCategory";
@@ -17,8 +19,9 @@ const zh = require("flatpickr/dist/l10n/zh.js").zh;
 class AccompanyShopping extends Component {
     constructor(props) {
         super(props);
+        let { serverId } = qs.parse(props.location.search);
         this.state = {
-            serverId: props.location.query['serverId'] || '', //服务id 只有在搭配师服务入口才有
+            serverId: serverId || '', //服务id 只有在搭配师服务入口才有
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
@@ -193,7 +196,7 @@ class AccompanyShopping extends Component {
                     msgText: '发布成功'
                 });
                 this._time = setTimeout(function() {
-                    this.context.router.push('/pay?orderId=' + res.orderId);
+                    this.context.router.history.push('/pay?orderId=' + res.orderId);
                 }.bind(this), 1500);
             } else {
                 this.setState({
@@ -272,4 +275,4 @@ AccompanyShopping.contextTypes = {
 }
 
 
-export default AccompanyShopping;
+export default withRouter(AccompanyShopping);

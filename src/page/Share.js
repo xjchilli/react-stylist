@@ -78,7 +78,6 @@ export default GetData({
 	id: 'Profile', //应用关联使用的redux
 	component: Main, //接收数据的组件入口
 	url: (props, state) => {
-		debugger
 		const { userId } = qs.parse(props.location.search);
 		return "/wx/user/" + userId + "/share";
 	},

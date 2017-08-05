@@ -39,6 +39,7 @@
     "bundle-loader": "^0.5.5",
     "classnames": "^2.2.5",
     "flatpickr": "^3.0.6",
+    "http-proxy-middleware": "^0.17.4",
     "immutable": "^3.8.1",
     "obj-merged": "^1.0.5",
     "prop-types": "^15.5.10",
@@ -53,6 +54,7 @@
     "redux": "^3.7.2",
     "redux-immutablejs": "^0.0.8",
     "redux-thunk": "^2.2.0",
-    "swiper": "^3.4.2"
+    "swiper": "^3.4.2",
+    "winston": "^2.3.1"
   }
 }

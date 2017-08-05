@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { GetData, DataLoad, Msg } from "../Component/index";
 import { ToolDps } from '../ToolDps';
-import MyPromotionCode from './component/MyPromotionCode';
+// import MyPromotionCode from './component/MyPromotionCode';
 
 
 

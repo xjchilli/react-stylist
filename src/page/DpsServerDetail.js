@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import qs from 'query-string';
 import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 import { Link } from 'react-router-dom';
@@ -115,7 +116,7 @@ export default GetData({
     id: 'DpsServerDetail', //应用关联使用的redux
     component: Main, //接收数据的组件入口
     url: (props, state) => {
-        let { shopId } = props.location.query;
+        let { shopId } = qs.parse(props.location.search);
         return "/wx/fashion/" + shopId + "/topic";
     },
     data: '', //发送给服务器的数据

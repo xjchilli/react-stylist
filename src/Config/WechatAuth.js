@@ -40,13 +40,13 @@ async function getUserInfo(code,dispatch,setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props,setAuth) {
+    if (!ToolDps.sessionItem('redirectUrl')) {
+        ToolDps.removeLocalItem('User');
+    }
     let user = ToolDps.localItem('User');
     if (user && JSON.parse(user).openId) { //如果用户信息已经存在
         setAuth();
         return;
-    }
-     if (!ToolDps.sessionItem('redirectUrl')) {
-        ToolDps.removeLocalItem('User');
     }
     let {location} = props;
     const { dispatch } = store;

@@ -5,6 +5,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
+import qs from 'query-string';
 import GirlCategory from "./component/GirlCategory";
 import BoyCategory from "./component/BoyCategory";
 import MatchScene from "./component/MatchScene";
@@ -17,8 +19,9 @@ import { Msg } from "../Component/index";
 class Shopping extends Component {
     constructor(props) {
         super(props);
+        let { serverId } = qs.parse(props.location.search);
         this.state = {
-            serverId: props.location.query['serverId'] || '',//服务id 只有在搭配师服务入口才有
+            serverId: serverId || '',//服务id 只有在搭配师服务入口才有
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
@@ -117,7 +120,7 @@ class Shopping extends Component {
                     msgText: '发布成功'
                 });
                 this._time = setTimeout(function () {
-                    this.context.router.push('/pay?orderId=' + res.orderId);
+                    this.context.router.history.push('/pay?orderId=' + res.orderId);
                 }.bind(this), 1000);
             } else {
                 this.setState({
@@ -182,4 +185,4 @@ Shopping.contextTypes = {
 
 
 
-export default Shopping;
+export default withRouter(Shopping);

@@ -3,6 +3,8 @@
  * Created by potato on 2017/5/17 0017.
  */
 import React, { Component } from 'react';
+import qs from 'query-string';
+import {withRouter} from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import { DataLoad, PreviewImg } from '../Component/index';
 import merged from 'obj-merged';
@@ -91,15 +93,7 @@ class Chat extends IM {
             list: [], //数据列表
             containerHeight: 500 //聊天内容高度
         };
-        let {
-            location: {
-                query: {
-                    selToID,
-            headUrl,
-            nickname
-                }
-            }
-        } = props;
+        let { selToID,headUrl,nickname } = qs.parse(props.location.search);
 
         this.currScrollHeight = 0; //默认当前滚动条高度
         this._time = 0;
@@ -608,4 +602,4 @@ class Chat extends IM {
     }
 }
 
-export default Chat;
+export default withRouter(Chat);

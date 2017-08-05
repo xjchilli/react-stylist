@@ -4,7 +4,7 @@
  * Created by potato on 2017/5/22 0022.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
@@ -344,10 +344,12 @@ class FashionMomentDetail extends IM {
 
     componentDidMount() {
         document.title = "时尚圈详情";
+        let p = document.createElement('p');
+        p.innerHTML=this.state.plan.content;
         //分享配置
         ShareConfig({
             title: this.state.plan.planName, // 分享标题
-            desc: this.state.plan.content, // 分享描述
+            desc: p.textContent, // 分享描述
             link: window.location.href, // 分享链接
             imgUrl: this.state.plan.masterImage, // 分享图标
         });
@@ -497,9 +499,7 @@ class Main extends React.Component {
             succ = data.succ;
         }
         let main = succ ? <FashionMomentDetail {...this.props} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
-        return (
-            main
-        )
+        return main;
     }
 }
 

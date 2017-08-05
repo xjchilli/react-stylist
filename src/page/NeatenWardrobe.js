@@ -4,6 +4,8 @@
  */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
 import { City, Msg } from "../Component/index";
 import flatpickr from 'flatpickr';
@@ -12,8 +14,9 @@ const zh = require("flatpickr/dist/l10n/zh.js").zh;
 class NeatenWardrobe extends Component {
     constructor(props) {
         super(props);
+        let { serverId } = qs.parse(props.location.search);
         this.state = {
-            serverId: props.location.query['serverId'] || '', //服务id 只有在搭配师服务入口才有
+            serverId: serverId || '', //服务id 只有在搭配师服务入口才有
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
@@ -144,7 +147,7 @@ class NeatenWardrobe extends Component {
                     msgText: '发布成功'
                 });
                 this._time = setTimeout(function () {
-                    this.context.router.push('/pay?orderId=' + res.orderId);
+                    this.context.router.history.push('/pay?orderId=' + res.orderId);
                 }.bind(this), 1500);
             } else {
                 this.setState({
@@ -190,4 +193,4 @@ NeatenWardrobe.contextTypes = {
 
 
 
-export default NeatenWardrobe;
+export default withRouter(NeatenWardrobe);
