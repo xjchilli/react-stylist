@@ -48,9 +48,8 @@ function wechatAuth(props,setAuth) {
         setAuth();
         return;
     }
-    let {location} = props;
     const { dispatch } = store;
-    const { code } = qs.parse(location.search);
+    const { code } = qs.parse(props.location.search);
     if (code) {
         getUserInfo(code,dispatch,setAuth);
     } else {
