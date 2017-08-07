@@ -178,6 +178,13 @@ const Main = (mySetting) => {
             this.redayDOM();
         }
 
+        componentWillUnmount() {
+            let newState = this.state;
+            newState.currentPager = 1;
+            newState.data = [];
+            this.props.setState(newState);
+        }
+
 
         render() {
             var {

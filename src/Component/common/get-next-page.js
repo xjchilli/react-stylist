@@ -77,7 +77,6 @@
      * 遍历DOM查询是否符合加载条件
      */
     GetNextPage.prototype.eachDOM = function() {
-
         if (this.testXhrStart()) return;
         let length = this.el.length;
         for (let i = 0; i < length; i++) {
