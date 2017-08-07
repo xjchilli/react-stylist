@@ -2,7 +2,7 @@
  * 我的衣橱
  * Created by potato on 2017/5/3 0003.
  */
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import Msg from "../Component/tips/msg";
@@ -10,7 +10,7 @@ import { ToolDps } from '../ToolDps';
 
 
 
-class SwiperSlide extends React.Component {
+class SwiperSlide extends Component {
     constructor(props) {
         super(props);
     }
@@ -36,7 +36,7 @@ class SwiperSlide extends React.Component {
     }
 }
 
-class ClothCategory extends React.Component {
+class ClothCategory extends Component {
     constructor(props) {
         super(props);
     }
@@ -74,7 +74,7 @@ class ClothCategory extends React.Component {
     }
 }
 
-class WardrobeList extends React.Component {
+class WardrobeList extends Component {
     constructor(props) {
         super(props);
         this.state = {

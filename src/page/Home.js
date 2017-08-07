@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import ShareConfig from './component/ShareConfig';
 
 
-class Home extends React.Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         // console.log(props)

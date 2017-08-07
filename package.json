@@ -6,6 +6,7 @@
   "repository ": "git@git.coding.net:dapeis/stylist-subscription-account.git",
   "scripts": {
     "build": "webpack --config webpack.config.pro.js --progress --colors -p",
+    "analyze": "webpack --config webpack.config.pro.js --progress --colors -p --json --profile > stats.json",
     "dev": "node server.js"
   },
   "author": "potato",
@@ -21,6 +22,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "happypack": "^3.1.0",
     "html-webpack-plugin": "^2.28.0",
+    "http-proxy-middleware": "^0.17.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "mockjs": "^1.0.1-beta3",
@@ -32,14 +34,14 @@
     "webpack-dev-middleware": "^1.10.2",
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0",
-    "webpack-parallel-uglify-plugin": "^0.4.1"
+    "webpack-parallel-uglify-plugin": "^0.4.1",
+    "winston": "^2.3.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bundle-loader": "^0.5.5",
     "classnames": "^2.2.5",
     "flatpickr": "^3.0.6",
-    "http-proxy-middleware": "^0.17.4",
     "immutable": "^3.8.1",
     "obj-merged": "^1.0.5",
     "prop-types": "^15.5.10",
@@ -54,7 +56,6 @@
     "redux": "^3.7.2",
     "redux-immutablejs": "^0.0.8",
     "redux-thunk": "^2.2.0",
-    "swiper": "^3.4.2",
-    "winston": "^2.3.1"
+    "swiper": "^3.4.2"
   }
 }

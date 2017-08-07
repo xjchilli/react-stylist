@@ -3,7 +3,7 @@
  * 时尚圈详情
  * Created by potato on 2017/5/22 0022.
  */
-import React from 'react';
+import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
@@ -18,7 +18,7 @@ import ShareConfig from './component/ShareConfig';
 /**
  * 搭配师信息
  */
-class DapeisInfo extends React.Component {
+class DapeisInfo extends Component {
     render() {
         let {
             headImg,
@@ -45,7 +45,7 @@ class DapeisInfo extends React.Component {
 /**
  * 方案内容
  */
-class Content extends React.Component {
+class Content extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -74,7 +74,7 @@ class Content extends React.Component {
 /**
  * 打赏
  */
-class ReWard extends React.Component {
+class ReWard extends Component {
 
     constructor(props) {
         super(props);
@@ -131,7 +131,7 @@ class ReWard extends React.Component {
 /**
  * 评论
  */
-class Comment extends React.Component {
+class Comment extends Component {
 
     constructor(props) {
         super(props);
@@ -233,7 +233,7 @@ class Comment extends React.Component {
 /**
  * 作者回复
  */
-class AuthorReply extends React.Component {
+class AuthorReply extends Component {
     render() {
         let data = this.props.data;
         return (
@@ -249,7 +249,7 @@ class AuthorReply extends React.Component {
 /**
  * 方案底部内容
  */
-class Footer extends React.Component {
+class Footer extends Component {
 
     constructor(props) {
         super(props);
@@ -483,7 +483,7 @@ class FashionMomentDetail extends IM {
 }
 
 
-class Main extends React.Component {
+class Main extends Component {
     constructor(props) {
         super(props);
     }

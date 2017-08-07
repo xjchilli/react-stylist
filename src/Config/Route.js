@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { wechatAuth } from './WechatAuth';
-// 异步引入
+// 懒加载
 import {
     Home,
     DpsProfile,
@@ -35,7 +35,7 @@ import {
     NotFoundPage,
     Server500,
     Test
-} from './RouteLazy'
+} from './RouteLazy';
 
 class App extends React.Component {
     constructor(props) {
@@ -52,7 +52,6 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
         this.state.auth ? null : wechatAuth(this.props, this.setAuth);
     }
 

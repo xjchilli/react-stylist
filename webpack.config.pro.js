@@ -21,7 +21,7 @@ var p = path.resolve(__dirname + '/assets');
 //入口文件
 var entry = {
     app: './src/App.js',
-    vendors: ['react', 'react-dom', 'react-router-dom', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper']
+    vendors: ['react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper']
 };
 
 module.exports = {
@@ -62,6 +62,9 @@ module.exports = {
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
+        }),
+        new webpack.ProvidePlugin({
+           "React": "react"
         }),
         //多线程处理文件
         new HappyPack({
@@ -114,7 +117,6 @@ module.exports = {
             'react': path.resolve(__dirname + '/node_modules/react'),
             'react-dom': path.resolve(__dirname + '/node_modules/react-dom'),
             'react-router': path.resolve(__dirname + '/node_modules/react-router'),
-            'react-router-dom': path.resolve(__dirname + '/node_modules/react-router-dom'),
             'react-redux': path.resolve(__dirname + '/node_modules/react-redux'),
             'redux': path.resolve(__dirname + '/node_modules/redux'),
             'redux-thunk': path.resolve(__dirname + '/node_modules/redux-thunk'),

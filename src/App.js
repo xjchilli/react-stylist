@@ -1,6 +1,6 @@
 import "babel-polyfill";
 import React from 'react';
-import ReactDOM, { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
 
 
@@ -15,7 +15,7 @@ import route from './Config/Route';
 import 'swiper'
 import './Style/dps.less';
 
-render(
+ReactDOM.render(
 	<Provider store={store}>
 		{route}
 	</Provider>,

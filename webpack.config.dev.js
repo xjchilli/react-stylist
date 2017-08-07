@@ -45,7 +45,7 @@ module.exports = {
       })
     }, {
       test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
+      include: path.resolve(__dirname, 'src'),
       use: [{
         loader: 'happypack/loader?id=happybabel',
       }]
@@ -70,7 +70,7 @@ module.exports = {
       hash: true, //为静态资源生成hash值
     }),
     //多线程处理文件
-    new HappyPack({
+    new HappyPack({//,plugins[]=transform-runtime
       id: 'happybabel',
       loaders: ['babel-loader?cacheDirectory=true,compact=false,presets[]=es2015,presets[]=stage-0,presets[]=react'],
       threadPool: happyThreadPool,

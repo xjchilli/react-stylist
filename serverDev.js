@@ -11,7 +11,7 @@ console.log('started on port ' + port);
 
 
 app.use('/wx', proxy({
-	target: 'http://wxapi.dapeis.com',
+	target: 'http://wxapi.dapeis.net',
 	changeOrigin: true,
 	logProvider: function (provider) {
 		let logger = new (winston.Logger)({
