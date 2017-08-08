@@ -4,7 +4,6 @@
  */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
 import { City, Msg } from "../Component/index";
@@ -193,4 +192,4 @@ NeatenWardrobe.contextTypes = {
 
 
 
-export default withRouter(NeatenWardrobe);
+export default NeatenWardrobe;

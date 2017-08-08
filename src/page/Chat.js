@@ -4,7 +4,6 @@
  */
 import React, { Component } from 'react';
 import qs from 'query-string';
-import {withRouter} from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import { DataLoad, PreviewImg } from '../Component/index';
 import merged from 'obj-merged';
@@ -602,4 +601,4 @@ class Chat extends IM {
     }
 }
 
-export default withRouter(Chat);
+export default Chat;

@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import merged from 'obj-merged';
-import {withRouter } from 'react-router';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { ToolDps } from '../ToolDps';
@@ -944,8 +943,8 @@ class CustomSuit extends Component {
 
 
 
-export default withRouter(connect((state) => {
+export default connect((state) => {
     return {
         state: state['CustomSuit']
     }
-}, action('CustomSuit'))(CustomSuit));
+}, action('CustomSuit'))(CustomSuit);

@@ -3,7 +3,6 @@
  * Created by potato on 2017/3/20.
  */
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import qs from 'query-string';
@@ -247,4 +246,4 @@ Consult.contextTypes = {
 
 
 
-export default withRouter(Consult);
+export default Consult;

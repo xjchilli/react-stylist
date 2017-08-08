@@ -2,7 +2,6 @@
  * Created by potato on 2017/4/15.
  */
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import merged from 'obj-merged';
@@ -77,7 +76,7 @@ const Main = (mySeting) => {
                 this.get = ToolDps.get(this.getUrl(), this.getData()).then((res) => {
                     this.state.loadMsg = '加载成功';
                     if (!res.succ) {
-                        this.state.loadMsg = '加载失败';
+                        this.state.loadMsg = res.msg;
                     }
                     this.state.loadAnimation = false;
                     this.state.data = res;
@@ -143,11 +142,11 @@ const Main = (mySeting) => {
         seting
     };
 
-    return withRouter(connect((state) => {
+    return connect((state) => {
         return {
             state: state[seting.id]
         }
-    }, action(seting.id))(Index)); //连接redux
+    }, action(seting.id))(Index); //连接redux
 }
 
 

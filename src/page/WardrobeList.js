@@ -15,7 +15,6 @@ class SwiperSlide extends Component {
         super(props);
     }
 
-    componentWillMount() { }
 
     render() {
         let {

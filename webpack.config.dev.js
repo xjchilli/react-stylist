@@ -70,9 +70,9 @@ module.exports = {
       hash: true, //为静态资源生成hash值
     }),
     //多线程处理文件
-    new HappyPack({//,plugins[]=transform-runtime
+    new HappyPack({//?cacheDirectory=true,compact=false,presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-runtime
       id: 'happybabel',
-      loaders: ['babel-loader?cacheDirectory=true,compact=false,presets[]=es2015,presets[]=stage-0,presets[]=react'],
+      loaders: ['babel-loader'],
       threadPool: happyThreadPool,
       cache: false,
       verbose: true

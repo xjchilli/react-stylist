@@ -74,9 +74,9 @@ module.exports = {
             cache: false,
             verbose: true
         }),
-        new HappyPack({
+        new HappyPack({//?cacheDirectory=true,compact=false,presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-runtime
             id: 'happybabel',
-            loaders: ['babel-loader?cacheDirectory=true,compact=false,presets[]=es2015,presets[]=stage-0,presets[]=react'],
+            loaders: ['babel-loader'],
             threadPool: happyThreadPool,
             cache: false,
             verbose: true

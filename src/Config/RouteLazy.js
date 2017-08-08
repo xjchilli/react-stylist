@@ -38,262 +38,171 @@ import Server500Container from 'bundle-loader?lazy&name=[name]!../page/Server500
 import TestContainer from 'bundle-loader?lazy&name=[name]!../page/Test';
 
 
-//首页
-const Home = () => (
-    <Bundle load={HomeContainer} >
-        {(Home) => <Home />}
-    </Bundle>
-);
-
-//搭配师个人信息
-const DpsProfile = () => (
-    <Bundle load={DpsProfileContainer} >
-        {(DpsProfile) => <DpsProfile />}
-    </Bundle>
-);
-
-//搭配师服务详情
-const DpsServerDetail = () => (
-    <Bundle load={DpsServerDetailContainer} >
-        {(DpsServerDetail) => <DpsServerDetail />}
-    </Bundle>
-);
-
-//个人信息
-const Profile = () => (
-    <Bundle load={ProfileContainer} >
-        {(Profile) => <Profile />}
-    </Bundle>
-);
-
-//我要搭配入口
-const NeedMatch = () => (
-    <Bundle load={NeedMatchContainer} >
-        {(NeedMatch) => <NeedMatch />}
-    </Bundle>
-);
-
-
-//咨询
-const Consult = () => (
-    <Bundle load={ConsultContainer} >
-        {(Consult) => <Consult />}
-    </Bundle>
-);
-
-
-//咨询介绍
-const ConsultHelp = () => (
-    <Bundle load={ConsultHelpContainer} >
-        {(ConsultHelp) => <ConsultHelp />}
-    </Bundle>
-);
-
-//购物
-const Shopping = () => (
-    <Bundle load={ShoppingContainer} >
-        {(Shopping) => <Shopping />}
-    </Bundle>
-);
-
-//购物介绍
-const ShoppingHelp = () => (
-    <Bundle load={ShoppingHelpContainer} >
-        {(ShoppingHelp) => <ShoppingHelp />}
-    </Bundle>
-);
-
-//陪逛
-const AccompanyShopping = () => (
-    <Bundle load={AccompanyShoppingContainer} >
-        {(AccompanyShopping) => <AccompanyShopping />}
-    </Bundle>
-);
-
-//陪逛介绍
-const AccompanyShoppingHelp = () => (
-    <Bundle load={AccompanyShoppingHelpContainer} >
-        {(AccompanyShoppingHelp) => <AccompanyShoppingHelp />}
-    </Bundle>
-);
-
-//整理衣橱
-const NeatenWardrobe = () => (
-    <Bundle load={NeatenWardrobeContainer} >
-        {(NeatenWardrobe) => <NeatenWardrobe />}
-    </Bundle>
-);
-
-//整理衣橱介绍
-const NeatenWardrobeHelp = () => (
-    <Bundle load={NeatenWardrobeHelpContainer} >
-        {(NeatenWardrobeHelp) => <NeatenWardrobeHelp />}
-    </Bundle>
-);
-
-//支付
-const Pay = () => (
-    <Bundle load={PayContainer} >
-        {(Pay) => <Pay />}
-    </Bundle>
-);
-
-//搭配测试
-const CustomSuit = () => (
-    <Bundle load={CustomSuitContainer} >
-        {(CustomSuit) => <CustomSuit />}
-    </Bundle>
-);
-
-//时尚圈
-const FashionMoment = () => (
-    <Bundle load={FashionMomentContainer} >
-        {(FashionMoment) => <FashionMoment />}
-    </Bundle>
-);
-
-//时尚圈详情
-const FashionMomentDetail = () => (
-    <Bundle load={FashionMomentDetailContainer} >
-        {(FashionMomentDetail) => <FashionMomentDetail />}
-    </Bundle>
-);
-
-//我的搭配师
-const MyDps = () => (
-    <Bundle load={MyDpsContainer} >
-        {(MyDps) => <MyDps />}
-    </Bundle>
-);
-
-//搭配方案
-const ArrangementScheme = () => (
-    <Bundle load={ArrangementSchemeContainer} >
-        {(ArrangementScheme) => <ArrangementScheme />}
-    </Bundle>
-);
-
-//聊天
-const Chat = () => (
-    <Bundle load={ChatContainer} >
-        {(Chat) => <Chat />}
-    </Bundle>
-);
-
-//我的衣橱
-const WardrobeList = () => (
-    <Bundle load={WardrobeListContainer} >
-        {(WardrobeList) => <WardrobeList  />}
-    </Bundle>
-);
-//衣橱修改
-const WardrobeModify = () => (
-    <Bundle load={WardrobeModifyContainer} >
-        {(WardrobeModify) => <WardrobeModify />}
-    </Bundle>
-);
-
-//我的订单
-const OrderList = () => (
-    <Bundle load={OrderListContainer} >
-        {(OrderList) => <OrderList />}
-    </Bundle>
-);
-
-//订单详情
-const OrderDetail = () => (
-    <Bundle load={OrderDetailContainer} >
-        {(OrderDetail) => <OrderDetail />}
-    </Bundle>
-);
-
-
-//优惠码
-const PromotionCode = () => (
-    <Bundle load={PromotionCodeContainer}>
-        {(PromotionCode) => <PromotionCode  />}
-    </Bundle>
-);
-
-
-//分享
-const Share = () => (
-    <Bundle load={ShareContainer} >
-        {(Share) => <Share />}
-    </Bundle>
-);
-
-
-//使用规则
-const Usage = () => (
-    <Bundle load={UsageContainer} >
-        {(Usage) => <Usage />}
-    </Bundle>
-);
-
-
-//反馈
-const Feedback = () => (
-    <Bundle load={FeedbackContainer} >
-        {(Feedback) => <Feedback />}
-    </Bundle>
-);
-
-
-//测试
-const Test = () => (
-    <Bundle load={TestContainer}>
-        {(Test) => <Test />}
-    </Bundle>
-);
-
-
-//404
-const NotFoundPage = () => (
-    <Bundle load={NotFoundPageContainer} >
-        {(NotFoundPage) => <NotFoundPage />}
-    </Bundle>
-);
-
-
-//500
-const Server500 = () => (
-    <Bundle load={Server500Container} >
-        {(Server500) => <Server500 />}
-    </Bundle>
-);
-
-
-export {
-    Home,
-	DpsProfile,
-	DpsServerDetail,
-	Profile,
-	NeedMatch,
-	Consult,
-	ConsultHelp,
-	Shopping,
-	ShoppingHelp,
-	AccompanyShopping,
-	AccompanyShoppingHelp,
-	NeatenWardrobe,
-	NeatenWardrobeHelp,
-	Pay,
-	CustomSuit,
-	FashionMoment,
-	FashionMomentDetail,
-	MyDps,
-	ArrangementScheme,
-	Chat,
-	WardrobeList,
-	WardrobeModify,
-	OrderList,
-	OrderDetail,
-	PromotionCode,
-	Share,
-	Usage,
-	Feedback,
-	NotFoundPage,
-	Server500,
-    Test
+let getComponent = (props, ComponentFunc) => {
+    return (
+        <Bundle load={ComponentFunc} {...props}>
+            {(Module) => <Module {...props} />}
+        </Bundle>
+    )
 }
+
+let routers = [
+    {//首页
+        path: '/',
+        exact: true,
+        component: (props) => getComponent(props, HomeContainer)
+    },
+    {//个人信息
+        path: '/profile',
+        exact: false,
+        component: (props) => getComponent(props, ProfileContainer)
+    },
+    {//搭配师个人信息
+        path: '/dpsProfile',
+        exact: false,
+        component: (props) => getComponent(props, DpsProfileContainer)
+    },
+    {//搭配师服务详情
+        path: '/dpsServerDetail',
+        exact: false,
+        component: (props) => getComponent(props, DpsServerDetailContainer)
+    },
+    {//我要搭配入口
+        path: '/needMatch',
+        exact: false,
+        component: (props) => getComponent(props, NeedMatchContainer)
+    },
+    {//咨询
+        path: '/consult',
+        exact: false,
+        component: (props) => getComponent(props, ConsultContainer)
+    },
+    {//咨询介绍
+        path: '/consultHelp',
+        exact: false,
+        component: (props) => getComponent(props, ConsultHelpContainer)
+    },
+    {//购物
+        path: '/shopping',
+        exact: false,
+        component: (props) => getComponent(props, ShoppingContainer)
+    },
+    {//购物介绍
+        path: '/shoppingHelp',
+        exact: false,
+        component: (props) => getComponent(props, ShoppingHelpContainer)
+    },
+    {//陪逛
+        path: '/accompanyShopping',
+        exact: false,
+        component: (props) => getComponent(props, AccompanyShoppingContainer)
+    },
+    {//陪逛介绍
+        path: '/accompanyShoppingHelp',
+        exact: false,
+        component: (props) => getComponent(props, AccompanyShoppingHelpContainer)
+    },
+    {//整理衣橱
+        path: '/neatenWardrobe',
+        exact: false,
+        component: (props) => getComponent(props, NeatenWardrobeContainer)
+    },
+    {//整理衣橱介绍
+        path: '/neatenWardrobeHelp',
+        exact: false,
+        component: (props) => getComponent(props, NeatenWardrobeHelpContainer)
+    },
+    {//支付
+        path: '/pay',
+        exact: false,
+        component: (props) => getComponent(props, PayContainer)
+    },
+    {//搭配测试
+        path: '/customSuit',
+        exact: false,
+        component: (props) => getComponent(props, CustomSuitContainer)
+    },
+    {//时尚圈
+        path: '/fashionMoment',
+        exact: false,
+        component: (props) => getComponent(props, FashionMomentContainer)
+    },
+    {//时尚圈详情
+        path: '/fashionMomentDetail',
+        exact: false,
+        component: (props) => getComponent(props, FashionMomentDetailContainer)
+    },
+     {//我的搭配师
+        path: '/myDps',
+        exact: false,
+        component: (props) => getComponent(props, MyDpsContainer)
+    },
+     {//搭配方案
+        path: '/arrangementScheme',
+        exact: false,
+        component: (props) => getComponent(props, ArrangementSchemeContainer)
+    },
+     {//聊天
+        path: '/chat',
+        exact: false,
+        component: (props) => getComponent(props, ChatContainer)
+    },
+     {//我的衣橱
+        path: '/wardrobeList',
+        exact: false,
+        component: (props) => getComponent(props, WardrobeListContainer)
+    },
+     {//衣橱修改
+        path: '/wardrobeModify',
+        exact: false,
+        component: (props) => getComponent(props, WardrobeModifyContainer)
+    },
+     {//我的订单
+        path: '/orderList',
+        exact: false,
+        component: (props) => getComponent(props, OrderListContainer)
+    },
+     {//订单详情
+        path: '/orderDetail',
+        exact: false,
+        component: (props) => getComponent(props, OrderDetailContainer)
+    },
+     {//优惠码
+        path: '/promotionCode',
+        exact: false,
+        component: (props) => getComponent(props, PromotionCodeContainer)
+    },
+     {//分享
+        path: '/share',
+        exact: false,
+        component: (props) => getComponent(props, ShareContainer)
+    },
+     {//使用规则
+        path: '/usage',
+        exact: false,
+        component: (props) => getComponent(props, UsageContainer)
+    },
+     {//反馈
+        path: '/feedback',
+        exact: false,
+        component: (props) => getComponent(props, FeedbackContainer)
+    },
+    {//测试用
+        path: '/test',
+        exact: false,
+        component: (props) => getComponent(props, TestContainer)
+    },
+    {//反馈
+        path: '/404',
+        exact: false,
+        component: (props) => getComponent(props, NotFoundPageContainer)
+    },
+    {//500
+        path: '/500',
+        exact: false,
+        component: (props) => getComponent(props, Server500Container)
+    },
+];
+
+
+export default routers;

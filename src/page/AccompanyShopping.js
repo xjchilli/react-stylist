@@ -5,7 +5,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
 import City from "../Component/city/city";
 import GirlCategory from "./component/GirlCategory";
@@ -275,4 +274,4 @@ AccompanyShopping.contextTypes = {
 }
 
 
-export default withRouter(AccompanyShopping);
+export default AccompanyShopping;

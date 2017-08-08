@@ -5,7 +5,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
-import { withRouter } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import { Msg, Tips, DataLoad } from "../Component/index";
 import classNames from "classnames";
@@ -300,4 +299,4 @@ Pay.contextTypes = {
 }
 
 
-export default withRouter(Main);
+export default Main;

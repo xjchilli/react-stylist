@@ -52,7 +52,27 @@ class Content extends Component {
             previewBigImg: false,//是否预览大图
             bigImgUrl: ''//大图url
         }
+        this.show=this.showImg.bind(this);
     }
+
+    componentDidMount(){
+        document.querySelector('.content .text').addEventListener('click',this.show);
+    }
+
+    showImg(e){
+        if(e.target.nodeName.toLowerCase() == "img"){//点击图片
+            let imgUrl=e.target.getAttribute('src');
+            this.setState({
+                previewBigImg:true,
+                bigImgUrl:imgUrl
+            });
+        }
+    }
+
+    componentWillUnmount(){
+        document.querySelector('.content .text').removeEventListener('click',this.show);
+    }
+
     render() {
         let {
             planName,
