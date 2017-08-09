@@ -34,7 +34,7 @@ class City extends Component {
         this.readyDom = () => {
             let self = this;
             //省
-            self.swiperProvince = new Swiper(self.refs.JProvince, {
+            self.swiperProvince = new Swiper(self.JProvince, {
                 direction: 'vertical',
                 slidesPerView: 5,
                 centeredSlides: true,
@@ -53,7 +53,7 @@ class City extends Component {
                 }
             });
             //市
-            self.swiperCity = new Swiper(self.refs.JCity, {
+            self.swiperCity = new Swiper(self.JCity, {
                 direction: 'vertical',
                 slidesPerView: 5,
                 centeredSlides: true,
@@ -73,7 +73,7 @@ class City extends Component {
                 }
             });
             //区
-            self.swiperArea = new Swiper(self.refs.JArea, {
+            self.swiperArea = new Swiper(self.JArea, {
                 direction: 'vertical',
                 slidesPerView: 5,
                 centeredSlides: true,
@@ -181,9 +181,9 @@ class City extends Component {
 
         //确定
         this.sureBtn = () => {
-            let provinceEle = this.refs.JProvince.querySelector('.swiper-slide-active');
-            let cityEle = this.refs.JCity.querySelector('.swiper-slide-active');
-            let areaEle = this.refs.JArea.querySelector('.swiper-slide-active');
+            let provinceEle = this.JProvince.querySelector('.swiper-slide-active');
+            let cityEle = this.JCity.querySelector('.swiper-slide-active');
+            let areaEle = this.JArea.querySelector('.swiper-slide-active');
             let provinceCode = provinceEle.getAttribute('data-code');
             let provinceName = provinceEle.textContent;
             let cityCode = cityEle.getAttribute('data-code');
@@ -221,19 +221,19 @@ class City extends Component {
                                 this.state.data.length === 0 ? <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} /> : null
                             }
                             <div className="city-item">
-                                <div ref='JProvince' className="swiper-container">
+                                <div ref={el => this.JProvince = el} className="swiper-container">
                                     <div className="swiper-wrapper">
                                     </div>
                                 </div>
                             </div>
                             <div className="city-item">
-                                <div ref='JCity' className="swiper-container J-city">
+                                <div ref={el => this.JCity = el} className="swiper-container J-city">
                                     <div className="swiper-wrapper">
                                     </div>
                                 </div>
                             </div>
                             <div className="city-item">
-                                <div ref='JArea' className="swiper-container J-area">
+                                <div ref={el => this.JArea = el} className="swiper-container J-area">
                                     <div className="swiper-wrapper">
                                     </div>
                                 </div>

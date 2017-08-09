@@ -49,7 +49,7 @@ class Slider extends Component{
         let long=this.state.max-this.state.min;//滑动条长度
         let defaultVal=defaultValue-this.state.min;//默认值
         let wPercent=defaultVal/long*100 + "%";//占控件的百分比
-       this.refs.range.style.backgroundSize=wPercent + ' 100%';
+       this.range.style.backgroundSize=wPercent + ' 100%';
 
     }
     /***
@@ -74,7 +74,7 @@ class Slider extends Component{
     render(){
         return (
                 <div className="dps-slider">
-                    <input type="range" ref="range"  min={this.state.min} max={this.state.max} step={this.state.step} defaultValue={this.state.defaultValue} onInput={this.getInputRange.bind(this)} />
+                    <input type="range" ref={el => this.range = el}  min={this.state.min} max={this.state.max} step={this.state.step} defaultValue={this.state.defaultValue} onInput={this.getInputRange.bind(this)} />
                     <span className="num">{this.state.defaultValue}</span>
                 </div>
         );

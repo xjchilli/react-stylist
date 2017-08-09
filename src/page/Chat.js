@@ -246,12 +246,12 @@ class Chat extends IM {
             li.innerHTML = '<img src=' + fromAccountImage + ' alt=""><div class="msgContent">' + contentHtml + '</div>';
             document.querySelector('.chat-content').insertBefore(li, document.querySelector('.chat-content').firstChild);
             //50代表一条聊天记录默认高度
-            this.refs.container.scrollTop = this.refs.container.scrollHeight - this.currScrollHeight - 50;
+            this.container.scrollTop = this.container.scrollHeight - this.currScrollHeight - 50;
 
             return;
         } else {
             this._time = setTimeout(() => {
-                this.refs.container.scrollTop = this.refs.container.scrollHeight;
+                this.container.scrollTop = this.container.scrollHeight;
             }, 300);
         }
 
@@ -461,9 +461,9 @@ class Chat extends IM {
         if (currEle.scrollTop == 0) {
             currEle.scrollTop = 10;
 
-            this.currScrollHeight = this.refs.container.scrollHeight - this.refs.container.scrollTop;
-            /*console.log(this.refs.container.scrollTop)
-            console.log(this.refs.container.scrollHeight)*/
+            this.currScrollHeight = this.container.scrollHeight - this.container.scrollTop;
+            /*console.log(this.container.scrollTop)
+            console.log(this.container.scrollHeight)*/
 
 
             this.getPrePageC2CHistoryMsgs();
@@ -578,7 +578,7 @@ class Chat extends IM {
     render() {
         return (
             <div className="full-page chat-page">
-                <div ref='container' className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
+                <div ref={el => this.container = el} className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
                     {this.state.list.length > 0 ? <List list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer>

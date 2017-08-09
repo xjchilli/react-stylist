@@ -15,79 +15,58 @@ class Test extends Component {
             times: 0,
             date: '1123'
         };
+
     }
 
     componentDidMount() {
-
+        this.textInput.focus();
     }
 
-   
+
 
     modifyTime(e) {
         this.setState({
-            date:e.target.value
+            date: e.target.value
         });
     }
 
     render() {
         return (
             <div>
-                <p>日期:1</p>
-                <input value={this.state.date} onChange={this.modifyTime.bind(this)} />
-                <User name={this.state.date}/>
+                <CustomTextInput
+                    ref={(input) => { this.textInput = input; }} />
             </div>
         )
     }
 }
 
-class User extends React.Component{
-    constructor(props){
+
+class CustomTextInput extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            age:13,
-            name:['potato']
-        }
+        // this.focus = this.focus.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        
-        this.setState({
-            name:this.state.name.concat(nextProps.name)
-        });
-    }
-    
-    
-     shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-        // const thisProps = this.props || {}, thisState = this.state || {};
-
-        // if (Object.keys(thisProps).length !== Object.keys(nextProps).length ||
-        //     Object.keys(thisState).length !== Object.keys(nextState).length) {
-        //     return true;
-        // }
-
-        // for (const key in nextProps) {
-        //     if (!is(thisProps[key], nextProps[key])) {
-        //         return true;
-        //     }
-        // }
-
-        // for (const key in nextState) {
-        //     if (thisState[key] !== nextState[key] || !is(thisState[key], nextState[key])) {
-        //         return true;
-        //     }
-        // }
-        // return false;
+    focus() {
+        // 直接使用原生 API 使 text 输入框获得焦点
+        this.textInput.focus();
     }
 
-
-    render(){
-        console.log(1111);
+    render() {
+        // 使用 `ref` 的回调将 text 输入框的 DOM 节点存储到 React 
+        // 实例上（比如 this.textInput）
         return (
             <div>
-                1
+                <input
+                    type="text"
+                    ref={(input) => { this.textInput = input; }} />
+                {/* <input
+                    type="button"
+                    value="Focus the text input"
+                    onClick={this.focus}
+                /> */}
             </div>
-        )
+        );
     }
 }
 

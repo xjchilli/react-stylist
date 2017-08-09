@@ -121,7 +121,7 @@ class WardrobeModify extends Component {
      * 删除当前预览的图片
      */
     deleteCurrImg() {
-        this.refs.uploadImg.value = '';
+        this.uploadImg.value = '';
         this.setState({
             file: '',
             imgSrc: ''
@@ -236,7 +236,7 @@ class WardrobeModify extends Component {
                                     <use xlinkHref="/assets/img/icon.svg#svg-cloth" />
                                 </svg>
                                 {this.state.imgSrc !== "" ? <img src={this.state.imgSrc} className="preview-img" alt="" /> : null}
-                                <input type="file" ref='uploadImg' accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
+                                <input type="file" ref={input => this.uploadImg = input} accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
                                 {this.state.imgSrc !== "" ? <svg viewBox="0 0 100 100" className="icon-svg-delete close" onClick={this.deleteCurrImg.bind(this)}><use xlinkHref="/assets/img/icon.svg#svg-delete" /></svg> : null}
                             </div>
                             <div className="item">

@@ -83,7 +83,7 @@ const Main = (mySetting) => {
                     scrollY
                     } = this.state;
                 window.scrollTo(scrollX, scrollY);
-                this.get = new GetNextPage(this.refs.dataload, {
+                this.get = new GetNextPage(this.dataload, {
                     url: this.getUrl(),
                     data: this.getData(),
                     start: this.start,
@@ -193,7 +193,7 @@ const Main = (mySetting) => {
             } = this.state;
             return (
                 <this.props.setting.component {...this.props} state={this.state}>
-                    <div ref='dataload'>
+                    <div ref={el => this.dataload = el}>
                         <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />
                     </div>
                 </this.props.setting.component>

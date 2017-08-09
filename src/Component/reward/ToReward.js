@@ -179,7 +179,7 @@ class ToReward extends Component {
      */
     switchMod() {
         if (!this.state.isInput) {
-            this.refs.num.focus();
+            this.num.focus();
         }
         this.setState({
             isInput: !this.state.isInput,
@@ -211,7 +211,7 @@ class ToReward extends Component {
                         <label htmlFor="num">
                             ￥
                         </label>
-                        <input id="num" ref="num" type="number" min={0.01} placeholder="输入打赏金额" value={this.state.inputMony} onChange={this.rewardMoney.bind(this)} />
+                        <input id="num" ref={input => this.num = input} type="number" min={0.01} placeholder="输入打赏金额" value={this.state.inputMony} onChange={this.rewardMoney.bind(this)} />
                     </div>
                     <div className={this.state.isRandom ? "text-center random-money active" : "text-center random-money"}>
                         <span>￥</span>

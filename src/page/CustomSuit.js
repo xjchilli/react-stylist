@@ -567,7 +567,7 @@ class Otherinfo extends Component {
                         };
                         let newPhotoList = Array.prototype.slice.apply(self.state.photoList);
                         newPhotoList.push(imgObj);
-                        self.refs.file.value = '';
+                        self.file.value = '';
 
                         let myData = self.state.data;
                         myData.lifeImgs = newPhotoList;
@@ -741,7 +741,7 @@ class Otherinfo extends Component {
                     <div className="life-photo-area">
                         <div className="item">
                             <div className="img icon-add">
-                                <input type="file" ref='file' multiple accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                                <input type="file" ref={el => this.file =el} multiple accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
                             </div>
                         </div>
                         {

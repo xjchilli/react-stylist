@@ -41,7 +41,7 @@ class Tips extends React.Component {
     }
 
     componentDidMount() {
-        this.refs.dpsTips.addEventListener('click', this.hideTips.bind(this));
+        this.dpsTips.addEventListener('click', this.hideTips.bind(this));
     }
     /**
      * 隐藏tips窗口
@@ -72,7 +72,7 @@ class Tips extends React.Component {
             'active': this.state.isShow
         });
         return (
-            <div ref="dpsTips" className={tips} data-bg="true">
+            <div ref={el => this.dpsTips = el} className={tips} data-bg="true">
                 <div className="dps-tips-box">
                     <p>填写完整信息</p>
                     <p>让我们更了解你～</p>
