@@ -52,25 +52,25 @@ class Content extends Component {
             previewBigImg: false,//是否预览大图
             bigImgUrl: ''//大图url
         }
-        this.show=this.showImg.bind(this);
+        this.show = this.showImg.bind(this);
     }
 
-    componentDidMount(){
-        document.querySelector('.content .text').addEventListener('click',this.show);
+    componentDidMount() {
+        document.querySelector('.content .text').addEventListener('click', this.show);
     }
 
-    showImg(e){
-        if(e.target.nodeName.toLowerCase() == "img"){//点击图片
-            let imgUrl=e.target.getAttribute('src');
+    showImg(e) {
+        if (e.target.nodeName.toLowerCase() == "img") {//点击图片
+            let imgUrl = e.target.getAttribute('src');
             this.setState({
-                previewBigImg:true,
-                bigImgUrl:imgUrl
+                previewBigImg: true,
+                bigImgUrl: imgUrl
             });
         }
     }
 
-    componentWillUnmount(){
-        document.querySelector('.content .text').removeEventListener('click',this.show);
+    componentWillUnmount() {
+        document.querySelector('.content .text').removeEventListener('click', this.show);
     }
 
     render() {
@@ -273,11 +273,7 @@ class Footer extends Component {
 
     constructor(props) {
         super(props);
-        let {
-            agreeNum,
-            agreeValue,
-            id
-        } = this.props.plan;
+        let { agreeNum, agreeValue, id } = this.props.plan;
         this.state = {
             agreeValue: agreeValue, //该用户是否点赞 0:未点赞，1已经点赞
             agreeNum: agreeNum, //	点赞数
@@ -314,7 +310,6 @@ class Footer extends Component {
 
 
     render() {
-
         let agree = classNames('icon-svg-zan', {
             'active': this.state.agreeValue === 1
         })
@@ -365,7 +360,7 @@ class FashionMomentDetail extends IM {
     componentDidMount() {
         document.title = "时尚圈详情";
         let p = document.createElement('p');
-        p.innerHTML=this.state.plan.content;
+        p.innerHTML = this.state.plan.content;
         //分享配置
         ShareConfig({
             title: this.state.plan.planName, // 分享标题

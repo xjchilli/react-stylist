@@ -59,7 +59,7 @@ ToolDps.ajax = (mySetting) => {
 
     let xhr = new XMLHttpRequest();
     return new Promise(function (resolve, reject) {
-        options.type === "POST" ? xhr.open(options.type, options.url, options.async) : xhr.open(options.type, options.url + "?" + data, options.async);
+        options.type === "POST" ? xhr.open(options.type, options.url, options.async) : xhr.open(options.type, options.url + "?" + data + "&"+new Date().getTime(), options.async);
         if (openId) {
             xhr.setRequestHeader('openId', openId);
         }
