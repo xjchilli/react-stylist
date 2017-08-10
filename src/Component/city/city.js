@@ -7,15 +7,9 @@
  * <City defaultProvince="330000" defaultCity="330100" defaultArea="330106"  getCity={this.getCity.bind(this)} close={()=>{this.setState({cityShow:false})}}/>
  *
  */
-import React, {
-    Component
-} from 'react';
-import {
-    DataLoad
-} from '../../Component/index';
-import {
-    ToolDps
-} from '../../ToolDps';
+import React, {Component} from 'react';
+import {DataLoad} from '../../Component/index';
+import {ToolDps} from '../../ToolDps';
 
 
 

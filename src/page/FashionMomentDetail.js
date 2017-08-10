@@ -284,6 +284,8 @@ class Footer extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
+            agreeValue:nextProps.plan.agreeValue,
+            agreeNum:nextProps.plan.agreeNum,
             commentTotalNum: nextProps.commentTotalNum
         });
     }

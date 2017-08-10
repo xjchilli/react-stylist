@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import action from '../../Action/Index';
 import merged from 'obj-merged';
 import GetNextPage from './get-next-page';
@@ -50,14 +49,8 @@ const Main = (mySetting) => {
              * @param props
              */
             this.initState = (props) => {
-                var {
-                        state,
-                    location
-                    } = props;
-                var {
-                        pathname,
-                    search
-                    } = location;
+                var { state, location } = props;
+                var { pathname, search } = location;
                 this.path = pathname + search;
 
                 if (typeof this.action == 'undefined' && location.action == 'PUSH') {
@@ -205,11 +198,11 @@ const Main = (mySetting) => {
         setting
     };
 
-    return withRouter(connect((state) => {
+    return connect((state) => {
         return {
             state: state[setting.id]
         }
-    }, action(setting.id))(Index));
+    }, action(setting.id))(Index);
 }
 
 

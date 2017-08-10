@@ -8,26 +8,56 @@ import { is, fromJS, Map } from 'immutable';
 
 
 
-class Test extends React.PureComponent {
+class Test extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: '0'
+            data: Map({ times: 0, name: 'potato' })
         };
 
     }
 
     componentDidMount() {
-   
+
+        let user1={
+            name:'wzh',
+            age:12,
+            love:[{
+                age:12
+            },'看动漫']
+        }
+
+        let user2={
+            name:'wzh',
+            age:12,
+            love:[{
+                age:13
+            },'看动漫']
+        }
+
+
+        console.log(is(fromJS(user1),fromJS(user2)));
+    }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return !(this.props === nextProps || is(this.props, nextProps)) ||
+    //         !(this.state === nextState || is(this.state, nextState));
+    // }
+
+    handleAdd() {
+        this.setState(({ data }) => ({
+            data: data.update('times', v => v + 1)
+        })
+        )
+
     }
 
     render() {
-        console.log(this.state.date);
+        console.log(this.state.data.get('times'));
         return (
             <div>
-                {this.state.date}
-                <button onClick={()=>{this.setState({date:'1'})}}>1</button>
-                <button onClick={()=>{this.setState({date:'2'})}}>2</button>
+                <button onClick={this.handleAdd.bind(this)}>{this.state.data.get('times')}</button>
+                <button onClick={() => { this.setState({ date: '2' }) }}>2</button>
             </div>
         )
     }

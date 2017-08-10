@@ -11,7 +11,7 @@ import { ToolDps } from '../ToolDps';
 import action from '../Action/Index';
 import classNames from 'classnames';
 import { Msg, City } from '../Component/index';
-import { is, fromJS } from 'immutable';
+// import { is, fromJS } from 'immutable';
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
 
@@ -718,7 +718,6 @@ class Otherinfo extends Component {
                         <div className="item">
                             <input id="city" type="text" value={this.state.data.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
                         </div>
-                        {this.state.cityShow ? <City defaultProvince={this.state.data.provinceCode} defaultCity={this.state.data.cityCode} defaultArea={this.state.data.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
                     </div>
                     <div className="form-ground">
                         <div className="item">
@@ -752,6 +751,7 @@ class Otherinfo extends Component {
                     </div>
                     <button className="sendBtn" onClick={this.sendForm.bind(this)}>{this.state.btnText}</button>
                 </section>
+                 {this.state.cityShow ? <City defaultProvince={this.state.data.provinceCode} defaultCity={this.state.data.cityCode} defaultArea={this.state.data.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
             </div>
         )
     }
@@ -843,7 +843,7 @@ class CustomSuit extends Component {
         document.title = "填写个人信息";
         //用户信息
         new Swiper('.J-custom-info', {
-            initialSlide: 0,
+            initialSlide: 7,
             direction: 'vertical',
             pagination: '.swiper-pagination',
             paginationType: 'progress',
