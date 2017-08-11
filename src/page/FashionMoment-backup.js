@@ -11,6 +11,8 @@ import IM from './component/IM';
 import LazyLoad from 'react-lazyload';
 
 
+
+
 /**
  * (循环列表)
  *
@@ -23,7 +25,8 @@ class List extends Component {
             <ul className="fashion-moment-list">
                 {
                     this.props.list.map((item, index) => {
-                        return <ListItem key={index} {...item} />
+                        return (<ListItem key={index} {...item} />
+                        )
                     })
                 }
             </ul>
@@ -81,11 +84,33 @@ class ListItem extends Component {
         })
 
         let p = document.createElement('p');
-        p.innerHTML=content;
+        p.innerHTML = content;
 
         return (
             <li>
                 <Link to={"/fashionMomentDetail?planId=" + id}>
+                    <LazyLoad height={200} overflow={true}>
+                        <img src={masterImage} className="img-content" alt="" />
+                    </LazyLoad>
+                    {/*{planName}  */}
+                    <h2 className="title">好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上好好学习天天向上</h2>
+                     <div className="footer-area">
+                        <span className="agree" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, id) : null}>
+                            <svg viewBox="0 0 200 200" className={agree} >
+                                <use xlinkHref="/assets/img/icon.svg#svg-zan" />
+                            </svg>
+                            {this.state.agreeNum ? this.state.agreeNum : 0}
+                        </span>
+                        <span className="money">
+                            <svg viewBox="0 0 1024 1024" className="icon-svg-reward" >
+                                <use xlinkHref="/assets/img/icon.svg#svg-reward" />
+                            </svg>
+                            {awardNum ? awardNum : 0}
+                        </span>
+                    </div>
+                    <time>{createTime}</time>
+                </Link>
+                {/* <Link to={"/fashionMomentDetail?planId=" + id}>
                     <h2 className="title">{planName}</h2>
                     <time>{createTime}</time>
                     <LazyLoad height={200} overflow={true}>
@@ -110,7 +135,7 @@ class ListItem extends Component {
                         </span>
                         <span className="right-arrow">&gt;</span>
                     </div>
-                </div>
+                </div> */}
             </li>
         );
     }
@@ -120,20 +145,54 @@ class ListItem extends Component {
 class FashionMoment extends IM {
     constructor(props) {
         super(props);
+        let data = this.arrangeData(props.state.data);
         this.state = {
-            newMsg: false
+            newMsg: false,
+            leftData: data.colLeft || [],//左列数据
+            rightData: data.colRight || []//右列数据
         }
         this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
 
     }
     componentDidMount() {
         document.title = "时尚圈";
-        this.signature((data) => {
-            this.login(data, () => {
-                this.getFriends();
-            });
+        // this.signature((data) => {
+        //     this.login(data, () => {
+        //         this.getFriends();
+        //     });
+        // });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let data = this.arrangeData(nextProps.state.data);
+        this.setState({
+            leftData: data.colLeft,
+            rightData: data.colRight
         });
     }
+
+    /**
+     * 排列数据
+     */
+    arrangeData(data) {
+        let colLeft = [];//左列数据
+        let colRight = [];//右列数据
+        for (let i = 0; i < data.length; i++) {
+            if (i % 2 == 0) {
+                console.log(i);
+                colLeft.push(data[i]);
+            } else {
+                colRight.push(data[i]);
+            }
+        }
+
+        return {
+            colLeft,
+            colRight
+        }
+
+    }
+
 
     onMsgNotify(newMsgList) {
         if (newMsgList.length > 0) {
@@ -213,27 +272,30 @@ class FashionMoment extends IM {
 
 
     render() {
-        let {
-            data
-        } = this.props.state;
+        // let {
+        //     data
+        // } = this.props.state;
         let newMsg = classNames('bell-link', {
             'active': this.state.newMsg
         });
         return (
-            <div className="fashion-moment-area">
-                <div className="full-page">
+            <section className="full-page fashion-moment-area">
+                <section className="clear">
                     {
-                        data.length > 0 ? <List list={data} /> : null
+                        this.state.leftData.length > 0 ? <List list={this.state.leftData} /> : null
                     }
-                    {this.props.children}
-                </div>
+                    {
+                        this.state.rightData.length > 0 ? <List list={this.state.rightData} /> : null
+                    }
+                </section>
+                {this.props.children}
                 <Link to="/myDps" className={newMsg}>
                     <svg viewBox="0 0 100 100" className="icon-svg-bell" >
                         <use xlinkHref="/assets/img/icon.svg#svg-bell" />
                     </svg>
                     <span className="circle"></span>
                 </Link>
-            </div>
+            </section>
         )
     }
 }
