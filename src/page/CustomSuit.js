@@ -843,7 +843,7 @@ class CustomSuit extends Component {
         document.title = "填写个人信息";
         //用户信息
         new Swiper('.J-custom-info', {
-            initialSlide: 7,
+            initialSlide: 0,
             direction: 'vertical',
             pagination: '.swiper-pagination',
             paginationType: 'progress',

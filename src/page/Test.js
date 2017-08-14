@@ -5,38 +5,19 @@
 import React from 'react';
 import { ToolDps } from '../ToolDps';
 import { is, fromJS, Map } from 'immutable';
+import { Editor, EditorState, RichUtils } from 'draft-js';
 
 
 
 class Test extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: Map({ times: 0, name: 'potato' })
-        };
-
+        this.state = { editorState: EditorState.createEmpty() };
+        this.onChange = (editorState) => this.setState({ editorState });
+        this.handleKeyCommand = this.handleKeyCommand.bind(this);
     }
 
     componentDidMount() {
-
-        let user1={
-            name:'wzh',
-            age:12,
-            love:[{
-                age:12
-            },'看动漫']
-        }
-
-        let user2={
-            name:'wzh',
-            age:12,
-            love:[{
-                age:13
-            },'看动漫']
-        }
-
-
-        console.log(is(fromJS(user1),fromJS(user2)));
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
@@ -44,20 +25,26 @@ class Test extends React.Component {
     //         !(this.state === nextState || is(this.state, nextState));
     // }
 
-    handleAdd() {
-        this.setState(({ data }) => ({
-            data: data.update('times', v => v + 1)
-        })
-        )
+    handleKeyCommand(command) {
+        const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+        if (newState) {
+            this.onChange(newState);
+            return 'handled';
+        }
+        return 'not-handled';
+    }
 
+    _onBoldClick() {
+        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
     }
 
     render() {
-        console.log(this.state.data.get('times'));
         return (
             <div>
-                <button onClick={this.handleAdd.bind(this)}>{this.state.data.get('times')}</button>
-                <button onClick={() => { this.setState({ date: '2' }) }}>2</button>
+                <button onClick={this._onBoldClick.bind(this)}>Bold</button>
+                <Editor editorState={this.state.editorState}
+                    handleKeyCommand={this.handleKeyCommand}
+                    onChange={this.onChange} />
             </div>
         )
     }
