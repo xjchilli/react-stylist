@@ -43,13 +43,16 @@ class SwiperSlide extends Component {
         let slider = classNames('img-area', {
             'active': this.state.active
         })
-        let {
-            data
-        } = this.props;
+        let { data } = this.props;
+        let imgStyle={
+            background:"url("+data.imgUrl+")",
+            backgroundSize:'cover'
+        }
+
         return (
             <div className="swiper-slide">
-                <div className={slider} data-id={data.id} data-url={data.imgUrl} onClick={this.selectImg.bind(this)}>
-                    <img src={data.imgUrl} alt="" />
+                <div className={slider} data-id={data.id} data-url={data.imgUrl} onClick={this.selectImg.bind(this)} style={imgStyle}>
+                    {/* <img src={data.imgUrl} alt="" /> */}
                     <p className="img-describe">{data.name}</p>
                 </div>
             </div>
