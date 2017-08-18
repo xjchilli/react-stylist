@@ -41,7 +41,7 @@ async function getUserInfo(code, setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props, setAuth) {
-    // localStorage.setItem('User', JSON.stringify({ openId: '021eNGQd1n0n3v0ajYQd1Z8tQd1eNGQl' }));
+    localStorage.setItem('User', JSON.stringify({ openId: '021eNGQd1n0n3v0ajYQd1Z8tQd1eNGQl' }));
     let user = ToolDps.localItem('User');
     if (user && JSON.parse(user).openId) { //如果用户信息已经存在
         setAuth();

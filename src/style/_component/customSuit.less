@@ -1,256 +1,446 @@
-.customsuit-swiper-box{
-  height: 100%;background: @white;
-  .swiper-slide{
-    overflow: hidden;
-     >.title{position:absolute;top:0;left:0;width:100%;font-size: 1.5rem;text-align: center;padding: 1rem 0;color: #0d0d0d;}
-  }
-  //性别
-  .sex-area{
-      position: absolute; left: 0;right: 0; bottom: 0;top: 0; margin: auto; width: 100%;height: 15rem;text-align: center;
-    .item{
-      display: inline-block;width: 50%;text-align: center;
-    }
-    .img-area{
-      position:relative;display: inline-block;width: 9rem;height: 15rem;
-      >img{width: 9rem;height: 15rem;}
-      &.active:after{
-        content: '';
-        position: absolute;
-        top:8.3rem;
-        right:1rem;
-        .cicle();
-        z-index: 1;
-      }
-      &.active:before{
-        content: '';
-        position: absolute;
-        top:8.6rem;
-        right: 1.3rem;
-        .yes();
-        z-index: 9;
-      }
-    }
-  }
-  //脸型
-  .face-area{
-    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-    .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
-    .img-area{
-      position:relative;display: inline-block;width: 115px;height: 170px;
-      >img{width: 115px;height: 170px;}
-      &.active:after{
-        content: '';
-        position: absolute;
-        top:83px;
-        right:10px;
-        .cicle();
-        z-index: 1;
-      }
-      &.active:before{
-        content: '';
-        position: absolute;
-        top:86px;
-        right: 13px;
-        .yes();
-        z-index: 9;
-      }
-    }
-  }
-  //肤色
-  .skin-area{
-    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-    .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
-    .img-area{
-      position:relative;display: inline-block;width: 105px;height: 135px;
-      >img{width: 105px;height: 135px;}
-      &.active:after{
-        content: '';
-        position: absolute;
-        top:83px;
-        right:10px;
-        .cicle();
-        z-index: 1;
-      }
-      &.active:before{
-        content: '';
-        position: absolute;
-        top:86px;
-        right: 13px;
-        .yes();
-        z-index: 9;
-      }
-    }
-  }
-  //身型
-  .body-area{
-    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-    .item{flex: 0 0 50%;height:33.3%;text-align: center;display: flex;align-items: center;justify-content: center;padding:10px 0;}
-    .img-area{
-      position:relative;display: inline-block;width: 75px;
-      >img{width: 75px;max-height: 100%;}
-      &.active:after{
-        content: '';
-        position: absolute;
-        top:83px;
-        right:10px;
-        .cicle();
-        z-index: 1;
-      }
-      &.active:before{
-        content: '';
-        position: absolute;
-        top:86px;
-        right: 13px;
-        .yes();
-        z-index: 9;
-      }
-    }
-  }
-  //希望解决的问题
-  .resolve-area{
-   position: absolute;top:0;right: 0;bottom: 0;left: 0;margin: auto; width:284px;height: 349px;
-    >img{width:284px;height: 349px;}
-    .resolve{
-      position: absolute;font-size: 14px;
-      &.active:after{
-        content: '';
-        position: absolute;
-        top:3px;
-        left:-16px;
-        .cicle();
-        z-index: 1;
-      }
-      &.active:before{
-        content: '';
-        position: absolute;
-        top:7px;
-        left: -13px;
-        .yes();
-        z-index: 9;
-      }
-    }
-    .resolve1{left: 15px;top: 35px;}
-    .resolveBoy.resolve1{top: 25px;}
-    .resolve2{left: 15px;top: 65px;}
-    .resolveBoy.resolve2{top: 61px;}
-    .resolve3{left: 15px;top: 97px;}
-    .resolveBoy.resolve3{top: 195px;}
-    .resolve4{left: 15px;top: 193px;}
-    .resolveBoy.resolve4{left:auto;right: 0;top: 43px;}
-    .resolve5{right: 0;top: 31px;}
-    .resolveBoy.resolve5{left:15px;right: auto;top:137px;}
-    .resolve6{right: 0;top: 67px;}
-    .resolveBoy.resolve6{top:260px;}
-    .resolve7{right: 0;top: 100px;}
-    .resolveBoy.resolve7{top:168px;}
-    .resolve8{right: 0;top: 163px;}
-    .resolve9{right: 0;top: 252px;}
-  }
-  //风格
-  .style-area{
-    display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-    .item{flex: 0 0 50%;height: 33.3%;text-align: center;display: flex;align-items: center;justify-content: center;}
-    .img-area{
-      position:relative;display: inline-block;width: 100px;
-      >img{width: 100px;max-height: 100%;}
-      &.active:after{
-        content: '';
-        position: absolute;
-        top:66px;
-        right:10px;
-        .cicle();
-        z-index: 1;
-      }
-      &.active:before{
-        content: '';
-        position: absolute;
-        top:70px;
-        right: 13px;
-        .yes();
-        z-index: 9;
-      }
-    }
-  }
-  //基础信息
-  .baseinfo-area{
-      display:flex;flex-direction:column;padding-top:44px;height:100%;
-      .item{flex: auto;}
-      .swiper-container{
-        height:3.8rem;border:0.1rem solid #cccccc;border-width:0.1rem 0 0.1rem 0;
-        .swiper-slide{
-            position: relative; line-height: 3.8rem;text-align: center;font-size: 1.2rem;color: #cccccc;font-family:Arial;
-            &:after{
-              content:'';position:absolute;left: 50%;top:0;width:0.1rem;height: 0.7rem;background: #999999;transition: all ease 0.3s;
+.customsuit-box {
+    padding-bottom: 100px; //头部信息
+    .flex-box {
+        padding: 26px 0 0 13px;
+        .item {
+            &:nth-of-type(1) {
+                color: #1a1a1a;
+                flex: 1 1 auto;
+                width: 0;
+                h2 {
+                    font-size: 25px;
+                    font-weight: 600;
+                    line-height: 46px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                p {
+                    font-size: 14px;
+                    padding-top: 16px;
+                }
             }
-          }
-        .swiper-slide-prev,.swiper-slide-next{
-           &:after{background:#999999; }
+            &:nth-of-type(2) {
+                flex: 0 0 125px;
+                img {
+                    width: 92px;
+                    height: 92px;
+                    border-radius: 50%;
+                }
+                .sex-area {
+                    width: 72px;
+                    background-color: #fadeea;
+                    border-radius: 8px;
+                    margin: 5px 0 0 12px;
+                    .boy,
+                    .girl {
+                        display: inline-block;
+                        width: 50%;
+                        line-height: 20px;
+                        position: relative;
+                        text-align: center;
+                        &.active {
+                            background-color: #f3f4f6;
+                        }
+                        .icon {
+                            position: relative;
+                            top: 2px;
+                        }
+                    }
+                    .boy {
+                        border-radius: 0 8px 8px 0;
+                    }
+                    .girl {
+                        border-radius: 8px 0 0 8px;
+                    }
+                }
+            }
         }
-        .swiper-slide-active{
-          font-size: 1.5rem;color: #01b5bb;line-height:4.8rem;
-          &:after{height: 1.2rem;background:#01b5bb;}
-          }
-      }
-     .title{font-size: 14px;text-align: left;padding-left: 2rem;margin:8px 0 5px;}
-  }
-  //其他信息
-  .otherinfo-area{
-    padding-top: 15px;
-    .birthDate{line-height: 30px;border: 1px solid gray;text-indent: 5px;}
-    .life-photo-title{
-      padding-top: 20px;
-      >label{font-size: 16px;}
-      small{font-size: 12px;color: rgb(172,172,172);}
+    } //基础信息
+    .baseinfo-area {
+        display: flex;
+        flex-direction: column;
+        padding: 18px 0 25px;
+        height: 100%;
+        border-bottom: 8px solid #f3f4f6;
+        .item {
+            flex: auto;
+        }
+        .swiper-container {
+            height: 45px;
+            border: 1px solid #e4e4e4;
+            border-width: 1px 0 1px 0;
+            .swiper-slide {
+                position: relative;
+                line-height: 40px;
+                text-align: center;
+                font-size: 14px;
+                color: #cccccc;
+                font-family: Arial;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    top: 0;
+                    width: 1px;
+                    height: 7px;
+                    background: #d5d5d5;
+                    transition: all ease 0.3s;
+                }
+            }
+            .swiper-slide-prev,
+            .swiper-slide-next {
+                color: #999999;
+                &:after {
+                    background: #999999;
+                }
+            }
+            .swiper-slide-active {
+                font-size: 17px;
+                color: #2ec2c7;
+                line-height: 50px;
+                &:after {
+                    height: 12px;
+                    background: #2ec2c7;
+                }
+            }
+        }
+        .title {
+            font-size: 15px;
+            color: #1a1a1a;
+            text-align: left;
+            padding-left: 13px;
+            margin: 16px 0;
+        }
+    } //脸型、肤色和体型
+    .body-area {
+        padding: 25px 11.5px;
+        >h2 {
+            padding-left: 1.5px;
+            font-size: 15px;
+            color: #1a1a1a;
+        }
+        .type-select-area {
+            padding-top: 13px;
+            li {
+                width: 100/3%;
+                height: 72px;
+                display: inline-block;
+                padding: 0 2.5px;
+                .box {
+                    position: relative;
+                    border-radius: 4px;
+                    padding-top: 12px;
+                    text-align: center;
+                    font-weight: 300;
+                    font-size: 13px;
+                    >img {
+                        margin: 0 auto 2px;
+                        width: 34px;
+                        height: 34px;
+                    }
+                    .title {
+                        position: relative;
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            right: -17px;
+                            margin-top: -5px;
+                            transform: rotate(-45deg);
+                            width: 6px;
+                            height: 6px;
+                            border: 1px solid #666666;
+                            border-width: 0 0 1px 1px;
+                        }
+                    }
+                    .icon-sure {
+                        visibility: hidden;
+                        position: absolute;
+                        top: 13px;
+                        right: 10px;
+                        font-size: 15px;
+                        &.active {
+                            visibility: visible;
+                        }
+                    }
+                }
+                &:nth-of-type(1) {
+                    .box {
+                        height: 100%;
+                        background-color: #eaf9f6;
+                    }
+                }
+                &:nth-of-type(2) {
+                    .box {
+                        height: 100%;
+                        background-color: #fff1f0;
+                    }
+                }
+                &:nth-of-type(3) {
+                    .box {
+                        height: 100%;
+                        background-color: #fff8dc;
+                        >img {
+                            width: 31px;
+                            height: 36px;
+                        }
+                    }
+                }
+            }
+        }
     }
-    .life-photo-area{
-      display:flex;padding: 0 10px;flex-wrap: wrap;
-      .item{flex: 0 0 33.3%;margin-bottom: 10px;}
-      .img{
-        position:relative;width: 80px;height: 80px;margin: auto;
-        .upload-file{width: 100%;height: 100%;opacity: 0;}
-        >img{width: 100%;height: 100%;}
-        >svg{position: absolute;top:0;right: 0;}
-      }
-
-    }
-
-  }
-  .sendBtn{
-      display:block;margin:20px auto 0;width: 130px;height: 35px;line-height:35px;background: rgb(234, 60, 59);border-width: 0;color: @white;font-size: 16px;
-  }
-  //动画箭头
-  .pre-wrap{
-    position: absolute;left:50%;bottom:10px;margin-left:-10px;width: 20px;height: 14px;z-index: 99;animation: start 1.5s infinite ease-in-out;
-    &:before,&:after{
-      content: ''; position: absolute;top: 5px;width: 14px;height: 5px;box-shadow: 1px -1px 1px #646464;background-color: @white;
-      border-radius: 2px;
-    }
-    &:before{
-      transform: rotate(130deg);left: 0;
-    }
-    &:after{
-      transform: rotate(50deg);left: 6px;
-    }
-  }
 }
 
-@keyframes start {
-  0%,30%{
-    opacity: 0;
-    transform: translate(0,10px);
-  }
-  60%{
-    opacity: 1;
-    transform: translate(0,0);
-  }
-  100%{
-    opacity: 0;
-    transform: translate(0,-8px);
-  }
-}
-
-@media all and (max-width: 320px) {
-  .customsuit-swiper-box{
-    .sendBtn{margin: auto;}
-  }
-}
+// .customsuit-swiper-box{
+//   height: 100%;background: @white;
+//   .swiper-slide{
+//     overflow: hidden;
+//      >.title{position:absolute;top:0;left:0;width:100%;font-size: 1.5rem;text-align: center;padding: 1rem 0;color: #0d0d0d;}
+//   }
+//   //性别
+//   .sex-area{
+//       position: absolute; left: 0;right: 0; bottom: 0;top: 0; margin: auto; width: 100%;height: 15rem;text-align: center;
+//     .item{
+//       display: inline-block;width: 50%;text-align: center;
+//     }
+//     .img-area{
+//       position:relative;display: inline-block;width: 9rem;height: 15rem;
+//       >img{width: 9rem;height: 15rem;}
+//       &.active:after{
+//         content: '';
+//         position: absolute;
+//         top:8.3rem;
+//         right:1rem;
+//         .cicle();
+//         z-index: 1;
+//       }
+//       &.active:before{
+//         content: '';
+//         position: absolute;
+//         top:8.6rem;
+//         right: 1.3rem;
+//         .yes();
+//         z-index: 9;
+//       }
+//     }
+//   }
+//   //脸型
+//   .face-area{
+//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+//     .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
+//     .img-area{
+//       position:relative;display: inline-block;width: 115px;height: 170px;
+//       >img{width: 115px;height: 170px;}
+//       &.active:after{
+//         content: '';
+//         position: absolute;
+//         top:83px;
+//         right:10px;
+//         .cicle();
+//         z-index: 1;
+//       }
+//       &.active:before{
+//         content: '';
+//         position: absolute;
+//         top:86px;
+//         right: 13px;
+//         .yes();
+//         z-index: 9;
+//       }
+//     }
+//   }
+//   //肤色
+//   .skin-area{
+//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+//     .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
+//     .img-area{
+//       position:relative;display: inline-block;width: 105px;height: 135px;
+//       >img{width: 105px;height: 135px;}
+//       &.active:after{
+//         content: '';
+//         position: absolute;
+//         top:83px;
+//         right:10px;
+//         .cicle();
+//         z-index: 1;
+//       }
+//       &.active:before{
+//         content: '';
+//         position: absolute;
+//         top:86px;
+//         right: 13px;
+//         .yes();
+//         z-index: 9;
+//       }
+//     }
+//   }
+//   //身型
+//   .body-area{
+//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+//     .item{flex: 0 0 50%;height:33.3%;text-align: center;display: flex;align-items: center;justify-content: center;padding:10px 0;}
+//     .img-area{
+//       position:relative;display: inline-block;width: 75px;
+//       >img{width: 75px;max-height: 100%;}
+//       &.active:after{
+//         content: '';
+//         position: absolute;
+//         top:83px;
+//         right:10px;
+//         .cicle();
+//         z-index: 1;
+//       }
+//       &.active:before{
+//         content: '';
+//         position: absolute;
+//         top:86px;
+//         right: 13px;
+//         .yes();
+//         z-index: 9;
+//       }
+//     }
+//   }
+//   //希望解决的问题
+//   .resolve-area{
+//    position: absolute;top:0;right: 0;bottom: 0;left: 0;margin: auto; width:284px;height: 349px;
+//     >img{width:284px;height: 349px;}
+//     .resolve{
+//       position: absolute;font-size: 14px;
+//       &.active:after{
+//         content: '';
+//         position: absolute;
+//         top:3px;
+//         left:-16px;
+//         .cicle();
+//         z-index: 1;
+//       }
+//       &.active:before{
+//         content: '';
+//         position: absolute;
+//         top:7px;
+//         left: -13px;
+//         .yes();
+//         z-index: 9;
+//       }
+//     }
+//     .resolve1{left: 15px;top: 35px;}
+//     .resolveBoy.resolve1{top: 25px;}
+//     .resolve2{left: 15px;top: 65px;}
+//     .resolveBoy.resolve2{top: 61px;}
+//     .resolve3{left: 15px;top: 97px;}
+//     .resolveBoy.resolve3{top: 195px;}
+//     .resolve4{left: 15px;top: 193px;}
+//     .resolveBoy.resolve4{left:auto;right: 0;top: 43px;}
+//     .resolve5{right: 0;top: 31px;}
+//     .resolveBoy.resolve5{left:15px;right: auto;top:137px;}
+//     .resolve6{right: 0;top: 67px;}
+//     .resolveBoy.resolve6{top:260px;}
+//     .resolve7{right: 0;top: 100px;}
+//     .resolveBoy.resolve7{top:168px;}
+//     .resolve8{right: 0;top: 163px;}
+//     .resolve9{right: 0;top: 252px;}
+//   }
+//   //风格
+//   .style-area{
+//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
+//     .item{flex: 0 0 50%;height: 33.3%;text-align: center;display: flex;align-items: center;justify-content: center;}
+//     .img-area{
+//       position:relative;display: inline-block;width: 100px;
+//       >img{width: 100px;max-height: 100%;}
+//       &.active:after{
+//         content: '';
+//         position: absolute;
+//         top:66px;
+//         right:10px;
+//         .cicle();
+//         z-index: 1;
+//       }
+//       &.active:before{
+//         content: '';
+//         position: absolute;
+//         top:70px;
+//         right: 13px;
+//         .yes();
+//         z-index: 9;
+//       }
+//     }
+//   }
+//   //基础信息
+//   .baseinfo-area{
+//       display:flex;flex-direction:column;padding-top:44px;height:100%;
+//       .item{flex: auto;}
+//       .swiper-container{
+//         height:3.8rem;border:0.1rem solid #cccccc;border-width:0.1rem 0 0.1rem 0;
+//         .swiper-slide{
+//             position: relative; line-height: 3.8rem;text-align: center;font-size: 1.2rem;color: #cccccc;font-family:Arial;
+//             &:after{
+//               content:'';position:absolute;left: 50%;top:0;width:0.1rem;height: 0.7rem;background: #999999;transition: all ease 0.3s;
+//             }
+//           }
+//         .swiper-slide-prev,.swiper-slide-next{
+//            &:after{background:#999999; }
+//         }
+//         .swiper-slide-active{
+//           font-size: 1.5rem;color: #01b5bb;line-height:4.8rem;
+//           &:after{height: 1.2rem;background:#01b5bb;}
+//           }
+//       }
+//      .title{font-size: 14px;text-align: left;padding-left: 2rem;margin:8px 0 5px;}
+//   }
+//   //其他信息
+//   .otherinfo-area{
+//     padding-top: 15px;
+//     .birthDate{line-height: 30px;border: 1px solid gray;text-indent: 5px;}
+//     .life-photo-title{
+//       padding-top: 20px;
+//       >label{font-size: 16px;}
+//       small{font-size: 12px;color: rgb(172,172,172);}
+//     }
+//     .life-photo-area{
+//       display:flex;padding: 0 10px;flex-wrap: wrap;
+//       .item{flex: 0 0 33.3%;margin-bottom: 10px;}
+//       .img{
+//         position:relative;width: 80px;height: 80px;margin: auto;
+//         .upload-file{width: 100%;height: 100%;opacity: 0;}
+//         >img{width: 100%;height: 100%;}
+//         >svg{position: absolute;top:0;right: 0;}
+//       }
+//     }
+//   }
+//   .sendBtn{
+//       display:block;margin:20px auto 0;width: 130px;height: 35px;line-height:35px;background: rgb(234, 60, 59);border-width: 0;color: @white;font-size: 16px;
+//   }
+//   //动画箭头
+//   .pre-wrap{
+//     position: absolute;left:50%;bottom:10px;margin-left:-10px;width: 20px;height: 14px;z-index: 99;animation: start 1.5s infinite ease-in-out;
+//     &:before,&:after{
+//       content: ''; position: absolute;top: 5px;width: 14px;height: 5px;box-shadow: 1px -1px 1px #646464;background-color: @white;
+//       border-radius: 2px;
+//     }
+//     &:before{
+//       transform: rotate(130deg);left: 0;
+//     }
+//     &:after{
+//       transform: rotate(50deg);left: 6px;
+//     }
+//   }
+// }
+// @keyframes start {
+//   0%,30%{
+//     opacity: 0;
+//     transform: translate(0,10px);
+//   }
+//   60%{
+//     opacity: 1;
+//     transform: translate(0,0);
+//   }
+//   100%{
+//     opacity: 0;
+//     transform: translate(0,-8px);
+//   }
+// }
+// @media all and (max-width: 320px) {
+//   .customsuit-swiper-box{
+//     .sendBtn{margin: auto;}
+//   }
+// }
