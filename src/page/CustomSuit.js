@@ -263,6 +263,267 @@ class Body extends Component {
     }
 }
 
+//希望搭配能解决什么
+class Resolve extends Component {
+    render() {
+        return (
+            <div className="resolve-area">
+                <h2>希望能解决的问题 *（多选）</h2>
+                <ul className="flex-box">
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-1.jpg" />
+                            <label>脸大</label>
+                            <span className="icon icon-sure active"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-2.jpg" />
+                            <label>肩宽</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-3.jpg" />
+                            <label>胳膊粗</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-4.jpg" />
+                            <label>脖子粗</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-5.jpg" />
+                            <label>大胸</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-6.jpg" />
+                            <label>小胸</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-7.jpg" />
+                            <label>PP大</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-8.jpg" />
+                            <label>小腿粗</label>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="cicle-area">
+                            <img src="assets/img/suit/solution-1-9.jpg" />
+                            <label>小短粗</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+}
+
+//风格
+class Style extends Component {
+    render() {
+        return (
+            <div className="style-area">
+                <h2>喜欢的穿衣风格 *（多选）</h2>
+                <ul className="flex-box">
+                    <li className="item-2">
+                        <div className="style-box active">
+                            <img src="/assets/img/suit/style-1-1.jpg" />
+                            <div className="bg"></div>
+                            <span className="triangle"></span>
+                            <label>中性运动风</label>
+                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="style-box">
+                            <img src="/assets/img/suit/style-1-2.jpg" />
+                            <div className="bg"></div>
+                            <span className="triangle"></span>
+                            <label>文艺复古风</label>
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="style-box">
+                            <img src="/assets/img/suit/style-1-3.jpg" />
+                            <div className="bg"></div>
+                            <span className="triangle"></span>
+                            <label>韩剧女主角</label>
+                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="style-box">
+                            <img src="/assets/img/suit/style-1-4.jpg" />
+                            <div className="bg"></div>
+                            <span className="triangle"></span>
+                            <label>日系小清新</label>
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="style-box">
+                            <img src="/assets/img/suit/style-1-5.jpg" />
+                            <div className="bg"></div>
+                            <span className="triangle"></span>
+                            <label>轻熟OL系</label>
+                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="style-box">
+                            <img src="/assets/img/suit/style-1-6.jpg" />
+                            <div className="bg"></div>
+                            <span className="triangle"></span>
+                            <label>欧美出街范</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+}
+
+//其他信息
+class OtherInfo extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            timeShow: false,//时间窗口显示
+            data: props.data || null,
+            cityShow: false, //是否显示城市窗口
+        }
+        this._time = 0;
+    }
+
+    /**
+     * 获取生日
+     * */
+    getBirthDate(value) {
+        let myData = this.state.data;
+        myData.birthday = value;
+        this.props.setState(myData);
+        this.setState({
+            timeShow: false
+        })
+    }
+
+    render() {
+        return (
+            <div className="otherInfo-area">
+                <label>职业</label>
+                <input />
+                <label>城市</label>
+                <input />
+                <label>城市</label>
+                <input id="birthDate" type="date" />
+                {this.state.timeShow ? <Time getBirthDate={this.getBirthDate.bind(this)} /> : null}
+            </div>
+        )
+    }
+}
+
+/**
+ * 时间
+ */
+class Time extends Component {
+    componentDidMount() {
+        this.flatpickr = flatpickr("#birthDate", {
+            locale: zh,
+            defaultDate: this.props.birthday,
+            disableMobile: "true",
+            onChange: (selectedDates, dateStr, instance) => {
+                this.props.getBirthDate(dateStr);
+            },
+            onClose: (selectedDates, dateStr, instance) => {
+                this.props.getBirthDate(dateStr);
+            }
+        });
+        this.flatpickr.open();
+
+    }
+
+    componentWillUnmount() {
+        this.flatpickr.close();
+    }
+
+    render() {
+        return null;
+    }
+}
+
+
+//生活照
+class LifePhoto extends Component {
+    render() {
+        return (
+            <div className="lifePhoto-area">
+                <h2>添加照片 *</h2>
+                <ul className="flex-box upload-control-area">
+                    <li className="item-2">
+                        <div className="upload-area">
+                            <span className="icon icon-camera"></span>
+                            <p>添加一张正脸照片</p>
+                            <input type="file" accept="image/*" className="upload-file" />
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="upload-area">
+                            <span className="icon icon-camera"></span>
+                            <p>添加近期全身照</p>
+                            <input type="file" multiple accept="image/*" className="upload-file" />
+                        </div>
+                    </li>
+                </ul>
+                <ul className="flex-box img-show-area">
+                    <li className="item-3">
+                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li className="item-3">
+                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+}
+
 class CustomSuit extends Component {
     constructor(props) {
         super(props);
@@ -332,6 +593,11 @@ class CustomSuit extends Component {
                 </header>
                 <BaseInfo  {...this.props} data={this.state.data} />
                 <Body />
+                <Resolve />
+                <Style />
+                <OtherInfo />
+                <LifePhoto />
+                <button className="btn send-btn">提交</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )

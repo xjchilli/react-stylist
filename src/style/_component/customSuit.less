@@ -1,6 +1,6 @@
 .customsuit-box {
-    padding-bottom: 100px; //头部信息
-    .flex-box {
+    //头部信息
+    >.flex-box {
         padding: 26px 0 0 13px;
         .item {
             &:nth-of-type(1) {
@@ -32,8 +32,7 @@
                     background-color: #fadeea;
                     border-radius: 8px;
                     margin: 5px 0 0 12px;
-                    .boy,
-                    .girl {
+                    .boy, .girl {
                         display: inline-block;
                         width: 50%;
                         line-height: 20px;
@@ -88,8 +87,7 @@
                     transition: all ease 0.3s;
                 }
             }
-            .swiper-slide-prev,
-            .swiper-slide-next {
+            .swiper-slide-prev, .swiper-slide-next {
                 color: #999999;
                 &:after {
                     background: #999999;
@@ -115,6 +113,7 @@
     } //脸型、肤色和体型
     .body-area {
         padding: 25px 11.5px;
+        border-bottom: 8px solid #f3f4f6;
         >h2 {
             padding-left: 1.5px;
             font-size: 15px;
@@ -186,6 +185,256 @@
                             height: 36px;
                         }
                     }
+                }
+            }
+        }
+    }
+    //希望搭配能解决什么
+    .resolve-area {
+        padding: 25px 0;
+        border-bottom: 8px solid #f3f4f6;
+        >h2 {
+            padding-left: 13px;
+            font-size: 15px;
+            color: #1a1a1a;
+        }
+        ul {
+            padding-top: 8px;
+            li {
+                margin-top: 22px;
+            }
+        }
+        .cicle-area {
+            position: relative;
+            width: 81px;
+            height: 81px;
+            border-radius: 50%;
+            margin: auto;
+            >img {
+                width: 81px;
+                height: 81px;
+                border-radius: 50%;
+            }
+            >label {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                line-height: 81px;
+                text-align: center;
+                font-weight: 600;
+                font-size: 15px;
+                color: #ffffff;
+                background: rgba(0, 0, 0, .5);
+            }
+            .icon-sure {
+                visibility: hidden;
+                position: absolute;
+                top: 6px;
+                right: 2px;
+                font-size: 15px;
+                &.active {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+    //风格
+    .style-area {
+        padding: 25px 13px;
+        border-bottom: 8px solid #f3f4f6;
+        >h2 {
+            font-size: 15px;
+            color: #1a1a1a;
+        }
+        ul {
+            padding-top: 5px;
+            li {
+                margin-top: 15px;
+            }
+        }
+        .style-box {
+            position: relative;
+            width: 169px;
+            height: 109px;
+            margin: auto;
+            border-radius: 5px;
+            >img {
+                width: 169px;
+                height: 109px;
+                border-radius: 5px;
+            }
+            .bg {
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                background: rgba(0, 0, 0, .5);
+            }
+            .triangle {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 0;
+                height: 0;
+                border-bottom: 66px solid #ffffff;
+                border-left: 90px solid transparent;
+            }
+            label {
+                position: absolute;
+                right: 0;
+                bottom: 5px;
+                font-size: 12px;
+                color: #333333;
+            }
+            .icon-sure {
+                visibility: hidden;
+                position: absolute;
+                top: 7px;
+                right: 7px;
+                font-size: 15px;
+            }
+            &.active {
+                .bg {
+                    visibility: visible;
+                }
+                .icon-sure {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+    //其他信息
+    .otherInfo-area {
+        padding: 0 13px 25px;
+        border-bottom: 8px solid #f3f4f6;
+        >label {
+            font-size: 15px;
+            color: #1a1a1a;
+            display: block;
+            margin: 25px 0 15px;
+        }
+        >input {
+            display: block;
+            -webkit-appearance: none;
+            background: #f3f4f6;
+            font-size: 12px;
+            color: #666666;
+            font-family: 'Microsoft YaHei';
+            border-width: 0;
+            width: 100%;
+            height: 30px;
+            text-indent: 12px;
+        }
+    }
+    //生活照
+    .lifePhoto-area {
+        padding: 25px 13px;
+        >h2 {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .upload-control-area {
+            li {
+                &:nth-of-type(1) {
+                    padding-right: 5px;
+                }
+                &:nth-of-type(2) {
+                    padding-left: 5px;
+                }
+            }
+        }
+        .upload-area {
+            position: relative;
+            border: 1px dashed #cccccc;
+            height: 170px;
+            text-align: center;
+            padding-top: 45px;
+            .icon-camera {
+                font-size: 35px;
+            }
+            >p {
+                font-size: 15px;
+                color: #666666;
+                margin-top: 25px;
+            }
+            .upload-file {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+            }
+        }
+        .img-show-area {
+            margin-top: 15px;
+            li {
+                margin-bottom: 15px;
+                &:nth-of-type(3n+1) {
+                    padding-right: 20/3px;
+                }
+                &:nth-of-type(3n+2) {
+                    padding: 0 20/3/2px;
+                }
+                &:nth-of-type(3n+3) {
+                    padding-left: 20/3px;
+                }
+            }
+        }
+        .img-area {
+            position: relative;
+            height: 155px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            .icon-fault {
+                position: absolute;
+                right: -8px;
+                top: -8px;
+                font-size: 16px;
+            }
+        }
+    }
+    .send-btn {
+        background: #000000;
+        font-size: 17px;
+        color: #ffffff;
+        width: 173px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 20px;
+        margin: 15px auto 85px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .customsuit-box {
+        //风格
+        .style-area {
+            ul {
+                li {
+                    padding:0 5px;
+                }
+            }
+            .style-box {
+                width: 137px;
+                height: 88px;
+                margin: auto;
+                >img {
+                    width: 137px;
+                    height: 88px;
+                }
+                .triangle {
+                    // border-bottom: 53px solid #ffffff;
+                    // border-left: 73px solid transparent;
                 }
             }
         }
