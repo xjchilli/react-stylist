@@ -235,7 +235,8 @@ class Type extends Component {
         super(props);
         this.state = {
             isFace: false,
-            isSkin:false
+            isSkin: false,
+            isBody: false,
         }
     }
     render() {
@@ -245,21 +246,21 @@ class Type extends Component {
                 <h2>选择脸型、肤色和体型 *</h2>
                 <ul className="type-select-area">
                     <li>
-                        <div className="box" onClick={() => { this.setState({ isFace: true }) }}>
+                        <div className={this.props.data.faceshpe != "" ? "box active" : "box"} onClick={() => { this.setState({ isFace: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/face-icon-2.jpg" : "/assets/img/suit/face-icon.jpg"} />
                             <span className="title">选择脸型</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                     <li>
-                        <div className="box">
+                        <div className={this.props.data.colorofskin != "" ? "box active" : "box"} onClick={() => { this.setState({ isSkin: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/skin-icon-2.jpg" : "/assets/img/suit/skin-icon.jpg"} />
                             <span className="title">选择肤色</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                     <li>
-                        <div className="box">
+                        <div className={this.props.data.bodySize != "" ? "box active" : "box"} onClick={() => { this.setState({ isBody: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/body-icon-2.jpg" : "/assets/img/suit/body-icon.jpg"} />
                             <span className="title">选择体型</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
@@ -267,9 +268,11 @@ class Type extends Component {
                     </li>
                 </ul>
                 {/* 脸型 */}
-                {this.state.isFace ? <Face {...this.props} data={this.props.data} close={()=>{this.setState({isFace:false})}}/> : null}
+                {this.state.isFace ? <Face {...this.props} data={this.props.data} close={() => { this.setState({ isFace: false }) }} /> : null}
                 {/* 肤色 */}
-                {this.state.isSkin ? <Skin {...this.props} data={this.props.data} close={()=>{this.setState({isSkin:false})}}/> : null}
+                {this.state.isSkin ? <Skin {...this.props} data={this.props.data} close={() => { this.setState({ isSkin: false }) }} /> : null}
+                {/* 体型 */}
+                {this.state.isBody ? <Body {...this.props} data={this.props.data} close={() => { this.setState({ isBody: false }) }} /> : null}
             </div>
         )
     }
@@ -313,11 +316,11 @@ class Face extends Component {
                 <div className="box">
                     <h3>选择脸型</h3>
                     <span className="close" onClick={this.props.close}></span>
-                    <ul className="flex-box face-list">
+                    <ul className="flex-box img-list">
                         {
                             faces.map((item, index) => {
                                 return (
-                                    <li className="item-2"  key={index}>
+                                    <li className="item-2" key={index}>
                                         <div className={this.state.faceshpe == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
                                             <img src={item.url} />
                                             <p>{item.name}</p>
@@ -328,42 +331,6 @@ class Face extends Component {
                                 )
                             })
                         }
-                        {/* <li className="item-2">
-                            <div className="img-box active">
-                                <img src="/assets/img/suit/face-1-1.jpg" />
-                                <p>鹅蛋脸</p>
-                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                            </div>
-                        </li>
-                        <li className="item-2">
-                            <div className="img-box">
-                                <img src="/assets/img/suit/face-1-2.jpg" />
-                                <p>圆脸</p>
-                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                            </div>
-                        </li>
-                        <li className="item-2">
-                            <div className="img-box">
-                                <img src="/assets/img/suit/face-1-3.jpg" />
-                                <p>瓜子脸</p>
-                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                            </div>
-                        </li>
-                        <li className="item-2">
-                            <div className="img-box">
-                                <img src="/assets/img/suit/face-1-4.jpg" />
-                                <p>方脸</p>
-                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                            </div>
-                        </li>
-                        <li className="item-2">
-                            <div className="img-box">
-                                <img src="/assets/img/suit/face-1-5.jpg" />
-                                <p>不太清楚</p>
-                                <small>不清楚自己的脸型</small>
-                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                            </div>
-                        </li> */}
                     </ul>
                 </div>
             </div>
@@ -372,12 +339,12 @@ class Face extends Component {
 }
 
 //肤色
-class Skin extends Component{
+class Skin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            girlSkin: [{name:'晶莹白皙',url:'/assets/img/suit/skin-1-1.jpg'}, {name:'自然红润',url:'/assets/img/suit/skin-1-2.jpg'}, {name:'自然偏黄',url:'/assets/img/suit/skin-1-3.jpg'},{name:'活力小麦',url:'/assets/img/suit/skin-1-4.jpg'},,{name:'不太清楚',url:'/assets/img/suit/skin-1-5.jpg'}],
-            boySkin: [{name:'晶莹白皙',url:'/assets/img/suit/skin-2-1.jpg'}, {name:'自然红润',url:'/assets/img/suit/skin-2-2.jpg'}, {name:'自然偏黄',url:'/assets/img/suit/skin-2-3.jpg'},{name:'活力小麦',url:'/assets/img/suit/skin-2-4.jpg'},,{name:'不太清楚',url:'/assets/img/suit/skin-2-5.jpg'}],
+            girlSkin: [{ name: '晶莹白皙', url: '/assets/img/suit/skin-1-1.jpg' }, { name: '自然红润', url: '/assets/img/suit/skin-1-2.jpg' }, { name: '自然偏黄', url: '/assets/img/suit/skin-1-3.jpg' }, { name: '活力小麦', url: '/assets/img/suit/skin-1-4.jpg' }, { name: '不太清楚', url: '/assets/img/suit/skin-1-5.jpg' }],
+            boySkin: [{ name: '晶莹白皙', url: '/assets/img/suit/skin-2-1.jpg' }, { name: '自然红润', url: '/assets/img/suit/skin-2-2.jpg' }, { name: '自然偏黄', url: '/assets/img/suit/skin-2-3.jpg' }, { name: '活力小麦', url: '/assets/img/suit/skin-2-4.jpg' }, { name: '不太清楚', url: '/assets/img/suit/skin-2-5.jpg' }],
             colorofskin: props.data.colorofskin, //肤色
         }
     }
@@ -395,7 +362,7 @@ class Skin extends Component{
         myData.colorofskin = skin;
         this.props.setState(myData);
     }
-    render(){
+    render() {
         let { sex } = this.props.data;
         let skins = [];
         if (sex === 1) {//男
@@ -405,27 +372,88 @@ class Skin extends Component{
         }
         return (
             <div className="fixed face-select-area">
-            <div className="box">
-                <h3>选择脸型</h3>
-                <span className="close" onClick={this.props.close}></span>
-                <ul className="flex-box face-list">
-                    {
-                        skins.map((item, index) => {
-                            return (
-                                <li className="item-2"  key={index}>
-                                    <div className={this.state.faceshpe == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
-                                        <img src={item.url} />
-                                        <p>{item.name}</p>
-                                        {index === 4 ? <small>不清楚自己的肤色</small> : null}
-                                        <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                                    </div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                <div className="box">
+                    <h3>选择肤色</h3>
+                    <span className="close" onClick={this.props.close}></span>
+                    <ul className="flex-box img-list">
+                        {
+                            skins.map((item, index) => {
+                                return (
+                                    <li className="item-2" key={index}>
+                                        <div className={this.state.colorofskin == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
+                                            <img src={item.url} />
+                                            <p>{item.name}</p>
+                                            {index === 4 ? <small>不清楚自己的肤色</small> : null}
+                                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
+        )
+    }
+}
+
+//体型
+class Body extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            girlBody: [{ name: '沙漏形', url: '/assets/img/suit/body-1-1.jpg' }, { name: '梨形', url: '/assets/img/suit/body-1-2.jpg' }, { name: '苹果形', url: '/assets/img/suit/body-1-3.jpg' }, { name: '直筒形', url: '/assets/img/suit/body-1-4.jpg' }, { name: '倒三角', url: '/assets/img/suit/body-1-5.jpg' }, { name: '不太清楚', url: '/assets/img/suit/body-1-6.jpg' }],
+            boyBody: [{ name: '梯形', url: '/assets/img/suit/body-2-1.jpg' }, { name: '正三角', url: '/assets/img/suit/body-2-2.jpg' }, { name: '矩形', url: '/assets/img/suit/body-2-3.jpg' }, { name: '倒三角', url: '/assets/img/suit/body-2-4.jpg' }, { name: '椭圆形', url: '/assets/img/suit/body-2-5.jpg' }, { name: '不太清楚', url: '/assets/img/suit/body-2-6.jpg' }],
+            bodySize: props.data.bodySize, //体型
+        }
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            bodySize: nextProps.data.bodySize
+        });
+    }
+
+
+    //选择体型
+    select(body) {
+        let myData = this.props.data;
+        myData.bodySize = body;
+        this.props.setState(myData);
+    }
+    render() {
+        let { sex } = this.props.data;
+        let bodys = [];
+        if (sex === 1) {//男
+            bodys = this.state.boyBody;
+        } else {//女
+            bodys = this.state.girlBody;
+        }
+
+        return (
+            <div className="fixed face-select-area">
+                <div className="box">
+                    <h3>选择体型</h3>
+                    <span className="close" onClick={this.props.close}></span>
+                    <ul className="flex-box img-list face-list">
+                        {
+                            bodys.map((item, index) => {
+                                return (
+                                    <li className="item-2" key={index}>
+                                        <div className={this.state.bodySize == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
+                                            <img src={item.url} />
+                                            <p>{item.name}</p>
+                                            {index === 5 ? <small>不清楚自己的体型</small> : null}
+                                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+            </div>
         )
     }
 }
@@ -687,6 +715,63 @@ class Time extends Component {
 
 //生活照
 class LifePhoto extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: props.data || null,
+            photoList: props.data.lifeImgs || [], //生活照片
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            data: nextProps.data,
+            photoList: nextProps.data.lifeImgs
+        });
+    }
+
+    uploadPhoto(e) {
+        let self = this;
+        let files = e.target.files;
+        if (files) {
+            if (files.length + this.state.photoList.length > 6) {
+                this.props.showMsg(true, '最多上传6张全身照哦');
+                return;
+            }
+            for (let i = 0; i < files.length; i++) {
+                // if (!/\/(?:jpeg|jpg|png)/i.test(files[i].type)) return;
+                (function (index) {
+                    let targetFile = files[index];
+                    let readFile = new FileReader();
+                    readFile.onload = function () {
+                        let imgObj = {
+                            imgPath: this.result,
+                            file: targetFile
+                        };
+                        let newPhotoList = Array.prototype.slice.apply(self.state.photoList);
+                        newPhotoList.push(imgObj);
+                        self.file.value = '';
+
+                        let myData = self.state.data;
+                        myData.lifeImgs = newPhotoList;
+                        self.props.setState(myData);
+                    };
+                    readFile.readAsDataURL(targetFile);
+                })(i);
+
+            }
+        }
+    }
+
+    deletePhoto(e) {
+        let index = e.currentTarget.getAttribute('data-index');
+        let newPhotoList = this.state.photoList;
+        newPhotoList.splice(index, 1);
+
+        let myData = this.state.data;
+        myData.lifeImgs = newPhotoList;
+        this.props.setState(myData);
+    }
+
     render() {
         return (
             <div className="lifePhoto-area">
@@ -703,41 +788,22 @@ class LifePhoto extends Component {
                         <div className="upload-area">
                             <span className="icon icon-camera"></span>
                             <p>添加近期全身照</p>
-                            <input type="file" multiple accept="image/*" className="upload-file" />
+                            <input type="file" ref={el => this.file =el} multiple accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
                         </div>
                     </li>
                 </ul>
                 <ul className="flex-box img-show-area">
-                    <li className="item-3">
-                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                            <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
+                    {
+                        this.state.photoList.map((item, index) => {
+                            return (
+                                <li className="item-3" key={index}>
+                                    <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                                        <span className="icon icon-fault" data-index={index} onClick={this.deletePhoto.bind(this)}><span className="path1"></span><span className="path2"></span></span>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
         )
@@ -833,7 +899,7 @@ class CustomSuit extends Component {
                 <Resolve  {...this.props} data={this.state.data} />
                 <Style  {...this.props} data={this.state.data} />
                 <OtherInfo  {...this.props} data={this.state.data} />
-                <LifePhoto  {...this.props} data={this.state.data} />
+                <LifePhoto  showMsg={this.showMsg.bind(this)} {...this.props} data={this.state.data} />
                 <button className="btn send-btn">提交</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>

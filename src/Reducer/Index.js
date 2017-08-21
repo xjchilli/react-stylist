@@ -78,26 +78,7 @@ const DpsServerDetail = DB('DpsServerDetail'); //搭配师服务详情
 
 
 const WardrobeDetail = DB('WardrobeDetail'); //衣橱详情
-const CustomSuitBackUp = DB('CustomSuitBackUp', {
-  sex: 2, //性别
-  faceshpe: '1', //脸型
-  colorofskin: '1', //肤色
-  bodySize: '1', //体型
-  problems: ['4'], //解决问题
-  styles: [], //风格
-  heigh: '165', //身高
-  weight: '60', //体重
-  chest: '80', //胸围
-  waist: '70', //腰围
-  hip: '90', //臀围
-  professional: '', //职业
-  provinceCode: '330000', //省默认浙江省
-  cityCode: '330100', //城市默认杭州市
-  countyCode: '330106', //区默认西湖区
-  fullCityName: '浙江省杭州市西湖区', //地址
-  birthday: '1992-08-08', //生日
-  lifeImgs: [] //生活照
-}); //搭配测试
+//搭配测试
 const CustomSuit = DB('CustomSuit', {
   sex: 2, //性别
   faceshpe: '', //脸型
