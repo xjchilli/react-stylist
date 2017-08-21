@@ -230,11 +230,12 @@ class BaseInfo extends Component {
 }
 
 //脸型、肤色和体型
-class Body extends Component {
+class Type extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           
+            isFace: false,
+            isSkin:false
         }
     }
     render() {
@@ -244,7 +245,7 @@ class Body extends Component {
                 <h2>选择脸型、肤色和体型 *</h2>
                 <ul className="type-select-area">
                     <li>
-                        <div className="box">
+                        <div className="box" onClick={() => { this.setState({ isFace: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/face-icon-2.jpg" : "/assets/img/suit/face-icon.jpg"} />
                             <span className="title">选择脸型</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
@@ -266,19 +267,165 @@ class Body extends Component {
                     </li>
                 </ul>
                 {/* 脸型 */}
-                <div className="fixed face-select-area">
-                    <div className="box">
-                        <h3>选择脸型</h3>
-                        <span className="close"></span>
-                        <ul className="flex-box face-list">
-                            <li className="item-2">
-                                <img src="/assets/img/suit/"/>
-                            </li>
-                            <li className="item-2">111</li>
-                        </ul>
-                    </div>
+                {this.state.isFace ? <Face {...this.props} data={this.props.data} close={()=>{this.setState({isFace:false})}}/> : null}
+                {/* 肤色 */}
+                {this.state.isSkin ? <Skin {...this.props} data={this.props.data} close={()=>{this.setState({isSkin:false})}}/> : null}
+            </div>
+        )
+    }
+}
+
+//脸型
+class Face extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            girlFaces: [{ name: '鹅蛋脸', url: '/assets/img/suit/face-1-1.jpg' }, { name: '圆脸', url: '/assets/img/suit/face-1-2.jpg' }, { name: '瓜子脸', url: '/assets/img/suit/face-1-3.jpg' }, { name: '方脸', url: '/assets/img/suit/face-1-4.jpg' }, { name: '不太清楚', url: '/assets/img/suit/face-1-5.jpg' }],
+            boyFaces: [{ name: '鹅蛋脸', url: '/assets/img/suit/face-2-1.jpg' }, { name: '圆脸', url: '/assets/img/suit/face-2-2.jpg' }, { name: '瓜子脸', url: '/assets/img/suit/face-2-3.jpg' }, { name: '方脸', url: '/assets/img/suit/face-2-4.jpg' }, { name: '不太清楚', url: '/assets/img/suit/face-2-5.jpg' }],
+            faceshpe: props.data.faceshpe //脸型
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            faceshpe: nextProps.data.faceshpe
+        });
+    }
+
+    //选择脸型
+    select(face) {
+        let myData = this.props.data;
+        myData.faceshpe = face;
+        this.props.setState(myData);
+
+    }
+
+    render() {
+        let { sex } = this.props.data;
+        let faces = [];
+        if (sex === 1) {//男
+            faces = this.state.boyFaces;
+        } else {//女
+            faces = this.state.girlFaces;
+        }
+        return (
+            <div className="fixed face-select-area">
+                <div className="box">
+                    <h3>选择脸型</h3>
+                    <span className="close" onClick={this.props.close}></span>
+                    <ul className="flex-box face-list">
+                        {
+                            faces.map((item, index) => {
+                                return (
+                                    <li className="item-2"  key={index}>
+                                        <div className={this.state.faceshpe == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
+                                            <img src={item.url} />
+                                            <p>{item.name}</p>
+                                            {index === 4 ? <small>不清楚自己的脸型</small> : null}
+                                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                        {/* <li className="item-2">
+                            <div className="img-box active">
+                                <img src="/assets/img/suit/face-1-1.jpg" />
+                                <p>鹅蛋脸</p>
+                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                        </li>
+                        <li className="item-2">
+                            <div className="img-box">
+                                <img src="/assets/img/suit/face-1-2.jpg" />
+                                <p>圆脸</p>
+                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                        </li>
+                        <li className="item-2">
+                            <div className="img-box">
+                                <img src="/assets/img/suit/face-1-3.jpg" />
+                                <p>瓜子脸</p>
+                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                        </li>
+                        <li className="item-2">
+                            <div className="img-box">
+                                <img src="/assets/img/suit/face-1-4.jpg" />
+                                <p>方脸</p>
+                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                        </li>
+                        <li className="item-2">
+                            <div className="img-box">
+                                <img src="/assets/img/suit/face-1-5.jpg" />
+                                <p>不太清楚</p>
+                                <small>不清楚自己的脸型</small>
+                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                        </li> */}
+                    </ul>
                 </div>
             </div>
+        )
+    }
+}
+
+//肤色
+class Skin extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            girlSkin: [{name:'晶莹白皙',url:'/assets/img/suit/skin-1-1.jpg'}, {name:'自然红润',url:'/assets/img/suit/skin-1-2.jpg'}, {name:'自然偏黄',url:'/assets/img/suit/skin-1-3.jpg'},{name:'活力小麦',url:'/assets/img/suit/skin-1-4.jpg'},,{name:'不太清楚',url:'/assets/img/suit/skin-1-5.jpg'}],
+            boySkin: [{name:'晶莹白皙',url:'/assets/img/suit/skin-2-1.jpg'}, {name:'自然红润',url:'/assets/img/suit/skin-2-2.jpg'}, {name:'自然偏黄',url:'/assets/img/suit/skin-2-3.jpg'},{name:'活力小麦',url:'/assets/img/suit/skin-2-4.jpg'},,{name:'不太清楚',url:'/assets/img/suit/skin-2-5.jpg'}],
+            colorofskin: props.data.colorofskin, //肤色
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            colorofskin: nextProps.data.colorofskin
+        });
+    }
+
+
+    //选择肤色
+    select(skin) {
+        let myData = this.props.data;
+        myData.colorofskin = skin;
+        this.props.setState(myData);
+    }
+    render(){
+        let { sex } = this.props.data;
+        let skins = [];
+        if (sex === 1) {//男
+            skins = this.state.boySkin;
+        } else {//女
+            skins = this.state.girlSkin;
+        }
+        return (
+            <div className="fixed face-select-area">
+            <div className="box">
+                <h3>选择脸型</h3>
+                <span className="close" onClick={this.props.close}></span>
+                <ul className="flex-box face-list">
+                    {
+                        skins.map((item, index) => {
+                            return (
+                                <li className="item-2"  key={index}>
+                                    <div className={this.state.faceshpe == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
+                                        <img src={item.url} />
+                                        <p>{item.name}</p>
+                                        {index === 4 ? <small>不清楚自己的肤色</small> : null}
+                                        <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
+        </div>
         )
     }
 }
@@ -366,8 +513,8 @@ class Style extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            girlStyle: [{url:'/assets/img/suit/style-1-1.jpg',name:'中性运动风'},{url:'/assets/img/suit/style-1-2.jpg',name:'文艺复古风'},{url:'/assets/img/suit/style-1-3.jpg',name:'韩剧女主角'},{url:'/assets/img/suit/style-1-4.jpg',name:'日系小清新'},{url:'/assets/img/suit/style-1-5.jpg',name:'轻熟OL系'},{url:'/assets/img/suit/style-1-6.jpg',name:'欧美出街范'}],
-            boyStyle: [{url:'/assets/img/suit/style-2-1.jpg',name:'街头潮男风'},{url:'/assets/img/suit/style-2-2.jpg',name:'绅士熟男系'}, {url:'/assets/img/suit/style-2-3.jpg',name:'纹身硬汉系'}, {url:'/assets/img/suit/style-2-4.jpg',name:'清新治愈系'}, {url:'/assets/img/suit/style-2-5.jpg',name:'暗黑禁欲系'}],
+            girlStyle: [{ url: '/assets/img/suit/style-1-1.jpg', name: '中性运动风' }, { url: '/assets/img/suit/style-1-2.jpg', name: '文艺复古风' }, { url: '/assets/img/suit/style-1-3.jpg', name: '韩剧女主角' }, { url: '/assets/img/suit/style-1-4.jpg', name: '日系小清新' }, { url: '/assets/img/suit/style-1-5.jpg', name: '轻熟OL系' }, { url: '/assets/img/suit/style-1-6.jpg', name: '欧美出街范' }],
+            boyStyle: [{ url: '/assets/img/suit/style-2-1.jpg', name: '街头潮男风' }, { url: '/assets/img/suit/style-2-2.jpg', name: '绅士熟男系' }, { url: '/assets/img/suit/style-2-3.jpg', name: '纹身硬汉系' }, { url: '/assets/img/suit/style-2-4.jpg', name: '清新治愈系' }, { url: '/assets/img/suit/style-2-5.jpg', name: '暗黑禁欲系' }],
             styles: props.data.styles || []
         }
     }
@@ -429,7 +576,6 @@ class Style extends Component {
 
 //其他信息
 class OtherInfo extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -683,7 +829,7 @@ class CustomSuit extends Component {
                     </div>
                 </header>
                 <BaseInfo  {...this.props} data={this.state.data} />
-                <Body  {...this.props} data={this.state.data} />
+                <Type  {...this.props} data={this.state.data} />
                 <Resolve  {...this.props} data={this.state.data} />
                 <Style  {...this.props} data={this.state.data} />
                 <OtherInfo  {...this.props} data={this.state.data} />

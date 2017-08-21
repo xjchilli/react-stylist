@@ -32,8 +32,7 @@
                     background-color: #fadeea;
                     border-radius: 8px;
                     margin: 5px 0 0 12px;
-                    .boy,
-                    .girl {
+                    .boy, .girl {
                         display: inline-block;
                         width: 50%;
                         line-height: 20px;
@@ -88,8 +87,7 @@
                     transition: all ease 0.3s;
                 }
             }
-            .swiper-slide-prev,
-            .swiper-slide-next {
+            .swiper-slide-prev, .swiper-slide-next {
                 color: #999999;
                 &:after {
                     background: #999999;
@@ -210,7 +208,7 @@
                 bottom: 0;
                 margin: auto;
                 width: 263px;
-                height: 416px;
+                height: 398px;
                 background: #ffffff;
                 >h3 {
                     background: #e6e6e6;
@@ -225,8 +223,47 @@
                     width: 25px;
                     height: 25px;
                 }
-                .face-list{
-                    padding:16px 37px
+                .face-list {
+                    padding: 16px 37px;
+                    li {
+                        margin-bottom: 28px;
+                        &:nth-of-type(even) {
+                            padding-left: 26.5px;
+                        }
+                    }
+                }
+                .img-box {
+                    position: relative;
+                    width: 68px;
+                    >img {
+                        width: 68px;
+                        height: 67px;
+                    }
+                    >p {
+                        padding-top: 6px;
+                        text-align: center;
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #1a1a1a;
+                    }
+                    .icon-sure {
+                        visibility: hidden;
+                        font-size: 15px;
+                        position: absolute;
+                        right: 5px;
+                        top: 5px;
+                    }
+                    >small {
+                        display: block;
+                        text-align: center;
+                        font-size: 8px;
+                        color: #333333;
+                    }
+                    &.active {
+                        .icon-sure {
+                            visibility: visible;
+                        }
+                    }
                 }
             }
         }
@@ -360,8 +397,7 @@
             display: block;
             margin: 25px 0 15px;
         }
-        >input,
-        .birthDate {
+        >input, .birthDate {
             display: block;
             -webkit-appearance: none;
             background: #f3f4f6;
