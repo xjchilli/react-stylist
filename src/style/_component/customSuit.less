@@ -32,7 +32,8 @@
                     background-color: #fadeea;
                     border-radius: 8px;
                     margin: 5px 0 0 12px;
-                    .boy, .girl {
+                    .boy,
+                    .girl {
                         display: inline-block;
                         width: 50%;
                         line-height: 20px;
@@ -87,7 +88,8 @@
                     transition: all ease 0.3s;
                 }
             }
-            .swiper-slide-prev, .swiper-slide-next {
+            .swiper-slide-prev,
+            .swiper-slide-next {
                 color: #999999;
                 &:after {
                     background: #999999;
@@ -159,7 +161,9 @@
                         top: 13px;
                         right: 10px;
                         font-size: 15px;
-                        &.active {
+                    }
+                    &.active {
+                        .icon-sure {
                             visibility: visible;
                         }
                     }
@@ -188,8 +192,45 @@
                 }
             }
         }
-    }
-    //希望搭配能解决什么
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 99;
+            background: rgba(0, 0, 0, .3);
+        }
+        .face-select-area {
+            .box {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                width: 263px;
+                height: 416px;
+                background: #ffffff;
+                >h3 {
+                    background: #e6e6e6;
+                    line-height: 28px;
+                    font-size: 14px;
+                    color: #333333;
+                    text-align: center;
+                }
+                .close {
+                    right: 3px;
+                    top: 7px;
+                    width: 25px;
+                    height: 25px;
+                }
+                .face-list{
+                    padding:16px 37px
+                }
+            }
+        }
+    } //希望搭配能解决什么
     .resolve-area {
         padding: 25px 0;
         border-bottom: 8px solid #f3f4f6;
@@ -235,13 +276,14 @@
                 top: 6px;
                 right: 2px;
                 font-size: 15px;
-                &.active {
+            }
+            &.active {
+                .icon-sure {
                     visibility: visible;
                 }
             }
         }
-    }
-    //风格
+    } //风格
     .style-area {
         padding: 25px 13px;
         border-bottom: 8px solid #f3f4f6;
@@ -308,8 +350,7 @@
                 }
             }
         }
-    }
-    //其他信息
+    } //其他信息
     .otherInfo-area {
         padding: 0 13px 25px;
         border-bottom: 8px solid #f3f4f6;
@@ -319,7 +360,8 @@
             display: block;
             margin: 25px 0 15px;
         }
-        >input {
+        >input,
+        .birthDate {
             display: block;
             -webkit-appearance: none;
             background: #f3f4f6;
@@ -331,8 +373,10 @@
             height: 30px;
             text-indent: 12px;
         }
-    }
-    //生活照
+        .birthDate {
+            line-height: 30px;
+        }
+    } //生活照
     .lifePhoto-area {
         padding: 25px 13px;
         >h2 {
@@ -421,7 +465,7 @@
         .style-area {
             ul {
                 li {
-                    padding:0 5px;
+                    padding: 0 5px;
                 }
             }
             .style-box {

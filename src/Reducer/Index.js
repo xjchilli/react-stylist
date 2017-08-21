@@ -100,10 +100,10 @@ const CustomSuitBackUp = DB('CustomSuitBackUp', {
 }); //搭配测试
 const CustomSuit = DB('CustomSuit', {
   sex: 2, //性别
-  faceshpe: '1', //脸型
-  colorofskin: '1', //肤色
-  bodySize: '1', //体型
-  problems: ['4'], //解决问题
+  faceshpe: '', //脸型
+  colorofskin: '', //肤色
+  bodySize: '', //体型
+  problems: [], //解决问题
   styles: [], //风格
   heigh: '165', //身高
   weight: '60', //体重
@@ -114,8 +114,8 @@ const CustomSuit = DB('CustomSuit', {
   provinceCode: '330000', //省默认浙江省
   cityCode: '330100', //城市默认杭州市
   countyCode: '330106', //区默认西湖区
-  fullCityName: '浙江省杭州市西湖区', //地址
-  birthday: '1992-08-08', //生日
+  fullCityName: '', //地址
+  birthday: '', //生日
   lifeImgs: [] //生活照
 }); //搭配测试
 const OrderList = DB('OrderList', {

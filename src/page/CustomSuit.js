@@ -231,33 +231,53 @@ class BaseInfo extends Component {
 
 //脸型、肤色和体型
 class Body extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+           
+        }
+    }
     render() {
+        let { sex } = this.props.data;//1：男  2：女
         return (
             <div className="body-area">
                 <h2>选择脸型、肤色和体型 *</h2>
                 <ul className="type-select-area">
                     <li>
                         <div className="box">
-                            <img src="/assets/img/suit/face-icon.jpg" />
-                            <span className="title">选择脸型</span>
-                            <span className="icon icon-sure active"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="box">
-                            <img src="/assets/img/suit/skin-icon.jpg" />
+                            <img src={sex === 1 ? "/assets/img/suit/face-icon-2.jpg" : "/assets/img/suit/face-icon.jpg"} />
                             <span className="title">选择脸型</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                     <li>
                         <div className="box">
-                            <img src="/assets/img/suit/body-icon.jpg" />
-                            <span className="title">选择脸型</span>
+                            <img src={sex === 1 ? "/assets/img/suit/skin-icon-2.jpg" : "/assets/img/suit/skin-icon.jpg"} />
+                            <span className="title">选择肤色</span>
+                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="box">
+                            <img src={sex === 1 ? "/assets/img/suit/body-icon-2.jpg" : "/assets/img/suit/body-icon.jpg"} />
+                            <span className="title">选择体型</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                 </ul>
+                {/* 脸型 */}
+                <div className="fixed face-select-area">
+                    <div className="box">
+                        <h3>选择脸型</h3>
+                        <span className="close"></span>
+                        <ul className="flex-box face-list">
+                            <li className="item-2">
+                                <img src="/assets/img/suit/"/>
+                            </li>
+                            <li className="item-2">111</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -265,66 +285,76 @@ class Body extends Component {
 
 //希望搭配能解决什么
 class Resolve extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            girlResolve: [{ num: '1', value: '脸大' }, { num: '2', value: '肩宽' }, { num: '3', value: '胳膊粗' }, { num: '4', value: '小粗腿' }, { num: '5', value: '脖子粗' }, { num: '6', value: '大胸' }, { num: '7', value: '平胸' }, { num: '8', value: 'PP大' }, { num: '9', value: '小短腿' }],
+            boyResolve: [{ num: '1', value: '脸大' }, { num: '2', value: '肩宽' }, { num: '3', value: '小粗腿' }, { num: '4', value: '脖子粗' }, { num: '5', value: '啤酒肚' }, { num: '6', value: '小短腿' }, { num: '7', value: '翘臀' }],
+            problems: props.data.problems || []
+        }
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            problems: nextProps.data.problems
+        });
+    }
+
+
+    select(resolve) {
+        let myProblemArr = Array.prototype.slice.apply(this.state.problems);
+        let index = myProblemArr.indexOf(resolve);
+        if (index !== -1) {
+            myProblemArr.splice(index, 1);
+        } else {
+            myProblemArr.push(resolve);
+        }
+
+        let myData = this.props.data;
+        myData.problems = myProblemArr;
+        this.props.setState(myData);
+
+    }
     render() {
+        let { sex } = this.props.data;
+        let girlResolves = [];
+        let boyResolves = [];
+        if (sex === 1) {//男
+            boyResolves = this.state.boyResolve;
+        } else {//女
+            girlResolves = this.state.girlResolve;
+        }
         return (
             <div className="resolve-area">
                 <h2>希望能解决的问题 *（多选）</h2>
                 <ul className="flex-box">
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-1.jpg" />
-                            <label>脸大</label>
-                            <span className="icon icon-sure active"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-2.jpg" />
-                            <label>肩宽</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-3.jpg" />
-                            <label>胳膊粗</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-4.jpg" />
-                            <label>脖子粗</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-5.jpg" />
-                            <label>大胸</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-6.jpg" />
-                            <label>小胸</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-7.jpg" />
-                            <label>PP大</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-8.jpg" />
-                            <label>小腿粗</label>
-                        </div>
-                    </li>
-                    <li className="item-3">
-                        <div className="cicle-area">
-                            <img src="assets/img/suit/solution-1-9.jpg" />
-                            <label>小短粗</label>
-                        </div>
-                    </li>
+                    {
+                        girlResolves.map((item, index) => {
+                            return (
+                                <li className="item-3" key={index}>
+                                    <div className={this.state.problems.indexOf(item.num) !== -1 ? "cicle-area active" : "cicle-area"} onClick={this.select.bind(this, item.num)}>
+                                        <img src={"assets/img/suit/solution-1-" + (index + 1) + ".jpg"} />
+                                        <label>{item.value}</label>
+                                        <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    }
+                    {
+                        boyResolves.map((item, index) => {
+                            return (
+                                <li className="item-3" key={index}>
+                                    <div className={this.state.problems.indexOf(item.num) !== -1 ? "cicle-area active" : "cicle-area"} onClick={this.select.bind(this, item.num)}>
+                                        <img src={"assets/img/suit/solution-2-" + (index + 1) + ".jpg"} />
+                                        <label>{item.value}</label>
+                                        <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
         )
@@ -333,62 +363,64 @@ class Resolve extends Component {
 
 //风格
 class Style extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            girlStyle: [{url:'/assets/img/suit/style-1-1.jpg',name:'中性运动风'},{url:'/assets/img/suit/style-1-2.jpg',name:'文艺复古风'},{url:'/assets/img/suit/style-1-3.jpg',name:'韩剧女主角'},{url:'/assets/img/suit/style-1-4.jpg',name:'日系小清新'},{url:'/assets/img/suit/style-1-5.jpg',name:'轻熟OL系'},{url:'/assets/img/suit/style-1-6.jpg',name:'欧美出街范'}],
+            boyStyle: [{url:'/assets/img/suit/style-2-1.jpg',name:'街头潮男风'},{url:'/assets/img/suit/style-2-2.jpg',name:'绅士熟男系'}, {url:'/assets/img/suit/style-2-3.jpg',name:'纹身硬汉系'}, {url:'/assets/img/suit/style-2-4.jpg',name:'清新治愈系'}, {url:'/assets/img/suit/style-2-5.jpg',name:'暗黑禁欲系'}],
+            styles: props.data.styles || []
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            styles: nextProps.data.styles
+        });
+    }
+
+
+    select(style) {
+        let arr = Array.prototype.slice.apply(this.state.styles);
+        let index = arr.indexOf(style);
+        if (index !== -1) {
+            arr.splice(index, 1);
+        } else {
+            arr.push(style);
+        }
+
+        let myData = this.props.data;
+        myData.styles = arr;
+        this.props.setState(myData);
+    }
+
     render() {
+        let { sex } = this.props.data;
+        let styles = [];
+        if (sex === 1) {//男
+            styles = this.state.boyStyle;
+        } else {//女
+            styles = this.state.girlStyle;
+        }
+
         return (
             <div className="style-area">
                 <h2>喜欢的穿衣风格 *（多选）</h2>
                 <ul className="flex-box">
-                    <li className="item-2">
-                        <div className="style-box active">
-                            <img src="/assets/img/suit/style-1-1.jpg" />
-                            <div className="bg"></div>
-                            <span className="triangle"></span>
-                            <label>中性运动风</label>
-                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-2">
-                        <div className="style-box">
-                            <img src="/assets/img/suit/style-1-2.jpg" />
-                            <div className="bg"></div>
-                            <span className="triangle"></span>
-                            <label>文艺复古风</label>
-                        </div>
-                    </li>
-                    <li className="item-2">
-                        <div className="style-box">
-                            <img src="/assets/img/suit/style-1-3.jpg" />
-                            <div className="bg"></div>
-                            <span className="triangle"></span>
-                            <label>韩剧女主角</label>
-                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-2">
-                        <div className="style-box">
-                            <img src="/assets/img/suit/style-1-4.jpg" />
-                            <div className="bg"></div>
-                            <span className="triangle"></span>
-                            <label>日系小清新</label>
-                        </div>
-                    </li>
-                    <li className="item-2">
-                        <div className="style-box">
-                            <img src="/assets/img/suit/style-1-5.jpg" />
-                            <div className="bg"></div>
-                            <span className="triangle"></span>
-                            <label>轻熟OL系</label>
-                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
-                        </div>
-                    </li>
-                    <li className="item-2">
-                        <div className="style-box">
-                            <img src="/assets/img/suit/style-1-6.jpg" />
-                            <div className="bg"></div>
-                            <span className="triangle"></span>
-                            <label>欧美出街范</label>
-                        </div>
-                    </li>
+                    {
+                        styles.map((item, index) => {
+                            return (
+                                <li className="item-2" key={index} >
+                                    <div className={this.state.styles.indexOf(index + 1 + '') !== -1 ? 'style-box active' : 'style-box'} onClick={this.select.bind(this, index + 1 + '')}>
+                                        <img src={item.url} />
+                                        <div className="bg"></div>
+                                        <span className="triangle"></span>
+                                        <label>{item.name}</label>
+                                        <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
         )
@@ -408,6 +440,45 @@ class OtherInfo extends Component {
         this._time = 0;
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            data: nextProps.data
+        });
+    }
+
+    /**
+     * 获取职业
+     * */
+    getProfessional(e) {
+        let myData = this.state.data;
+        myData.professional = e.target.value;
+        this.props.setState(myData);
+    }
+
+    /**
+ * 获取城市代码
+ * */
+    getCity(city) {
+        let {
+            currProvince,
+            currCity,
+            currArea,
+            provinceName,
+            cityName,
+            areaName
+        } = city;
+
+        let myData = this.state.data;
+        myData.provinceCode = currProvince; //省默认浙江省
+        myData.cityCode = currCity; //城市默认杭州市
+        myData.countyCode = currArea; //区默认西湖区
+        myData.fullCityName = provinceName + cityName + areaName; //地址
+        this.props.setState(myData);
+        this.setState({
+            cityShow: false
+        });
+    }
+
     /**
      * 获取生日
      * */
@@ -424,12 +495,15 @@ class OtherInfo extends Component {
         return (
             <div className="otherInfo-area">
                 <label>职业</label>
-                <input />
+                <input type="text" maxLength={10} value={this.state.data.professional} onChange={this.getProfessional.bind(this)} />
                 <label>城市</label>
-                <input />
-                <label>城市</label>
-                <input id="birthDate" type="date" />
-                {this.state.timeShow ? <Time getBirthDate={this.getBirthDate.bind(this)} /> : null}
+                <input type="text" value={this.state.data.fullCityName} readOnly={true} onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
+                <label>生日</label>
+                <div id="birthDate" className="birthDate" onClick={() => { this.setState({ timeShow: true }) }}>
+                    {this.state.data.birthday}
+                    {this.state.timeShow ? <Time birthday={this.state.data.birthday} getBirthDate={this.getBirthDate.bind(this)} /> : null}
+                </div>
+                {this.state.cityShow ? <City defaultProvince={this.state.data.provinceCode} defaultCity={this.state.data.cityCode} defaultArea={this.state.data.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
             </div>
         )
     }
@@ -442,7 +516,7 @@ class Time extends Component {
     componentDidMount() {
         this.flatpickr = flatpickr("#birthDate", {
             locale: zh,
-            defaultDate: this.props.birthday,
+            defaultDate: this.props.birthday || '1992-08-08',
             disableMobile: "true",
             onChange: (selectedDates, dateStr, instance) => {
                 this.props.getBirthDate(dateStr);
@@ -535,22 +609,20 @@ class CustomSuit extends Component {
             msgShow: false,
             msgText: '', //提示内容
         };
-
-
     }
 
     componentDidMount() {
         document.title = "填写个人信息";
-        ToolDps.get('/wx/user/info').then((res) => {
-            // if (res.succ && res.info && res.info.faceshpe != "" && res.info.colorofskin != "") {
-            //     let myData = merged(this.state.data, res.info);
-            //     this.props.setState(myData);
-            // } else if (res.succ && res.info && res.info.sex != "") {
-            //     let myData = this.state.data;
-            //     myData.sex = res.info.sex;
-            //     this.props.setState(myData);
-            // }
-        });
+        // ToolDps.get('/wx/user/info').then((res) => {
+        //     if (res.succ && res.info && res.info.faceshpe != "" && res.info.colorofskin != "") {
+        //         let myData = merged(this.state.data, res.info);
+        //         this.props.setState(myData);
+        //     } else if (res.succ && res.info && res.info.sex != "") {
+        //         let myData = this.state.data;
+        //         myData.sex = res.info.sex;
+        //         this.props.setState(myData);
+        //     }
+        // });
 
     }
 
@@ -561,6 +633,19 @@ class CustomSuit extends Component {
         // });
     }
 
+    selectSex(sex) {
+        let myData = this.state.data;
+        if (myData.sex != sex) {
+            myData.sex = sex;
+            myData.faceshpe = '';
+            myData.colorofskin = '';
+            myData.bodySize = '';
+            myData.problems = [];
+            myData.styles = [];
+            this.props.setState(myData);
+        }
+
+    }
 
 
     showMsg(isShow, tipText) {
@@ -571,6 +656,12 @@ class CustomSuit extends Component {
     }
 
     render() {
+        let girlSex = classNames('girl', {
+            'active': this.state.data.sex === 2
+        });
+        let boySex = classNames('boy', {
+            'active': this.state.data.sex === 1
+        });
         return (
             <section className="customsuit-box">
                 <header className="flex-box">
@@ -581,10 +672,10 @@ class CustomSuit extends Component {
                     <div className="item">
                         <img src="/assets/img/headImg.jpg" />
                         <div className="sex-area">
-                            <span className="girl">
+                            <span className={girlSex} onClick={this.selectSex.bind(this, 2)}>
                                 <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             </span>
-                            <span className="boy active">
+                            <span className={boySex} onClick={this.selectSex.bind(this, 1)}>
                                 <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             </span>
 
@@ -592,11 +683,11 @@ class CustomSuit extends Component {
                     </div>
                 </header>
                 <BaseInfo  {...this.props} data={this.state.data} />
-                <Body />
-                <Resolve />
-                <Style />
-                <OtherInfo />
-                <LifePhoto />
+                <Body  {...this.props} data={this.state.data} />
+                <Resolve  {...this.props} data={this.state.data} />
+                <Style  {...this.props} data={this.state.data} />
+                <OtherInfo  {...this.props} data={this.state.data} />
+                <LifePhoto  {...this.props} data={this.state.data} />
                 <button className="btn send-btn">提交</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
