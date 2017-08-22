@@ -1,7 +1,7 @@
 .profile-container {
     background: #f0f5f9!important;
     header.flex-box {
-        background: #ffffff;
+        background: @white;
         padding: 20px 13px;
         >.item-2 {
             width: 0;
@@ -10,8 +10,8 @@
             }
             &:last-child {
                 flex: 1 0 auto;
-                padding:16px 0 0 16px;
-                .name{
+                padding: 12px 0 0 16px;
+                .name {
                     color: #333333;
                     font-size: 17px;
                     font-weight: bold;
@@ -19,13 +19,27 @@
                     overflow: hidden;
                     white-space: nowrap;
                 }
-                .box{
-                    li{
-                        &:nth-of-type(1){
+                .box {
+                    li {
+                        &:nth-of-type(1) {
+                            width: 0;
                             flex: 1 0 auto;
+                            color: #666666;
+                            font-size: 13px;
+                            font-weight: 600;
+                            .base {
+                                line-height: 18px;
+                                >span {
+                                    padding-right: 10px;
+                                }
+                            }
+                            .job {
+                                line-height: 18px;
+                            }
                         }
-                        &:nth-of-type(2){
+                        &:nth-of-type(2) {
                             flex: 0 0 91px;
+                            padding-top: 5px;
                         }
                     }
                 }
@@ -45,66 +59,54 @@
                 font-size: 15px;
             }
         }
-    }
-    .base-info-area {
-        text-align: center;
-        font-size: 1.4rem;
-    }
-    .base-info-area {
-        >span {
-            padding: 0 0.5rem;
-            line-height: 25px;
+        .again-write {
+            display: block;
+            width: 92px;
+            color: #ff6064;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 15px;
+            border: 1px solid #ff6064;
+            line-height: 30px;
+            text-align: center;
         }
     }
     .figure-info-area {
-        min-height: 100px;
         background: @white;
-        margin: 1rem;
-        padding-bottom: 10px;
+        margin: 10px 13px 12px;
+        padding-bottom: 17px;
         .title {
-            position: relative;
             text-align: center;
-            font-size: 1.6rem;
-            line-height: 30px;
-            padding: 5px;
-            .overwrite--figure-info {
-                position: absolute;
-                top: 50%;
-                right: 5px;
-                transform: translate(0, -50%);
-                background-color: rgb(51, 51, 51);
-                border-radius: 5px;
-                color: @white;
-                font-size: 1.4rem;
-                padding: 0 10px;
-            }
+            font-size: 16px;
+            color: #333333;
+            font-weight: 600;
+            border-bottom: 1px solid #e5e5e5;
+            line-height: 55px;
+            margin-bottom: 18px;
         }
-        .body-info-area {
-            font-size: 1.4rem;
-            margin: 0 1rem;
-            border-top: 1px dashed rgb(238, 238, 238);
-            border-bottom: 1px dashed rgb(238, 238, 238);
-            span {
-                padding-right: 1rem;
-                line-height: 3rem;
+        >p {
+            color: #666666;
+            font-size: 14px;
+            font-weight: 600;
+            margin:0 10px 20px;
+            &:nth-of-type(4) {
+                margin-bottom: 0;
             }
-        }
-        .sanwei {
-            line-height: 3rem;
-            font-size: 1.4rem;
-            padding-left: 1rem;
+            >span {
+                font-weight: 400;
+                color: #cccccc;
+                font-size: 12px;
+                &.active {
+                    color: #333333;
+                    font-size: 15px;
+                    font-weight: 600;
+                }
+            }
         }
         .body-img-area {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 10px 0;
-            .item {
-                flex: 0 0 33.3%;
-                max-height: 200px;
-                padding: 5px 15px;
+            .item-3 {
                 img {
-                    max-width: 100%;
-                    max-height: 100%;
+                    margin: auto;
                 }
             }
         }

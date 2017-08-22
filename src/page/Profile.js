@@ -58,10 +58,10 @@ class Profile extends Component {
             bodySize,
             lifeImgs
         } = info ? info : {};
-        let isBoyImg = sex === 1 ? '-boy' : '';
-        let faceshpeImgSrc = "/assets/img/face" + faceshpe + "" + isBoyImg + ".jpg"; //脸型图片地址
-        let colorofskinImgSrc = "/assets/img/skin" + colorofskin + "" + isBoyImg + ".jpg"; //肤色图片地址
-        let bodyImgSrc = "/assets/img/body" + bodySize + "" + isBoyImg + ".jpg";
+        let sexFlag = sex === 1 ? '2' : '1';
+        let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
+        let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
+        let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
 
         return (
             <section className="full-page profile-container">
@@ -78,48 +78,49 @@ class Profile extends Component {
                     <div className="item-2">
                         <p className="name">{nickName}</p>
                         <ul className="flex-box box">
-                            <li>1</li>
                             <li>
-                                <Link to="/customSuit" className="again-write">重新定制</Link>
+                                <p className="base">
+                                    <span>{age}</span>
+                                    <span>{cityName}</span>
+                                </p>
+                                <p className="job">
+                                    {professional}
+                                    {!age && !cityName && !professional ? "赶紧定制你的专属信息吧~" : null}
+                                </p>
+                            </li>
+                            <li>
+                                <Link to="/customSuit" className="again-write">马上定制</Link>
                             </li>
                         </ul>
                     </div>
                 </header>
-                <p className="name">{nickName}</p>
-                <div className="base-info-area">
-                    {age ? <span>{age}</span> : null}
-                    {cityName ? <span>{cityName}</span> : null}
-                    {professional ? <span>{professional}</span> : null}
-                </div>
                 <div className="figure-info-area">
                     <h3 className="title">
-                        您的身材信息
-                        <Link to="/customSuit" className="overwrite--figure-info">重新录入</Link>
+                        身材信息
                     </h3>
-                    <div className="body-info-area">
-                        <span>身高(CM)：{heigh}</span>
-                        <span>体重(KG)：{weight}</span>
-                    </div>
-                    <p className="sanwei">三围(胸腰臀CM)：{chest} {waist} {hip}</p>
-                    <div className="body-img-area">
+                    <p>身高(cm)：<span className={heigh ? "active" : ""}>{heigh ? heigh : "去添加身高~"}</span></p>
+                    <p>体重(kg)：<span className={weight ? "active" : ""}>{weight ? weight : "去添加体重~"}</span></p>
+                    <p>三围(胸腰臀cm)：<span className={chest ? "active" : ""}>{chest ? chest : "去添加三围~"}、{waist}、{hip}</span></p>
+                    <p>脸型、肤色和体型：<span>{faceshpe ? '' : "去选择你的脸型肤色体型~"}</span></p>
+                    <div className="flex-box body-img-area">
                         {
                             faceshpe ? (
-                                <div className="item">
-                                    <img src={faceshpeImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }} />
+                                <div className="item-3">
+                                    <img src={faceshpeImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }} />
                                 </div>
                             ) : null
                         }
                         {
                             colorofskin ? (
-                                <div className="item">
-                                    <img src={colorofskinImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
+                                <div className="item-3">
+                                    <img src={colorofskinImgSrc} alt="" width="68" height="67"  onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
                                 </div>
                             ) : null
                         }
                         {
                             bodySize ? (
-                                <div className="item">
-                                    <img src={bodyImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
+                                <div className="item-3">
+                                    <img src={bodyImgSrc} alt="" width="68" height="81"  onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
                                 </div>
                             ) : null
                         }
