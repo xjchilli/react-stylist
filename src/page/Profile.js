@@ -65,10 +65,24 @@ class Profile extends Component {
 
         return (
             <section className="full-page profile-container">
-                <header>
-                    <div className="head-img">
+                <header className="flex-box">
+                    <div className="item-2 head-img">
                         <img src={headImg} alt="" />
-                        {sex ? <span className="sex">{sex === 1 ? '♂' : '♀'}</span> : null}
+                        {sex && sex === 2 ? (
+                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                        ) : (
+                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            )
+                        }
+                    </div>
+                    <div className="item-2">
+                        <p className="name">{nickName}</p>
+                        <ul className="flex-box box">
+                            <li>1</li>
+                            <li>
+                                <Link to="/customSuit" className="again-write">重新定制</Link>
+                            </li>
+                        </ul>
                     </div>
                 </header>
                 <p className="name">{nickName}</p>
@@ -98,14 +112,14 @@ class Profile extends Component {
                         {
                             colorofskin ? (
                                 <div className="item">
-                                    <img src={colorofskinImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }}  />
+                                    <img src={colorofskinImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
                                 </div>
                             ) : null
                         }
                         {
                             bodySize ? (
                                 <div className="item">
-                                    <img src={bodyImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }}  />
+                                    <img src={bodyImgSrc} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
                                 </div>
                             ) : null
                         }

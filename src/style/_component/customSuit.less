@@ -28,19 +28,17 @@
                     border-radius: 50%;
                 }
                 .sex-area {
-                    width: 72px;
-                    background-color: #fadeea;
+                    width: 84px;
+                    background-color: #f3f4f6;
                     border-radius: 8px;
-                    margin: 5px 0 0 12px;
-                    .boy, .girl {
+                    margin: 5px 0 0 5px;
+                    .boy,
+                    .girl {
                         display: inline-block;
                         width: 50%;
-                        line-height: 20px;
+                        line-height: 19px;
                         position: relative;
                         text-align: center;
-                        &.active {
-                            background-color: #f3f4f6;
-                        }
                         .icon {
                             position: relative;
                             top: 2px;
@@ -48,9 +46,15 @@
                     }
                     .boy {
                         border-radius: 0 8px 8px 0;
+                        &.active {
+                            background-color: #5ac6fc;
+                        }
                     }
                     .girl {
                         border-radius: 8px 0 0 8px;
+                        &.active {
+                            background-color: #ff6064;
+                        }
                     }
                 }
             }
@@ -87,7 +91,8 @@
                     transition: all ease 0.3s;
                 }
             }
-            .swiper-slide-prev, .swiper-slide-next {
+            .swiper-slide-prev,
+            .swiper-slide-next {
                 color: #999999;
                 &:after {
                     background: #999999;
@@ -144,9 +149,8 @@
                             content: '';
                             position: absolute;
                             top: 50%;
-                            right: -17px;
                             margin-top: -5px;
-                            transform: rotate(-45deg);
+                            transform:translate(6px,0) rotate(-45deg);
                             width: 6px;
                             height: 6px;
                             border: 1px solid #666666;
@@ -158,7 +162,7 @@
                         position: absolute;
                         top: 13px;
                         right: 10px;
-                        font-size: 15px;
+                        font-size: 20px;
                     }
                     &.active {
                         .icon-sure {
@@ -232,13 +236,6 @@
                         }
                     }
                 }
-                .face-list{
-                    li{
-                        .img-box {
-                            
-                        }
-                    }
-                }
                 .img-box {
                     position: relative;
                     width: 68px;
@@ -255,7 +252,7 @@
                     }
                     .icon-sure {
                         visibility: hidden;
-                        font-size: 15px;
+                        font-size: 20px;
                         position: absolute;
                         right: 5px;
                         top: 5px;
@@ -269,6 +266,14 @@
                     &.active {
                         .icon-sure {
                             visibility: visible;
+                        }
+                    }
+                }
+                &.face-box {
+                    height: 433px;
+                    .img-box {
+                        >img {
+                            height: 81px;
                         }
                     }
                 }
@@ -319,7 +324,7 @@
                 position: absolute;
                 top: 6px;
                 right: 2px;
-                font-size: 15px;
+                font-size: 20px;
             }
             &.active {
                 .icon-sure {
@@ -383,7 +388,7 @@
                 position: absolute;
                 top: 7px;
                 right: 7px;
-                font-size: 15px;
+                font-size: 20px;
             }
             &.active {
                 .bg {
@@ -404,7 +409,8 @@
             display: block;
             margin: 25px 0 15px;
         }
-        >input, .birthDate {
+        >input,
+        .birthDate {
             display: block;
             -webkit-appearance: none;
             background: #f3f4f6;
@@ -451,14 +457,35 @@
                 color: #666666;
                 margin-top: 25px;
             }
+            .img-show,
             .upload-file {
                 position: absolute;
                 top: 0;
+                left: 0;
                 right: 0;
                 bottom: 0;
-                left: 0;
                 width: 100%;
                 height: 100%;
+            }
+            .img-show {
+                z-index: 8;
+                background-repeat: no-repeat;
+                background-size: cover;
+                .icon-fault {
+                    display: none;
+                    font-size: 15px;
+                    position: absolute;
+                    top:-8px;
+                    right: -8px;
+                }
+                &.active{
+                    .icon-fault {
+                        display: block;
+                    }
+                }
+            }
+            .upload-file {
+                z-index: 9;
                 opacity: 0;
             }
         }
@@ -502,7 +529,7 @@
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 375px) {
     .customsuit-box {
         //风格
         .style-area {
@@ -519,264 +546,7 @@
                     width: 137px;
                     height: 88px;
                 }
-                .triangle {
-                    // border-bottom: 53px solid #ffffff;
-                    // border-left: 73px solid transparent;
-                }
             }
         }
     }
 }
-
-// .customsuit-swiper-box{
-//   height: 100%;background: @white;
-//   .swiper-slide{
-//     overflow: hidden;
-//      >.title{position:absolute;top:0;left:0;width:100%;font-size: 1.5rem;text-align: center;padding: 1rem 0;color: #0d0d0d;}
-//   }
-//   //性别
-//   .sex-area{
-//       position: absolute; left: 0;right: 0; bottom: 0;top: 0; margin: auto; width: 100%;height: 15rem;text-align: center;
-//     .item{
-//       display: inline-block;width: 50%;text-align: center;
-//     }
-//     .img-area{
-//       position:relative;display: inline-block;width: 9rem;height: 15rem;
-//       >img{width: 9rem;height: 15rem;}
-//       &.active:after{
-//         content: '';
-//         position: absolute;
-//         top:8.3rem;
-//         right:1rem;
-//         .cicle();
-//         z-index: 1;
-//       }
-//       &.active:before{
-//         content: '';
-//         position: absolute;
-//         top:8.6rem;
-//         right: 1.3rem;
-//         .yes();
-//         z-index: 9;
-//       }
-//     }
-//   }
-//   //脸型
-//   .face-area{
-//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-//     .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
-//     .img-area{
-//       position:relative;display: inline-block;width: 115px;height: 170px;
-//       >img{width: 115px;height: 170px;}
-//       &.active:after{
-//         content: '';
-//         position: absolute;
-//         top:83px;
-//         right:10px;
-//         .cicle();
-//         z-index: 1;
-//       }
-//       &.active:before{
-//         content: '';
-//         position: absolute;
-//         top:86px;
-//         right: 13px;
-//         .yes();
-//         z-index: 9;
-//       }
-//     }
-//   }
-//   //肤色
-//   .skin-area{
-//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-//     .item{flex: 0 0 50%;height: 50%;text-align: center;display: flex;align-items: center;justify-content: center;}
-//     .img-area{
-//       position:relative;display: inline-block;width: 105px;height: 135px;
-//       >img{width: 105px;height: 135px;}
-//       &.active:after{
-//         content: '';
-//         position: absolute;
-//         top:83px;
-//         right:10px;
-//         .cicle();
-//         z-index: 1;
-//       }
-//       &.active:before{
-//         content: '';
-//         position: absolute;
-//         top:86px;
-//         right: 13px;
-//         .yes();
-//         z-index: 9;
-//       }
-//     }
-//   }
-//   //身型
-//   .body-area{
-//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-//     .item{flex: 0 0 50%;height:33.3%;text-align: center;display: flex;align-items: center;justify-content: center;padding:10px 0;}
-//     .img-area{
-//       position:relative;display: inline-block;width: 75px;
-//       >img{width: 75px;max-height: 100%;}
-//       &.active:after{
-//         content: '';
-//         position: absolute;
-//         top:83px;
-//         right:10px;
-//         .cicle();
-//         z-index: 1;
-//       }
-//       &.active:before{
-//         content: '';
-//         position: absolute;
-//         top:86px;
-//         right: 13px;
-//         .yes();
-//         z-index: 9;
-//       }
-//     }
-//   }
-//   //希望解决的问题
-//   .resolve-area{
-//    position: absolute;top:0;right: 0;bottom: 0;left: 0;margin: auto; width:284px;height: 349px;
-//     >img{width:284px;height: 349px;}
-//     .resolve{
-//       position: absolute;font-size: 14px;
-//       &.active:after{
-//         content: '';
-//         position: absolute;
-//         top:3px;
-//         left:-16px;
-//         .cicle();
-//         z-index: 1;
-//       }
-//       &.active:before{
-//         content: '';
-//         position: absolute;
-//         top:7px;
-//         left: -13px;
-//         .yes();
-//         z-index: 9;
-//       }
-//     }
-//     .resolve1{left: 15px;top: 35px;}
-//     .resolveBoy.resolve1{top: 25px;}
-//     .resolve2{left: 15px;top: 65px;}
-//     .resolveBoy.resolve2{top: 61px;}
-//     .resolve3{left: 15px;top: 97px;}
-//     .resolveBoy.resolve3{top: 195px;}
-//     .resolve4{left: 15px;top: 193px;}
-//     .resolveBoy.resolve4{left:auto;right: 0;top: 43px;}
-//     .resolve5{right: 0;top: 31px;}
-//     .resolveBoy.resolve5{left:15px;right: auto;top:137px;}
-//     .resolve6{right: 0;top: 67px;}
-//     .resolveBoy.resolve6{top:260px;}
-//     .resolve7{right: 0;top: 100px;}
-//     .resolveBoy.resolve7{top:168px;}
-//     .resolve8{right: 0;top: 163px;}
-//     .resolve9{right: 0;top: 252px;}
-//   }
-//   //风格
-//   .style-area{
-//     display: flex;flex-wrap: wrap;height:100%;padding-top:44px;
-//     .item{flex: 0 0 50%;height: 33.3%;text-align: center;display: flex;align-items: center;justify-content: center;}
-//     .img-area{
-//       position:relative;display: inline-block;width: 100px;
-//       >img{width: 100px;max-height: 100%;}
-//       &.active:after{
-//         content: '';
-//         position: absolute;
-//         top:66px;
-//         right:10px;
-//         .cicle();
-//         z-index: 1;
-//       }
-//       &.active:before{
-//         content: '';
-//         position: absolute;
-//         top:70px;
-//         right: 13px;
-//         .yes();
-//         z-index: 9;
-//       }
-//     }
-//   }
-//   //基础信息
-//   .baseinfo-area{
-//       display:flex;flex-direction:column;padding-top:44px;height:100%;
-//       .item{flex: auto;}
-//       .swiper-container{
-//         height:3.8rem;border:0.1rem solid #cccccc;border-width:0.1rem 0 0.1rem 0;
-//         .swiper-slide{
-//             position: relative; line-height: 3.8rem;text-align: center;font-size: 1.2rem;color: #cccccc;font-family:Arial;
-//             &:after{
-//               content:'';position:absolute;left: 50%;top:0;width:0.1rem;height: 0.7rem;background: #999999;transition: all ease 0.3s;
-//             }
-//           }
-//         .swiper-slide-prev,.swiper-slide-next{
-//            &:after{background:#999999; }
-//         }
-//         .swiper-slide-active{
-//           font-size: 1.5rem;color: #01b5bb;line-height:4.8rem;
-//           &:after{height: 1.2rem;background:#01b5bb;}
-//           }
-//       }
-//      .title{font-size: 14px;text-align: left;padding-left: 2rem;margin:8px 0 5px;}
-//   }
-//   //其他信息
-//   .otherinfo-area{
-//     padding-top: 15px;
-//     .birthDate{line-height: 30px;border: 1px solid gray;text-indent: 5px;}
-//     .life-photo-title{
-//       padding-top: 20px;
-//       >label{font-size: 16px;}
-//       small{font-size: 12px;color: rgb(172,172,172);}
-//     }
-//     .life-photo-area{
-//       display:flex;padding: 0 10px;flex-wrap: wrap;
-//       .item{flex: 0 0 33.3%;margin-bottom: 10px;}
-//       .img{
-//         position:relative;width: 80px;height: 80px;margin: auto;
-//         .upload-file{width: 100%;height: 100%;opacity: 0;}
-//         >img{width: 100%;height: 100%;}
-//         >svg{position: absolute;top:0;right: 0;}
-//       }
-//     }
-//   }
-//   .sendBtn{
-//       display:block;margin:20px auto 0;width: 130px;height: 35px;line-height:35px;background: rgb(234, 60, 59);border-width: 0;color: @white;font-size: 16px;
-//   }
-//   //动画箭头
-//   .pre-wrap{
-//     position: absolute;left:50%;bottom:10px;margin-left:-10px;width: 20px;height: 14px;z-index: 99;animation: start 1.5s infinite ease-in-out;
-//     &:before,&:after{
-//       content: ''; position: absolute;top: 5px;width: 14px;height: 5px;box-shadow: 1px -1px 1px #646464;background-color: @white;
-//       border-radius: 2px;
-//     }
-//     &:before{
-//       transform: rotate(130deg);left: 0;
-//     }
-//     &:after{
-//       transform: rotate(50deg);left: 6px;
-//     }
-//   }
-// }
-// @keyframes start {
-//   0%,30%{
-//     opacity: 0;
-//     transform: translate(0,10px);
-//   }
-//   60%{
-//     opacity: 1;
-//     transform: translate(0,0);
-//   }
-//   100%{
-//     opacity: 0;
-//     transform: translate(0,-8px);
-//   }
-// }
-// @media all and (max-width: 320px) {
-//   .customsuit-swiper-box{
-//     .sendBtn{margin: auto;}
-//   }
-// }

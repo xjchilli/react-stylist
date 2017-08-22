@@ -97,6 +97,10 @@ const CustomSuit = DB('CustomSuit', {
   countyCode: '330106', //区默认西湖区
   fullCityName: '', //地址
   birthday: '', //生日
+  faceImg:{
+    imgPath:'',
+    file:null
+  },//正脸照
   lifeImgs: [] //生活照
 }); //搭配测试
 const OrderList = DB('OrderList', {

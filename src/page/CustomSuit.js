@@ -237,10 +237,33 @@ class Type extends Component {
             isFace: false,
             isSkin: false,
             isBody: false,
+            faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
+            skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦', '不太清楚'],//肤色名字
+            bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角', '不太清楚'],//男：体型名字
+            bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形', '不太清楚']//女：体型名字
         }
     }
     render() {
         let { sex } = this.props.data;//1：男  2：女
+        let faceName = "选择脸型";
+        let skinName = "选择肤色";
+        let bodyName = "选择体型";
+        if (this.props.data.faceshpe != "") {
+            faceName=this.state.faceNames[Number(this.props.data.faceshpe)-1];
+        }
+        if (this.props.data.colorofskin != "") {
+            skinName=this.state.skinNames[Number(this.props.data.colorofskin)-1];
+        }
+
+        if (this.props.data.bodySize != "") {
+            if(sex === 1){
+                bodyName=this.state.bodyNamesBoy[Number(this.props.data.bodySize)-1];
+            }else{
+                bodyName=this.state.bodyNamesGirl[Number(this.props.data.bodySize)-1];
+            }
+            
+        }
+
         return (
             <div className="body-area">
                 <h2>选择脸型、肤色和体型 *</h2>
@@ -248,21 +271,21 @@ class Type extends Component {
                     <li>
                         <div className={this.props.data.faceshpe != "" ? "box active" : "box"} onClick={() => { this.setState({ isFace: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/face-icon-2.jpg" : "/assets/img/suit/face-icon.jpg"} />
-                            <span className="title">选择脸型</span>
+                            <span className="title">{faceName}</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                     <li>
                         <div className={this.props.data.colorofskin != "" ? "box active" : "box"} onClick={() => { this.setState({ isSkin: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/skin-icon-2.jpg" : "/assets/img/suit/skin-icon.jpg"} />
-                            <span className="title">选择肤色</span>
+                            <span className="title">{skinName}</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                     <li>
                         <div className={this.props.data.bodySize != "" ? "box active" : "box"} onClick={() => { this.setState({ isBody: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/body-icon-2.jpg" : "/assets/img/suit/body-icon.jpg"} />
-                            <span className="title">选择体型</span>
+                            <span className="title">{bodyName}</span>
                             <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
@@ -300,7 +323,7 @@ class Face extends Component {
         let myData = this.props.data;
         myData.faceshpe = face;
         this.props.setState(myData);
-
+        this.props.close();
     }
 
     render() {
@@ -361,6 +384,7 @@ class Skin extends Component {
         let myData = this.props.data;
         myData.colorofskin = skin;
         this.props.setState(myData);
+        this.props.close();
     }
     render() {
         let { sex } = this.props.data;
@@ -421,6 +445,7 @@ class Body extends Component {
         let myData = this.props.data;
         myData.bodySize = body;
         this.props.setState(myData);
+        this.props.close();
     }
     render() {
         let { sex } = this.props.data;
@@ -433,10 +458,10 @@ class Body extends Component {
 
         return (
             <div className="fixed face-select-area">
-                <div className="box">
+                <div className="box face-box">
                     <h3>选择体型</h3>
                     <span className="close" onClick={this.props.close}></span>
-                    <ul className="flex-box img-list face-list">
+                    <ul className="flex-box img-list">
                         {
                             bodys.map((item, index) => {
                                 return (
@@ -729,6 +754,7 @@ class LifePhoto extends Component {
         });
     }
 
+    //全身照
     uploadPhoto(e) {
         let self = this;
         let files = e.target.files;
@@ -772,23 +798,62 @@ class LifePhoto extends Component {
         this.props.setState(myData);
     }
 
+    //正脸照
+    uploadFaceImg(e) {
+        let self = this;
+        let files = e.target.files;
+        if (files) {
+            let targetFile = files[0];
+            let readFile = new FileReader();
+            readFile.onload = function () {
+                let imgObj = {
+                    imgPath: this.result,
+                    file: targetFile
+                };
+                self.file.value = '';
+                let myData = self.state.data;
+                myData.faceImg.imgPath = imgObj.imgPath;
+                myData.faceImg.file = imgObj.file;
+                self.props.setState(myData);
+            };
+            readFile.readAsDataURL(targetFile);
+        }
+    }
+
+    deleteFaceImg() {
+        let myData = this.state.data;
+        myData.faceImg.imgPath = '';
+        myData.faceImg.file = null;
+        this.props.setState(myData);
+    }
+
     render() {
+        let imgPath = '';
+        if (this.state.data.faceImg) {
+            imgPath = this.state.data.faceImg.imgPath;
+        }
         return (
             <div className="lifePhoto-area">
                 <h2>添加照片 *</h2>
                 <ul className="flex-box upload-control-area">
                     <li className="item-2">
-                        <div className="upload-area">
+                        <div className="upload-area" >
                             <span className="icon icon-camera"></span>
                             <p>添加一张正脸照片</p>
-                            <input type="file" accept="image/*" className="upload-file" />
+                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }}>
+                                <span className="icon icon-fault" onClick={this.deleteFaceImg.bind(this)}><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                            {
+                                imgPath ? null : (<input type="file" accept="image/*" className="upload-file" onChange={this.uploadFaceImg.bind(this)} />)
+                            }
+
                         </div>
                     </li>
                     <li className="item-2">
                         <div className="upload-area">
                             <span className="icon icon-camera"></span>
                             <p>添加近期全身照</p>
-                            <input type="file" ref={el => this.file =el} multiple accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                            <input type="file" ref={el => this.file = el} multiple accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
                         </div>
                     </li>
                 </ul>
@@ -797,7 +862,7 @@ class LifePhoto extends Component {
                         this.state.photoList.map((item, index) => {
                             return (
                                 <li className="item-3" key={index}>
-                                    <div className="img-area" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                                    <div className="img-area" style={{ backgroundImage: 'url(' + item.imgPath + ')' }}>
                                         <span className="icon icon-fault" data-index={index} onClick={this.deletePhoto.bind(this)}><span className="path1"></span><span className="path2"></span></span>
                                     </div>
                                 </li>
@@ -820,29 +885,32 @@ class CustomSuit extends Component {
             data: copyMyData || null,
             msgShow: false,
             msgText: '', //提示内容
+            btnText: '提交'
         };
     }
 
     componentDidMount() {
         document.title = "填写个人信息";
-        // ToolDps.get('/wx/user/info').then((res) => {
-        //     if (res.succ && res.info && res.info.faceshpe != "" && res.info.colorofskin != "") {
-        //         let myData = merged(this.state.data, res.info);
-        //         this.props.setState(myData);
-        //     } else if (res.succ && res.info && res.info.sex != "") {
-        //         let myData = this.state.data;
-        //         myData.sex = res.info.sex;
-        //         this.props.setState(myData);
-        //     }
-        // });
+        ToolDps.get('/wx/user/info').then((res) => {
+            if (res.succ && res.info && res.info.faceshpe != "" && res.info.colorofskin != "") {//表示修改过个人信息
+                let myData = merged(this.state.data, res.info);
+                myData.faceImg = res.info.lifeImgs[0];
+                myData.lifeImgs = res.info.lifeImgs.slice(1);
+                this.props.setState(myData);
+            } else if (res.succ && res.info && res.info.sex != "") {//默认没修改过
+                let myData = this.state.data;
+                myData.sex = res.info.sex;
+                this.props.setState(myData);
+            }
+        });
 
     }
 
     componentWillReceiveProps(nextProps) {
-        // let data = nextProps.state.path[nextProps.location.pathname];
-        // this.setState({
-        //     data: data
-        // });
+        let data = nextProps.state.path[nextProps.location.pathname];
+        this.setState({
+            data: data
+        });
     }
 
     selectSex(sex) {
@@ -867,6 +935,127 @@ class CustomSuit extends Component {
         });
     }
 
+
+    sendForm() {
+        let lifeImgIds = []; //未删除的生活照ID
+        let {
+            sex, //性别
+            faceshpe, //脸型
+            colorofskin, //肤色
+            bodySize, //体型
+            problems, //解决问题
+            styles, //风格
+            heigh, //身高
+            weight, //体重
+            chest, //胸围
+            waist, //腰围
+            hip, //臀围
+            professional, //职业
+            countyCode, //城市
+            birthday, //生日
+            faceImg,//正脸照
+            lifeImgs, //生活照
+        } = this.state.data;
+
+        let flag = this.tips(this.state.data);
+        if (!flag) {
+            return;
+        }
+
+
+        let formdata = new FormData();
+        formdata.append('sex', sex);
+        formdata.append('faceshpe', faceshpe);
+        formdata.append('colorofskin', colorofskin);
+        formdata.append('bodySize', bodySize);
+        formdata.append('style', styles);
+        formdata.append('heigh', heigh);
+        formdata.append('weight', weight);
+        formdata.append('problem', problems);
+        formdata.append('chest', chest);
+        formdata.append('waist', waist);
+        formdata.append('hip', hip);
+        formdata.append('professional', professional);
+        formdata.append('countyCode', countyCode);
+        formdata.append('birthday', birthday);
+        if (faceImg.file) {
+            formdata.append('headImg', faceImg.file);
+        } else {
+            lifeImgIds.push(faceImg.id);
+        }
+        lifeImgs.forEach((item, index) => {
+            if (item.file) {
+                formdata.append('lifeImg', item.file);
+            }
+            if (item.id) {
+                lifeImgIds.push(item.id);
+            }
+
+        });
+        formdata.append('lifeImgIds', lifeImgIds);
+
+        this.setState({
+            btnText: '提交中...'
+        });
+
+        ToolDps.post('/wx/user/save', formdata, {
+            'Content-Type': 'multipart/form-data'
+        }).then((res) => {
+            if (res.succ) {
+                this.showMsg(true, '提交成功');
+                this._time = setTimeout(() => {
+                    this.context.router.history.push('/fashionMoment');
+                }, 1000);
+            } else {
+                this.showMsg(true, '提交失败');
+            }
+            this.setState({
+                btnText: '提交'
+            });
+        });
+    }
+
+    tips(data) {
+        let {
+            faceshpe, //脸型
+            colorofskin, //肤色
+            bodySize, //体型
+            problems, //解决问题
+            styles, //风格
+            faceImg,//正脸照
+            lifeImgs, //生活照
+        } = data;
+        if (faceshpe == "") {
+            this.showMsg(true, '请选择脸型');
+            return false;
+        }
+        if (colorofskin == "") {
+            this.showMsg(true, '请选择肤色');
+            return false;
+        }
+        if (bodySize == "") {
+            this.showMsg(true, '请选择体型');
+            return false;
+        }
+        if (problems.length == 0) {
+            this.showMsg(true, '请选择希望能解决的问题');
+            return false;
+        }
+        if (styles.length == 0) {
+            this.showMsg(true, '请选择喜欢的穿衣风格');
+            return false;
+        }
+        if (faceImg.imgPath == "") {
+            this.showMsg(true, '请上传正脸照片');
+            return false;
+        }
+        if (lifeImgs.length == 0) {
+            this.showMsg(true, '请上传全身照');
+            return false;
+        }
+        return true;
+    }
+
     render() {
         let girlSex = classNames('girl', {
             'active': this.state.data.sex === 2
@@ -885,10 +1074,22 @@ class CustomSuit extends Component {
                         <img src="/assets/img/headImg.jpg" />
                         <div className="sex-area">
                             <span className={girlSex} onClick={this.selectSex.bind(this, 2)}>
-                                <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                {
+                                    this.state.data.sex === 2 ? (
+                                        <span className="icon icon-girl-active"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                    ) : (
+                                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                        )
+                                }
                             </span>
                             <span className={boySex} onClick={this.selectSex.bind(this, 1)}>
-                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                {
+                                    this.state.data.sex === 1 ? (
+                                        <span className="icon icon-man-active"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                    ) : (
+                                            <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                        )
+                                }
                             </span>
 
                         </div>
@@ -899,8 +1100,8 @@ class CustomSuit extends Component {
                 <Resolve  {...this.props} data={this.state.data} />
                 <Style  {...this.props} data={this.state.data} />
                 <OtherInfo  {...this.props} data={this.state.data} />
-                <LifePhoto  showMsg={this.showMsg.bind(this)} {...this.props} data={this.state.data} />
-                <button className="btn send-btn">提交</button>
+                <LifePhoto showMsg={this.showMsg.bind(this)} {...this.props} data={this.state.data} />
+                <button className="btn send-btn" onClick={this.sendForm.bind(this)}>{this.state.btnText}</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
@@ -908,6 +1109,10 @@ class CustomSuit extends Component {
 
 }
 
+
+CustomSuit.contextTypes = {
+    router: PropTypes.object.isRequired
+};
 
 
 export default connect((state) => {
