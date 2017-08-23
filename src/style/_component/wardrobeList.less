@@ -8,6 +8,38 @@
         width: 75px;
         height: 100%;
         overflow-y: auto;
+        li {
+            background: @white;
+            height: 77px;
+            border-bottom: 1px solid #e6e6e6;
+            text-align: center;
+            &:last-child {
+                border-bottom-width: 0;
+            }
+            &.active {
+                position: relative;
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 5px;
+                    height: 100%;
+                    background: #ff6064;
+                }
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translate(0,-50%);
+                    width: 0;height: 0;
+                    border-top: 5px solid transparent;
+                    border-right: 5px solid #f0f5f9;
+                    border-bottom: 5px solid transparent;
+                }
+            }
+        }
     }
     .rside {
         padding-left: 75px;

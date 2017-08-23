@@ -296,7 +296,11 @@ class WardrobeList extends Component {
 
         return (
             <section className="full-page wardrobe-list-area">
-                <section className="lside">1</section>
+                <ul className="lside">
+                    <li className="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
                 <section className="rside">2</section>
                 {/* <section className='content'> </section> */}
                     {/* {
