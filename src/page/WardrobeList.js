@@ -287,9 +287,6 @@ class WardrobeList extends Component {
     }
 
     render() {
-        let content = classNames('content', {
-            'remove-css-overflow-scrolling': this.state.uploadClothing
-        });
         let uploadClothing = classNames('upload-clothing-bg', {
             'active': this.state.uploadClothing
         });
@@ -298,21 +295,23 @@ class WardrobeList extends Component {
         this.state.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
 
         return (
-            <section className="consult-my-wardrobe full-page wardrobe-list-container">
-                <section className={content}>
-                    {
+            <section className="full-page wardrobe-list-area">
+                <section className="lside">1</section>
+                <section className="rside">2</section>
+                {/* <section className='content'> </section> */}
+                    {/* {
                         this.state.data.map((clothCategory, index) => {
                             return <ClothCategory key={index} data={clothCategory} />;
                         })
-                    }
+                    } */}
 
-                    {
+                    {/* {
                         this.state.data.length == 0 ? <p style={{ textAlign: 'center', fontSize: '1.8rem' }}>{this.state.serachTip}</p> : null
-                    }
+                    } */}
 
-                    <div className="action-area">
+                    {/* <div className="action-area">
                         <button onClick={this.showUploadClothWindow.bind(this)}>上传</button>
-                    </div>
+                    </div> */}
                     <div className={uploadClothing}>
                         <div className="box">
                             <div className="group">
@@ -349,7 +348,7 @@ class WardrobeList extends Component {
                             </div>
                         </div>
                     </div>
-                </section>
+               
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )

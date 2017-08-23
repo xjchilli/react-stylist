@@ -11,13 +11,9 @@ import DpsServerDetailContainer from 'bundle-loader?lazy&name=[name]!../page/Dps
 import ProfileContainer from 'bundle-loader?lazy&name=[name]!../page/Profile';
 import NeedMatchContainer from 'bundle-loader?lazy&name=[name]!../page/NeedMatch';
 import ConsultContainer from 'bundle-loader?lazy&name=[name]!../page/Consult';
-import ConsultHelpContainer from 'bundle-loader?lazy&name=[name]!../page/ConsultHelp';
 import ShoppingContainer from 'bundle-loader?lazy&name=[name]!../page/Shopping';
-import ShoppingHelpContainer from 'bundle-loader?lazy&name=[name]!../page/ShoppingHelp';
 import AccompanyShoppingContainer from 'bundle-loader?lazy&name=[name]!../page/AccompanyShopping';
-import AccompanyShoppingHelpContainer from 'bundle-loader?lazy&name=[name]!../page/AccompanyShoppingHelp';
 import NeatenWardrobeContainer from 'bundle-loader?lazy&name=[name]!../page/NeatenWardrobe';
-import NeatenWardrobeHelpContainer from 'bundle-loader?lazy&name=[name]!../page/NeatenWardrobeHelp';
 import PayContainer from 'bundle-loader?lazy&name=[name]!../page/Pay';
 import CustomSuitContainer from 'bundle-loader?lazy&name=[name]!../page/CustomSuit';
 import FashionMomentContainer from 'bundle-loader?lazy&name=[name]!../page/FashionMoment';
@@ -77,40 +73,20 @@ let routers = [
         exact: false,
         component: (props) => getComponent(props, ConsultContainer)
     },
-    {//咨询介绍
-        path: '/consultHelp',
-        exact: false,
-        component: (props) => getComponent(props, ConsultHelpContainer)
-    },
     {//购物
         path: '/shopping',
         exact: false,
         component: (props) => getComponent(props, ShoppingContainer)
-    },
-    {//购物介绍
-        path: '/shoppingHelp',
-        exact: false,
-        component: (props) => getComponent(props, ShoppingHelpContainer)
     },
     {//陪逛
         path: '/accompanyShopping',
         exact: false,
         component: (props) => getComponent(props, AccompanyShoppingContainer)
     },
-    {//陪逛介绍
-        path: '/accompanyShoppingHelp',
-        exact: false,
-        component: (props) => getComponent(props, AccompanyShoppingHelpContainer)
-    },
     {//整理衣橱
         path: '/neatenWardrobe',
         exact: false,
         component: (props) => getComponent(props, NeatenWardrobeContainer)
-    },
-    {//整理衣橱介绍
-        path: '/neatenWardrobeHelp',
-        exact: false,
-        component: (props) => getComponent(props, NeatenWardrobeHelpContainer)
     },
     {//支付
         path: '/pay',
