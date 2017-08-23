@@ -70,7 +70,7 @@ class ListItem extends Component {
         let {
             id,
             planName,
-            createTime,
+            wxCreateTime,
             masterImage,
             awardNum,
             content
@@ -81,35 +81,31 @@ class ListItem extends Component {
         })
 
         let p = document.createElement('p');
-        p.innerHTML=content;
+        p.innerHTML = content;
 
         return (
             <li>
-                <Link to={"/fashionMomentDetail?planId=" + id}>
-                    <h2 className="title">{planName}</h2>
-                    <time>{createTime}</time>
-                    <LazyLoad height={200} overflow={true}>
-                        <img src={masterImage} className="img-content" alt="" />
-                    </LazyLoad>
-                    <p className="description">{p.textContent}</p>
-                </Link>
-                <div className="fashion-action-area">
-                    <Link to={"/fashionMomentDetail?planId=" + id} className="read-origin-article">阅读全文</Link>
-                    <div className="footer-area">
-                        <span className="agree" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, id) : null}>
-                            <svg viewBox="0 0 200 200" className={agree} >
-                                <use xlinkHref="/assets/img/icon.svg#svg-zan" />
-                            </svg>
-                            {this.state.agreeNum ? this.state.agreeNum : 0}
-                        </span>
-                        <span className="money">
-                            <svg viewBox="0 0 1024 1024" className="icon-svg-reward" >
-                                <use xlinkHref="/assets/img/icon.svg#svg-reward" />
-                            </svg>
-                            {awardNum ? awardNum : 0}
-                        </span>
-                        <span className="right-arrow">&gt;</span>
+                <div className="main-img">
+                    <Link to={"/fashionMomentDetail?planId=" + id}>
+                        <LazyLoad height={200} overflow={true}>
+                            <img src={masterImage} className="img-content" alt="" />
+                        </LazyLoad>
+                    </Link>
+                    <div className="action-area">
+                        <div className="agree-area" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, id) : null}>
+                            <span className={this.state.agreeValue === 1 ? "icon icon-heart-selected" : "icon icon-heart"}></span>
+                            <p>{this.state.agreeNum ? this.state.agreeNum : 0}</p>
+                        </div>
+                        <div className="money-area">
+                            <span className="icon icon-money"></span>
+                            <p>{awardNum ? awardNum : 0}</p>
+                        </div>
                     </div>
+                </div>
+                <div className="content-area">
+                    <h2 className="title">{planName}</h2>
+                    <time>{wxCreateTime}</time>
+                    <p className="description">{p.textContent}</p>
                 </div>
             </li>
         );
@@ -220,13 +216,12 @@ class FashionMoment extends IM {
             'active': this.state.newMsg
         });
         return (
-            <div className="fashion-moment-area">
-                <div className="full-page">
-                    {
-                        data.length > 0 ? <List list={data} /> : null
-                    }
-                    {this.props.children}
-                </div>
+            <div className="full-page fashion-moment-area">
+                {
+                    data.length > 0 ? <List list={data} /> : null
+                }
+                {this.props.children}
+
                 <Link to="/myDps" className={newMsg}>
                     <svg viewBox="0 0 100 100" className="icon-svg-bell" >
                         <use xlinkHref="/assets/img/icon.svg#svg-bell" />

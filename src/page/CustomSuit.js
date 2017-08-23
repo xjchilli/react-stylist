@@ -894,11 +894,15 @@ class CustomSuit extends Component {
         ToolDps.get('/wx/user/info').then((res) => {
             if (res.succ && res.info && res.info.faceshpe != "" && res.info.colorofskin != "") {//表示修改过个人信息
                 let myData = merged(this.state.data, res.info);
+                myData.headImg=res.headImg;
+                myData.nickName=res.nickName;
                 myData.faceImg = res.info.lifeImgs[0];
                 myData.lifeImgs = res.info.lifeImgs.slice(1);
                 this.props.setState(myData);
             } else if (res.succ && res.info && res.info.sex != "") {//默认没修改过
                 let myData = this.state.data;
+                myData.headImg=res.headImg;
+                myData.nickName=res.nickName;
                 myData.sex = res.info.sex;
                 this.props.setState(myData);
             }
@@ -1067,11 +1071,11 @@ class CustomSuit extends Component {
             <section className="customsuit-box">
                 <header className="flex-box">
                     <div className="item">
-                        <h2>hi , A-Reachel</h2>
+                        <h2>{this.state.data.nickName}</h2>
                         <p>开始定制你的专属信息吧！</p>
                     </div>
                     <div className="item">
-                        <img src="/assets/img/headImg.jpg" />
+                        <img src={this.state.data.headImg} />
                         <div className="sex-area">
                             <span className={girlSex} onClick={this.selectSex.bind(this, 2)}>
                                 {

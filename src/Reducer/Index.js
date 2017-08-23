@@ -80,6 +80,8 @@ const DpsServerDetail = DB('DpsServerDetail'); //搭配师服务详情
 const WardrobeDetail = DB('WardrobeDetail'); //衣橱详情
 //搭配测试
 const CustomSuit = DB('CustomSuit', {
+  headImg:'',//头像
+  nickName:'',//昵称
   sex: 2, //性别
   faceshpe: '', //脸型
   colorofskin: '', //肤色

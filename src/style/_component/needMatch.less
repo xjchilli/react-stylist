@@ -1,31 +1,66 @@
-.needMatch-entry{
-  display: flex;flex-wrap: wrap;height: 100%;
-  .item{
-    position:relative;flex:0 0 100%;height:25%;background-repeat:no-repeat;border-bottom:0.4rem solid #f5f5f5;
-    &:nth-of-type(1){
-      background: url('/assets/img/match1.jpg');background-size: cover;
+.needMatch-entry {
+    .swiper-container {
+        width: 100%;
+        padding: 8px 0 18px;
     }
-    &:nth-of-type(2){
-      background: url('/assets/img/match2.jpg');background-size: cover;
+    #match-banner .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 305px;
+        height: 202px;
     }
-    &:nth-of-type(3){
-      background: url('/assets/img/match3.jpg');background-size: cover;
+    .swiper-container-horizontal>.swiper-pagination-bullets {
+        bottom: 30px;
     }
-    &:nth-of-type(4){
-      background: url('/assets/img/match4.jpg');background-size: cover;border-bottom-width: 0;
+    .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+        margin: 0 8px;
     }
-    .container{display:block;width: 100%;height: 100%;}
-   
-    .content{
-      background-color: rgba(13,13,13,0.3);position: absolute;bottom: 0;left: 0;width:100%;color: @white;padding:0.2rem 1.8rem 0.2rem 3rem;
-      h5{
-        font-size:2.4rem;
-        >small{font-size:1.5rem;padding-left: 1.5rem;}
-      }
-      p{font-size: 1.2rem;}
+    .swiper-pagination-bullet {
+        background: #ffffff;
+        opacity: 0.5;
     }
-    .detail-btn{
-      position: absolute;top:0.8rem;right: 1.2rem;padding:0.5rem 0.6rem;border: 0.1rem solid @white;color: @white;font-size:1.2rem;text-align: center;
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #ff6064;
     }
-  }
+    .swiper-container-coverflow .swiper-wrapper .swiper-slide-active {
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, .25);
+    }
+    .content-area {
+        padding: 0 25px;
+        h3 {
+            color: #1a1a1a;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 21px;
+        }
+        p {
+            font-size: 12px;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            >em {
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 600;
+                color: #1a1a1a;
+            }
+            b {
+                font-weight: bold;
+                color: #ff6064;
+                font-size: 15px;
+            }
+        }
+        .to-publish-btn {
+            width: 140px;
+            height: 35px;
+            line-height: 35px;
+            background: #ff6064;
+            border-radius: 17px;
+            margin: 40px auto 0;
+            text-align: center;
+            font-size: 18px;
+            box-shadow: 0px 10px 6px rgba(255, 96, 100, .31);
+        }
+    }
 }

@@ -289,9 +289,12 @@
             color: #1a1a1a;
         }
         ul {
-            padding-top: 8px;
+            padding: 8px 34px 0;
             li {
                 margin-top: 22px;
+                &:nth-of-type(3n+1){text-align: left;}
+                &:nth-of-type(3n+2){text-align: center;}
+                &:nth-of-type(3n+3){text-align: right;}
             }
         }
         .cicle-area {
@@ -299,7 +302,7 @@
             width: 81px;
             height: 81px;
             border-radius: 50%;
-            margin: auto;
+            display: inline-block;
             >img {
                 width: 81px;
                 height: 81px;
@@ -344,13 +347,15 @@
             padding-top: 5px;
             li {
                 margin-top: 15px;
+                &:nth-of-type(odd){padding-right: 5px;text-align: right;}
+                &:nth-of-type(even){padding-left: 5px;text-align: left;}
             }
         }
         .style-box {
             position: relative;
             width: 169px;
             height: 109px;
-            margin: auto;
+            display: inline-block;
             border-radius: 5px;
             >img {
                 width: 169px;
@@ -529,7 +534,7 @@
     }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 374px) {
     .customsuit-box {
         //风格
         .style-area {

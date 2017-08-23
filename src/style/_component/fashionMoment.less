@@ -1,47 +1,79 @@
-.fashion-moment-area{
-  .fashion-moment-list{
-    li{
-      background: @white;min-height: 25rem;margin: 1rem;padding: 1rem;
-      .title{font-size: 1.9rem;color: @black;}
-      time{font-size: 1.2rem;color: #8c8c8c;}
-      .img-content{max-width:100%;max-height: 100%;margin: 0.5rem auto;}
-      .description{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 1.5rem;color: #737373;}
-    }
-    .fashion-action-area{
-      position: relative;padding-top: 10px;
-      .read-origin-article{position: absolute;left: 0;font-size: 1.5rem;color: @black;}
-      .footer-area{
-        text-align: right;color: @black;font-size: 1.4rem;
-        .agree,.money{
-          padding-right: 1.2rem;
-          >svg{vertical-align: -2px;margin-right: 2px;}
+.fashion-moment-area {
+    background: @white!important;
+    .fashion-moment-list {
+        li {
+            min-height: 25rem;
+            .main-img{
+              position: relative;
+              .action-area{
+                position: absolute;right: 20px;bottom: 10px;text-align: center;min-width: 65px;
+              }
+              .agree-area,.money-area{
+                display: inline-block;
+                .icon-heart,.icon-heart-selected{
+                  font-size: 18px;
+                }
+                >p{font-size: 12px;color: #ffffff;}
+              }
+              .money-area{
+                margin-left: 25px;
+                .icon-money{
+                  font-size: 20px;
+                }
+              }
+            }
+            .img-content {
+                max-width: 100%;
+                max-height: 100%;
+                margin: auto;
+            }
+            .content-area {
+                .title {
+                    font-size: 22px;
+                    color: #1a1a1a;
+                    font-weight: 600;
+                    text-align: center;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin: 12px 0 6px;
+                }
+                time {
+                    display: block;
+                    font-size: 10px;
+                    color: #999999;
+                    text-align: center;
+                }
+                .description {
+                    margin: 30px 13px 50px;
+                    font-size: 12px;
+                    color: #999999;
+                    font-weight: 600;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    word-break: break-all;
+                }
+            }
         }
-        .right-arrow{color: #8c8c8c;}
-      }
     }
-  }
-
 }
 
-
 @keyframes bounce {
-  20% {
-    transform: rotate3d(0, 0, 1, 15deg);
-  }
-
-  40% {
-    transform: rotate3d(0, 0, 1, -10deg);
-  }
-
-  60% {
-    transform: rotate3d(0, 0, 1, 5deg);
-  }
-
-  80% {
-    transform: rotate3d(0, 0, 1, -5deg);
-  }
-
-  to {
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
+    20% {
+        transform: rotate3d(0, 0, 1, 15deg);
+    }
+    40% {
+        transform: rotate3d(0, 0, 1, -10deg);
+    }
+    60% {
+        transform: rotate3d(0, 0, 1, 5deg);
+    }
+    80% {
+        transform: rotate3d(0, 0, 1, -5deg);
+    }
+    to {
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
 }

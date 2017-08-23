@@ -30,6 +30,10 @@ class Profile extends Component {
         this.state = {
             previewBigImg: false,//是否预览大图
             bigImgUrl: '',//大图url
+            faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
+            skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦', '不太清楚'],//肤色名字
+            bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角', '不太清楚'],//男：体型名字
+            bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形', '不太清楚']//女：体型名字
         }
 
     }
@@ -62,6 +66,24 @@ class Profile extends Component {
         let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
         let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
         let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
+        let faceName = "";
+        let skinName = "";
+        let bodyName = "";
+        if (faceshpe != "") {
+            faceName=this.state.faceNames[Number(faceshpe)-1];
+        }
+        if (colorofskin != "") {
+            skinName=this.state.skinNames[Number(colorofskin)-1];
+        }
+
+        if (bodySize != "") {
+            if(sex === 1){
+                bodyName=this.state.bodyNamesBoy[Number(bodySize)-1];
+            }else{
+                bodyName=this.state.bodyNamesGirl[Number(bodySize)-1];
+            }
+            
+        }
 
         return (
             <section className="full-page profile-container">
@@ -96,6 +118,7 @@ class Profile extends Component {
                 </header>
                 <div className="figure-info-area">
                     <h3 className="title">
+                        <span className="icon icon-person-info"></span>
                         身材信息
                     </h3>
                     <p>身高(cm)：<span className={heigh ? "active" : ""}>{heigh ? heigh : "去添加身高~"}</span></p>
@@ -107,38 +130,44 @@ class Profile extends Component {
                             faceshpe ? (
                                 <div className="item-3">
                                     <img src={faceshpeImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }} />
+                                    <p className='name'>{faceName}</p>
                                 </div>
                             ) : null
                         }
                         {
                             colorofskin ? (
                                 <div className="item-3">
-                                    <img src={colorofskinImgSrc} alt="" width="68" height="67"  onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
+                                    <img src={colorofskinImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
+                                    <p className='name'>{skinName}</p>
                                 </div>
                             ) : null
                         }
                         {
                             bodySize ? (
                                 <div className="item-3">
-                                    <img src={bodyImgSrc} alt="" width="68" height="81"  onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
+                                    <img src={bodyImgSrc} alt="" width="68" height="81" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
+                                    <p className='name'>{bodyName}</p>
                                 </div>
                             ) : null
                         }
                     </div>
                 </div>
                 <div className="photo-wall">
-                    <h4 className="title">照片墙</h4>
-                    <div className="photo-area">
+                    <h4 className="title"><span className="icon icon-photo-wall"></span>照片墙</h4>
+                    <div className="flex-box photo-area">
                         {
-                            lifeImgs ? (
+                            lifeImgs.length > 0 ? (
                                 lifeImgs.map((lifeImg, index) => {
                                     return (
-                                        <div className="item" key={index}>
-                                            <img src={lifeImg.imgPath} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: lifeImg.imgPath }) }} />
+                                        <div className="item-3" key={index}>
+                                            <div className="img-box" style={{ backgroundImage: 'url(' + lifeImg.imgPath + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: lifeImg.imgPath }) }}>
+                                            </div>
                                         </div>
                                     )
                                 })
-                            ) : null
+                            ) : (
+                                    <p className="tips">去添加你的照片吧~</p>
+                                )
                         }
                     </div>
                 </div>

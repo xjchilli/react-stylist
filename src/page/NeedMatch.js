@@ -17,6 +17,27 @@ class NeedMatch extends Component {
     }
     componentDidMount() {
         document.title = "我要搭配";
+        let swiper1 = new Swiper('#match-banner', {
+            pagination: '.swiper-pagination',
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflow: {
+                rotate: 50,
+                stretch: 16,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true
+            }
+        });
+        let swiper2 = new Swiper('#content-banner', {
+
+        });
+        swiper1.params.control = swiper2;
+        swiper2.params.control = swiper1;
+
+
         ToolDps.get('/wx/user/info').then((res) => {
             if (res.succ) {
                 this.setState({
@@ -48,9 +69,34 @@ class NeedMatch extends Component {
     }
     render() {
         return (
-            <section className="full-page bgWhite">
-                <section className="needMatch-entry">
-                    <div className="item" >
+            <section className="full-page bgWhite needMatch-entry">
+                <div id="match-banner" className="swiper-container">
+                    <div className="swiper-wrapper">
+                        <div className="swiper-slide" style={{ backgroundImage: "url(assets/img/match1.jpg)" }}></div>
+                        <div className="swiper-slide" style={{ backgroundImage: "url(assets/img/match2.jpg)" }}></div>
+                        <div className="swiper-slide" style={{ backgroundImage: "url(assets/img/match3.jpg)" }}></div>
+                        <div className="swiper-slide" style={{ backgroundImage: "url(assets/img/match4.jpg)" }}></div>
+                    </div>
+                    <div className="swiper-pagination"></div>
+                </div>
+                <div id="content-banner" className="swiper-container">
+                    <div className="swiper-wrapper">
+                        <div className="swiper-slide content-area">
+                            <h3>咨询</h3>
+                            <p>入手了一双鞋，不知道怎么搭配？直接把鞋子照片发上来去问你的搭配师吧。想要约女票去看电影，想要一个新的形象？把衣橱里的衣物发给搭配师，搭配师会给你合理的建议。</p>
+                            <p>总之，任何搭配类的问题，都可以直接问搭配师。</p>
+                            <p>每个搭配师根据自身的经验水平，会有自己的定价，但是MS搭配师官方给出了统一的优惠价。</p>
+                            <p><em>只要在官方入口发布需求，享受统一价格<b>19.9元/次</b></em></p>
+                            <Link to="/consult" className="btn to-publish-btn" onClick={this.verifyUser.bind(this, '/consult')}>发布需求</Link>
+                        </div>
+                        <div className="swiper-slide">2</div>
+                        <div className="swiper-slide">3</div>
+                        <div className="swiper-slide" >4</div>
+                    </div>
+                </div>
+
+
+                {/* <div className="item" >
                         <Link to="/consult" className='container' onClick={this.verifyUser.bind(this, '/consult')}>
                             <div className="content">
                                 <h5>咨询<small>19.9元/次</small></h5>
@@ -85,8 +131,8 @@ class NeedMatch extends Component {
                             </div>
                         </Link>
                         <Link to="/neatenWardrobeHelp" className='detail-btn'>查看详情</Link>
-                    </div>
-                </section>
+                    </div> */}
+
                 {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
             </section>
         );
