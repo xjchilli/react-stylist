@@ -35,6 +35,7 @@ class Consult extends Component {
         }
         this._time = 0;
     }
+
     componentDidMount() {
         document.title = "咨询";
     }
@@ -42,7 +43,6 @@ class Consult extends Component {
     componentWillUnmount() {
         clearTimeout(this._time);
     }
-
 
 
     /**
@@ -171,23 +171,27 @@ class Consult extends Component {
     }
 
     render() {
-        let myWardrobe = classNames('full-page matchService', {
-            'remove-css-overflow-scrolling': this.state.myWardrobe
-        });
-        let sexGirl = classNames({
-            'active': this.state.sex === 2
-        });
-        let sexBoy = classNames({
-            'active': this.state.sex === 1
-        });
-
         return (
-            <section className={myWardrobe}>
+            <section className='matchService'>
+                <section className="box sex-switch-area">
+                    <h3>性别</h3>
+                    <ul className="sex-area">
+                        <li className={this.state.sex === 2 ? "active" : ""}>
+                            <span className={this.state.sex === 2 ? "icon icon-girl-active" : "icon icon-girl"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            女
+                        </li>
+                        <li className={this.state.sex === 1 ? "active" : ""}>
+                            <span className={this.state.sex === 1 ? "icon icon-man-active" : "icon icon-man"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            男
+                        </li>
+                    </ul>
+                </section>
+
                 <section className="box occasion">
                     <h4 className="title">搭配场景</h4>
                     <MatchScene getScene={this.getScene.bind(this)} />
                 </section>
-                <section className="box">
+                {/* <section className="box">
                     <h4 className="title">
                         商品选择
                         <div className="sex-switch">
@@ -197,7 +201,7 @@ class Consult extends Component {
                     </h4>
                     {this.state.sex === 2 ? <GirlCategory getShop={this.getShop.bind(this)} /> : null}
                     {this.state.sex === 1 ? <BoyCategory getShop={this.getShop.bind(this)} /> : null}
-                </section>
+                </section> */}
                 <section className="box">
                     <h4 className="title">预期花费</h4>
                     <div className="expect-fare-area">

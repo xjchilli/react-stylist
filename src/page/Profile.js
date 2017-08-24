@@ -66,23 +66,26 @@ class Profile extends Component {
         let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
         let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
         let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
+        if (bodySize == "6") {
+            bodyImgSrc = "/assets/img/suit/face-1-5.jpg";
+        }
         let faceName = "";
         let skinName = "";
         let bodyName = "";
         if (faceshpe != "") {
-            faceName=this.state.faceNames[Number(faceshpe)-1];
+            faceName = this.state.faceNames[Number(faceshpe) - 1];
         }
         if (colorofskin != "") {
-            skinName=this.state.skinNames[Number(colorofskin)-1];
+            skinName = this.state.skinNames[Number(colorofskin) - 1];
         }
 
         if (bodySize != "") {
-            if(sex === 1){
-                bodyName=this.state.bodyNamesBoy[Number(bodySize)-1];
-            }else{
-                bodyName=this.state.bodyNamesGirl[Number(bodySize)-1];
+            if (sex === 1) {
+                bodyName = this.state.bodyNamesBoy[Number(bodySize) - 1];
+            } else {
+                bodyName = this.state.bodyNamesGirl[Number(bodySize) - 1];
             }
-            
+
         }
 
         return (
@@ -145,7 +148,7 @@ class Profile extends Component {
                         {
                             bodySize ? (
                                 <div className="item-3">
-                                    <img src={bodyImgSrc} alt="" width="68" height="81" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
+                                    <img src={bodyImgSrc} alt="" width="68" height={bodySize == "6" ? "67" : "81"} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
                                     <p className='name'>{bodyName}</p>
                                 </div>
                             ) : null

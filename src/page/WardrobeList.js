@@ -5,88 +5,212 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import Msg from "../Component/tips/msg";
 import { ToolDps } from '../ToolDps';
+import { DataLoad, GetData, Msg } from '../Component/index';
 
 
-
-class SwiperSlide extends Component {
+//女性类别
+class GirlType extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            activeIndex: 1//默认第一个类别
+        }
+    }
+    //选择类别
+    select(index, typeCode) {
+        this.setState({
+            activeIndex: index
+        });
+        this.props.getGarderobeList(2, typeCode);
     }
 
-
     render() {
-        let {
-            data
-        } = this.props;
         return (
-
-            <div className="swiper-slide">
-                <Link to={'/wardrobeModify?gid=' + data.id} >
-                    <div className='img-area' >
-                        <img src={data.imgUrl} alt="" />
-                        <p className="img-describe">{data.name}</p>
+            <ul className="lside">
+                <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '100')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-dress-normal normal"></span>
+                        <span className="icon icon-girl-dress-selected selected"></span>
+                        <p>裙子</p>
                     </div>
-                </Link>
-            </div>
-
+                </li>
+                <li className={this.state.activeIndex === 2 ? "active" : ""} onClick={this.select.bind(this, 2, '101')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-coat-normal normal" ></span>
+                        <span className="icon icon-girl-coat-selected selected"></span>
+                        <p>上衣</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '102')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-trousers-normal normal" style={{ fontSize: '28px' }}></span>
+                        <span className="icon icon-girl-trousers-selected selected" style={{ fontSize: '28px' }}></span>
+                        <p>裤子</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '103')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-underweaer-normal normal" style={{ fontSize: '17px' }}></span>
+                        <span className="icon icon-girl-underweaer-selected selected" style={{ fontSize: '17px' }}></span>
+                        <p>内衣</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '104')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-shoes-normal normal" style={{ fontSize: '16px' }}></span>
+                        <span className="icon icon-girl-shoes-selected selected" style={{ fontSize: '16px' }}></span>
+                        <p>鞋子</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '105')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-bag-normal normal" style={{ fontSize: '21px' }}></span>
+                        <span className="icon icon-girl-bag-selected selected" style={{ fontSize: '21px' }}></span>
+                        <p>包包</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '106')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-ornaments-normal normal" style={{ fontSize: '26px' }}></span>
+                        <span className="icon icon-girl-ornaments-selected selected" style={{ fontSize: '26px' }}></span>
+                        <p>配饰</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 8 ? "active" : ""} onClick={this.select.bind(this, 8, '107')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-beauty-normal normal" style={{ fontSize: '28px' }}></span>
+                        <span className="icon icon-girl-beauty-selected selected" style={{ fontSize: '28px' }}></span>
+                        <p>美妆</p>
+                    </div>
+                </li>
+            </ul>
         )
     }
 }
 
-class ClothCategory extends Component {
+//男性类别
+class BoyType extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            activeIndex: 1//默认第一个类别
+        }
     }
-
-    componentDidMount() {
-        document.title = "我的衣橱";
-        new Swiper('.J-consult-my-wardrobe', {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            slidesOffsetBefore: 30,
-            slidesOffsetAfter: 30,
-            observer: true,
+    //选择类别
+    select(index, typeCode) {
+        this.setState({
+            activeIndex: index
         });
+        this.props.getGarderobeList(1, typeCode);
     }
-
-
     render() {
-        let {
-            data
-        } = this.props;
         return (
-            <div className="cloth-category">
-                <h4 className="wardrobe-title" data-code={data.typeCode}>{data.typeName}</h4>
-                <div className="swiper-container  J-consult-my-wardrobe">
-                    <div className="swiper-wrapper">
+            <ul className="lside">
+                <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '200')}>
+                    <div className="icon-box">
+                        <span className="icon icon-boy-jacket-normal normal"></span>
+                        <span className="icon icon-boy-jacket-selected selected"></span>
+                        <p>上衣</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 2 ? "active" : ""} onClick={this.select.bind(this, 2, '201')}>
+                    <div className="icon-box">
+                        <span className="icon icon-boy-trousers-normal normal" style={{ fontSize: '28px' }}></span>
+                        <span className="icon icon-boy-trousers-selected selected" style={{ fontSize: '28px' }}></span>
+                        <p>裤子</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '203')}>
+                    <div className="icon-box">
+                        <span className="icon icon-boy-shorts-normal normal" style={{ fontSize: '15px' }}></span>
+                        <span className="icon icon-boy-shorts-selected selected" style={{ fontSize: '15px' }}></span>
+                        <p>内衣</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '204')}>
+                    <div className="icon-box">
+                        <span className="icon icon-boy-coat-normal normal" style={{ fontSize: '28px' }}></span>
+                        <span className="icon icon-boy-coat-selected selected" style={{ fontSize: '28px' }}></span>
+                        <p>外套</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '205')}>
+                    <div className="icon-box">
+                        <span className="icon icon-boy-shoes-normal normal" style={{ fontSize: '20px' }}></span>
+                        <span className="icon icon-boy-shoes-selected selected" style={{ fontSize: '20px' }}></span>
+                        <p>鞋子</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '206')}>
+                    <div className="icon-box">
+                        <span className="icon icon-girl-bag-normal normal"></span>
+                        <span className="icon icon-girl-bag-selected selected"></span>
+                        <p>包包</p>
+                    </div>
+                </li>
+                <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '207')}>
+                    <div className="icon-box">
+                        <span className="icon icon-boy-ornaments-normal normal" style={{ fontSize: '27px' }}></span>
+                        <span className="icon icon-boy-ornaments-selected selected" style={{ fontSize: '27px' }}></span>
+                        <p>配饰</p>
+                    </div>
+                </li>
+            </ul>
+        )
+    }
+}
+
+
+class ImgPreview extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            girlCategory: [{ key: '100', value: '裙子' }, { key: '101', value: '上衣' }, { key: '102', value: '裤子' }, { key: '103', value: '内衣' }, { key: '104', value: '鞋' }, { key: '105', value: '包' }, { key: '106', value: '配饰' }, { key: '107', value: '美妆' }],//女分类
+            boyCategory: [{ key: '200', value: '上衣' }, { key: '201', value: '裤子' }, { key: '202', value: '内衣' }, { key: '203', value: '外套' }, { key: '204', value: '鞋' }, { key: '205', value: '包' }, { key: '206', value: '配饰' }],//男分类
+            remark: ''//备注
+        }
+    }
+    render() {
+        let categories = [];
+        this.props.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
+        return (
+            <section className="select-type-area">
+                <div className="box">
+                    <h3>选择分类</h3>
+                    <ul className="flex-box img-show">
+                        <li>
+                            <div className="img-preview" style={{ backgroundImage: "url(" + this.props.imgSrc + ")" }}></div>
+                        </li>
+                        <li>
+                            <textarea placeholder="添加物品描述..." value={this.state.remark} onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+                        </li>
+                    </ul>
+                    <h4>物品分类</h4>
+                    <ul className="type-list">
                         {
-                            data.list.map((slider, index) => {
-                                return <SwiperSlide data={slider} key={index} />
+                            categories.map((item, index) => {
+                                return <li key={index} onClick={this.props.selectType.bind(this, item.key, this.state.remark)}>{item.value}</li>
                             })
                         }
-                    </div>
+                    </ul>
                 </div>
-            </div>
+            </section>
         )
     }
 }
+
 
 class WardrobeList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             sex: 2,//性别1：男 2:女
-            girlCategory: [{ key: '100', value: '裙子' }, { key: '101', value: '上衣' }, { key: '102', value: '裤子' }, { key: '103', value: '内衣' }, { key: '104', value: '鞋' }, { key: '105', value: '包' }, { key: '106', value: '配饰' }, { key: '107', value: '美妆' }],//女分类
-            boyCategory: [{ key: '200', value: '上衣' }, { key: '201', value: '裤子' }, { key: '202', value: '内衣' }, { key: '203', value: '外套' }, { key: '204', value: '鞋' }, { key: '205', value: '包' }, { key: '206', value: '配饰' }],//男分类
-            serachTip: '加载中...',
-            uploadBtn: '确认上传',
+            loadAnimation: true,
+            loadMsg: '正在加载中',
             msgShow: false,
             msgText: '', //提示内容
-            uploadClothing: false, //上传服装
-            name: '', //商品名称
-            remark: '', //描述
+            imgPreview: false, //类别窗口
             typeCode: '', //类别Code
             file: '', //图片文件
             imgSrc: '', //图片地址
@@ -99,11 +223,13 @@ class WardrobeList extends Component {
         document.title = '我的衣橱';
         ToolDps.get('/wx/user/info').then((data) => {
             if (data.succ) {
+                let typeCode = '';
+                data.info.sex === 2 ? typeCode = "100" : typeCode = "200";//第一次加载
                 this.setState({
-                    sex: data.info.sex
+                    sex: data.info.sex,
+                    typeCode: typeCode
                 });
-
-                this.getGarderobeList(data.info.sex);
+                this.getGarderobeList(data.info.sex, typeCode);
             } else {
                 this.setState({
                     msgShow: false,
@@ -129,46 +255,41 @@ class WardrobeList extends Component {
     /**
      * 获取衣橱列表
      */
-    getGarderobeList(sex) {
-        ToolDps.get('/wx/garderobe/list', { sex: sex }).then((data) => {
+    getGarderobeList(sex, typeCode) {
+        this.setState({
+            typeCode: typeCode,
+            loadAnimation: true,
+            loadMsg: '加载中...',
+            data: []
+        });
+        ToolDps.get('/wx/garderobe/list', { sex: sex, typeCode: typeCode }).then((data) => {
             if (data.succ) {
-                if (data.list.length === 0) {
-                    this.setState({
-                        serachTip: '暂时没有您的数据'
-                    })
-                } else {
-                    this.setState({
-                        data: data.list
-                    })
-                }
+                this.setState({
+                    loadAnimation: false,
+                    loadMsg: '加载成功',
+                    data: data.list[0].list
+                })
             } else {
                 this.setState({
-                    serachTip: '加载失败'
+                    loadAnimation: false,
+                    loadMsg: '加载失败'
                 })
             }
         }).catch(() => {
             this.setState({
-                serachTip: '加载失败'
+                loadAnimation: false,
+                loadMsg: '加载失败'
             })
         });
     }
 
 
     /**
-     * 显示上传服装窗口
-     */
-    showUploadClothWindow() {
-        this.setState({
-            uploadClothing: true
-        });
-    }
-
-    /**
      * 隐藏上传服装窗口
      */
     hideUploadClothWindow() {
         this.setState({
-            uploadClothing: false
+            imgPreview: false
         });
     }
 
@@ -191,7 +312,8 @@ class WardrobeList extends Component {
     preview(file) {
         this.setState({
             file: file,
-            imgSrc: this.reader.result
+            imgSrc: this.reader.result,
+            imgPreview: true
         })
 
     }
@@ -207,78 +329,37 @@ class WardrobeList extends Component {
         })
     }
 
-    upload() {
-        if (this.state.typeCode === "") {
-            this.setState({
-                msgShow: true,
-                msgText: '请选择物品分类'
-            });
-            return;
-        }
-
-        if (this.state.file === "") {
-            this.setState({
-                msgShow: true,
-                msgText: '请上传图片'
-            });
-            return;
-        }
-
-        this.setState({
-            uploadBtn: '上传中...'
-        });
-
+    //选择类别
+    selectType(typeCode, remark) {
         let formdata = new FormData();
-        formdata.append('typeCode', this.state.typeCode);
+        formdata.append('typeCode', typeCode);
+        formdata.append('name', '');
         formdata.append('img', this.state.file);
-        formdata.append('name', this.state.name);
-        formdata.append('remark', this.state.remark);
+        formdata.append('remark', remark);
         formdata.append('sex', this.state.sex);
 
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
         }).then((data) => {
             if (data.succ) {
-                let resetData = {
-                    typeCode: data.typeCode,
-                    typeName: data.typeName,
-                    list: []
-                };
-                resetData.list.push(data.garderobe);
-
                 let newData = Array.prototype.slice.apply(this.state.data);
-                if (newData.length == 0) {
-                    newData.push(resetData);
-                } else {
-                    for (let i = 0; i < this.state.data.length; i++) {
-                        if (newData[i].typeCode == data.typeCode) {
-                            newData[i].list.push(data.garderobe);
-                            break;
-                        }
-                        if (i == newData.length - 1 && newData[i].typeCode != data.typeCode) {
-                            newData.push(resetData);
-                        }
-                    }
+                if (typeCode == this.state.typeCode) {
+                    newData.push(data.garderobe);
                 }
 
-
                 this.setState({
-                    name: '', //商品名称
                     remark: '', //描述
-                    typeCode: '', //类别Code
                     file: '', //图片文件
                     imgSrc: '', //图片地址
                     msgShow: true,
                     msgText: '上传成功',
-                    uploadBtn: '确认上传',
-                    uploadClothing: false,
+                    imgPreview: false,
                     data: newData
                 });
             } else {
                 this.setState({
                     msgShow: true,
-                    msgText: '上传失败',
-                    uploadBtn: '确认上传'
+                    msgText: '上传失败'
                 });
             }
         });
@@ -287,72 +368,34 @@ class WardrobeList extends Component {
     }
 
     render() {
-        let uploadClothing = classNames('upload-clothing-bg', {
-            'active': this.state.uploadClothing
-        });
-
-        let categories = [];
-        this.state.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
-
         return (
             <section className="full-page wardrobe-list-area">
-                <ul className="lside">
-                    <li className="active">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </ul>
-                <section className="rside">2</section>
-                {/* <section className='content'> </section> */}
-                    {/* {
-                        this.state.data.map((clothCategory, index) => {
-                            return <ClothCategory key={index} data={clothCategory} />;
-                        })
-                    } */}
-
-                    {/* {
-                        this.state.data.length == 0 ? <p style={{ textAlign: 'center', fontSize: '1.8rem' }}>{this.state.serachTip}</p> : null
-                    } */}
-
-                    {/* <div className="action-area">
-                        <button onClick={this.showUploadClothWindow.bind(this)}>上传</button>
-                    </div> */}
-                    <div className={uploadClothing}>
-                        <div className="box">
-                            <div className="group">
-                                <div className="item">
-                                    <input type="text" placeholder="物品名称" className="goods-name" accept="image/*" onChange={(e) => { this.setState({ name: e.target.value }) }} value={this.state.name} />
-                                </div>
-                                <div className="item category-area">
-                                    <select className="category" onChange={(e) => { this.setState({ typeCode: e.target.value }) }} value={this.state.typeCode}>
-                                        <option value="">物品分类</option>
-                                        {
-                                            categories.map((item, index) => {
-                                                return <option key={index} value={item.key}>{item.value}</option>
-                                            })
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="group">
-                                <div className="item img-show">
-                                    <svg viewBox="5 0 209.6 200" className="icon-svg-cloth" >
-                                        <use xlinkHref="/assets/img/icon.svg#svg-cloth" />
-                                    </svg>
-                                    {this.state.file !== "" ? <img src={this.state.imgSrc} className="preview-img" alt="" /> : null}
-                                    <input type="file" ref={el => this.uploadImg =el} accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
-                                    {this.state.file !== "" ? <svg viewBox="0 0 100 100" className="icon-svg-delete close" onClick={this.deleteCurrImg.bind(this)}><use xlinkHref="/assets/img/icon.svg#svg-delete" /></svg> : null}
-                                </div>
-                                <div className="item">
-                                    <textarea placeholder="添加物品描述" onChange={(e) => { this.setState({ remark: e.target.value }) }} value={this.state.remark}></textarea>
-                                </div>
-                            </div>
-                            <div className="action-area">
-                                <button onClick={this.hideUploadClothWindow.bind(this)}>取消</button>
-                                <button onClick={this.upload.bind(this)}>{this.state.uploadBtn}</button>
-                            </div>
-                        </div>
-                    </div>
-               
+                {this.state.sex === 2 ? <GirlType getGarderobeList={this.getGarderobeList.bind(this)} /> : <BoyType getGarderobeList={this.getGarderobeList.bind(this)} />}
+                <section className="rside">
+                    {this.state.loadAnimation ? <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} /> : (
+                        <ul className="flex-box">
+                            {
+                                this.state.data.map((item, index) => {
+                                    return (
+                                        <li className="item-3" key={index}>
+                                            <Link to={"/wardrobeModify?gid="+item.id}>
+                                                <div className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }}></div>
+                                            </Link>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    )}
+                </section>
+                <section className="upload-btn">
+                    上传
+                    <br />
+                    衣服
+                    <input type="file" ref={el => this.uploadImg = el} accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
+                </section>
+                {/* 选择类别 */}
+                {this.state.imgPreview ? <ImgPreview imgSrc={this.state.imgSrc} sex={this.state.sex} selectType={this.selectType.bind(this)} /> : null}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )

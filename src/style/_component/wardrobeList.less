@@ -9,15 +9,48 @@
         height: 100%;
         overflow-y: auto;
         li {
+            position: relative;
             background: @white;
             height: 77px;
             border-bottom: 1px solid #e6e6e6;
             text-align: center;
+            .icon-box {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                >p {
+                    display: none;
+                    font-size: 10px;
+                    font-weight: bold;
+                    color: #ff6064;
+                }
+                .normal {
+                    display: block;
+                }
+                .selected {
+                    display: none;
+                }
+            }
+            .icon {
+                font-size: 21px;
+            }
             &:last-child {
                 border-bottom-width: 0;
             }
             &.active {
                 position: relative;
+                .icon-box {
+                    >p {
+                        display: block;
+                    }
+                    .normal {
+                        display: none;
+                    }
+                    .selected {
+                        display: block;
+                    }
+                }
                 &:before {
                     content: '';
                     position: absolute;
@@ -32,8 +65,9 @@
                     position: absolute;
                     right: 0;
                     top: 50%;
-                    transform: translate(0,-50%);
-                    width: 0;height: 0;
+                    transform: translate(0, -50%);
+                    width: 0;
+                    height: 0;
                     border-top: 5px solid transparent;
                     border-right: 5px solid #f0f5f9;
                     border-bottom: 5px solid transparent;
@@ -42,8 +76,117 @@
         }
     }
     .rside {
-        padding-left: 75px;
+        padding-left: 79px;
         height: 100%;
         overflow-y: auto;
+        li {
+            height: 98px;
+            margin-bottom: 3px;
+            &:nth-of-type(3n+1) {
+                padding-right: 2px;
+            }
+            &:nth-of-type(3n+2) {
+                padding: 0 1px;
+            }
+            &:nth-of-type(3n+3) {
+                padding-left: 2px;
+            }
+        }
+        .img-box {
+            height: 98px;
+            background-color: @white;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+    .upload-btn {
+        position: fixed;
+        right: 13px;
+        bottom: 150px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #ff6064;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        padding-top: 10px;
+        box-shadow: 0 10px 6px rgba(255, 96, 100, .3);
+        .upload-file {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    }
+    .select-type-area {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99;
+        background: rgba(0, 0, 0, .5);
+        padding: 17px 13px 0;
+        .box {
+            min-height: 450px;
+            background: @white;
+            border-radius: 8px;
+            >h3 {
+                font-size: 14px;
+                color: #1a1a1a;
+                text-align: center;
+                padding-top: 14px;
+            }
+            >h4 {
+                font-size: 12px;
+                color: #999999;
+                font-weight: 500;
+                padding: 5px 0 0 25px;
+                margin-bottom: -5px;
+            }
+        }
+        .img-show {
+            margin: 30px 16px 0;
+            padding: 0 10px 18px;
+            border-bottom: 1px solid #e6e6e6;
+            li {
+                &:nth-of-type(1) {
+                    flex: 0 0 65px;
+                }
+                &:nth-of-type(2) {
+                    flex: 1 0 auto;
+                    padding-left: 18px;
+                    textarea {
+                        width: 100%;
+                        height: 100%;
+                        padding-top: 7px;
+                        border-width: 0;
+                    }
+                }
+                .img-preview {
+                    width: 65px;
+                    height: 65px;
+                    border: 1px solid #cccccc;
+                    border-radius: 2px;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+            }
+        }
+        .type-list {
+            padding: 0 16px 18px 25px;
+            li {
+                font-size: 14px;
+                color: #1a1a1a;
+                font-weight: 500;
+                margin-top: 20px;
+            }
+        }
     }
 }
