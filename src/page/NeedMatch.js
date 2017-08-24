@@ -4,20 +4,23 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
+import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 
 class NeedMatch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            contact: '',
+            contact: props.data.contact || '',
             path: '', //url路径
             isBingTelShow: false //是否显示绑定手机窗口
         }
     }
     componentDidMount() {
         document.title = "我要搭配";
+        let index = ToolDps.sessionItem('sliderIndex');
         let swiper1 = new Swiper('#match-banner', {
+            initialSlide: index || 0,
             pagination: '.swiper-pagination',
             effect: 'coverflow',
             grabCursor: true,
@@ -29,24 +32,16 @@ class NeedMatch extends Component {
                 depth: 100,
                 modifier: 1,
                 slideShadows: true
+            },
+            onSlideChangeEnd: function (swiper) {
+                ToolDps.sessionItem('sliderIndex', swiper.activeIndex)
             }
         });
         let swiper2 = new Swiper('#content-banner', {
-
+            initialSlide: index || 0
         });
         swiper1.params.control = swiper2;
         swiper2.params.control = swiper1;
-
-
-        ToolDps.get('/wx/user/info').then((res) => {
-            if (res.succ) {
-                this.setState({
-                    contact: res.contact
-                });
-            }
-        });
-
-
     }
 
     /**
@@ -121,5 +116,32 @@ class NeedMatch extends Component {
 }
 
 
+class Main extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-export default NeedMatch;
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
+        let main = data.succ ? <NeedMatch data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+
+        return main;
+    }
+}
+
+export default GetData({
+    id: 'Profile', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/user/info',
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

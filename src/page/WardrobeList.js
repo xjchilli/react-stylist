@@ -27,7 +27,7 @@ class GirlType extends Component {
 
     render() {
         return (
-            <ul className="lside">
+            <ul className="lside" >
                 <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '100')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-dress-normal normal"></span>
@@ -73,7 +73,14 @@ class GirlType extends Component {
                 <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '106')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-ornaments-normal normal" style={{ fontSize: '26px' }}></span>
-                        <span className="icon icon-girl-ornaments-selected selected" style={{ fontSize: '26px' }}></span>
+                        <span className="icon icon-girl-ornaments-selected selected" style={{ fontSize: '26px' }}>
+                            <span className="path1"></span>
+                            <span className="path2"></span>
+                            <span className="path3"></span>
+                            <span className="path4"></span>
+                            <span className="path5"></span>
+                            <span className="path6"></span>
+                        </span>
                         <p>配饰</p>
                     </div>
                 </li>
@@ -131,7 +138,15 @@ class BoyType extends Component {
                 <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '204')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-coat-normal normal" style={{ fontSize: '28px' }}></span>
-                        <span className="icon icon-boy-coat-selected selected" style={{ fontSize: '28px' }}></span>
+                        <span className="icon icon-boy-coat-selected selected" style={{ fontSize: '28px' }}>
+                            <span className="path1"></span>
+                            <span className="path2"></span>
+                            <span className="path3"></span>
+                            <span className="path4"></span>
+                            <span className="path5"></span>
+                            <span className="path6"></span>
+                            <span className="path7"></span>
+                        </span>
                         <p>外套</p>
                     </div>
                 </li>
@@ -152,7 +167,14 @@ class BoyType extends Component {
                 <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '207')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-ornaments-normal normal" style={{ fontSize: '27px' }}></span>
-                        <span className="icon icon-boy-ornaments-selected selected" style={{ fontSize: '27px' }}></span>
+                        <span className="icon icon-boy-ornaments-selected selected" style={{ fontSize: '27px' }}>
+                            <span className="path1"></span>
+                            <span className="path2"></span>
+                            <span className="path3"></span>
+                            <span className="path4"></span>
+                            <span className="path5"></span>
+                            <span className="path6"></span>
+                        </span>
                         <p>配饰</p>
                     </div>
                 </li>
@@ -369,7 +391,7 @@ class WardrobeList extends Component {
 
     render() {
         return (
-            <section className="full-page wardrobe-list-area">
+            <section className="full-page wardrobe-list-area flex-box" >
                 {this.state.sex === 2 ? <GirlType getGarderobeList={this.getGarderobeList.bind(this)} /> : <BoyType getGarderobeList={this.getGarderobeList.bind(this)} />}
                 <section className="rside">
                     {this.state.loadAnimation ? <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} /> : (
@@ -378,7 +400,7 @@ class WardrobeList extends Component {
                                 this.state.data.map((item, index) => {
                                     return (
                                         <li className="item-3" key={index}>
-                                            <Link to={"/wardrobeModify?gid="+item.id}>
+                                            <Link to={"/wardrobeModify?gid=" + item.id}>
                                                 <div className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }}></div>
                                             </Link>
                                         </li>
