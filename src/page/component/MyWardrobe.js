@@ -23,12 +23,44 @@ class GirlType extends Component {
     }
 
     render() {
+        let goods0 = 0,
+            goods1 = 0,
+            goods2 = 0,
+            goods3 = 0,
+            goods4 = 0,
+            goods5 = 0,
+            goods6 = 0,
+            goods7 = 0;
+        for (let i = 0; i < this.props.selectGoods.length; i++) {
+            let typeCode = this.props.selectGoods[i].typeCode;
+            if (typeCode == '100') {
+                goods0++;
+            } else if (typeCode == '101') {
+                goods1++;
+            } else if (typeCode == '102') {
+                goods2++;
+            } else if (typeCode == '103') {
+                goods3++;
+            } else if (typeCode == '104') {
+                goods4++;
+            } else if (typeCode == '105') {
+                goods5++;
+            } else if (typeCode == '106') {
+                goods6++;
+            } else if (typeCode == '107') {
+                goods7++;
+            }
+
+        }
+
+
         return (
             <ul className="lside" >
                 <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '100')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-dress-normal normal"></span>
                         <span className="icon icon-girl-dress-selected selected"></span>
+                        {goods0 != 0 ? (<label>{goods0}</label>) : null}
                         <p>裙子</p>
                     </div>
                 </li>
@@ -36,6 +68,7 @@ class GirlType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-girl-coat-normal normal" ></span>
                         <span className="icon icon-girl-coat-selected selected"></span>
+                        {goods1 != 0 ? (<label>{goods1}</label>) : null}
                         <p>上衣</p>
                     </div>
                 </li>
@@ -43,6 +76,7 @@ class GirlType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-girl-trousers-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-girl-trousers-selected selected" style={{ fontSize: '28px' }}></span>
+                        {goods2 != 0 ? (<label>{goods2}</label>) : null}
                         <p>裤子</p>
                     </div>
                 </li>
@@ -50,6 +84,7 @@ class GirlType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-girl-underweaer-normal normal" style={{ fontSize: '17px' }}></span>
                         <span className="icon icon-girl-underweaer-selected selected" style={{ fontSize: '17px' }}></span>
+                        {goods3 != 0 ? (<label>{goods3}</label>) : null}
                         <p>内衣</p>
                     </div>
                 </li>
@@ -57,6 +92,7 @@ class GirlType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-girl-shoes-normal normal" style={{ fontSize: '16px' }}></span>
                         <span className="icon icon-girl-shoes-selected selected" style={{ fontSize: '16px' }}></span>
+                        {goods4 != 0 ? (<label>{goods4}</label>) : null}
                         <p>鞋子</p>
                     </div>
                 </li>
@@ -64,6 +100,7 @@ class GirlType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-girl-bag-normal normal" style={{ fontSize: '21px' }}></span>
                         <span className="icon icon-girl-bag-selected selected" style={{ fontSize: '21px' }}></span>
+                        {goods5 != 0 ? (<label>{goods5}</label>) : null}
                         <p>包包</p>
                     </div>
                 </li>
@@ -78,6 +115,7 @@ class GirlType extends Component {
                             <span className="path5"></span>
                             <span className="path6"></span>
                         </span>
+                        {goods6 != 0 ? (<label>{goods6}</label>) : null}
                         <p>配饰</p>
                     </div>
                 </li>
@@ -86,6 +124,7 @@ class GirlType extends Component {
                         <span className="icon icon-girl-beauty-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-girl-beauty-selected selected" style={{ fontSize: '28px' }}></span>
                         <p>美妆</p>
+                        {goods7 != 0 ? (<label>{goods7}</label>) : null}
                     </div>
                 </li>
             </ul>
@@ -109,12 +148,38 @@ class BoyType extends Component {
         this.props.getGarderobeList(1, typeCode);
     }
     render() {
+        let goods0 = 0,
+            goods1 = 0,
+            goods2 = 0,
+            goods3 = 0,
+            goods4 = 0,
+            goods5 = 0,
+            goods6 = 0;
+        for (let i = 0; i < this.props.selectGoods.length; i++) {
+            let typeCode = this.props.selectGoods[i].typeCode;
+            if (typeCode == '200') {
+                goods0++;
+            } else if (typeCode == '201') {
+                goods1++;
+            } else if (typeCode == '202') {
+                goods2++;
+            } else if (typeCode == '203') {
+                goods3++;
+            } else if (typeCode == '204') {
+                goods4++;
+            } else if (typeCode == '205') {
+                goods5++;
+            } else if (typeCode == '206') {
+                goods6++;
+            }
+        }
         return (
             <ul className="lside">
                 <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '200')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-jacket-normal normal"></span>
                         <span className="icon icon-boy-jacket-selected selected"></span>
+                        {goods0 != 0 ? (<label>{goods0}</label>) : null}
                         <p>上衣</p>
                     </div>
                 </li>
@@ -122,6 +187,7 @@ class BoyType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-boy-trousers-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-boy-trousers-selected selected" style={{ fontSize: '28px' }}></span>
+                        {goods1 != 0 ? (<label>{goods1}</label>) : null}
                         <p>裤子</p>
                     </div>
                 </li>
@@ -129,6 +195,7 @@ class BoyType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-boy-shorts-normal normal" style={{ fontSize: '15px' }}></span>
                         <span className="icon icon-boy-shorts-selected selected" style={{ fontSize: '15px' }}></span>
+                        {goods2 != 0 ? (<label>{goods2}</label>) : null}
                         <p>内衣</p>
                     </div>
                 </li>
@@ -144,6 +211,7 @@ class BoyType extends Component {
                             <span className="path6"></span>
                             <span className="path7"></span>
                         </span>
+                        {goods3 != 0 ? (<label>{goods3}</label>) : null}
                         <p>外套</p>
                     </div>
                 </li>
@@ -151,6 +219,7 @@ class BoyType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-boy-shoes-normal normal" style={{ fontSize: '20px' }}></span>
                         <span className="icon icon-boy-shoes-selected selected" style={{ fontSize: '20px' }}></span>
+                        {goods4 != 0 ? (<label>{goods4}</label>) : null}
                         <p>鞋子</p>
                     </div>
                 </li>
@@ -158,6 +227,7 @@ class BoyType extends Component {
                     <div className="icon-box">
                         <span className="icon icon-girl-bag-normal normal"></span>
                         <span className="icon icon-girl-bag-selected selected"></span>
+                        {goods5 != 0 ? (<label>{goods5}</label>) : null}
                         <p>包包</p>
                     </div>
                 </li>
@@ -172,6 +242,7 @@ class BoyType extends Component {
                             <span className="path5"></span>
                             <span className="path6"></span>
                         </span>
+                        {goods6 != 0 ? (<label>{goods6}</label>) : null}
                         <p>配饰</p>
                     </div>
                 </li>
@@ -180,7 +251,9 @@ class BoyType extends Component {
     }
 }
 
-
+/**
+ * 图片预览
+ */
 class ImgPreview extends Component {
     constructor(props) {
         super(props);
@@ -234,16 +307,14 @@ class MyWardrobe extends Component {
             file: '', //图片文件
             imgSrc: '', //图片地址
             data: [],
+            selectGoods: props.garderobeArr || []//选择的物品
         }
+        this.index = -1;//选中下标
         this.reader = new FileReader();
     }
 
     componentDidMount() {
         this.getGarderobeList(this.state.sex, this.state.typeCode);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
     }
 
 
@@ -317,17 +388,6 @@ class MyWardrobe extends Component {
 
     }
 
-    /**
-     * 删除当前预览的图片
-     */
-    deleteCurrImg() {
-        this.uploadImg.value = '';
-        this.setState({
-            file: '',
-            imgSrc: ''
-        })
-    }
-
     //选择类别
     selectType(typeCode, remark) {
         let formdata = new FormData();
@@ -366,10 +426,62 @@ class MyWardrobe extends Component {
 
     }
 
+    /**
+     * 选择物品
+     * @param {*} id  图片id
+     * @param {*} url  图片url
+     */
+    selectGoods(id, url) {
+        let imgObj = {
+            id: id,
+            url: url,
+            typeCode: this.state.typeCode
+        }
+        let newArr = Array.prototype.slice.apply(this.state.selectGoods);
+        let flag = this.checkSelected(id);
+        if (flag) {
+            newArr.splice(this.index, 1);
+        } else {
+            newArr.push(imgObj);
+        }
+
+        this.setState({
+            selectGoods: newArr
+        });
+    }
+
+    /**
+     * 检查是否被选中
+     */
+    checkSelected(imgId) {
+        let flag = false;
+        for (let i = 0; i < this.state.selectGoods.length; i++) {
+            if (this.state.selectGoods[i].id == imgId) {
+                flag = true;
+                this.index = i;
+                break;
+            }
+            flag = false;
+        }
+        return flag;
+    }
+
+    addCloth(){
+        if(this.state.selectGoods.length>6){
+            this.setState({
+                msgShow: true,
+                msgText: '最多选择6张', //提示内容
+            });
+            return;
+        }
+        this.props.addCloth(this.state.selectGoods);
+    }
+
+
     render() {
         return (
             <section className="full-page wardrobe-list-area flex-box consult-my-wardrobe" >
-                {this.state.sex === 2 ? <GirlType getGarderobeList={this.getGarderobeList.bind(this)} /> : <BoyType getGarderobeList={this.getGarderobeList.bind(this)} />}
+                {this.state.sex === 2 ? <GirlType selectGoods={this.state.selectGoods} getGarderobeList={this.getGarderobeList.bind(this)} /> : <BoyType selectGoods={this.state.selectGoods} getGarderobeList={this.getGarderobeList.bind(this)} />}
                 <section className="rside">
                     {this.state.loadAnimation ? <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} /> : (
                         <ul className="flex-box">
@@ -377,7 +489,9 @@ class MyWardrobe extends Component {
                                 this.state.data.map((item, index) => {
                                     return (
                                         <li className="item-3" key={index}>
-                                            <div className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }}></div>
+                                            <div className={this.checkSelected(item.id) ? "img-box active" : "img-box"} style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onClick={this.selectGoods.bind(this, item.id, item.imgUrl)}>
+                                                <span className="icon icon-gou"></span>
+                                            </div>
                                         </li>
                                     )
                                 })
@@ -385,18 +499,18 @@ class MyWardrobe extends Component {
                         </ul>
                     )}
                 </section>
-                <section className="upload-btn add-btn">
+                <section className="upload-btn add-btn" onClick={this.addCloth.bind(this)}>
                     <span>
                         确认
                         <br />
-                         添加
+                        添加
                     </span>
                 </section>
                 <section className="upload-btn">
                     <span>
                         上传
                         <br />
-                         衣服
+                        衣服
                     </span>
                     <input type="file" ref={el => this.uploadImg = el} accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
                 </section>

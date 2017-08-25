@@ -8,10 +8,12 @@
     border: 5px solid rgba(0, 0, 0, .5);
     transition: all 0.5s ease;
     animation: topToDown 0.5s ease-out;
-    .upload-btn.add-btn{
+    .upload-btn.add-btn {
         bottom: 258px;
     }
-    .upload-btn {bottom: 176px;}
+    .upload-btn {
+        bottom: 176px;
+    }
     .close-btn {
         position: fixed;
         bottom: 105px;
@@ -20,9 +22,48 @@
             font-size: 29px;
         }
     }
-
-    .rside .img-box{
-        
+    .lside li .icon-box {
+        >label {
+            position: absolute;
+            right: -11px;
+            top: -6px;
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+            background: #ff6064;
+            border-radius: 50%;
+            font-size: 9px;
+            font-weight: 500;
+            color: #fefefe;
+            text-align: center;
+        }
+    }
+    .rside .img-box {
+        &:after {
+            content: '';
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 8;
+            background: rgba(0, 0, 0, .4);
+            margin: auto;
+        }
+        .icon-gou {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 9;
+            transform: translate(-50%, -50%);
+        }
+        &.active {
+            &:after, .icon-gou {
+                display: block;
+            }
+        }
     }
 }
 

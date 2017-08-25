@@ -11,6 +11,7 @@ import MyWardrobe from "./component/MyWardrobe";
 import MatchScene from "./component/MatchScene";
 import { Msg } from "../Component/index";
 import { ToolDps } from '../ToolDps';
+import { DataLoad, GetData } from '../Component/index';
 
 
 
@@ -24,8 +25,8 @@ class Consult extends Component {
             btn: '发布需求',
             msgShow: false,
             msgText: '', //提示内容
-            myWardrobe: true, //我的衣橱
-            sex: 2, //性别
+            myWardrobe: false, //我的衣橱
+            sex: props.data.info.sex || 2, //性别
             scene: [], //场景
             shop: [], //商品
             costCode: '1', //预期花费价格
@@ -34,6 +35,13 @@ class Consult extends Component {
         }
         this._time = 0;
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            sex: nextProps.data.info.sex
+        });
+    }
+
 
     componentDidMount() {
         document.title = "咨询";
@@ -147,15 +155,15 @@ class Consult extends Component {
      */
     addCloth(cloths) {
         this.setState({
-            garderobeArr: cloths
+            garderobeArr: cloths,
+            myWardrobe: false
         });
     }
 
     /**
      * 删除服装
      * */
-    deleteCloth(e) {
-        let id = e.currentTarget.getAttribute('data-id');
+    deleteCloth(id) {
         let newGarderobeArr = Array.prototype.slice.apply(this.state.garderobeArr);
         for (let i = 0; i < newGarderobeArr.length; i++) {
             if (newGarderobeArr[i].id == id) {
@@ -173,11 +181,11 @@ class Consult extends Component {
                 <section className="box sex-switch-area">
                     <h3>性别</h3>
                     <ul className="sex-area">
-                        <li className={this.state.sex === 2 ? "active" : ""} onClick={() => { this.setState({ sex: 2 }) }}>
+                        <li className={this.state.sex === 2 ? "active" : ""} onClick={() => { this.setState({ sex: 2, garderobeArr: this.state.sex === 2 ? this.state.garderobeArr : [] }) }}>
                             <span className={this.state.sex === 2 ? "icon icon-girl-active" : "icon icon-girl"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             女
                         </li>
-                        <li className={this.state.sex === 1 ? "active" : ""} onClick={() => { this.setState({ sex: 1 }) }}>
+                        <li className={this.state.sex === 1 ? "active" : ""} onClick={() => { this.setState({ sex: 1, garderobeArr: this.state.sex === 1 ? this.state.garderobeArr : [] }) }}>
                             <span className={this.state.sex === 1 ? "icon icon-man-active" : "icon icon-man"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             男
                         </li>
@@ -213,7 +221,7 @@ class Consult extends Component {
                                 return (
                                     <li className="item-3" key={index}>
                                         <div className="goods-img-show" style={{ backgroundImage: 'url(' + item.url + ')' }}>
-                                            <span className="icon icon-fault" data-id={item.id} onClick={this.deleteCloth.bind(this)}><span className="path1"></span><span className="path2"></span></span>
+                                            <span className="icon icon-fault" onClick={this.deleteCloth.bind(this, item.id)}><span className="path1"></span><span className="path2"></span></span>
                                         </div>
                                     </li>
                                 )
@@ -221,35 +229,12 @@ class Consult extends Component {
                         }
 
                         {
-                            this.state.garderobeArr.length != 6 ? (
+                            this.state.garderobeArr.length < 6 ? (
                                 <li className="item-3">
                                     <div className="goods-img-show add-btn" onClick={() => { this.setState({ myWardrobe: true }) }}></div>
                                 </li>
                             ) : null
                         }
-                        {/*
-                        <li className="item-3">
-                            <div className="goods-img-show" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
-                                <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
-                            </div>
-                        </li>
-                        <li className="item-3">
-                            <div className="goods-img-show add-btn" onClick={() => { this.setState({ myWardrobe: true }) }}></div>
-                        </li> */}
-                        {/* {
-                            this.state.garderobeArr.map((item, index) => {
-                                return (
-                                    <div className="item" key={index}>
-                                        <div className="goods-img-show">
-                                            <img src={item.url} alt="" />
-                                            <svg viewBox="0 0 100 100" data-id={item.id} className="icon-svg-delete" onClick={this.deleteCloth.bind(this)}>
-                                                <use xlinkHref="/assets/img/icon.svg#svg-delete" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        } */}
                     </ul>
                     <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
                 </section>
@@ -267,4 +252,33 @@ Consult.contextTypes = {
 
 
 
-export default Consult;
+
+class Main extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
+        let main = data.succ ? <Consult data={data} location={this.props.location} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+
+        return main;
+    }
+}
+
+export default GetData({
+    id: 'Profile', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/user/info',
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

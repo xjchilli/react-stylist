@@ -19,7 +19,7 @@ class NeatenWardrobe extends Component {
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
-            date: null, //日期
+            date: '', //日期
             currArea: '', //选择的城市
             addres: '', //详细地址
             remark: '', //需求描述
@@ -161,27 +161,42 @@ class NeatenWardrobe extends Component {
 
     render() {
         return (
-            <section className="full-page matchService">
-                <section className="box">
-                    <h4 className="title">约定时间</h4>
-                    <div id="date" className={this.state.date ? "date-area t-active" : "date-area"}>
-                        {this.state.date ? this.state.date : '请选择约定时间'}
-                    </div>
-                    <h4 className="title">约定地址</h4>
-                    <div className="agreement-address-area">
-                        <input id="city" type="text" value={this.state.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
-                        {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
-                    </div>
-                    <h4 className="title">详细地址</h4>
-                    <div className="agreement-address-area">
-                        <input type="text" placeholder="请填写详细地址" onChange={(e) => { this.setState({ addres: e.target.value }) }} />
-                    </div>
-                    <h4 className="title">需求描述</h4>
-                    <textarea rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+            <section className='matchService'>
+                <section className="box other-area">
+                    <h3 className="title">约定时间</h3>
+                    <input id="date" type="text" value={this.state.date} readOnly={true} placeholder='请选择约定时间' onFocus={(e) => { e.target.blur() }} />
+                    <h3>约定地址</h3>
+                    <input id="city" type="text" value={this.state.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
+                    {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
+                    <h3>详细地址</h3>
+                    <input type="text" placeholder="请填写详细地址" onChange={(e) => { this.setState({ addres: e.target.value }) }} />
+                    <h3>需求描述</h3>
+                    <textarea className="word-describe" placeholder="您描述的越仔细，搭配师能给您更精准的服务哦 ~" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+                    <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
                 </section>
-                <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
+            // <section className="full-page matchService">
+            //     <section className="box">
+            //         <h4 className="title">约定时间</h4>
+            //         <div id="date" className={this.state.date ? "date-area t-active" : "date-area"}>
+            //             {this.state.date ? this.state.date : '请选择约定时间'}
+            //         </div>
+            //         <h4 className="title">约定地址</h4>
+            //         <div className="agreement-address-area">
+            //             <input id="city" type="text" value={this.state.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
+            //             {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
+            //         </div>
+            //         <h4 className="title">详细地址</h4>
+            //         <div className="agreement-address-area">
+            //             <input type="text" placeholder="请填写详细地址" onChange={(e) => { this.setState({ addres: e.target.value }) }} />
+            //         </div>
+            //         <h4 className="title">需求描述</h4>
+            //         <textarea rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+            //     </section>
+            //     <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
+            //     {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+            // </section>
         );
     }
 }

@@ -339,16 +339,6 @@ class WardrobeList extends Component {
 
     }
 
-    /**
-     * 删除当前预览的图片
-     */
-    deleteCurrImg() {
-        this.uploadImg.value = '';
-        this.setState({
-            file: '',
-            imgSrc: ''
-        })
-    }
 
     //选择类别
     selectType(typeCode, remark) {

@@ -5,11 +5,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
+import Category from "./component/Category";
+import MyWardrobe from "./component/MyWardrobe";
 import MatchScene from "./component/MatchScene";
-import { ToolDps } from '../ToolDps';
 import { Msg } from "../Component/index";
+import { ToolDps } from '../ToolDps';
+import { DataLoad, GetData } from '../Component/index';
+
 
 
 
@@ -23,7 +26,7 @@ class Shopping extends Component {
             btn: '发布',
             msgShow: false,
             msgText: '', //提示内容
-            sex: 2, //性别
+            sex: props.data.info.sex || 2, //性别
             remark: '', //需求描述
             costCode: '1', //预期花费价格
             scene: [], //场景
@@ -36,6 +39,11 @@ class Shopping extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            sex: nextProps.data.info.sex
+        });
+    }
 
     componentWillUnmount() {
         clearTimeout(this._time);
@@ -139,24 +147,31 @@ class Shopping extends Component {
             'active': this.state.sex === 1
         });
         return (
-            <section className="full-page matchService">
+            <section className='matchService'>
+                <section className="box sex-switch-area">
+                    <h3>性别</h3>
+                    <ul className="sex-area">
+                        <li className={this.state.sex === 2 ? "active" : ""} onClick={() => { this.setState({ sex: 2, garderobeArr: this.state.sex === 2 ? this.state.garderobeArr : [] }) }}>
+                            <span className={this.state.sex === 2 ? "icon icon-girl-active" : "icon icon-girl"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            女
+                        </li>
+                        <li className={this.state.sex === 1 ? "active" : ""} onClick={() => { this.setState({ sex: 1, garderobeArr: this.state.sex === 1 ? this.state.garderobeArr : [] }) }}>
+                            <span className={this.state.sex === 1 ? "icon icon-man-active" : "icon icon-man"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            男
+                        </li>
+                    </ul>
+                </section>
+
                 <section className="box occasion">
-                    <h4 className="title">搭配场景</h4>
-                    <MatchScene getScene={this.getScene.bind(this)} />
+                    <h3>搭配场景</h3>
+                    <MatchScene sex={this.state.sex} getScene={this.getScene.bind(this)} />
                 </section>
-                <section className="box">
-                    <h4 className="title">
-                        商品选择
-                        <div className="sex-switch">
-                            <a href="javascript:void(0)" className={sexGirl} onClick={() => { this.setState({ sex: 2, shop: this.state.sex === 2 ? this.state.shop : [] }) }}>♀</a>
-                            <a href="javascript:void(0)" className={sexBoy} onClick={() => { this.setState({ sex: 1, shop: this.state.sex === 1 ? this.state.shop : [] }) }}>♂</a>
-                        </div>
-                    </h4>
-                    {/* {this.state.sex === 2 ? <GirlCategory getShop={this.getShop.bind(this)} /> : null}
-                    {this.state.sex === 1 ? <BoyCategory getShop={this.getShop.bind(this)} /> : null} */}
+                <section className="box shop-area">
+                    <h3>商品选择</h3>
+                    <Category sex={this.state.sex} getShop={this.getShop.bind(this)} />
                 </section>
-                <section className="box">
-                    <h4 className="title">预期花费</h4>
+                <section className="box other-area">
+                    <h3 className="title">预期花费</h3>
                     <div className="expect-fare-area">
                         <select onChange={(e) => { this.setState({ costCode: e.target.value }) }}>
                             <option value="1">0-300</option>
@@ -167,10 +182,10 @@ class Shopping extends Component {
                             <option value="6">不限</option>
                         </select>
                     </div>
-                    <h4 className="title">需求描述</h4>
-                    <textarea rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+                    <h3>需求描述</h3>
+                    <textarea className="word-describe" placeholder="您描述的越仔细，搭配师能给您更精准的服务哦 ~" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+                    <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
                 </section>
-                <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         );
@@ -183,4 +198,32 @@ Shopping.contextTypes = {
 
 
 
-export default withRouter(Shopping);
+class Main extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
+        let main = data.succ ? <Shopping data={data} location={this.props.location} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+
+        return main;
+    }
+}
+
+export default GetData({
+    id: 'Profile', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/user/info',
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});
