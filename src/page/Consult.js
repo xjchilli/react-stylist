@@ -6,8 +6,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import qs from 'query-string';
-import GirlCategory from "./component/GirlCategory";
-import BoyCategory from "./component/BoyCategory";
+import Category from "./component/Category";
 import MyWardrobe from "./component/MyWardrobe";
 import MatchScene from "./component/MatchScene";
 import { Msg } from "../Component/index";
@@ -22,10 +21,10 @@ class Consult extends Component {
         let { serverId } = qs.parse(props.location.search);
         this.state = {
             serverId: serverId || '',//服务id 只有在搭配师服务入口才有
-            btn: '发布',
+            btn: '发布需求',
             msgShow: false,
             msgText: '', //提示内容
-            myWardrobe: false, //我的衣橱
+            myWardrobe: true, //我的衣橱
             sex: 2, //性别
             scene: [], //场景
             shop: [], //商品
@@ -50,8 +49,7 @@ class Consult extends Component {
      */
     getScene(sceneArr) {
         this.setState({
-            scene: sceneArr,
-            msgShow: false
+            scene: sceneArr
         });
     }
 
@@ -60,8 +58,7 @@ class Consult extends Component {
      */
     getShop(shopArr) {
         this.setState({
-            shop: shopArr,
-            msgShow: false
+            shop: shopArr
         })
     }
 
@@ -176,11 +173,11 @@ class Consult extends Component {
                 <section className="box sex-switch-area">
                     <h3>性别</h3>
                     <ul className="sex-area">
-                        <li className={this.state.sex === 2 ? "active" : ""}>
+                        <li className={this.state.sex === 2 ? "active" : ""} onClick={() => { this.setState({ sex: 2 }) }}>
                             <span className={this.state.sex === 2 ? "icon icon-girl-active" : "icon icon-girl"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             女
                         </li>
-                        <li className={this.state.sex === 1 ? "active" : ""}>
+                        <li className={this.state.sex === 1 ? "active" : ""} onClick={() => { this.setState({ sex: 1 }) }}>
                             <span className={this.state.sex === 1 ? "icon icon-man-active" : "icon icon-man"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             男
                         </li>
@@ -188,22 +185,15 @@ class Consult extends Component {
                 </section>
 
                 <section className="box occasion">
-                    <h4 className="title">搭配场景</h4>
-                    <MatchScene getScene={this.getScene.bind(this)} />
+                    <h3>搭配场景</h3>
+                    <MatchScene sex={this.state.sex} getScene={this.getScene.bind(this)} />
                 </section>
-                {/* <section className="box">
-                    <h4 className="title">
-                        商品选择
-                        <div className="sex-switch">
-                            <a href="javascript:void(0)" className={sexGirl} onClick={() => { this.setState({ sex: 2, shop: this.state.sex === 2 ? this.state.shop : [] }) }}>♀</a>
-                            <a href="javascript:void(0)" className={sexBoy} onClick={() => { this.setState({ sex: 1, shop: this.state.sex === 1 ? this.state.shop : [] }) }}>♂</a>
-                        </div>
-                    </h4>
-                    {this.state.sex === 2 ? <GirlCategory getShop={this.getShop.bind(this)} /> : null}
-                    {this.state.sex === 1 ? <BoyCategory getShop={this.getShop.bind(this)} /> : null}
-                </section> */}
-                <section className="box">
-                    <h4 className="title">预期花费</h4>
+                <section className="box shop-area">
+                    <h3>商品选择</h3>
+                    <Category sex={this.state.sex} getShop={this.getShop.bind(this)} />
+                </section>
+                <section className="box other-area">
+                    <h3 className="title">预期花费</h3>
                     <div className="expect-fare-area">
                         <select onChange={(e) => { this.setState({ costCode: e.target.value }) }}>
                             <option value="1">0-300</option>
@@ -214,13 +204,39 @@ class Consult extends Component {
                             <option value="6">不限</option>
                         </select>
                     </div>
-                    <h4 className="title">需求描述</h4>
-                    <textarea rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
-                </section>
-                <section className="box">
-                    <h4 className="title">搭配物品<span className="myWardrobeBtn" onClick={() => { this.setState({ myWardrobe: !this.state.myWardrobe }) }}>我的衣橱</span></h4>
-                    <div className="matchGoods-area">
+                    <h3>需求描述</h3>
+                    <textarea className="word-describe" placeholder="您描述的越仔细，搭配师能给您更精准的服务哦 ~" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
+                    <h3>搭配物品</h3>
+                    <ul className="flex-box matchGoods-area">
                         {
+                            this.state.garderobeArr.map((item, index) => {
+                                return (
+                                    <li className="item-3" key={index}>
+                                        <div className="goods-img-show" style={{ backgroundImage: 'url(' + item.url + ')' }}>
+                                            <span className="icon icon-fault" data-id={item.id} onClick={this.deleteCloth.bind(this)}><span className="path1"></span><span className="path2"></span></span>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+
+                        {
+                            this.state.garderobeArr.length != 6 ? (
+                                <li className="item-3">
+                                    <div className="goods-img-show add-btn" onClick={() => { this.setState({ myWardrobe: true }) }}></div>
+                                </li>
+                            ) : null
+                        }
+                        {/*
+                        <li className="item-3">
+                            <div className="goods-img-show" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}>
+                                <span className="icon icon-fault"><span className="path1"></span><span className="path2"></span></span>
+                            </div>
+                        </li>
+                        <li className="item-3">
+                            <div className="goods-img-show add-btn" onClick={() => { this.setState({ myWardrobe: true }) }}></div>
+                        </li> */}
+                        {/* {
                             this.state.garderobeArr.map((item, index) => {
                                 return (
                                     <div className="item" key={index}>
@@ -233,10 +249,11 @@ class Consult extends Component {
                                     </div>
                                 )
                             })
-                        }
-                    </div>
+                        } */}
+                    </ul>
+                    <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
                 </section>
-                <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
+
                 {this.state.myWardrobe ? <MyWardrobe sex={this.state.sex} garderobeArr={this.state.garderobeArr} addCloth={this.addCloth.bind(this)} closeMyWardrobe={() => { this.setState({ myWardrobe: false }) }} /> : null}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>

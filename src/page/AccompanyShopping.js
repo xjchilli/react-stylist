@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import qs from 'query-string';
 import City from "../Component/city/city";
-import GirlCategory from "./component/GirlCategory";
-import BoyCategory from "./component/BoyCategory";
+// import GirlCategory from "./component/GirlCategory";
+// import BoyCategory from "./component/BoyCategory";
 import MatchScene from "./component/MatchScene";
 import { Msg } from "../Component/index";
 import { ToolDps } from '../ToolDps';
@@ -230,8 +230,8 @@ class AccompanyShopping extends Component {
                             <a href="javascript:void(0)" className={sexBoy} onClick={() => { this.setState({ sex: 1, shop: this.state.sex === 1 ? this.state.shop : [] }) }}>♂</a>
                         </div>
                     </h4>
-                    {this.state.sex === 2 ? <GirlCategory getShop={this.getShop.bind(this)} /> : null}
-                    {this.state.sex === 1 ? <BoyCategory getShop={this.getShop.bind(this)} /> : null}
+                    {/* {this.state.sex === 2 ? <GirlCategory getShop={this.getShop.bind(this)} /> : null}
+                    {this.state.sex === 1 ? <BoyCategory getShop={this.getShop.bind(this)} /> : null} */}
                 </section>
                 <section className="box">
                     <h4 className="title">约定时间</h4>

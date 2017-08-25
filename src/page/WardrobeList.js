@@ -4,7 +4,6 @@
  */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData, Msg } from '../Component/index';
 
@@ -411,9 +410,11 @@ class WardrobeList extends Component {
                     )}
                 </section>
                 <section className="upload-btn">
-                    上传
-                    <br />
-                    衣服
+                    <span>
+                        上传
+                        <br />
+                        衣服
+                    </span>
                     <input type="file" ref={el => this.uploadImg = el} accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
                 </section>
                 {/* 选择类别 */}

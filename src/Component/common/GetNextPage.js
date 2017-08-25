@@ -71,10 +71,7 @@ const Main = (mySetting) => {
              * DOM初始化完成后执行回调
              */
             this.redayDOM = () => {
-                var {
-                        scrollX,
-                    scrollY
-                    } = this.state;
+                var {scrollX, scrollY} = this.state;
                 window.scrollTo(scrollX, scrollY);
                 this.get = new GetNextPage(this.dataload, {
                     url: this.getUrl(),
@@ -84,6 +81,19 @@ const Main = (mySetting) => {
                     error: this.error
                 });
             }
+
+             /**
+             * url更改时
+             */
+            this.unmount = () => {
+                this.get.end();
+                delete this.get;
+                delete this.action;
+                this.state.scrollX = window.scrollX; //记录滚动条位置
+                this.state.scrollY = window.scrollY;
+                this.props.setState(this.state);
+            }
+            
             /**
              * 获取ajax 请求url
              *

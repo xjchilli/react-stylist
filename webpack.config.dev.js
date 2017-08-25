@@ -75,7 +75,7 @@ module.exports = {
       loaders: ['babel-loader'],
       threadPool: happyThreadPool,
       cache: false,
-      verbose: true
+      verbose: false
     }),
     new webpack.HotModuleReplacementPlugin(),
     // 开启全局的模块热替换(HMR)

@@ -3,24 +3,35 @@
     .fashion-moment-list {
         li {
             min-height: 25rem;
-            .main-img{
-              position: relative;
-              .action-area{
-                position: absolute;right: 20px;bottom: 10px;text-align: center;min-width: 65px;
-              }
-              .agree-area,.money-area{
-                display: inline-block;
-                .icon-heart,.icon-heart-selected{
-                  font-size: 18px;
+            .main-img {
+                position: relative;
+                .action-area {
+                    padding: 10px 20px;
+                    background: rgba(0,0,0,.5);
+                    position: absolute;
+                    right: 0px;
+                    bottom: 0px;
+                    text-align: center;
+                    min-width: 65px;
                 }
-                >p{font-size: 12px;color: #ffffff;}
-              }
-              .money-area{
-                margin-left: 25px;
-                .icon-money{
-                  font-size: 20px;
+                .agree-area,
+                .money-area {
+                    display: inline-block;
+                    .icon-heart,
+                    .icon-heart-selected {
+                        font-size: 18px;
+                    }
+                    >p {
+                        font-size: 12px;
+                        color: #ffffff;
+                    }
                 }
-              }
+                .money-area {
+                    margin-left: 25px;
+                    .icon-money {
+                        font-size: 20px;
+                    }
+                }
             }
             .img-content {
                 max-width: 100%;
