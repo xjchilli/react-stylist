@@ -72,6 +72,7 @@ const Main = (mySetting) => {
              */
             this.redayDOM = () => {
                 var {scrollX, scrollY} = this.state;
+                if (this.get) return false; //已经加载过
                 window.scrollTo(scrollX, scrollY);
                 this.get = new GetNextPage(this.dataload, {
                     url: this.getUrl(),
@@ -151,6 +152,7 @@ const Main = (mySetting) => {
                 let {
                     state
                 } = this;
+                console.log(this.state);
                 let {
                     pager
                 } = res;
@@ -182,10 +184,11 @@ const Main = (mySetting) => {
         }
 
         componentWillUnmount() {
-            let newState = this.state;
-            newState.currentPager = 1;
-            newState.data = [];
-            this.props.setState(newState);
+            this.unmount();
+            // let newState = this.state;
+            // newState.currentPager = 1;
+            // newState.data = [];
+            // this.props.setState(newState);
         }
 
 

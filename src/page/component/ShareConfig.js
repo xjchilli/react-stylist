@@ -42,7 +42,7 @@ function ShareConfig({ title, desc, link, imgUrl }) {
                 });
 
                 wx.error(function (res) {
-                    window.location.reload();
+                    // window.location.reload();
                 });
 
 

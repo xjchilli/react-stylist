@@ -87,9 +87,9 @@ class ListItem extends Component {
             <li>
                 <div className="main-img">
                     <Link to={"/fashionMomentDetail?planId=" + id}>
-                        <LazyLoad height={200} overflow={true}>
+                        {/* <LazyLoad height={200} overflow={true}> </LazyLoad> */}
                             <img src={masterImage} className="img-content" alt="" />
-                        </LazyLoad>
+                       
                     </Link>
                     <div className="action-area">
                         <div className="agree-area" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, id) : null}>
@@ -216,7 +216,7 @@ class FashionMoment extends IM {
             'active': this.state.newMsg
         });
         return (
-            <div className="full-page fashion-moment-area">
+            <div className="fashion-moment-area">
                 {
                     data.length > 0 ? <List list={data} /> : null
                 }

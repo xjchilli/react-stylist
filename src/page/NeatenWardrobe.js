@@ -176,27 +176,6 @@ class NeatenWardrobe extends Component {
                 </section>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
-            // <section className="full-page matchService">
-            //     <section className="box">
-            //         <h4 className="title">约定时间</h4>
-            //         <div id="date" className={this.state.date ? "date-area t-active" : "date-area"}>
-            //             {this.state.date ? this.state.date : '请选择约定时间'}
-            //         </div>
-            //         <h4 className="title">约定地址</h4>
-            //         <div className="agreement-address-area">
-            //             <input id="city" type="text" value={this.state.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
-            //             {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
-            //         </div>
-            //         <h4 className="title">详细地址</h4>
-            //         <div className="agreement-address-area">
-            //             <input type="text" placeholder="请填写详细地址" onChange={(e) => { this.setState({ addres: e.target.value }) }} />
-            //         </div>
-            //         <h4 className="title">需求描述</h4>
-            //         <textarea rows="10" className="word-describe" placeholder="有什么需要对搭配师说的嘛" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
-            //     </section>
-            //     <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
-            //     {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
-            // </section>
         );
     }
 }
