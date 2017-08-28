@@ -437,6 +437,13 @@ class MyWardrobe extends Component {
             url: url,
             typeCode: this.state.typeCode
         }
+        if (this.state.selectGoods.length === 6) {
+            this.setState({
+                msgShow: true,
+                msgText: '最多选择6张'
+            });
+            return;
+        }
         let newArr = Array.prototype.slice.apply(this.state.selectGoods);
         let flag = this.checkSelected(id);
         if (flag) {
@@ -466,8 +473,8 @@ class MyWardrobe extends Component {
         return flag;
     }
 
-    addCloth(){
-        if(this.state.selectGoods.length>6){
+    addCloth() {
+        if (this.state.selectGoods.length > 6) {
             this.setState({
                 msgShow: true,
                 msgText: '最多选择6张', //提示内容

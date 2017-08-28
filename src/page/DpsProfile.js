@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import qs from 'query-string';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
+import { ToolDps } from '../ToolDps';
+import BindTel from "./component/BindTel";
 
 
 
@@ -24,17 +26,48 @@ class Main extends Component {
 }
 
 class DpsProfile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tab: 2,//1:时尚圈  2：现有服务
+            shopId: '',
+            dpsServerDetail: false,
+            contact: '',
+            isBingTelShow: false //是否显示绑定手机窗口
+        }
+    }
+
     componentDidMount() {
         document.title = "搭配师个人信息";
+        ToolDps.get('/wx/user/info').then((res) => {
+            if (res.succ) {
+                this.setState({
+                    contact: res.contact
+                });
+            }
+        });
+    }
+
+    /**
+  * 
+  * [verifyUser 验证是否绑定过手机]
+  * @param  {[type]} path  [url路由]
+  * @param  {[type]} event [点击事件]
+  * @return {[type]}       [description]
+  */
+    verifyUser(id, event) {
+        if (!this.state.contact) {
+            event.preventDefault();
+            this.setState({ isBingTelShow: true })
+        } else {
+            this.setState({ shopId: id, dpsServerDetail: true })
+        }
+
     }
 
 
     render() {
-        let {
-            collocation,
-            plans,
-            shops
-        } = this.props.data;
+        let { collocation, plans, shops } = this.props.data;
         shops.map((item, index) => {
             if (item.type === 1) {
                 item['typeName'] = "咨询";
@@ -46,72 +79,190 @@ class DpsProfile extends Component {
                 item['typeName'] = "整理";
             }
             item['url'] = "/dpsServerDetail?shopId=" + item.id;
-            item['imgUrl'] = "/assets/img/match" + item.type + ".jpg";
+            item['imgUrl'] = "/assets/img/server" + item.type + ".jpg";
         });
+        let sex = collocation.sex;
         return (
-            <section className="full-page dps-profile-page" >
+            <section className="full-page dps-profile-page">
                 <header>
-                    <div className="item">
-                        <div className="head-img">
-                            <img src={collocation.headImg} alt="" />
-                            <span className="text-center sex">{collocation.sex === 1 ? '♂' : '♀'}</span>
-                        </div>
-                    </div>
-                    <div className="item dps-info">
-                        <p className="nickName">{collocation.nickName}</p>
-                        <p className="style">擅长风格：{collocation.goodsStyle}</p>
-                        <p className="introduce-text">简介：{collocation.remark}</p>
-                    </div>
+                    <ul className="flex-box">
+                        <li>
+                            <div className="head-img" style={{ backgroundImage: 'url(' + collocation.headImg + ')' }}>
+                                {sex && sex === 2 ? (
+                                    <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                ) : (
+                                        <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                    )
+                                }
+                            </div>
+                        </li>
+                        <li>
+                            <p className="nickname">{collocation.nickName}</p>
+                            <p className="styles">擅长风格：{collocation.goodsStyle}</p>
+                        </li>
+                    </ul>
                 </header>
-                <div className="photo-wall">
-                    <h4 className="text-center title">现有服务</h4>
-                    <div className="flex-box">
-                        {
-                            shops.map((item, index) => {
-                                return (
-                                    <Link to={item.url} className="item-2" key={index} >
-                                        <img src={item.imgUrl} className="response_img" alt="" />
-                                        <span className="text-center">{item.typeName}</span>
-                                    </Link>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-                <div className="photo-wall">
-                    <h4 className="text-center title">搭配师的时尚圈</h4>
-                    <div className="flex-box">
+                <section className="remark-area">
+                    <h3 className="text-center">个人简介</h3>
+                    <p>{collocation.honor}</p>
+                </section>
+                <section className="tab-area">
+                    <ul className="flex-box">
+                        <li className={this.state.tab === 1 ? "item-2 active" : "item-2"} onClick={() => { this.setState({ tab: 1 }) }}>
+                            <span>时尚圈</span>
+                        </li>
+                        <li className={this.state.tab === 2 ? "item-2 active" : "item-2"} onClick={() => { this.setState({ tab: 2 }) }}>
+                            <span>现有服务</span>
+                        </li>
+                    </ul>
+                    <ul className={this.state.tab === 1 ? "fashion-list active" : "fashion-list"}>
                         {
                             plans.map((item, index) => {
                                 return (
-                                    <Link to={"/fashionMomentDetail?planId=" + item.id} className="item-2" key={index}>
-                                        <img src={item.masterImage} className="fashion-img" alt="" />
-                                        <div className="statistics">
-                                            <span className="agree" >
-                                                <svg viewBox="0 0 200 200" className='icon-svg-zan' >
-                                                    <use xlinkHref="/assets/img/icon.svg#svg-zan" />
-                                                </svg>
-                                                {item.agreeNum}
-                                            </span>
-                                            <span className="comment" >
-                                                <svg viewBox="0 0 1024 1024" className="icon-svg-comment" >
-                                                    <use xlinkHref="/assets/img/icon.svg#svg-comment" />
-                                                </svg>
-                                                {item.commentNum}
-                                            </span>
-                                        </div>
-                                    </Link>
+                                    <ListItem item={item} key={index} />
                                 )
                             })
                         }
+                    </ul>
+                    <div className={this.state.tab === 2 ? "service-list active" : "service-list"}>
+                        <ul className="flex-box">
+                            {
+                                shops.map((item, index) => {
+                                    return (
+                                        <li className="item-2" key={index} onClick={this.verifyUser.bind(this, item.id)} >
+                                            <img src={item.imgUrl} />
+                                            <p className="text-center">{item.typeName}</p>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
                     </div>
-                </div>
+                </section>
+                {this.state.dpsServerDetail ? <DpsServer shopId={this.state.shopId} /> : null}
+                {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
             </section>
         );
     }
 }
 
 
+class ListItem extends Component {
+    render() {
+        let { item } = this.props;
+        let p = document.createElement('p');
+        p.innerHTML = item.content;
+        return (
+            <li>
+                <Link to={"/fashionMomentDetail?planId=" + item.id}>
+                    <ul className="flex-box">
+                        <li>
+                            <div className="main-img" style={{ backgroundImage: 'url(' + item.masterImage + ')' }}></div>
+                        </li>
+                        <li className="fashion-content">
+                            <h3>{item.planName}</h3>
+                            <p>{p.textContent}</p>
+                            <div className="num-area">
+                                <span className="icon-area">
+                                    <span className="icon icon-heart-icon"></span>
+                                    {item.agreeNum}
+                                </span>
+                                <span className="icon-area">
+                                    <span className="icon icon-money-icon"></span>
+                                    {item.commentNum}
+                                </span>
+                                <span className="time">
+                                    {item.time2ago}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </Link>
+            </li>
+        )
+    }
+}
+
+class DpsServer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            contact: '',
+            windowShow: false, //是否显示窗口
+            data: null
+        }
+    }
+
+    componentDidMount() {
+        ToolDps.get("/wx/fashion/" + this.props.shopId + "/topic").then((res) => {
+            if (res.succ) {
+                console.log(res);
+                this.setState({
+                    windowShow: true,
+                    data: res.data
+                });
+            }
+        });
+
+    }
+
+
+
+    render() {
+        let main = this.state.windowShow ? <DpsServerDetail /> : null;
+        return main;
+    }
+}
+
+class DpsServerDetail extends Component {
+    render() {
+        let { id, type, price, content } = this.props.data;//type 1:咨询,2:购物,3:逛街,4：衣橱整理
+        let service = {
+            url: '',
+            price: '',
+            typeName: '',
+            backgroundImage: 'url(/assets/img/dapei-service-' + type + '.jpg)',
+        }
+
+        if (type === 1) {//咨询
+            service.price = price + "/次";
+            service.typeName = "在线咨询";
+            service.url = "/consult?serverId=" + id;
+            document.title = "在线咨询";
+        } else if (type === 2) {//购物
+            service.price = price + "/次";
+            service.typeName = "购物服务";
+            service.url = "/shopping?serverId=" + id;
+            document.title = "购物服务";
+        } else if (type === 3) {//逛街
+            service.price = price + "/2小时";
+            service.typeName = "线下陪购";
+            service.url = "/accompanyShopping?serverId=" + id;
+            document.title = "线下陪购";
+        } else if (type === 4) {//整理
+            service.price = price + "/2小时";
+            service.typeName = "整理衣橱";
+            service.url = "/neatenWardrobe?serverId=" + id;
+            document.title = "整理衣橱";
+        }
+
+        return (
+            <section className="dpsServerDetail-area">
+                <section className="content-area">
+                    <header>
+                        <p>服务类别：在线咨询</p>
+                        <p className="price">服务价格：100.00元/次</p>
+                    </header>
+                    <section className="content">
+                        换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿
+                    </section>
+                    <button className="btn buy-btn">立刻购买</button>
+                    <span className="icon icon-close-gray"></span>
+                </section>
+            </section>
+        )
+    }
+}
 
 export default GetData({
     id: 'DpsProfile', //应用关联使用的redux
@@ -128,3 +279,5 @@ export default GetData({
         return state
     } //请求失败后执行的方法
 });
+
+// export default DpsProfile;

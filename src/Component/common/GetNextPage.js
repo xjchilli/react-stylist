@@ -152,7 +152,7 @@ const Main = (mySetting) => {
                 let {
                     state
                 } = this;
-                console.log(this.state);
+                // console.log(this.state);
                 let {
                     pager
                 } = res;

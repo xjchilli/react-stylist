@@ -1,41 +1,234 @@
-.dps-profile-page{
-    header{
-        display: flex;padding:1.9rem 0 1.4rem;
-        .item{
-            &:nth-of-type(1){ flex: 0 0 9.5rem;}
-            &:nth-of-type(2){ flex:auto;}
-        }
-        .head-img{
-            position:relative;width: 6.7rem;height: 6.7rem;margin:auto;
-            >img{width: 6.7rem;height: 6.7rem;border-radius: 50%;border:0.1rem solid @white;}
-            .sex{position: absolute;right: 0.2rem;bottom: 0.2rem;width: 1.5rem;height: 1.5rem;line-height:1.5rem;border-radius:50%;background: @white;color: #01b5bb;}
-        }
-
-        .dps-info{
-            font-size: 1.2rem;color:#666666;padding-right:1.8rem;
-            .nickName{margin: 0.4rem 0 0.8rem 0;color: #333333;}
-            .style{margin-bottom: 0.6rem;}
-        }
-    }
-    .photo-wall{
-        margin: 1rem;background: @white;padding:0.8rem 0.8rem 1rem 0.8rem;
-        .title{color: #333333;font-size:1.2rem;border-bottom:0.1rem dashed #cccccc;padding-bottom:0.8rem;}
-        .flex-box{
-            padding: 1rem 0.5rem 0;
-            .item-2{
-                display: block;position:relative;margin-bottom:1rem;
-                &:nth-of-type(odd){padding-right: 0.7rem;}
-                &:nth-of-type(even){padding-left: 0.7rem;}
-                >span{position: absolute;top:0;right: 0;bottom: 0;left: 0;margin: auto;width: 4.5rem;height:1.7rem;line-height: 1.7rem;font-size:1.2rem;color: #333333;background: rgba(255,255,255,0.9);}
-               .fashion-img{height: 8rem;max-width: 100%;margin: auto;}
+.dps-profile-page {
+    header {
+        height: 125px;
+        overflow: hidden;
+        background: url('/assets/img/dps-bg.jpg') no-repeat;
+        .flex-box {
+            padding: 51px 13px 0;
+            li {
+                &:nth-of-type(1) {
+                    flex: 0 0 59px;
+                }
+                &:nth-of-type(2) {
+                    width: 0;
+                    flex: 1 0 auto;
+                    padding-left: 8px;
+                }
             }
-        } 
+        }
+        .head-img {
+            position: relative;
+            width: 59px;
+            height: 59px;
+            border: 2px solid #ffffff;
+            background-repeat: no-repeat;
+            background-size: cover;
+            .icon {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                font-size: 14px;
+            }
+        }
+        .nickname {
+            padding-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fefefe;
+        }
+        .styles {
+            font-size: 10px;
+            color: #fefefe;
+            height: 34px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
     }
-    .statistics{
-        position: relative;color:#666666;font-size:1.2rem;
-        .icon-svg-comment{width: 1.5rem;height: 1.5rem;}
-        .agree{padding-left: 0.6rem;}
-        .comment{position: absolute;right: 0.6rem;}
-        svg{margin-right: 0.5rem;vertical-align: middle;}
+    .remark-area {
+        padding: 23px 13px 32px;
+        background: @white;
+        h3 {
+            font-size: 14px;
+            color: #1a1a1a;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 12px;
+            color: #1a1a1a;
+            font-weight: lighter;
+        }
+    }
+    .tab-area {
+        >.flex-box {
+            background: @white;
+            li {
+                height: 40px;
+                position: relative;
+                >span {
+                    position: absolute;
+                    font-size: 13px;
+                    color: #333333;
+                    top: 0;
+                    line-height: 38px;
+                }
+                &:nth-of-type(1) {
+                    >span {
+                        right: 26px;
+                    }
+                }
+                &:nth-of-type(2) {
+                    >span {
+                        left: 26px;
+                    }
+                }
+                &.active {
+                    >span {
+                        border-bottom: 2px solid #ff6064;
+                        color: #1a1a1a;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        .fashion-list {
+            display: none;
+            >li {
+                margin-top: 8px;
+                padding: 13px;
+                background: @white;
+                height: 150px;
+                .flex-box {
+                    height: 100%;
+                    >li {
+                        height: 100%;
+                        &:nth-of-type(1) {
+                            flex: 0 0 auto;
+                        }
+                        &:nth-of-type(2) {
+                            flex: 1 0 auto;
+                            width: 0;
+                        }
+                    }
+                }
+            }
+            &.active {
+                display: block;
+            }
+        }
+        .main-img {
+            width: 136px;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .fashion-content {
+            padding-left: 17px;
+            h3 {
+                margin-top: 4px;
+                font-size: 13px;
+                color: #333333;
+                font-weight: 500;
+                height: 36px;
+                overflow: hidden;
+            }
+            >p {
+                font-size: 10px;
+                color: #666666;
+                height: 51px;
+                overflow: hidden;
+                margin-top: 11px;
+            }
+        }
+        .num-area {
+            position: relative;
+            color: #999999;
+            font-size: 11px;
+            margin-top: 8px;
+            .icon-area {
+                display: inline-block;
+                &:nth-of-type(1) {
+                    margin-right: 30px;
+                }
+                >.icon {
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+                .icon-heart-icon {
+                    font-size: 10px;
+                }
+                .icon-money-icon {
+                    font-size: 11px;
+                }
+            }
+            .time {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translate(0, -50%);
+                font-size: 10px;
+            }
+        }
+        .service-list {
+            padding: 0 13px 9px;
+            display: none;
+            .flex-box {
+                li {
+                    background: @white;
+                    margin-top: 8px;
+                    &:nth-of-type(2n+1) {
+                        padding-right: 4.5px;
+                    }
+                    &:nth-of-type(2n+2) {
+                        padding-left: 4.5px;
+                    }
+                    >img {
+                        max-width: 100%;
+                    }
+                    >p {
+                        font-size: 15px;
+                        color: #1a1a1a;
+                        font-weight: 500;
+                        line-height: 57px;
+                    }
+                }
+            }
+            &.active {
+                display: block;
+            }
+        }
+    }
+    .dpsServerDetail-area {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .5);
+        padding: 20px 13px;
+        .content-area{
+            position: relative;
+            background: @white;border-radius: 8px;padding-bottom:28px;
+            header{
+                height: 102px;background: #ff6064;border-radius: 8px 8px 0 0;padding:20px 0 0 22px;;
+                >p{
+                    color: #ffffff;font-size: 14px;
+                }
+                .price{
+                    margin-top: 12px;
+                }
+            }
+            .content{
+                background: @white;padding:21px 36px 150px;font-size: 13px;color: #1a1a1a;height: 268px;
+            }
+            .buy-btn{
+                background: #ff6064;width: 99px;height: 35px;line-height: 35px;margin: auto;border-radius: 10px 10px 4px 4px;
+                box-shadow: 0 10px 6px rgba(255,96,100,0.3);
+            }
+        }
+        .icon-close-gray{
+            position: absolute;bottom: -68px;left: 50%;transform: translate3d(-50%,0,0);font-size: 51px;
+        }
     }
 }
