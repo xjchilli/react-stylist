@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { ToolDps } from '../ToolDps';
 import action from '../Action/Index';
 import classNames from 'classnames';
-import { Msg, City } from '../Component/index';
+import { Msg, City, PreviewImg } from '../Component/index';
 // import { is, fromJS } from 'immutable';
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
@@ -249,19 +249,19 @@ class Type extends Component {
         let skinName = "选择肤色";
         let bodyName = "选择体型";
         if (this.props.data.faceshpe != "") {
-            faceName=this.state.faceNames[Number(this.props.data.faceshpe)-1];
+            faceName = this.state.faceNames[Number(this.props.data.faceshpe) - 1];
         }
         if (this.props.data.colorofskin != "") {
-            skinName=this.state.skinNames[Number(this.props.data.colorofskin)-1];
+            skinName = this.state.skinNames[Number(this.props.data.colorofskin) - 1];
         }
 
         if (this.props.data.bodySize != "") {
-            if(sex === 1){
-                bodyName=this.state.bodyNamesBoy[Number(this.props.data.bodySize)-1];
-            }else{
-                bodyName=this.state.bodyNamesGirl[Number(this.props.data.bodySize)-1];
+            if (sex === 1) {
+                bodyName = this.state.bodyNamesBoy[Number(this.props.data.bodySize) - 1];
+            } else {
+                bodyName = this.state.bodyNamesGirl[Number(this.props.data.bodySize) - 1];
             }
-            
+
         }
 
         return (
@@ -743,6 +743,8 @@ class LifePhoto extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: '',//大图url
             data: props.data || null,
             photoList: props.data.lifeImgs || [], //生活照片
         }
@@ -789,6 +791,7 @@ class LifePhoto extends Component {
     }
 
     deletePhoto(e) {
+        e.stopPropagation();
         let index = e.currentTarget.getAttribute('data-index');
         let newPhotoList = this.state.photoList;
         newPhotoList.splice(index, 1);
@@ -820,7 +823,8 @@ class LifePhoto extends Component {
         }
     }
 
-    deleteFaceImg() {
+    deleteFaceImg(e) {
+        e.stopPropagation();
         let myData = this.state.data;
         myData.faceImg.imgPath = '';
         myData.faceImg.file = null;
@@ -840,7 +844,7 @@ class LifePhoto extends Component {
                         <div className="upload-area" >
                             <span className="icon icon-camera"></span>
                             <p>添加一张正脸照片</p>
-                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }}>
+                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: imgPath }) }}>
                                 <span className="icon icon-fault" onClick={this.deleteFaceImg.bind(this)}><span className="path1"></span><span className="path2"></span></span>
                             </div>
                             {
@@ -862,7 +866,7 @@ class LifePhoto extends Component {
                         this.state.photoList.map((item, index) => {
                             return (
                                 <li className="item-3" key={index}>
-                                    <div className="img-area" style={{ backgroundImage: 'url(' + item.imgPath + ')' }}>
+                                    <div className="img-area" style={{ backgroundImage: 'url(' + item.imgPath + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: item.imgPath }) }}>
                                         <span className="icon icon-fault" data-index={index} onClick={this.deletePhoto.bind(this)}><span className="path1"></span><span className="path2"></span></span>
                                     </div>
                                 </li>
@@ -870,6 +874,7 @@ class LifePhoto extends Component {
                         })
                     }
                 </ul>
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>
         )
     }
@@ -894,15 +899,15 @@ class CustomSuit extends Component {
         ToolDps.get('/wx/user/info').then((res) => {
             if (res.succ && res.info && res.info.faceshpe != "" && res.info.colorofskin != "") {//表示修改过个人信息
                 let myData = merged(this.state.data, res.info);
-                myData.headImg=res.headImg;
-                myData.nickName=res.nickName;
+                myData.headImg = res.headImg;
+                myData.nickName = res.nickName;
                 myData.faceImg = res.info.lifeImgs[0];
                 myData.lifeImgs = res.info.lifeImgs.slice(1);
                 this.props.setState(myData);
             } else if (res.succ && res.info && res.info.sex != "") {//默认没修改过
                 let myData = this.state.data;
-                myData.headImg=res.headImg;
-                myData.nickName=res.nickName;
+                myData.headImg = res.headImg;
+                myData.nickName = res.nickName;
                 myData.sex = res.info.sex;
                 this.props.setState(myData);
             }

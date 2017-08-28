@@ -86,7 +86,7 @@ class NeedMatch extends Component {
                         </div>
                         <div className="swiper-slide content-area">
                             <h3>购物</h3>
-                            <p>你可以体验一下明星般的服务，只需要告知你要买什么，在什么场合穿的，搭配师就可以根据i的需求，并结合你自身的个人特点，告诉你最优的搭配购买方案。</p>
+                            <p>你可以体验一下明星般的服务，只需要告知你要买什么，在什么场合穿的，搭配师就可以根据你的需求，并结合你自身的个人特点，告诉你最优的搭配购买方案。</p>
                             <p>每个搭配师根据自身的经验水平，会有自己的定价，但是MS搭配师官方给出了统一的优惠价。</p>
                             <p><em>只要在官方入口发布需求，享受统一价格<b>19.9元/次</b></em></p>
                             <Link to="/shopping" className="btn to-publish-btn" onClick={this.verifyUser.bind(this, '/shopping')}>发布需求</Link>

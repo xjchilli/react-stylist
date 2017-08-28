@@ -5,7 +5,7 @@
 let p=process.env.NODE_ENV === 'production';
 
 let confidential={//default dev pattern
-    APP_ID:'wxfb8fb349ee5fcfc8',//Please use your owe app id;安卓:wx841ef790c7af581f     4s:wxfb8fb349ee5fcfc8
+    APP_ID:'wx351309dedea04180',//Please use your owe app id;安卓:wx841ef790c7af581f     4s:wxfb8fb349ee5fcfc8
     scope:'snsapi_userinfo'//snsapi_base
 }
 if(p){//production pattern
