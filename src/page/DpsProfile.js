@@ -30,40 +30,14 @@ class DpsProfile extends Component {
         super(props);
         this.state = {
             tab: 2,//1:时尚圈  2：现有服务
-            shopId: '',
-            dpsServerDetail: false,
-            contact: '',
-            isBingTelShow: false //是否显示绑定手机窗口
+            dpsServerDetail: false
         }
     }
 
     componentDidMount() {
         document.title = "搭配师个人信息";
-        ToolDps.get('/wx/user/info').then((res) => {
-            if (res.succ) {
-                this.setState({
-                    contact: res.contact
-                });
-            }
-        });
     }
 
-    /**
-  * 
-  * [verifyUser 验证是否绑定过手机]
-  * @param  {[type]} path  [url路由]
-  * @param  {[type]} event [点击事件]
-  * @return {[type]}       [description]
-  */
-    verifyUser(id, event) {
-        if (!this.state.contact) {
-            event.preventDefault();
-            this.setState({ isBingTelShow: true })
-        } else {
-            this.setState({ shopId: id, dpsServerDetail: true })
-        }
-
-    }
 
 
     render() {
@@ -129,7 +103,7 @@ class DpsProfile extends Component {
                             {
                                 shops.map((item, index) => {
                                     return (
-                                        <li className="item-2" key={index} onClick={this.verifyUser.bind(this, item.id)} >
+                                        <li className="item-2" key={index} onClick={() => { this.setState({ dpsServerDetail: true, shopId: item.id }) }} >
                                             <img src={item.imgUrl} />
                                             <p className="text-center">{item.typeName}</p>
                                         </li>
@@ -139,8 +113,7 @@ class DpsProfile extends Component {
                         </ul>
                     </div>
                 </section>
-                {this.state.dpsServerDetail ? <DpsServer shopId={this.state.shopId} /> : null}
-                {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
+                {this.state.dpsServerDetail ? <DpsServer close={() => { this.setState({ dpsServerDetail: false }) }} shopId={this.state.shopId} /> : null}
             </section>
         );
     }
@@ -194,34 +167,66 @@ class DpsServer extends Component {
     }
 
     componentDidMount() {
-        ToolDps.get("/wx/fashion/" + this.props.shopId + "/topic").then((res) => {
+        ToolDps.get('/wx/user/info').then((res) => {
             if (res.succ) {
-                console.log(res);
                 this.setState({
-                    windowShow: true,
-                    data: res.data
+                    contact: res.contact
+                });
+                ToolDps.get("/wx/fashion/" + this.props.shopId + "/topic").then((res) => {
+                    if (res.succ) {
+                        this.setState({
+                            windowShow: true,
+                            data: res.data
+                        });
+                    }
                 });
             }
         });
-
     }
 
 
 
     render() {
-        let main = this.state.windowShow ? <DpsServerDetail /> : null;
+        let main = this.state.windowShow ? <DpsServerDetail close={this.props.close} contact={this.state.contact} data={this.state.data} /> : null;
         return main;
     }
 }
 
 class DpsServerDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            contact: props.contact || '',
+            path: '', //url路径
+            isBingTelShow: false //是否显示绑定手机窗口
+        }
+    }
+
+    /**
+      * 
+      * [verifyUser 验证是否绑定过手机]
+      * @param  {[type]} path  [url路由]
+      * @param  {[type]} event [点击事件]
+      * @return {[type]}       [description]
+      */
+    verifyUser(path, event) {
+        if (!this.state.contact) {
+            event.preventDefault();
+            this.setState({
+                path: path,
+                isBingTelShow: true
+            });
+            return;
+        }
+
+    }
+
     render() {
         let { id, type, price, content } = this.props.data;//type 1:咨询,2:购物,3:逛街,4：衣橱整理
         let service = {
             url: '',
             price: '',
             typeName: '',
-            backgroundImage: 'url(/assets/img/dapei-service-' + type + '.jpg)',
         }
 
         if (type === 1) {//咨询
@@ -250,15 +255,16 @@ class DpsServerDetail extends Component {
             <section className="dpsServerDetail-area">
                 <section className="content-area">
                     <header>
-                        <p>服务类别：在线咨询</p>
-                        <p className="price">服务价格：100.00元/次</p>
+                        <p>服务类别：{service.typeName}</p>
+                        <p className="price">服务价格：{service.price}</p>
                     </header>
                     <section className="content">
-                        换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿换季没有衣服穿衣服穿
+                        {content}
                     </section>
-                    <button className="btn buy-btn">立刻购买</button>
-                    <span className="icon icon-close-gray"></span>
+                    <Link to={service.url} className="btn buy-btn text-center" onClick={this.verifyUser.bind(this, service.url)}>立即购买</Link>
+                    <span className="icon icon-close-gray" onClick={this.props.close}></span>
                 </section>
+                {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
             </section>
         )
     }

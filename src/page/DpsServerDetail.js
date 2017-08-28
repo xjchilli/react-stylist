@@ -66,8 +66,7 @@ class DpsServerDetail extends Component {
         let service = {
             url: '',
             price: '',
-            typeName: '',
-            backgroundImage: 'url(/assets/img/dapei-service-' + type + '.jpg)',
+            typeName: ''
         }
 
         if (type === 1) {//咨询
