@@ -182,7 +182,7 @@ class BoyType extends Component {
     }
 }
 
-
+//上传图片选择分类
 class ImgPreview extends Component {
     constructor(props) {
         super(props);
@@ -221,6 +221,37 @@ class ImgPreview extends Component {
     }
 }
 
+//删除图片
+class DeleteImg extends Component {
+
+    /**
+    * 衣橱删除
+    */
+    delete() {
+        ToolDps.post('/wx/garderobe/delete', {
+            gid: this.props.gid
+        }).then((res) => {
+            if (res.succ) {
+                this.props.delete();
+                this.props.close();
+            }
+        });
+    }
+
+
+    render() {
+        return (
+            <section className="delete-img-area">
+                <section className="btn-area">
+                    <button className="btn" onClick={this.delete.bind(this)}>删除这件衣服</button>
+                    <button className="btn" onClick={this.props.close}>取消</button>
+                </section>
+            </section>
+        )
+    }
+}
+
+
 
 class WardrobeList extends Component {
     constructor(props) {
@@ -232,6 +263,8 @@ class WardrobeList extends Component {
             msgShow: false,
             msgText: '', //提示内容
             imgPreview: false, //类别窗口
+            deleteImgWindow: false,
+            gid: '',//图片id
             typeCode: '', //类别Code
             file: '', //图片文件
             imgSrc: '', //图片地址
@@ -349,6 +382,10 @@ class WardrobeList extends Component {
         formdata.append('remark', remark);
         formdata.append('sex', this.state.sex);
 
+        this.setState({
+            imgPreview: false
+        });
+
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
         }).then((data) => {
@@ -374,8 +411,13 @@ class WardrobeList extends Component {
                 });
             }
         });
+    }
 
-
+    //删除图片
+    deleteImg() {
+        let gidParentEle = document.querySelector('#gid-' + this.state.gid);
+        let liEle = gidParentEle.parentElement;
+        liEle.parentElement.removeChild(liEle);
     }
 
     render() {
@@ -389,9 +431,10 @@ class WardrobeList extends Component {
                                 this.state.data.map((item, index) => {
                                     return (
                                         <li className="item-3" key={index}>
-                                            <Link to={"/wardrobeModify?gid=" + item.id}>
-                                                <div className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }}></div>
-                                            </Link>
+                                            {/* <Link to={"/wardrobeModify?gid=" + item.id}>
+                                                
+                                            </Link> */}
+                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onClick={() => { this.setState({ deleteImgWindow: true, gid: item.id }) }}></div>
                                         </li>
                                     )
                                 })
@@ -409,7 +452,11 @@ class WardrobeList extends Component {
                 </section>
                 {/* 选择类别 */}
                 {this.state.imgPreview ? <ImgPreview imgSrc={this.state.imgSrc} sex={this.state.sex} selectType={this.selectType.bind(this)} /> : null}
+                {/* 提示 */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+                {/* 删除图片 */}
+                {this.state.deleteImgWindow ? <DeleteImg gid={this.state.gid} delete={this.deleteImg.bind(this)} close={() => { this.setState({ deleteImgWindow: false }) }} /> : null}
+
             </section>
         )
     }

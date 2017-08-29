@@ -113,11 +113,11 @@
         font-weight: 500;
         text-align: center;
         box-shadow: 0 10px 6px rgba(255, 96, 100, .3);
-        span{
+        span {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             z-index: 8;
         }
         .upload-file {
@@ -194,6 +194,36 @@
                 color: #1a1a1a;
                 font-weight: 500;
                 margin-top: 20px;
+            }
+        }
+    }
+    .delete-img-area {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .5);
+        .btn-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: @white;
+            padding:0 13px;
+            .btn{
+                background: @white;
+                width:100%;
+                font-size: 16px;
+                height: 52px;
+                line-height: 52px;
+                &:nth-of-type(1){
+                    color: #ff6064;
+                    border-bottom: 1px solid #e6e6e6;
+                }
+                &:nth-of-type(2){
+                    color: #333333;
+                }
             }
         }
     }

@@ -76,8 +76,6 @@ const DpsProfile = DB('DpsProfile'); //搭配师个人信息
 
 const DpsServerDetail = DB('DpsServerDetail'); //搭配师服务详情
 
-
-const WardrobeDetail = DB('WardrobeDetail'); //衣橱详情
 //搭配测试
 const CustomSuit = DB('CustomSuit', {
   headImg:'',//头像
@@ -121,7 +119,6 @@ const reducers = combineReducers({
   Profile,
   DpsProfile,
   DpsServerDetail,
-  WardrobeDetail,
   CustomSuit,
   OrderList,
   OrderDetail,

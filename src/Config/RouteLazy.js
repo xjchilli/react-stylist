@@ -128,11 +128,6 @@ let routers = [
         exact: false,
         component: (props) => getComponent(props, WardrobeListContainer)
     },
-     {//衣橱修改
-        path: '/wardrobeModify',
-        exact: false,
-        component: (props) => getComponent(props, WardrobeModifyContainer)
-    },
      {//我的订单
         path: '/orderList',
         exact: false,

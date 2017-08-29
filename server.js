@@ -6,9 +6,12 @@ const webpackConfig = require("./webpack.config.dev");
 const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
     proxy: { // proxy URLs to backend development server
-          '/wx': {
-            target:'http://paywx.dapeis.net',//线上服务器后端:http://wxapi.dapeis.com  线上服务器前端:http://wx.dapeis.com  测试服务器:http://wxapi.dapeis.net 开发:http://devwx.dapeis.net
-            changeOrigin:true
+        '/wx': {
+            //线上服务器后端:http://wxapi.dapeis.com  线上服务器前端:http://wx.dapeis.com  
+            //测试服务器:http://wxapi.dapeis.net  开发:http://devwx.dapeis.net
+            //支付测试:http://paywx.dapeis.net
+            target: 'http://devwx.dapeis.net',
+            changeOrigin: true
         }
     },
     publicPath: webpackConfig.output.publicPath,//服务器资源路径
