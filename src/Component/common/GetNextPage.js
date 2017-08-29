@@ -92,6 +92,9 @@ const Main = (mySetting) => {
                 delete this.action;
                 this.state.scrollX = window.scrollX; //记录滚动条位置
                 this.state.scrollY = window.scrollY;
+
+                this.state.currentPager = 1;
+                this.state.data = [];
                 this.props.setState(this.state);
             }
             
@@ -185,10 +188,7 @@ const Main = (mySetting) => {
 
         componentWillUnmount() {
             this.unmount();
-            // let newState = this.state;
-            // newState.currentPager = 1;
-            // newState.data = [];
-            // this.props.setState(newState);
+            
         }
 
 

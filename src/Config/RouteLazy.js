@@ -22,7 +22,6 @@ import MyDpsContainer from 'bundle-loader?lazy&name=[name]!../page/MyDps';
 import ArrangementSchemeContainer from 'bundle-loader?lazy&name=[name]!../page/ArrangementScheme';
 import ChatContainer from 'bundle-loader?lazy&name=[name]!../page/Chat';
 import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeList';
-import WardrobeModifyContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeModify';
 import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList';
 import OrderDetailContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetail';
 import PromotionCodeContainer from 'bundle-loader?lazy&name=[name]!../page/PromotionCode';

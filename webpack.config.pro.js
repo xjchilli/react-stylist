@@ -32,6 +32,7 @@ module.exports = {
         filename: 'js/[name].js',
         chunkFilename: 'js/[name].[chunkhash:5].min.js',
     },
+    // devtool: 'source-map',
     module: {
         rules: [{
             test: /\.css|less$/,

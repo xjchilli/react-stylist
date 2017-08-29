@@ -61,7 +61,15 @@ class List extends Component {
             }
             data.push(
                 <li className={"friend-area" + selfClass} key={index}>
-                    <img src={headUrl} alt="" />
+                    {
+                        selfClass ? (<img src={headUrl} alt="" />) : (
+                            <a href={'/dpsProfile?collocationId=' + this.props.collocationId}>
+                                <img src={headUrl} alt="" />
+                            </a>
+                        )
+
+                    }
+
                     <div className="msgContent" dangerouslySetInnerHTML={{ __html: content }}></div>
                 </li>
             )
@@ -92,7 +100,7 @@ class Chat extends IM {
             list: [], //数据列表
             containerHeight: 500 //聊天内容高度
         };
-        let { selToID,headUrl,nickname } = qs.parse(props.location.search);
+        let { selToID, headUrl, nickname } = qs.parse(props.location.search);
 
         this.currScrollHeight = 0; //默认当前滚动条高度
         this._time = 0;
@@ -104,6 +112,7 @@ class Chat extends IM {
         };
         this.selType = webim.SESSION_TYPE.C2C; //当前聊天类型:单聊
         this.selToID = selToID; //好友帐号
+        this.collocationId = selToID.replace('dps', '');//搭配师id
         this.friendHeadUrl = headUrl; //好友头像
         this.nickname = nickname; //好友昵称
         this.selSess = null; //当前聊天会话对象
@@ -574,12 +583,11 @@ class Chat extends IM {
             containerHeight: window.innerHeight - 50
         });
     }
-
     render() {
         return (
             <div className="full-page chat-page">
                 <div ref={el => this.container = el} className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
-                    {this.state.list.length > 0 ? <List list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
+                    {this.state.list.length > 0 ? <List collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer>
                     <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>
@@ -594,7 +602,6 @@ class Chat extends IM {
                     <textarea type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
                     <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
-
                 </footer>
             </div>
         )

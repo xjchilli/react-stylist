@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
+import qs from 'query-string';
 
 class NeedMatch extends Component {
     constructor(props) {
@@ -119,6 +120,11 @@ class NeedMatch extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+        let { index } = qs.parse(props.location.search);
+        //设置默认加载位置
+        if (index) {
+            ToolDps.sessionItem('sliderIndex', index);
+        }
     }
 
     render() {

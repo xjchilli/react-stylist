@@ -29,7 +29,7 @@ class DpsProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tab: 2,//1:时尚圈  2：现有服务
+            tab: 1,//1:时尚圈  2：现有服务
             dpsServerDetail: false
         }
     }

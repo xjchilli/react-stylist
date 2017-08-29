@@ -397,6 +397,10 @@ class MyWardrobe extends Component {
         formdata.append('remark', remark);
         formdata.append('sex', this.state.sex);
 
+        this.setState({
+            imgPreview: false
+        });
+
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
         }).then((data) => {
