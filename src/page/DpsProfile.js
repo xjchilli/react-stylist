@@ -81,11 +81,11 @@ class DpsProfile extends Component {
                     <p>{collocation.honor}</p>
                 </section>
                 <section className="tab-area">
-                    <ul className="flex-box">
-                        <li className={this.state.tab === 1 ? "item-2 active" : "item-2"} onClick={() => { this.setState({ tab: 1 }) }}>
+                    <ul className="tab-switch clear">
+                        <li className={this.state.tab === 1 ? "active" : ""} onClick={() => { this.setState({ tab: 1 }) }}>
                             <span>时尚圈</span>
                         </li>
-                        <li className={this.state.tab === 2 ? "item-2 active" : "item-2"} onClick={() => { this.setState({ tab: 2 }) }}>
+                        <li className={this.state.tab === 2 ? "active" : ""} onClick={() => { this.setState({ tab: 2 }) }}>
                             <span>现有服务</span>
                         </li>
                     </ul>
@@ -128,20 +128,22 @@ class ListItem extends Component {
         return (
             <li>
                 <Link to={"/fashionMomentDetail?planId=" + item.id}>
-                    <ul className="flex-box">
+                    <ul className="flex-box clear">
                         <li>
                             <div className="main-img" style={{ backgroundImage: 'url(' + item.masterImage + ')' }}></div>
                         </li>
                         <li className="fashion-content">
                             <h3>{item.planName}</h3>
-                            <p>{p.textContent}</p>
+                            <div className="text">
+                                <p>{p.textContent}</p>
+                            </div>
                             <div className="num-area">
                                 <span className="icon-area">
                                     <span className="icon icon-heart-icon"></span>
                                     {item.agreeNum}
                                 </span>
                                 <span className="icon-area">
-                                    <span className="icon icon-money-icon"></span>
+                                    <span className="icon icon-comment"></span>
                                     {item.commentNum}
                                 </span>
                                 <span className="time">

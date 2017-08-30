@@ -40,7 +40,7 @@ class Home extends Component {
                 <br />
                 <Link to="/share?userId=171">分享</Link>
                 <br />
-                <Link to="/arrangementScheme?id=11">搭配方案</Link>
+                <Link to="/arrangementScheme?id=18">搭配方案</Link>
                 <br />
                 <Link to="/feedback">吐槽</Link>
                 <br />

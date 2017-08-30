@@ -1,52 +1,73 @@
-.bind-tel-container
-{
-    position:fixed!important;
+.bind-tel-container {
+    position: fixed!important;
     z-index: 9;
-    .box
-    {
+    background: @white!important;
+    .box {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-
         width: 100%;
-        height: 200px;
+        padding: 0 43px;
+        height: 294px;
         margin: auto;
     }
-    .form-ground
-    {
-        .item
-        {
+    .form-ground {
+        &:nth-of-type(2) {
+            margin-top: 23px;
+        }
+        .item {
             position: relative;
-
-            height: 40px;
-            padding: 0 15px;
-            .getCodeBtn
-            {
-                font-size: 14px;
-                line-height: 30px;
-
+            .icon-tel {
+                font-size: 21px;
+            }
+            .icon-lock {
+                font-size: 20px;
+            }
+            .icon {
                 position: absolute;
                 top: 50%;
-                right: 17px;
-
+                left: 0;
+                transform: translate3d(0, -50%, 0);
+            }
+            input {
+                height: 50px;
+                font-size: 15px;
+                color: #333333;
+                text-indent: 30px;
+                width: 100%;
+                border: 1px solid #e6e6e6;
+                border-width: 0 0 1px 0;
+                &::-webkit-input-placeholder {
+                    font-size: 15px;
+                    color: #666666;
+                    font-weight: lighter;
+                }
+            }
+            .getCodeBtn {
+                font-size: 14px;
+                line-height: 27px;
+                color: #666666;
+                position: absolute;
+                top: 50%;
+                right: 0;
                 padding: 2px 8px;
-
-                transform: translate(0,-50%);
-
-                color: @white;
-                border-radius: 5px;
-                background: rgb(111,185,34);
+                transform: translate(0, -50%);
+                background: #e4e4e4;
             }
         }
     }
-    .bindBtn
-    {
-        margin: 20px auto;
+    .bindBtn {
+        margin: 65px auto 45px;
+        background: #ff6064;
+        width: 100%;
+        height: 40px;
+        border-radius: 4px;
     }
-    .tips
-    {
-        font-size: 1.4rem;
+    .tips {
+        font-size: 13px;
+        color: #666666;
+        font-weight: lighter;
     }
 }

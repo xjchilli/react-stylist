@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { ToolDps } from '../../ToolDps';
-import {Msg} from "../../Component/index";
+import { Msg } from "../../Component/index";
 
 class BindTel extends Component {
   constructor(props) {
@@ -153,13 +153,15 @@ class BindTel extends Component {
         <div className="box">
           <div className="form-ground">
             <div className="item">
-              <input type="tel" placeholder="手机号" maxLength={11} value={this.state.tel} onChange={(e) => { this.setState({ tel: e.target.value }) }} />
-              <span className="getCodeBtn" onClick={this.getCodeBtn.bind(this)}>{this.state.getCodeBtnText}</span>
+              <span className="icon icon-tel"></span>
+              <input type="tel" placeholder="请输入11位手机号码" maxLength={11} value={this.state.tel} onChange={(e) => { this.setState({ tel: e.target.value }) }} />
             </div>
           </div>
           <div className="form-ground">
             <div className="item">
-              <input type="tel" placeholder="验证码" maxLength={4} value={this.state.verifyCode} onChange={(e) => { this.setState({ verifyCode: e.target.value }) }} />
+              <span className="icon icon-lock"></span>
+              <input type="tel" placeholder="请输入验证码" maxLength={4} value={this.state.verifyCode} onChange={(e) => { this.setState({ verifyCode: e.target.value }) }} />
+              <span className="getCodeBtn" onClick={this.getCodeBtn.bind(this)}>{this.state.getCodeBtnText}</span>
             </div>
           </div>
           <button className="btn bindBtn" onClick={this.bindTel.bind(this)}>绑定</button>

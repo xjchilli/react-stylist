@@ -251,47 +251,6 @@ class BoyType extends Component {
     }
 }
 
-/**
- * 图片预览
- */
-class ImgPreview extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            girlCategory: [{ key: '100', value: '裙子' }, { key: '101', value: '上衣' }, { key: '102', value: '裤子' }, { key: '103', value: '内衣' }, { key: '104', value: '鞋' }, { key: '105', value: '包' }, { key: '106', value: '配饰' }, { key: '107', value: '美妆' }],//女分类
-            boyCategory: [{ key: '200', value: '上衣' }, { key: '201', value: '裤子' }, { key: '202', value: '内衣' }, { key: '203', value: '外套' }, { key: '204', value: '鞋' }, { key: '205', value: '包' }, { key: '206', value: '配饰' }],//男分类
-            remark: ''//备注
-        }
-    }
-    render() {
-        let categories = [];
-        this.props.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
-        return (
-            <section className="select-type-area">
-                <div className="box">
-                    <h3>选择分类</h3>
-                    <ul className="flex-box img-show">
-                        <li>
-                            <div className="img-preview" style={{ backgroundImage: "url(" + this.props.imgSrc + ")" }}></div>
-                        </li>
-                        <li>
-                            <textarea placeholder="添加物品描述..." value={this.state.remark} onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
-                        </li>
-                    </ul>
-                    <h4>物品分类</h4>
-                    <ul className="type-list">
-                        {
-                            categories.map((item, index) => {
-                                return <li key={index} onClick={this.props.selectType.bind(this, item.key, this.state.remark)}>{item.value}</li>
-                            })
-                        }
-                    </ul>
-                </div>
-            </section>
-        )
-    }
-}
-
 
 class MyWardrobe extends Component {
     constructor(props) {
@@ -302,25 +261,17 @@ class MyWardrobe extends Component {
             loadMsg: '正在加载中',
             msgShow: false,
             msgText: '', //提示内容
-            imgPreview: false, //类别窗口
             typeCode: props.sex === 2 ? "100" : "200", //类别Code
-            file: '', //图片文件
-            imgSrc: '', //图片地址
             data: [],
             selectGoods: props.garderobeArr || []//选择的物品
         }
         this.index = -1;//选中下标
-        this.reader = new FileReader();
     }
 
     componentDidMount() {
         this.getGarderobeList(this.state.sex, this.state.typeCode);
     }
 
-
-    componentWillUnmount() {
-        this.reader.removeEventListener('load', this.preview);
-    }
 
     /**
      * 获取衣橱列表
@@ -354,14 +305,6 @@ class MyWardrobe extends Component {
     }
 
 
-    /**
-     * 隐藏上传服装窗口
-     */
-    hideUploadClothWindow() {
-        this.setState({
-            imgPreview: false
-        });
-    }
 
     /**
      * 预览图片
@@ -369,46 +312,30 @@ class MyWardrobe extends Component {
     previewImg(e) {
         let files = e.target.files;
         if (files && files[0]) {
-            // if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
-            this.reader.addEventListener('load', this.preview.bind(this, files[0]));
-            this.reader.readAsDataURL(files[0]);
+            let readFile = new FileReader();
+            readFile.onload = ()=> {
+                this.selectType(files[0]);
+            }
+            readFile.readAsDataURL(files[0]);
         }
     }
 
-    /**
-     * 预览
-     * @param file
-     */
-    preview(file) {
-        this.setState({
-            file: file,
-            imgSrc: this.reader.result,
-            imgPreview: true
-        })
-
-    }
 
     //选择类别
-    selectType(typeCode, remark) {
+    selectType(file) {
         let formdata = new FormData();
-        formdata.append('typeCode', typeCode);
+        formdata.append('typeCode', this.state.typeCode);
         formdata.append('name', '');
-        formdata.append('img', this.state.file);
-        formdata.append('remark', remark);
+        formdata.append('img', file);
+        formdata.append('remark', '');
         formdata.append('sex', this.state.sex);
-
-        this.setState({
-            imgPreview: false
-        });
 
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
         }).then((data) => {
             if (data.succ) {
                 let newData = Array.prototype.slice.apply(this.state.data);
-                if (typeCode == this.state.typeCode) {
-                    newData.push(data.garderobe);
-                }
+                newData.push(data.garderobe);
 
                 this.setState({
                     remark: '', //描述
@@ -416,7 +343,6 @@ class MyWardrobe extends Component {
                     imgSrc: '', //图片地址
                     msgShow: true,
                     msgText: '上传成功',
-                    imgPreview: false,
                     data: newData
                 });
             } else {
@@ -441,19 +367,21 @@ class MyWardrobe extends Component {
             url: url,
             typeCode: this.state.typeCode
         }
-        if (this.state.selectGoods.length === 6) {
-            this.setState({
-                msgShow: true,
-                msgText: '最多选择6张'
-            });
-            return;
-        }
+      
         let newArr = Array.prototype.slice.apply(this.state.selectGoods);
         let flag = this.checkSelected(id);
         if (flag) {
             newArr.splice(this.index, 1);
         } else {
             newArr.push(imgObj);
+        }
+
+        if (newArr.length > 6) {
+            this.setState({
+                msgShow: true,
+                msgText: '最多选择6张'
+            });
+            return;
         }
 
         this.setState({
@@ -528,9 +456,6 @@ class MyWardrobe extends Component {
                 <section className="close-btn" onClick={this.props.closeMyWardrobe}>
                     <span className="icon icon-close"></span>
                 </section>
-
-                {/* 选择类别 */}
-                {this.state.imgPreview ? <ImgPreview imgSrc={this.state.imgSrc} sex={this.state.sex} selectType={this.selectType.bind(this)} /> : null}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )

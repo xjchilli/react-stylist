@@ -262,15 +262,11 @@ class WardrobeList extends Component {
             loadMsg: '正在加载中',
             msgShow: false,
             msgText: '', //提示内容
-            imgPreview: false, //类别窗口
             deleteImgWindow: false,
             gid: '',//图片id
             typeCode: '', //类别Code
-            file: '', //图片文件
-            imgSrc: '', //图片地址
             data: [],
         }
-        this.reader = new FileReader();
     }
 
     componentDidMount() {
@@ -301,10 +297,6 @@ class WardrobeList extends Component {
 
     }
 
-
-    componentWillUnmount() {
-        this.reader.removeEventListener('load', this.preview);
-    }
 
     /**
      * 获取衣橱列表
@@ -353,55 +345,35 @@ class WardrobeList extends Component {
     previewImg(e) {
         let files = e.target.files;
         if (files && files[0]) {
-            // if (!/\/(?:jpeg|jpg|png)/i.test(files[0].type)) return;
-            this.reader.addEventListener('load', this.preview.bind(this, files[0]));
-            this.reader.readAsDataURL(files[0]);
+            let readFile = new FileReader();
+            readFile.onload = ()=> {
+                this.selectType(files[0]);
+            }
+            readFile.readAsDataURL(files[0]);
         }
     }
 
-    /**
-     * 预览
-     * @param file
-     */
-    preview(file) {
-        this.setState({
-            file: file,
-            imgSrc: this.reader.result,
-            imgPreview: true
-        })
-
-    }
-
-
     //选择类别
-    selectType(typeCode, remark) {
+    selectType(file) {
         let formdata = new FormData();
-        formdata.append('typeCode', typeCode);
+        formdata.append('typeCode', this.state.typeCode);
         formdata.append('name', '');
-        formdata.append('img', this.state.file);
-        formdata.append('remark', remark);
+        formdata.append('img', file);
+        formdata.append('remark', '');
         formdata.append('sex', this.state.sex);
-
-        this.setState({
-            imgPreview: false
-        });
 
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
         }).then((data) => {
             if (data.succ) {
                 let newData = Array.prototype.slice.apply(this.state.data);
-                if (typeCode == this.state.typeCode) {
-                    newData.push(data.garderobe);
-                }
-
+                newData.push(data.garderobe);
                 this.setState({
                     remark: '', //描述
                     file: '', //图片文件
                     imgSrc: '', //图片地址
                     msgShow: true,
                     msgText: '上传成功',
-                    imgPreview: false,
                     data: newData
                 });
             } else {
@@ -415,9 +387,17 @@ class WardrobeList extends Component {
 
     //删除图片
     deleteImg() {
-        let gidParentEle = document.querySelector('#gid-' + this.state.gid);
-        let liEle = gidParentEle.parentElement;
-        liEle.parentElement.removeChild(liEle);
+        let data = Array.prototype.slice.apply(this.state.data);
+        let newData = [];
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].id == this.state.gid) {
+                continue;
+            }
+            newData.push(data[i]);
+        }
+        this.setState({
+            data: newData
+        });
     }
 
     render() {
@@ -431,9 +411,6 @@ class WardrobeList extends Component {
                                 this.state.data.map((item, index) => {
                                     return (
                                         <li className="item-3" key={index}>
-                                            {/* <Link to={"/wardrobeModify?gid=" + item.id}>
-                                                
-                                            </Link> */}
                                             <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onClick={() => { this.setState({ deleteImgWindow: true, gid: item.id }) }}></div>
                                         </li>
                                     )
@@ -450,8 +427,6 @@ class WardrobeList extends Component {
                     </span>
                     <input type="file" ref={el => this.uploadImg = el} accept="image/*" className="upload-file" onChange={this.previewImg.bind(this)} />
                 </section>
-                {/* 选择类别 */}
-                {this.state.imgPreview ? <ImgPreview imgSrc={this.state.imgSrc} sex={this.state.sex} selectType={this.selectType.bind(this)} /> : null}
                 {/* 提示 */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {/* 删除图片 */}

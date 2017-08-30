@@ -1,23 +1,74 @@
-.myDps-area{
-  margin-top:0.5rem;
-  li{
-    background: @white;border: 0.1rem solid #f0f0f0;
-    >a{display:flex;}
-    &:last-child{border-width: 0;}
-    .img{
-      flex: 0 0 8rem;padding: 1rem;text-align: center;position: relative;
-      .head-img{border-radius:50%;display: inline-block;}
-      .no-read-num{position: absolute;right: 1rem;top: 1rem;width: 1.5rem;height: 1.5rem;line-height:1.5rem;border-radius: 50%;background: red;color: @white;font-size: 1.2rem;}
-    }
-    .introduce{
-      flex:1 1 auto;padding: 1rem 0;overflow: hidden;position:relative;
-      .name{font-size: 1.5rem;color: #333333;padding-right: 0.7rem;white-space: nowrap;text-overflow: ellipsis;overflow: hidden; }
-      .msgText{
-        color: #333333;padding-top: 10px;word-break: break-all;white-space: nowrap;text-overflow: ellipsis;overflow: hidden; font-size: 12px;
-        >img{display: inline-block;vertical-align: middle;}
+.myDps-page {
+  background: @white!important;
+  .myDps-area {
+    li {
+      height: 65px;
+      >a {
+        display: flex;
       }
-      .time{
-         position:Absolute; right: 10px;top:50%;transform: translate3d(0,-50%,0);
+      &:last-child {
+        border-width: 0;
+      }
+      .img {
+        flex: 0 0 76px;
+        text-align: center;
+        padding-top:7px;
+        position: relative;
+        height: 65px;
+        .head-img {
+          border-radius: 50%;
+          display: inline-block;
+        }
+        .no-read-num {
+          position: absolute;
+          right: 7px;
+          top: 7px;
+          width: 16px;
+          height:  16px;
+          line-height:  16px;
+          border-radius: 50%;
+          background: #ff6064;
+          color: @white;
+          font-size: 10px;
+        }
+      }
+      .introduce {
+        height: 65px;
+        flex: 1 1 auto;
+        padding: 10px 0;
+        overflow: hidden;
+        position: relative;
+        border-bottom: 1px solid #e6e6e6;
+        .name {
+          font-size: 15px;
+          color: #333333;
+          padding-right: 7px;
+          font-weight: 500;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        .msgText {
+          color: #666666;
+          padding-top: 10px;
+          word-break: break-all;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          font-size: 13px;
+          >img {
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+        .time {
+          position: absolute;
+          right: 12px;
+          top: 20px;
+          transform: translate3d(0, -50%, 0);
+          color: #999999;
+          font-size: 11px;
+        }
       }
     }
   }

@@ -42,16 +42,22 @@ async function getUserInfo(code, setAuth) {
  */
 function wechatAuth(props, setAuth) {
     // localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
+    if (!ToolDps.sessionItem('redirectUrl')) {
+        ToolDps.removeLocalItem('User');
+    }
     let user = ToolDps.localItem('User');
     if (user && JSON.parse(user).openId) { //如果用户信息已经存在
         setAuth();
-        // localStorage.clear();
         return;
     }
     const { code } = qs.parse(props.location.search);
     if (code) {
+        //防止第二次分享出现无效的code问题
+        const { pathname, search } = props.location;
+        history.replaceState({}, pathname, search.replace('code',''));
         getUserInfo(code, setAuth);
     } else {
+        ToolDps.sessionItem('redirectUrl', document.location.href);
         let url = document.location.href.split('#')[0];
         document.location = generateGetCodeUrl(url);
     }

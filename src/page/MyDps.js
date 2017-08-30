@@ -26,7 +26,7 @@ class FriendList extends Component {
                 <li key={userId}>
                     <Link to={"/chat?selToID=" + userId + "&headUrl=" + friends[userId].image + "&nickname=" + friends[userId].nickname}>
                         <div className="img">
-                            <img src={friends[userId].image} className="head-img" width={60} height={60} alt="" />
+                            <img src={friends[userId].image} className="head-img" width={50} height={50} alt="" />
                             {friends[userId].unReadNum ? <span className="no-read-num">{friends[userId].unReadNum}</span> : null}
                         </div>
                         <div className="introduce">
@@ -288,7 +288,7 @@ class MyDps extends IM {
     render() {
         let main = this.state.friends ? <FriendList friends={this.state.friends} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
         return (
-            <section className="full-page">
+            <section className="full-page myDps-page">
                 {main}
             </section>
         )
