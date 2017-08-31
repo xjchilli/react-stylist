@@ -42,9 +42,9 @@ async function getUserInfo(code, setAuth) {
  */
 function wechatAuth(props, setAuth) {
     // localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
-    if (!ToolDps.sessionItem('redirectUrl')) {
-        ToolDps.removeLocalItem('User');
-    }
+    // if (!ToolDps.sessionItem('redirectUrl')) {
+    //     ToolDps.removeLocalItem('User');
+    // }
     let user = ToolDps.localItem('User');
     if (user && JSON.parse(user).openId) { //如果用户信息已经存在
         setAuth();
