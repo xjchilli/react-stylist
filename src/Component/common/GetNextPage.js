@@ -92,11 +92,9 @@ const Main = (mySetting) => {
                 delete this.get;
                 delete this.action;
                 this.state.scrollX = window.scrollX; //记录滚动条位置
+                // this.state.scrollY = window.scrollY; 
                 this.state.scrollY = document.querySelector('.full-page').scrollTop;
 
-
-                // this.state.currentPager = 1;
-                // this.state.data = [];
                 this.props.setState(this.state);
             }
 
