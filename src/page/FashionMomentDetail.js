@@ -186,6 +186,9 @@ class Comment extends Component {
     toComment() {
         let newCommentContent = this.state.newCommentContent;
         if (!newCommentContent.trim()) return;
+        this.setState({
+            newCommentContent: '',
+        })
         ToolDps.post('/wx/comment/plan', {
             content: this.state.newCommentContent,
             planId: this.state.planId
@@ -195,7 +198,6 @@ class Comment extends Component {
                 commentArr.splice(0, 0, res.data);
                 this.props.setCommentNum(commentArr.length);
                 this.setState({
-                    newCommentContent: '',
                     arrays: commentArr
                 })
             } else {

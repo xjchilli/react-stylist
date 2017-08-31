@@ -887,6 +887,8 @@ class CustomSuit extends Component {
         copyMyData.path = props.location.pathname;
         props.setState(copyMyData);
         this.state = {
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: '',//大图url
             data: copyMyData || null,
             msgShow: false,
             msgText: '', //提示内容
@@ -1080,7 +1082,7 @@ class CustomSuit extends Component {
                         <p>开始定制你的专属信息吧！</p>
                     </div>
                     <div className="item">
-                        <img src={this.state.data.headImg} />
+                        <img src={this.state.data.headImg} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: this.state.data.headImg }) }}/>
                         <div className="sex-area">
                             <span className={girlSex} onClick={this.selectSex.bind(this, 2)}>
                                 {
@@ -1112,6 +1114,7 @@ class CustomSuit extends Component {
                 <LifePhoto showMsg={this.showMsg.bind(this)} {...this.props} data={this.state.data} />
                 <button className="btn send-btn" onClick={this.sendForm.bind(this)}>{this.state.btnText}</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section>
         )
     }

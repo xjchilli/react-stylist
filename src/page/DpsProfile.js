@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import qs from 'query-string';
 import { Link } from 'react-router-dom';
-import { DataLoad, GetData } from '../Component/index';
+import { DataLoad, GetData, PreviewImg } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 import BindTel from "./component/BindTel";
 
@@ -29,6 +29,8 @@ class DpsProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: '',//大图url
             tab: 1,//1:时尚圈  2：现有服务
             dpsServerDetail: false
         }
@@ -61,7 +63,7 @@ class DpsProfile extends Component {
                 <header>
                     <ul className="flex-box">
                         <li>
-                            <div className="head-img" style={{ backgroundImage: 'url(' + collocation.headImg + ')' }}>
+                            <div className="head-img" style={{ backgroundImage: 'url(' + collocation.headImg + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: collocation.headImg }) }}>
                                 {sex && sex === 2 ? (
                                     <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                                 ) : (
@@ -114,6 +116,7 @@ class DpsProfile extends Component {
                     </div>
                 </section>
                 {this.state.dpsServerDetail ? <DpsServer close={() => { this.setState({ dpsServerDetail: false }) }} shopId={this.state.shopId} /> : null}
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section>
         );
     }
