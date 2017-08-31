@@ -71,9 +71,10 @@ const Main = (mySetting) => {
              * DOM初始化完成后执行回调
              */
             this.redayDOM = () => {
-                var {scrollX, scrollY} = this.state;
+                var { scrollX, scrollY } = this.state;
                 if (this.get) return false; //已经加载过
-                window.scrollTo(scrollX, scrollY);
+                document.querySelector('.full-page').scrollTop = scrollY;
+                // window.scrollTo(scrollX, scrollY);
                 this.get = new GetNextPage(this.dataload, {
                     url: this.getUrl(),
                     data: this.getData(),
@@ -83,21 +84,22 @@ const Main = (mySetting) => {
                 });
             }
 
-             /**
-             * url更改时
-             */
+            /**
+            * url更改时
+            */
             this.unmount = () => {
                 this.get.end();
                 delete this.get;
                 delete this.action;
                 this.state.scrollX = window.scrollX; //记录滚动条位置
-                this.state.scrollY = window.scrollY;
+                this.state.scrollY = document.querySelector('.full-page').scrollTop;
 
-                this.state.currentPager = 1;
-                this.state.data = [];
+
+                // this.state.currentPager = 1;
+                // this.state.data = [];
                 this.props.setState(this.state);
             }
-            
+
             /**
              * 获取ajax 请求url
              *
@@ -188,7 +190,7 @@ const Main = (mySetting) => {
 
         componentWillUnmount() {
             this.unmount();
-            
+
         }
 
 

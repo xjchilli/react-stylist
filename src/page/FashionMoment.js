@@ -216,7 +216,7 @@ class FashionMoment extends IM {
             'active': this.state.newMsg
         });
         return (
-            <div className="fashion-moment-area">
+            <div className="full-page fashion-moment-area">
                 {
                     data.length > 0 ? <List list={data} /> : null
                 }

@@ -28,9 +28,16 @@ async function getUserInfo(code, setAuth) {
             type: 'signinSuccess',
             target: user.user
         });
+        //去除code参数
+        let url = document.location.href.split('#')[0];
+        document.location.href = url.replace('code','');
         setAuth();
     } else {
-        alert(user.msg);
+        //当出现无效code时执行
+        ToolDps.removeLocalItem('User');
+        let url = document.location.href.split('#')[0];
+        document.location.href = url.replace('code','');   
+        // alert(user.msg);
     }
 
 }
@@ -52,12 +59,9 @@ function wechatAuth(props, setAuth) {
     }
     const { code } = qs.parse(props.location.search);
     if (code) {
-        //防止第二次分享出现无效的code问题
-        const { pathname, search } = props.location;
-        history.replaceState({}, pathname, search.replace('code',''));
         getUserInfo(code, setAuth);
     } else {
-        ToolDps.sessionItem('redirectUrl', document.location.href);
+        // ToolDps.sessionItem('redirectUrl', document.location.href);
         let url = document.location.href.split('#')[0];
         document.location = generateGetCodeUrl(url);
     }

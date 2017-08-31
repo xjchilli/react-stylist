@@ -125,13 +125,14 @@
             background-size: cover;
         }
         .fashion-content {
-            padding-left: 17px;
+            position: relative;
+            margin-left: 17px;
             h3 {
                 margin-top: 4px;
                 font-size: 13px;
                 color: #333333;
                 font-weight: 500;
-                height: 36px;
+                max-height: 36px;
                 overflow: hidden;
                 overflow: hidden;
                 display: -webkit-box;
@@ -140,7 +141,7 @@
                 word-break: break-all;
             }
             .text {
-                height: 51px;
+                max-height: 51px;
                 >p {
                     font-size: 10px;
                     color: #666666;
@@ -155,7 +156,10 @@
             }
         }
         .num-area {
-            position: relative;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             color: #999999;
             font-size: 11px;
             margin-top: 8px;
@@ -189,7 +193,8 @@
             display: none;
             .flex-box {
                 li {
-                    float: left;width: 50%;
+                    float: left;
+                    width: 50%;
                     background: @white;
                     margin-top: 8px;
                     &:nth-of-type(2n+1) {
