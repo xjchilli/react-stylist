@@ -51,15 +51,18 @@ class ListItem extends Component {
      * @planId 方案id
      */
     zan(planId) {
+        this.setState({
+            agreeValue: 1,
+            agreeNum: ++this.state.agreeNum
+        });
         ToolDps.post('/wx/fashion/agree', {
             planId: planId
         }).then((res) => {
-            if (res.succ) {
+            if (!res.succ) {
                 this.setState({
-                    agreeValue: 1,
-                    agreeNum: ++this.state.agreeNum
+                    agreeValue: 0,
+                    agreeNum: --this.state.agreeNum
                 });
-            } else {
                 alert('点赞失败');
             }
         });

@@ -19,7 +19,7 @@ class Nav extends Component {
 
     componentDidMount() {
         new Swiper('.order-list-nav', {
-            slidesPerView: 4
+            slidesPerView: 5
         });
     }
 
@@ -72,7 +72,7 @@ class Main extends Component {
     componentDidMount() {
         document.title = "订单列表";
         this.getData();
-      
+
     }
 
     getData(status) {
@@ -134,10 +134,78 @@ class OrderList extends Component {
                         return (
                             <li key={index}>
                                 <Link to={"/orderDetail?orderId=" + item.orderId} className="link">
-                                    <span className="service-type">{item.title}&nbsp;{"(￥" + item.originalPrice + ")"}</span><br />
-                                    <time className="time">{item.time}</time><br />
-                                    <span className="dps-name">{item.dpsName}</span><br />
-                                    <span className="status">{item.status}</span>
+                                    <div className="status">{item.status}</div>
+                                    <div className="service-type">{item.title}</div>
+                                    <div className="content-area">
+                                        {
+                                            item.collocation ? (
+                                                <ul className="flex-box">
+                                                    <li>
+                                                        <div className="head-img-area">
+                                                            <img src={item.collocation.headImg} />
+                                                        </div>
+
+                                                    </li>
+                                                    <li>
+                                                        <h4>【搭配师】{item.collocation.nickName}</h4>
+                                                        <p className="remark">{item.requirementRemark}</p>
+                                                    </li>
+                                                </ul>
+                                            ) : (
+                                                    <p className="remark">{item.requirementRemark}</p>
+                                                )
+                                        }
+
+
+                                    </div>
+                                    <div className="price">
+                                        <span>
+                                            <em>总计：</em>￥{item.originalPrice}
+                                        </span>
+                                    </div>
+                                    {/* 待付款 */}
+                                    {
+                                        item.statusValue == "0" ? (
+                                            <div className="action-area">
+                                                <button className="btn">付款</button>
+                                                <button className="btn">取消订单</button>
+                                            </div>
+                                        ) : null
+                                    }
+                                    {/* 发布中 */}
+                                    {
+                                        item.statusValue == "1" ? (
+                                            <div className="action-area">
+                                                <button className="btn">取消发布</button>
+                                            </div>
+                                        ) : null
+                                    }
+                                    {/* 服务中 */}
+                                    {
+                                        item.statusValue == "2" ? (
+                                            <div className="action-area">
+                                                <button className="btn">沟通</button>
+                                                <button className="btn">结束服务</button>
+                                            </div>
+                                        ) : null
+                                    }
+                                    {/* 待评价 */}
+                                    {
+                                        item.statusValue == "3" ? (
+                                            <div className="action-area">
+                                                <button className="btn">评价</button>
+                                                <button className="btn">打赏</button>
+                                            </div>
+                                        ) : null
+                                    }
+                                    {/* 已完成 */}
+                                    {
+                                        item.statusValue == "10" ? (
+                                            <div className="action-area">
+                                                <button className="btn">打赏</button>
+                                            </div>
+                                        ) : null
+                                    }
                                 </Link>
                             </li>
                         )

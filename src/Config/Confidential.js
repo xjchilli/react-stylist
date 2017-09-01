@@ -9,7 +9,7 @@ let confidential={//default dev pattern
     scope:'snsapi_userinfo'//snsapi_base 
 }
 if(p){//production pattern
-    confidential.APP_ID='wx351309dedea04180';//wx351309dedea04180
+    confidential.APP_ID='wx841ef790c7af581f';//wx351309dedea04180
     confidential.scope="snsapi_userinfo";
 }
 
