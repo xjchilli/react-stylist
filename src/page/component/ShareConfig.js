@@ -46,7 +46,6 @@ function ShareConfig({ title, desc, link, imgUrl }) {
                 });
 
                 wx.error(function (res) {
-                    alert(JSON.stringify(res));
                     // window.location.reload();
                 });
 

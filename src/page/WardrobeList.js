@@ -182,44 +182,6 @@ class BoyType extends Component {
     }
 }
 
-//上传图片选择分类
-class ImgPreview extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            girlCategory: [{ key: '100', value: '裙子' }, { key: '101', value: '上衣' }, { key: '102', value: '裤子' }, { key: '103', value: '内衣' }, { key: '104', value: '鞋' }, { key: '105', value: '包' }, { key: '106', value: '配饰' }, { key: '107', value: '美妆' }],//女分类
-            boyCategory: [{ key: '200', value: '上衣' }, { key: '201', value: '裤子' }, { key: '202', value: '内衣' }, { key: '203', value: '外套' }, { key: '204', value: '鞋' }, { key: '205', value: '包' }, { key: '206', value: '配饰' }],//男分类
-            remark: ''//备注
-        }
-    }
-    render() {
-        let categories = [];
-        this.props.sex === 2 ? categories = this.state.girlCategory : categories = this.state.boyCategory;
-        return (
-            <section className="select-type-area">
-                <div className="box">
-                    <h3>选择分类</h3>
-                    <ul className="flex-box img-show">
-                        <li>
-                            <div className="img-preview" style={{ backgroundImage: "url(" + this.props.imgSrc + ")" }}></div>
-                        </li>
-                        <li>
-                            <textarea placeholder="添加物品描述..." value={this.state.remark} onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
-                        </li>
-                    </ul>
-                    <h4>物品分类</h4>
-                    <ul className="type-list">
-                        {
-                            categories.map((item, index) => {
-                                return <li key={index} onClick={this.props.selectType.bind(this, item.key, this.state.remark)}>{item.value}</li>
-                            })
-                        }
-                    </ul>
-                </div>
-            </section>
-        )
-    }
-}
 
 //删除图片
 class DeleteImg extends Component {
@@ -330,14 +292,6 @@ class WardrobeList extends Component {
     }
 
 
-    /**
-     * 隐藏上传服装窗口
-     */
-    hideUploadClothWindow() {
-        this.setState({
-            imgPreview: false
-        });
-    }
 
     /**
      * 预览图片
