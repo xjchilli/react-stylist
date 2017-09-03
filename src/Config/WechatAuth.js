@@ -30,13 +30,13 @@ async function getUserInfo(code, setAuth) {
         });
         //去除code参数
         let url = document.location.href.split('#')[0];
-        document.location.href = url.replace('code','');
+        document.location.href = url.replace('code', '');
         setAuth();
     } else {
         //当出现无效code时执行
         ToolDps.removeLocalItem('User');
         let url = document.location.href.split('#')[0];
-        document.location.href = url.replace('code','');   
+        document.location.href = url.replace('code', '');
         // alert(user.msg);
     }
 
@@ -48,10 +48,13 @@ async function getUserInfo(code, setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props, setAuth) {
-    localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
+    // localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
     // if (!ToolDps.sessionItem('redirectUrl')) {
     //     ToolDps.removeLocalItem('User');
     // }
+    if (ToolDps.isWKWebview) {//保存第一次加载url 分享时用于配置信息
+        ToolDps.sessionItem('authUrl', document.location.href.split('#')[0]);
+    }
     let user = ToolDps.localItem('User');
     if (user && JSON.parse(user).openId) { //如果用户信息已经存在
         setAuth();

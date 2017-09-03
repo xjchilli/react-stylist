@@ -64,6 +64,7 @@ const Main = (mySetting) => {
                 } else {
                     this.state = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
                     this.state.path = this.path;
+                    this.action = false;
                 }
 
             }
@@ -73,8 +74,8 @@ const Main = (mySetting) => {
             this.redayDOM = () => {
                 var { scrollX, scrollY } = this.state;
                 if (this.get) return false; //已经加载过
-                document.querySelector('.full-page').scrollTop = scrollY;
-                // window.scrollTo(scrollX, scrollY);
+                // document.querySelector('.full-page').scrollTop = scrollY;
+                window.scrollTo(scrollX, scrollY);
                 this.get = new GetNextPage(this.dataload, {
                     url: this.getUrl(),
                     data: this.getData(),
@@ -92,8 +93,8 @@ const Main = (mySetting) => {
                 delete this.get;
                 delete this.action;
                 this.state.scrollX = window.scrollX; //记录滚动条位置
-                // this.state.scrollY = window.scrollY; 
-                this.state.scrollY = document.querySelector('.full-page').scrollTop;
+                this.state.scrollY = window.scrollY; 
+                // this.state.scrollY = document.querySelector('.full-page').scrollTop;
 
                 this.props.setState(this.state);
             }
@@ -159,7 +160,7 @@ const Main = (mySetting) => {
                 let {
                     pager
                 } = res;
-                if (!pager.arrays.length && pager.arrays.length < 10) {
+                if (!pager.arrays.length && pager.arrays.length < 15) {
                     state.nextBtn = false;
                     state.loadMsg = '- end -';
                     this.get.end();
@@ -188,9 +189,7 @@ const Main = (mySetting) => {
 
         componentWillUnmount() {
             this.unmount();
-
         }
-
 
         render() {
             var {

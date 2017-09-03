@@ -391,15 +391,16 @@ ToolDps.getUrl = window.location.href;
 /**
  * 重新加载url
  */
-ToolDps.reloadUrl = function () {
-    if (ToolDps.isWKWebview && !ToolDps.sessionItem('isReload')) {
-        ToolDps.sessionItem('isReload', true);
-        window.location.reload();
-    } else if (ToolDps.isWKWebview && ToolDps.sessionItem('isReload')) {
-        ToolDps.removeSessionItem('isReload');
-    }
+// ToolDps.reloadUrl = function () {
+//     if (ToolDps.isWKWebview && !ToolDps.sessionItem('isReload')) {
+//         ToolDps.sessionItem('isReload', true);
+//         window.location.reload();
+//     } else if (ToolDps.isWKWebview && ToolDps.sessionItem('isReload')) {
+//         ToolDps.removeSessionItem('isReload');
+//     }
 
-}
+// }
+
 
 
 export {

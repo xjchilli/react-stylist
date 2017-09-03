@@ -6,9 +6,13 @@ import { ToolDps } from '../../ToolDps';
 
 
 function ShareConfig({ title, desc, link, imgUrl }) {
+    let url = location.href.split('#')[0];
+    if (ToolDps.isWKWebview) {//用于区别ios android
+        url = ToolDps.sessionItem('authUrl');
+    }
     return new Promise(function (resolve, reject) {
         ToolDps.get('/wx/user/getJsapiSigna', {
-            url: encodeURIComponent(location.href.split('#')[0])
+            url: encodeURIComponent(url)
         }).then((res) => {
             if (res.succ) {
                 let { jsapiSignature } = res;
@@ -42,6 +46,7 @@ function ShareConfig({ title, desc, link, imgUrl }) {
                 });
 
                 wx.error(function (res) {
+                    alert(JSON.stringify(res));
                     // window.location.reload();
                 });
 

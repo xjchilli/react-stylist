@@ -23,7 +23,7 @@ class List extends Component {
             <ul className="fashion-moment-list">
                 {
                     this.props.list.map((item, index) => {
-                        return <ListItem key={index} {...item} />
+                        return <ListItem globalState={this.props.globalState} globalSetState={this.props.globalSetState} key={index} {...item} />
                     })
                 }
             </ul>
@@ -46,11 +46,31 @@ class ListItem extends Component {
         }
     }
 
+    componentWillReceiveProps(np) {
+        this.setState({
+            agreeValue: np.agreeValue, //该用户是否点赞 0:未点赞，1已经点赞
+            agreeNum: np.agreeNum //点赞数
+        });
+    }
+
     /**
      * 点赞
      * @planId 方案id
      */
     zan(planId) {
+        let globalState = this.props.globalState;
+        let oldData = globalState.data;
+        let newData = oldData.map((item, index) => {
+            let data = item;
+            if (data.id == planId) {
+                data.agreeValue = 1;
+                data.agreeNum = ++this.state.agreeNum;
+            }
+            return data;
+        })
+        globalState.data = newData;
+        this.props.globalSetState(globalState);
+
         this.setState({
             agreeValue: 1,
             agreeNum: ++this.state.agreeNum
@@ -58,12 +78,18 @@ class ListItem extends Component {
         ToolDps.post('/wx/fashion/agree', {
             planId: planId
         }).then((res) => {
-            if (!res.succ) {
-                this.setState({
-                    agreeValue: 0,
-                    agreeNum: --this.state.agreeNum
-                });
-                alert('点赞失败');
+            if (!res.succ) {//点赞失败
+                let newData = oldData.map((item, index) => {
+                    let data = item;
+                    if (data.id == planId) {
+                        data.agreeValue = 0;
+                        data.agreeNum = --this.state.agreeNum;
+                    }
+                    return data;
+                })
+                globalState.data = newData;
+                this.props.globalSetState(globalState);
+                alert(res.msg);
             }
         });
 
@@ -91,8 +117,8 @@ class ListItem extends Component {
                 <div className="main-img">
                     <Link to={"/fashionMomentDetail?planId=" + id}>
                         {/* <LazyLoad height={200} overflow={true}> </LazyLoad> */}
-                            <img src={masterImage} className="img-content" alt="" />
-                       
+                        <img src={masterImage} className="img-content" alt="" />
+
                     </Link>
                     <div className="action-area">
                         <div className="agree-area" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, id) : null}>
@@ -219,9 +245,9 @@ class FashionMoment extends IM {
             'active': this.state.newMsg
         });
         return (
-            <div className="full-page fashion-moment-area">
+            <div className="fashion-moment-area">
                 {
-                    data.length > 0 ? <List list={data} /> : null
+                    data.length > 0 ? <List globalState={this.props.state} globalSetState={this.props.setState} list={data} /> : null
                 }
                 {this.props.children}
 

@@ -159,7 +159,7 @@ export default GetData({
 	component: Main, //接收数据的组件入口
 	url: '/wx/coupons/getMy',
 	data: function () {
-		ToolDps.reloadUrl();
+		// ToolDps.reloadUrl();
 		return '';
 	},
 	success: (state) => {

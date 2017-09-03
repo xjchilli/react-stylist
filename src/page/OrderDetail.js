@@ -716,7 +716,7 @@ export default GetData({
     component: Main, //接收数据的组件入口
     url: '/wx/order/detail',
     data: (props, state) => {
-        ToolDps.reloadUrl();
+        // ToolDps.reloadUrl();
         let { orderId } = qs.parse(props.location.search);
         return {
             orderId: orderId
