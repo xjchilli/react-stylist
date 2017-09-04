@@ -9,6 +9,7 @@ import qs from 'query-string';
 import { DataLoad, GetData, Msg, ToReward, PreviewImg } from '../Component/index';
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
+import WxPayAuth from './component/WxPayAuth';
 import MyPromotionCode from './component/MyPromotionCode';
 // import { CSSTransitionGroup } from 'react-transition-group';
 import UseFulPromotionCode from './component/UseFulPromotionCode';
@@ -81,18 +82,18 @@ class DaipeiGoods extends Component {
             data
         } = this.props;
         return (
-            <div className="photo-area">
+            <ul className="flex-box photo-area">
                 {
                     data.map((url, index) => {
                         return (
-                            <div className="item" key={index}>
-                                <img src={url} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: url }) }} />
-                            </div>
+                            <li className="item-3" key={index}>
+                                <div className="img-show" style={{ backgroundImage: 'url(' + url + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: url }) }} ></div>
+                            </li>
                         )
                     })
                 }
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
-            </div>
+            </ul>
         )
     }
 }
@@ -558,11 +559,7 @@ class Main extends Component {
         } = this.props.state;
 
         let main = data.succ ? <OrderDetail data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
-        return (
-            <div className="full-page">
-                {main}
-            </div>
-        )
+        return main;
     }
 }
 
@@ -584,25 +581,29 @@ class OrderDetail extends Component {
 
     componentDidMount() {
         document.title = "订单详情";
-
+        WxPayAuth();
+        // let url = location.href.split('#')[0];
+        // if (ToolDps.isWKWebview) {//用于区别ios android
+        //     url = ToolDps.sessionItem('authUrl');
+        // }
         //jsapi签名
-        ToolDps.get('/wx/user/getJsapiSigna', {
-            url: encodeURIComponent(window.location.href.split('#')[0])
-        }).then((res) => {
-            if (res.succ) {
-                let { jsapiSignature } = res;
-                wx.config({
-                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                    appId: jsapiSignature.appid, // 必填，公众号的唯一标识
-                    timestamp: jsapiSignature.timestamp, // 必填，生成签名的时间戳
-                    nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
-                    signature: jsapiSignature.signature, // 必填，签名，见附录1
-                    jsApiList: [
-                        'chooseWXPay'
-                    ] // 必填
-                });
-            }
-        });
+        // ToolDps.get('/wx/user/getJsapiSigna', {
+        //     url: encodeURIComponent(location.href.split('#')[0])
+        // }).then((res) => {
+        //     if (res.succ) {
+        //         let { jsapiSignature } = res;
+        //         wx.config({
+        //             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        //             appId: jsapiSignature.appid, // 必填，公众号的唯一标识
+        //             timestamp: jsapiSignature.timestamp, // 必填，生成签名的时间戳
+        //             nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
+        //             signature: jsapiSignature.signature, // 必填，签名，见附录1
+        //             jsApiList: [
+        //                 'chooseWXPay'
+        //             ] // 必填
+        //         });
+        //     }
+        // });
 
 
     }
@@ -658,33 +659,46 @@ class OrderDetail extends Component {
         } = this.props.data;
         return (
             <div className="order-detail-box">
-                <section className="requirement-area">
-                    <h3 className="title">{requirement.typeName}<small>{order.statusStr}</small></h3>
-                    <p className="text order-num">订单编号：{order.ordreId}</p>
-                    <p className="text">付款金额：{order.transactionPrice}</p>
-                    <p className="text publish-time">发布时间：{requirement.createTime}</p>
-                    {requirement.scenes.length > 0 ? <p className="text">搭配场景：{requirement.scenes.join('、')}</p> : null}
-                    {requirement.shops.length > 0 ? <p className="text">搭配类目：{requirement.shops.join('、')}</p> : null}
-                    {requirement.costCode ? <p className="text">预期花费：{requirement.costCode}</p> : null}
-                    {requirement.time ? <p className="text">约定时间：{requirement.time}</p> : null}
-                    {requirement.addres ? <p className="text">约定地址：{requirement.addres}</p> : null}
-                    {requirement.garderobes ? <DaipeiGoods data={requirement.garderobes} /> : null}
-                    <h6 className="text">需求描述：</h6>
-                    <p className="text">{requirement.remark}</p>
+                <p className="text-center status">{order.statusStr}</p>
+                <section className="time-area">
+                    <p>订单编号：<span>{order.ordreId}</span></p>
+                    <p>创建时间：<span>{requirement.createTime}</span></p>
                 </section>
-                {/*搭配师*/}
-                {
-                    collocation ? (
-                        <section className="dps-area">
-                            <header className="dps-header">
-                                <img src={collocation.headImg} alt="" />
-                                <span>{collocation.nickName}</span>
-                            </header>
-                            {order.taskTime ? <time className="text match-time">匹配时间：{order.taskTime}</time> : null}
-                            {order.finshTime ? <time className="text end-time">结束时间：{order.finshTime}</time> : null}
-                        </section>
-                    ) : null
-                }
+                <section className="requirement-area">
+                    <h3>{requirement.typeName}</h3>
+                    {/*搭配师*/}
+                    {
+                        collocation ? (
+                            <ul className="dps-area flex-box">
+                                <li>
+                                    <header className="dps-header">
+                                        <img src={collocation.headImg} alt="" />
+                                    </header>
+                                </li>
+                                <li>
+                                    <span className="nickname">【搭配师】{collocation.nickName}</span>
+                                    {order.taskTime ? <time className="match-time">匹配时间：{order.taskTime}</time> : null}
+                                    {order.finshTime ? <time className="end-time">结束时间：{order.finshTime}</time> : null}
+                                </li>
+                            </ul>
+                        ) : null
+                    }
+                    <section className="form-content">
+                        {requirement.costCode ? <p className="text">预期花费：<span>￥{requirement.costCode}</span></p> : null}
+                        {requirement.shops.length > 0 ? <p className="text">搭配商品：<span>{requirement.shops.join('、')}</span></p> : null}
+                        {requirement.scenes.length > 0 ? <p className="text">搭配场景：<span>{requirement.scenes.join('、')}</span></p> : null}
+                        <p className="text">实付金额：<span>￥{order.transactionPrice}</span></p>
+                        {requirement.time ? <p className="text">约定时间：<span>{requirement.time}</span></p> : null}
+                        {requirement.addres ? <p className="text">约定地址：<span>{requirement.addres}</span></p> : null}
+                    </section>
+                    <section className="describe-area">
+                        <h6>需求描述：</h6>
+                        <p>{requirement.remark}</p>
+                        {requirement.garderobes && requirement.garderobes.length > 0 ? <h6>搭配物品：</h6> : null}
+                        {requirement.garderobes && requirement.garderobes.length > 0 ? <DaipeiGoods data={requirement.garderobes} /> : null}
+                    </section>
+                   
+                </section>
                 {/*评论*/}
                 {comment ? <Score data={comment} /> : null}
                 {/*支付、取消订单button*/}

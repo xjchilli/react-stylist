@@ -19,7 +19,7 @@ class Nav extends Component {
 
     componentDidMount() {
         new Swiper('.order-list-nav', {
-            slidesPerView: 4
+            slidesPerView: 5
         });
     }
 

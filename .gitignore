@@ -4,3 +4,5 @@ node_modules/
 .happypack/
 assets/js
 .tags
+[credential]
+    helper = store

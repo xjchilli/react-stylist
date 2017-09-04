@@ -4,7 +4,7 @@ import { ToolDps } from '../ToolDps';
 import qs from 'query-string';
 
 
-//localStorage.setItem('User',JSON.stringify({openId:'oGHrAv2QLJaScmtYKnK-oVvF81S8'}))      搭配师:4s手机oGHrAvwpDzGjKnPRxHIiCamlAR2o  安卓：oGHrAv2QLJaScmtYKnK-oVvF81S8
+//localStorage.setItem('User',JSON.stringify({openId:'oGHrAv2QLJaScmtYKnK-oVvF81S8'}))      搭配师:安卓手机oGHrAvwpDzGjKnPRxHIiCamlAR2o  7p：oGHrAv2QLJaScmtYKnK-oVvF81S8
 function generateGetCodeUrl(redirectURL) {
     let url = "https://open.weixin.qq.com/connect/oauth2/authorize";
     let appid = Confidential.APP_ID;
@@ -48,7 +48,7 @@ async function getUserInfo(code, setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props, setAuth) {
-    // localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
+    localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
     // if (!ToolDps.sessionItem('redirectUrl')) {
     //     ToolDps.removeLocalItem('User');
     // }

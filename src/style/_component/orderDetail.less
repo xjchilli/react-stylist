@@ -1,73 +1,122 @@
 .order-detail-box {
-  margin: 0 15px;
-  padding-bottom: 150px;
-
-  .text {
-    font-size: 14px;
-    color: #444444;
-    line-height: 22px;
+  padding-bottom: 38px;
+  background: @white;
+  .status {
+    font-size: 17px;
+    color: #ffffff;
+    background: #ff6064;
+    line-height: 55px;
   }
-  .requirement-area {
-    border-bottom: 1px solid rgb(231, 231, 231);
-
-    .title {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 44px;
-      border-bottom: 1px solid rgb(231, 231, 231);
-
-      >small {
-        margin-left: 5px;
-        font-weight: normal;
-        font-size: 12px;
-        border: 1px solid #CC3333;
-        color: #CC3333;
-        border-radius: 5px;
-        padding: 1px 2px;
+  .time-area {
+    background: #f0f5f9;
+    font-size: 11px;
+    color: #999999;
+    padding: 6px 13px;
+    >p {
+      line-height: 22px;
+      >span {
+        margin-left: 2px;
       }
     }
-    .order-num {
-      padding-top: 5px;
-    }
-    .publish-time {
-      color: #999999;
-      padding-bottom: 10px;
+  }
+  .requirement-area {
+    margin: 0 13px;
+    padding-top: 18px;
+    >h3 {
+      font-size: 14px;
+      line-height: 14px;
+      color: #1a1a1a;
+      border-left: 2px solid #ff6064;
+      padding-left: 10px;
+      margin-bottom: 10px;
     }
     .photo-area {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 10px 0;
-
-      .item {
-        flex: 0 0 33.3%;
-        padding: 5px 5px;
-
-        img {
-          margin: auto;
-          width: 80px;
-          height: 80px;
+      margin-top: -10px;
+      .item-3 {
+        margin-top: 10px;
+        &:nth-of-type(3n+1) {
+          padding-right: 8px;
+        }
+        &:nth-of-type(3n+2) {
+          padding: 0 4px;
+        }
+        &:nth-of-type(3n+3) {
+          padding-left: 8px;
+        }
+        .img-show {
+          height: 110px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          border: 1px solid #e6e6e6;
         }
       }
     }
   }
   .dps-area {
+    border-bottom: 1px solid #e6e6e6;
     padding-bottom: 20px;
-
-    .dps-header {
-      padding: 10px 0;
-
-      >img {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
+    li {
+      &:nth-of-type(1) {
+        flex: 0 0 62px;
       }
+      &:nth-of-type(2) {
+        width: 0;
+        flex: 1 0 auto;
+        padding-left: 15px;
+      }
+    }
+    .dps-header {
+      padding: 3px;
+      border: 2px solid #e6e6e6;
+      width: 62px;
+      height: 62px;
+      >img {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #e5e5e5;
+      }
+    }
+    .nickname {
+      margin-left: -7px;
+      font-size: 14px;
+      color: #333333;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 6px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     time {
       display: block;
-      color: rgb(178, 178, 178);
+      color: #333333;
+      font-size: 11px;
+      line-height: 19px;
+    }
+  }
+  .form-content {
+    margin-top: 17px;
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 14px;
+    .text {
+      font-size: 13px;
+      color: #333333;
+      line-height: 24px;
+      >span {
+        font-size: 12px;
+      }
+    }
+  }
+  .describe-area {
+    >h6 {
+      font-size: 13px;
+      color: #333333;
+      margin-top: 18px;
+      margin-bottom: 12px;
+    }
+    >p {
+      font-size: 12px;
+      color: #333333;
     }
   }
   .score-area {
@@ -82,7 +131,7 @@
   .order-action-area {
     .ground {
       line-height: 2rem;
-      background: #ea3c3b;
+      background: #EA3B3A;
       border-radius: 5px;
       color: @white;
       margin: 20px 0;
@@ -98,7 +147,6 @@
       position: relative;
       display: inline-block;
       line-height: 24px;
-
       &:after {
         content: '';
         position: absolute;
@@ -122,20 +170,19 @@
   }
   .action-area {
     text-align: center;
-
     button {
       display: inline-block;
       -webkit-appearance: none;
-      background: #ea3c3b;
-      border-radius: 0.5rem;
+      background: #ff6064;
       color: #ffffff;
-      font-size: 1.7rem;
-      padding: 0.5rem 1rem;
-      margin: 1rem auto;
+      font-size: 14px;
+      padding: 8px 22px;
+      margin: 50px auto;
       border-width: 0;
-
+      border-radius: 10px 10px 4px 4px;
+      box-shadow: 0 10px 6px rgba(255, 96, 100, .3);
       &:first-child {
-        margin-right: 1rem;
+        margin-right: 28px;
       }
     }
   }
@@ -143,10 +190,8 @@
   .user-comment-area {
     header {
       padding-top: 15px;
-
       .haader-img {
         font-size: 14px;
-
         >img {
           width: 30px;
           height: 30px;
@@ -164,7 +209,6 @@
     }
     .star-area {
       margin: 20px 0;
-
       >img {
         display: inline-block;
         width: 40px;
