@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
-import { DataLoad, GetData, Msg } from '../Component/index';
+import { DataLoad, GetData, Msg, PreviewImg } from '../Component/index';
 
 
 //女性类别
@@ -127,14 +127,14 @@ class BoyType extends Component {
                         <p>裤子</p>
                     </div>
                 </li>
-                <li className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '203')}>
+                <li className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '202')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-shorts-normal normal" style={{ fontSize: '15px' }}></span>
                         <span className="icon icon-boy-shorts-selected selected" style={{ fontSize: '15px' }}></span>
                         <p>内衣</p>
                     </div>
                 </li>
-                <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '204')}>
+                <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '203')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-coat-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-boy-coat-selected selected" style={{ fontSize: '28px' }}>
@@ -149,21 +149,21 @@ class BoyType extends Component {
                         <p>外套</p>
                     </div>
                 </li>
-                <li className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '205')}>
+                <li className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '204')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-shoes-normal normal" style={{ fontSize: '20px' }}></span>
                         <span className="icon icon-boy-shoes-selected selected" style={{ fontSize: '20px' }}></span>
                         <p>鞋子</p>
                     </div>
                 </li>
-                <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '206')}>
+                <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '205')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-bag-normal normal"></span>
                         <span className="icon icon-girl-bag-selected selected"></span>
                         <p>包包</p>
                     </div>
                 </li>
-                <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '207')}>
+                <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '206')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-ornaments-normal normal" style={{ fontSize: '27px' }}></span>
                         <span className="icon icon-boy-ornaments-selected selected" style={{ fontSize: '27px' }}>
@@ -300,7 +300,7 @@ class WardrobeList extends Component {
         let files = e.target.files;
         if (files && files[0]) {
             let readFile = new FileReader();
-            readFile.onload = ()=> {
+            readFile.onload = () => {
                 this.selectType(files[0]);
             }
             readFile.readAsDataURL(files[0]);
@@ -354,6 +354,32 @@ class WardrobeList extends Component {
         });
     }
 
+    /**
+   * 长按
+   */
+    longPress(e) {
+        e.preventDefault();
+        this.pressStartTime = new Date();
+    }
+
+    /**
+     * 长按结束
+     */
+    pressEnd(gid, bigImgUrl, e) {
+        let time = new Date().getTime() - this.pressStartTime;
+        if (time > 800) {
+            this.setState({
+                deleteImgWindow: true,
+                gid: gid
+            });
+        } else {
+            this.setState({
+                previewBigImg: true, 
+                bigImgUrl: bigImgUrl
+            });
+        }
+    }
+
     render() {
         return (
             <section className="full-page wardrobe-list-area flex-box" >
@@ -364,8 +390,8 @@ class WardrobeList extends Component {
                             {
                                 this.state.data.map((item, index) => {
                                     return (
-                                        <li className="item-3" key={index}>
-                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onClick={() => { this.setState({ deleteImgWindow: true, gid: item.id }) }}></div>
+                                        <li className="item-3" key={index} >
+                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onTouchStart={this.longPress.bind(this)} onTouchEnd={this.pressEnd.bind(this, item.id, item.imgUrl)} ></div>
                                         </li>
                                     )
                                 })
@@ -385,7 +411,8 @@ class WardrobeList extends Component {
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {/* 删除图片 */}
                 {this.state.deleteImgWindow ? <DeleteImg gid={this.state.gid} delete={this.deleteImg.bind(this)} close={() => { this.setState({ deleteImgWindow: false }) }} /> : null}
-
+                {/* 图片预览 */}
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section>
         )
     }

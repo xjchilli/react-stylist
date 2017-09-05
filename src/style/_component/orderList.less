@@ -1,19 +1,20 @@
 .order-list-page{
-  padding-top:3.8rem;
+  padding-top:38px;
 }
 .order-list-nav{
-  position:fixed;top:0;width:100%;background: #fefefe;color: #666666;font-size: 12px;text-align: center;line-height: 3.8rem;
+  position:fixed;top:0;width:100%;background: #fefefe;color: #666666;font-size: 12px;text-align: center;line-height: 38px;
   .swiper-slide{
-    >span{display:inline-block;border-bottom: 2px solid transparent;}
+    a{display: block;height: 100%;color: #666666;}
+    span{display:inline-block;border-bottom: 2px solid transparent;}
     &.active{
-      >span{border-bottom-color:#ff6064; color: #ff6064;font-weight: 500;}
+      span{border-bottom-color:#ff6064; color: #ff6064;font-weight: 500;}
     }
   }
 }
 .order-list-area{
   margin-top: 8px;
   li{
-    position:relative;background: @white;min-height: 40px;padding: 10px 15px;border-bottom: 1px solid rgb(215,215,215);
+    position:relative;background: @white;min-height: 40px;padding: 10px 15px;border-bottom: 1px solid #e6e6e6;
     .link{width: 100%;display: block;}
     .service-type{font-size: 14px;color: #333333;font-weight: bold;}
     .time,.dps-name{

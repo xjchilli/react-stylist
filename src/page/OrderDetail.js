@@ -30,19 +30,19 @@ class Score extends Component {
         let scoreHtml = [];
         for (let i = 0; i < 5; i++) {
             if (i < score) {
-                scoreHtml.push(<img src="/assets/img/star.png" key={i} alt="" />);
+                scoreHtml.push(<span className="icon icon-star-selected" key={i}></span>);
             } else {
-                scoreHtml.push(<img src="/assets/img/starEmpty.png" key={i} alt="" />);
+                scoreHtml.push(<span className="icon icon-star-normal" key={i}></span>);
             }
         }
         return (
-            <section>
-                <div className="score-area">
-                    <label className="text">评分：</label>
+            <section className="score-area">
+                <div className="score">
+                    <label>评分：</label>
                     {scoreHtml}
                 </div>
-                <h6 className="text">评价：</h6>
-                <p className="text">{data.content}</p>
+                <h6 className="user-comment-title">评价：</h6>
+                <p className="user-comment-content">{data.content}</p>
                 {
                     data.reply.map((item, index) => {
                         return <DpsReply data={item} key={index} />
@@ -58,8 +58,8 @@ class DpsReply extends Component {
         let { data } = this.props;
         return (
             <section className="dps-reply">
-                <h6>{data.nickName}回复：</h6>
-                <p className="text">{data.content}</p>
+                <h6>{data.nickName}的回复：</h6>
+                <p className="content">{data.content}</p>
             </section>
         )
     }
@@ -367,6 +367,9 @@ PublishCancel.contextTypes = {
 class ToChat extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isEndService: false//是否结束服务
+        }
     }
 
     /**
@@ -376,7 +379,9 @@ class ToChat extends Component {
         let {
             ordreId
         } = this.props.order;
-
+        this.setState({
+            isEndService: true
+        })
         ToolDps.post('/wx/order/finish', {
             orderId: ordreId
         }).then((res) => {
@@ -406,7 +411,12 @@ class ToChat extends Component {
                 <Link to={"/chat?selToID=" + timId + "&headUrl=" + headImg + "&nickname=" + nickName}>
                     <button>沟通</button>
                 </Link>
-                <button onClick={this.endService.bind(this)}>结束服务</button>
+                {
+                    !this.state.isEndService ? (
+                        <button onClick={this.endService.bind(this)}>结束服务</button>
+                    ) : null
+                }
+
             </div>
         )
     }
@@ -502,30 +512,38 @@ class ToCommnet extends Component {
         let scoreHtml = [];
         for (let i = 0; i < 5; i++) {
             if (i < score) {
-                scoreHtml.push(<img src="/assets/img/star.png" key={i} onClick={() => { this.setState({ score: i + 1 }) }} alt="" />);
+                scoreHtml.push(<span className="icon icon-star-selected" key={i} onClick={() => { this.setState({ score: i + 1 }) }}></span>);
             } else {
-                scoreHtml.push(<img src="/assets/img/starEmpty.png" key={i} onClick={() => { this.setState({ score: i + 1 }) }} alt="" />);
+                scoreHtml.push(<span className="icon icon-star-normal" key={i} onClick={() => { this.setState({ score: i + 1 }) }}></span>);
             }
         }
 
         return (
-            <section className="full-page text-center user-comment-area">
-                <header className="text-center">
-                    <div className="haader-img">
-                        <img src={collocation.headImg} alt="" />
-                        <span>{collocation.nickName}</span>
+            <section className="user-comment-area">
+                <section className="box">
+                    <ul className="flex-box header-area">
+                        <li className="text-right">
+                            <header className="dps-header">
+                                <img src={collocation.headImg} alt="" />
+                            </header>
+                        </li>
+                        <li>
+                            <span className="nickname">【搭配师】{collocation.nickName}</span>
+                            <time className="match-time">匹配时间：{order.taskTime}</time>
+                            <time className="end-time">结束时间：{this.state.endServiceTime != "" ? this.state.endServiceTime : order.finshTime}</time>
+                        </li>
+                    </ul>
+                    <div className="star-area text-center">
+                        {scoreHtml}
                     </div>
-                    <p className="match-time">匹配时间：{order.taskTime}</p>
-                    <p className="end-time">结束时间：{this.state.endServiceTime != "" ? this.state.endServiceTime : order.finshTime}</p>
-                </header>
-                <div className="star-area">
-                    {scoreHtml}
-                </div>
-                <textarea cols="30" rows="10" placeholder="评价下搭配师的服务吧" onChange={(e) => { this.setState({ content: e.target.value }) }} value={this.state.content} />
-                <div className="action-area">
-                    <button onClick={this.props.commentLayerHide}>取消</button>
-                    <button onClick={this.toComment.bind(this)}>完成</button>
-                </div>
+                    <section className="content">
+                        <textarea placeholder="评价下搭配师的服务吧~" onChange={(e) => { this.setState({ content: e.target.value }) }} value={this.state.content} />
+                    </section>
+                    <div className="action-area">
+                        <button onClick={this.toComment.bind(this)}>完成</button>
+                    </div>
+                    <span className="icon icon-close-gray" onClick={this.props.commentLayerHide}></span>
+                </section>
             </section>
         )
     }
@@ -582,30 +600,6 @@ class OrderDetail extends Component {
     componentDidMount() {
         document.title = "订单详情";
         WxPayAuth();
-        // let url = location.href.split('#')[0];
-        // if (ToolDps.isWKWebview) {//用于区别ios android
-        //     url = ToolDps.sessionItem('authUrl');
-        // }
-        //jsapi签名
-        // ToolDps.get('/wx/user/getJsapiSigna', {
-        //     url: encodeURIComponent(location.href.split('#')[0])
-        // }).then((res) => {
-        //     if (res.succ) {
-        //         let { jsapiSignature } = res;
-        //         wx.config({
-        //             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        //             appId: jsapiSignature.appid, // 必填，公众号的唯一标识
-        //             timestamp: jsapiSignature.timestamp, // 必填，生成签名的时间戳
-        //             nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
-        //             signature: jsapiSignature.signature, // 必填，签名，见附录1
-        //             jsApiList: [
-        //                 'chooseWXPay'
-        //             ] // 必填
-        //         });
-        //     }
-        // });
-
-
     }
 
     msgLayerShow(obj) {
@@ -697,7 +691,7 @@ class OrderDetail extends Component {
                         {requirement.garderobes && requirement.garderobes.length > 0 ? <h6>搭配物品：</h6> : null}
                         {requirement.garderobes && requirement.garderobes.length > 0 ? <DaipeiGoods data={requirement.garderobes} /> : null}
                     </section>
-                   
+
                 </section>
                 {/*评论*/}
                 {comment ? <Score data={comment} /> : null}

@@ -29,8 +29,10 @@ ToolDps.ajax = (mySetting) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }, //一个对象，包含请求头信息
-        onprogress: function () { }, //处理onprogress的函数
-        onuploadprogress: function () { }, //处理.upload.onprogress的函数
+        onprogress: function (evt) {
+        }, //处理onprogress的函数
+        onuploadprogress: function (evt) {
+        }, //处理.upload.onprogress的函数
     };
 
     options.type = options.type.toUpperCase();
@@ -59,7 +61,7 @@ ToolDps.ajax = (mySetting) => {
 
     let xhr = new XMLHttpRequest();
     return new Promise(function (resolve, reject) {
-        options.type === "POST" ? xhr.open(options.type, options.url, options.async) : xhr.open(options.type, options.url + "?" + data + "&"+new Date().getTime(), options.async);
+        options.type === "POST" ? xhr.open(options.type, options.url, options.async) : xhr.open(options.type, options.url + "?" + data + "&" + new Date().getTime(), options.async);
         if (openId) {
             xhr.setRequestHeader('openId', openId);
         }

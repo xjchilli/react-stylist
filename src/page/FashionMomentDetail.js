@@ -4,11 +4,9 @@
  * Created by potato on 2017/5/22 0022.
  */
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
-// import { target } from '../Config/Config';
 import classNames from 'classnames';
 import { DataLoad, GetData, Msg, PreviewImg, ToReward } from "../Component/index";
 import IM from './component/IM';
@@ -31,7 +29,12 @@ class DapeisInfo extends Component {
                 <header>
                     <div className="item">
                         <img src={headImg} alt="" />
-                        <i className="gender">{sex === 1 ? '♂' : '♀'}</i>
+                        {sex && sex === 2 ? (
+                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                        ) : (
+                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            )
+                        }
                     </div>
                     <div className="item">
                         <p className="nickname">{nickName}</p>
@@ -227,7 +230,13 @@ class Comment extends Component {
                                 <li key={index}>
                                     <div className="item">
                                         <img src={item.headImg} alt="" />
-                                        <i className="gender">{item.sex === 1 ? '♂' : '♀'}</i>
+                                        {item.sex && item.sex === 2 ? (
+                                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                        ) : (
+                                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                            )
+                                        }
+                                        {/* <i className="gender">{item.sex === 1 ? '♂' : '♀'}</i> */}
                                     </div>
                                     <div className="item">
                                         <p className="nickname">{item.nickName}</p>

@@ -8,9 +8,9 @@ const server = new WebpackDevServer(compiler, {
     proxy: { // proxy URLs to backend development server
         '/wx': {
             //线上服务器后端:http://wxapi.dapeis.com  线上服务器前端:http://wx.dapeis.com  
-            //测试服务器:http://wxapi.dapeis.net  开发:http://devwx.dapeis.net
+            //测试服务器:http://wxapi.dapeis.net  开发:http://devwx.dapeis.net  测试服务器前端:http://wx.dapeis.net
             //支付测试:http://pywx.dapeis.net
-            target: 'http://devwx.dapeis.net',
+            target: 'http://pywx.dapeis.net',
             changeOrigin: true
         }
     },
