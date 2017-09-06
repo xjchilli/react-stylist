@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { ToolDps } from '../ToolDps';
 import action from '../Action/Index';
 import classNames from 'classnames';
-import { Msg, City, PreviewImg } from '../Component/index';
+import { Msg, City, PreviewImg, Loading } from '../Component/index';
 // import { is, fromJS } from 'immutable';
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
@@ -857,7 +857,7 @@ class LifePhoto extends Component {
                         <div className="upload-area">
                             <span className="icon icon-camera"></span>
                             <p>添加近期全身照</p>
-                            <input type="file" ref={el => this.file = el} multiple accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                            <input type="file" ref={el => this.file = el} multiple accept="image/*"  capture="camera" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
                         </div>
                     </li>
                 </ul>
@@ -1082,7 +1082,7 @@ class CustomSuit extends Component {
                         <p>开始定制你的专属信息吧！</p>
                     </div>
                     <div className="item">
-                        <img src={this.state.data.headImg} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: this.state.data.headImg }) }}/>
+                        <img src={this.state.data.headImg} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: this.state.data.headImg }) }} />
                         <div className="sex-area">
                             <span className={girlSex} onClick={this.selectSex.bind(this, 2)}>
                                 {

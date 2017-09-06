@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
-import { DataLoad, GetData, Msg, PreviewImg } from '../Component/index';
+import { DataLoad, GetData, Msg, PreviewImg, Loading } from '../Component/index';
 
 
 //女性类别
@@ -228,6 +228,7 @@ class WardrobeList extends Component {
             gid: '',//图片id
             typeCode: '', //类别Code
             data: [],
+            imgLoading: false//图片加载loading
         }
     }
 
@@ -315,6 +316,9 @@ class WardrobeList extends Component {
         formdata.append('img', file);
         formdata.append('remark', '');
         formdata.append('sex', this.state.sex);
+        this.setState({
+            imgLoading: true
+        });
 
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
@@ -328,12 +332,14 @@ class WardrobeList extends Component {
                     imgSrc: '', //图片地址
                     msgShow: true,
                     msgText: '上传成功',
-                    data: newData
+                    data: newData,
+                    imgLoading: false
                 });
             } else {
                 this.setState({
                     msgShow: true,
-                    msgText: '上传失败'
+                    msgText: '上传失败',
+                    imgLoading: false
                 });
             }
         });
@@ -374,7 +380,7 @@ class WardrobeList extends Component {
             });
         } else {
             this.setState({
-                previewBigImg: true, 
+                previewBigImg: true,
                 bigImgUrl: bigImgUrl
             });
         }
@@ -396,6 +402,13 @@ class WardrobeList extends Component {
                                     )
                                 })
                             }
+                            {
+                                this.state.imgLoading ? (
+                                    <li className="item-3" >
+                                        <Loading />
+                                    </li>
+                                ) : null
+                            }
                         </ul>
                     )}
                 </section>
@@ -413,6 +426,7 @@ class WardrobeList extends Component {
                 {this.state.deleteImgWindow ? <DeleteImg gid={this.state.gid} delete={this.deleteImg.bind(this)} close={() => { this.setState({ deleteImgWindow: false }) }} /> : null}
                 {/* 图片预览 */}
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
+
             </section>
         )
     }

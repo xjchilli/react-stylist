@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { ToolDps } from '../../ToolDps';
-import { DataLoad, GetData, Msg } from '../../Component/index';
+import { DataLoad, GetData, Msg, Loading } from '../../Component/index';
 
 
 //女性类别
@@ -263,6 +263,7 @@ class MyWardrobe extends Component {
             msgText: '', //提示内容
             typeCode: props.sex === 2 ? "100" : "200", //类别Code
             data: [],
+            imgLoading: false,//图片加载loading
             selectGoods: props.garderobeArr || []//选择的物品
         }
         this.index = -1;//选中下标
@@ -313,7 +314,7 @@ class MyWardrobe extends Component {
         let files = e.target.files;
         if (files && files[0]) {
             let readFile = new FileReader();
-            readFile.onload = ()=> {
+            readFile.onload = () => {
                 this.selectType(files[0]);
             }
             readFile.readAsDataURL(files[0]);
@@ -329,6 +330,9 @@ class MyWardrobe extends Component {
         formdata.append('img', file);
         formdata.append('remark', '');
         formdata.append('sex', this.state.sex);
+        this.setState({
+            imgLoading: true
+        });
 
         ToolDps.post('/wx/garderobe/add', formdata, {
             'Content-Type': 'multipart/form-data'
@@ -343,12 +347,14 @@ class MyWardrobe extends Component {
                     imgSrc: '', //图片地址
                     msgShow: true,
                     msgText: '上传成功',
-                    data: newData
+                    data: newData,
+                    imgLoading: false
                 });
             } else {
                 this.setState({
                     msgShow: true,
-                    msgText: '上传失败'
+                    msgText: '上传失败',
+                    imgLoading: false
                 });
             }
         });
@@ -367,7 +373,7 @@ class MyWardrobe extends Component {
             url: url,
             typeCode: this.state.typeCode
         }
-      
+
         let newArr = Array.prototype.slice.apply(this.state.selectGoods);
         let flag = this.checkSelected(id);
         if (flag) {
@@ -434,6 +440,13 @@ class MyWardrobe extends Component {
                                         </li>
                                     )
                                 })
+                            }
+                            {
+                                this.state.imgLoading ? (
+                                    <li className="item-3" >
+                                        <Loading />
+                                    </li>
+                                ) : null
                             }
                         </ul>
                     )}

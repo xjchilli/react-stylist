@@ -1,12 +1,13 @@
 /**
  * Created by potato on 2017/3/24.
  */
-import {GetNextPage,GetData,DataLoad} from './common/index';
+import { GetNextPage, GetData, DataLoad } from './common/index';
 import City from './city/index';
 import Slider from './slider/index';
-import {Tips,Msg} from './tips/index';
+import { Tips, Msg } from './tips/index';
 import PreviewImg from './preview/index';
-import ToReward from './reward/index'
+import ToReward from './reward/index';
+import Loading from './loading/Loading'
 
 export {
     GetNextPage,
@@ -17,5 +18,6 @@ export {
     Tips,
     Msg,
     PreviewImg,
-    ToReward
+    ToReward,
+    Loading
 }

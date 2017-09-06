@@ -4,7 +4,6 @@
 @import './myPromotionCode';
 //可用的优惠码
 @import './usefulPromotion';
-
 .full-page {
   position: absolute;
   top: 0;
@@ -16,81 +15,94 @@
   margin: auto;
   -webkit-overflow-scrolling: touch;
 }
+
 .bgWhite {
   background-color: @white;
 }
+
 //icon删除
-.icon-svg-delete,.icon-svg-close {
+.icon-svg-delete, .icon-svg-close {
   width: 20px;
   height: 20px;
 }
+
 //图片
 .icon-svg-img {
   width: 30px;
   height: 30px;
 }
+
 //加号
 .icon-svg-add {
   width: 40px;
   height: 40px;
 }
+
 //表情
 .icon-svg-face {
   width: 20px;
   height: 20px;
 }
+
 //铃铛
 .icon-svg-bell {
   width: 50px;
   height: 50px;
 }
+
 //点赞，打赏
 .icon-svg-zan, .icon-svg-reward {
   width: 15px;
   height: 15px;
 }
+
 .icon-svg-zan {
   fill: gray;
-
   &.active {
     fill: #cc5858;
   }
 }
+
 //评论
 .icon-svg-comment {
   width: 20px;
   height: 20px;
 }
+
 //红包
 .icon-svg-redBag {
   width: 30px;
   height: 30px;
 }
+
 // 问号
 .icon-svg-question {
   width: 15px;
   height: 15px;
 }
+
 //优惠码状态、分享按钮
 .icon-svg-promotion-code {
   width: 50px;
   height: 50px;
 }
+
 //分享按钮
 .icon-svg-share-btn {
   width: 40px;
   height: 40px;
 }
+
 .icon-svg-share-tips {
   width: 250px;
   height: 250px;
 }
+
 //铃铛
 .bell-link {
   position: fixed;
   top: 40px;
   right: 40px;
-
   .circle {
     display: none;
   }
@@ -112,10 +124,12 @@
 }
 
 //微信logo
-.icon-svg-weixin{
-  width: 20px;height: 20px;
-  fill:rgb(214,214,214);
+.icon-svg-weixin {
+  width: 20px;
+  height: 20px;
+  fill: rgb(214, 214, 214);
 }
+
 //loading start
 .data-load {
   .msg {
@@ -124,6 +138,7 @@
     font-size: 14px;
   }
 }
+
 .data-load-true {
   margin: 20px auto 20px auto;
   position: relative;
@@ -133,11 +148,11 @@
   border: 4px solid #80bd01;
   border-right-color: transparent;
   border-radius: 50%;
-
   .msg {
     display: none;
   }
 }
+
 // 过渡 end
 @keyframes rotate-forever {
   0% {
@@ -147,7 +162,9 @@
     transform: rotate(360deg)
   }
 }
+
 //loading end
+
 //button
 .btn {
   display: block;
@@ -161,51 +178,55 @@
   line-height: 3.5rem;
   border-width: 0;
 }
+
 .text-center {
   text-align: center;
 }
+
 .text-right {
   text-align: right;
 }
+
 .no-record {
   padding: 15px;
   font-size: 14px;
 }
+
 // 左滑动start
 .move-enter {
   transform: translate3d(100%, 0, 0);
-
   &.move-enter-active {
     transform: translate3d(0, 0, 0);
     transition: all 500ms ease-in;
   }
 }
+
 .move-leave {
   transform: translate3d(0, 0, 0);
-
   &.move-leave-active {
     transform: translate3d(100%, 0, 0);
     transition: all 300ms ease-in;
   }
 }
+
 // 左滑动 end
 // 淡入淡出 start
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s;
 }
+
 .fade-enter, .fade-leave-active {
   opacity: 0;
 }
+
 // 淡入淡出 end
 //form input layout
 // .form-ground {
 //   display: flex;
 //   margin-bottom: 15px;
-
 //   .item {
 //     font-size: 16px;
 //     height: 30px;
-
 //     &:first-child {
 //       flex: 0 0 50px;
 //       padding-left: 10px;
@@ -236,11 +257,15 @@
 }
 
 //flex layout start
-.flex-box{
-   display: flex;flex-wrap: wrap;
-   >.item-2{flex: 0 0 50%;}
-   >.item-3{flex: 0 0 100/3%;}
+.flex-box {
+  display: flex;
+  flex-wrap: wrap;
+  >.item-2 {
+    flex: 0 0 50%;
+  }
+  >.item-3 {
+    flex: 0 0 100/3%;
+  }
 }
 
 //flex layout end
-
