@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "better-scroll": "^1.2.6",
     "bundle-loader": "^0.5.5",
     "classnames": "^2.2.5",
     "flatpickr": "^3.0.6",
