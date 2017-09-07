@@ -40,10 +40,32 @@ class Profile extends Component {
     }
     componentDidMount() {
         document.title = "个人信息";
-        // let scroll = new BScroll('.profile-container',{
-        //     click: true,
-        //     scrollbar:true
+        this.scroll = new BScroll('.profile-container', {
+            click: true,
+            scrollbar: true,
+            probeType:1,
+            pullDownRefresh:{
+                threshold:90,
+                stop:40
+            }
+        });
+        // this.scroll.on('touchEnd', (pos) => {
+        //     // 下拉动作 
+        //     if (pos.y > 50) {
+        //         console.log('刷新');
+        //         this.scroll.finishPullUp();
+        //         this.scroll.refresh()
+        //     }
         // });
+        // this.scroll.on('beforeScrollStart', (pos) => {
+        //    console.log('滚动开始之前。');
+        // });
+        // this.scroll.on('scrollStart', (pos) => {
+        //     console.log('滚动开始时。');
+        //  });
+        //  this.scroll.on('scroll', (pos) => {
+        //     console.log('滚动的实时坐标');
+        //  });
     }
 
     render() {
