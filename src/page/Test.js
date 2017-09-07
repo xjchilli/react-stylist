@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData, PreviewImg } from '../Component/index';
-import BScroll from 'better-scroll';
+// import BScroll from 'better-scroll';
 
 class Main extends Component {
     constructor(props) {
@@ -40,10 +40,10 @@ class Profile extends Component {
     }
     componentDidMount() {
         document.title = "个人信息";
-        let scroll = new BScroll('.profile-container',{
-            click: true,
-            scrollbar:true
-        });
+        // let scroll = new BScroll('.profile-container',{
+        //     click: true,
+        //     scrollbar:true
+        // });
     }
 
     render() {

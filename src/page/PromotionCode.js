@@ -92,62 +92,86 @@ class PromotionCode extends Component {
 
 		return (
 			<div className='promotionCode-area'>
-				<div className="">
-					<header>
-						<p className="text-right help-link-area">
-							<Link to="/usage">
-								<svg viewBox="0 0 1024 1024" className="icon-svg-question" >
-									<use xlinkHref="/assets/img/icon.svg#svg-question" />
-								</svg>
-								使用规则
+				<header>
+					<p className="text-right help-link-area">
+						<Link to="/usage">
+							<svg viewBox="0 0 1024 1024" className="icon-svg-question" >
+								<use xlinkHref="/assets/img/icon.svg#svg-question" />
+							</svg>
+							使用规则
 							</Link>
-						</p>
-						{/*兑换优惠码*/}
-						<section className="exchange-code-area" >
+					</p>
+					{/*兑换优惠码*/}
+					<ul className="flex-box exchange-code-area" >
+						<li>
 							<input type="text" placeholder="输入优惠码" maxLength="6" defaultValue={this.state.promotionCode} onChange={(e) => { this.setState({ promotionCode: e.target.value.trim() }) }} />
-							<button className="btn" onClick={this.exchange.bind(this)}>兑换</button>
-						</section>
-
-
-
-						<p className="text-center tips">优惠码将在下次使用时自动抵消费用</p>
-					</header>
-					<ul className="promotion-list-area">
-						{
-							this.state.data.map((promotion, index) => {
-								return (
-									<li key={index}>
-										<h5>{promotion.name}</h5>
-										<p className="time">有效期至{promotion.expiryDate}</p>
-										<p className="tips">好友分享优惠码获得</p>
-										<div className="price-area">
-											<small>￥</small>
-											{promotion.price}
-										</div>
-										{
-											promotion.status === 2 ? (
-												<svg viewBox="0 0 190 150" className="icon-svg-promotion-code">
-													<use xlinkHref="/assets/img/icon.svg#svg-used" />
-												</svg>
-											) : null
-										}
-										{
-											promotion.status === 3 ? (
-												<svg viewBox="0 0 190 150" className="icon-svg-promotion-code">
-													<use xlinkHref="/assets/img/icon.svg#svg-past" />
-												</svg>
-											) : null
-										}
-
-									</li>
-								)
-							})
-						}
+						</li>
+						<li>
+							<button className="btn" onClick={this.exchange.bind(this)}>立即兑换</button>
+						</li>
 					</ul>
-				</div>
+				</header>
+				<ul className="promotion-list-area">
+					<li>
+						<Link to="/">
+							<ul className="flex-box list-box">
+								<li>
+									<img className="lcicle" src="/assets/img/promotion/lcircle.jpg" />
+									<img className="border-center" src="/assets/img/promotion/border-center.jpg" />
+									<ul className="price-area">
+										<li>
+											<span className="money-icon">
+												<span className="icon icon-money-overdue"></span>
+											</span>
+											<span className="num">19</span>
+										</li>
+										<li>
+											<span className="icon icon-promotion-font"></span>
+											<br />
+											<span className="icon icon-all-server-use-font"></span>
+										</li>
+									</ul>
+									<time className="text-center time">有效期至2017-9-6</time>
+								</li>
+								<li>
+									<span className="icon icon-use-font"></span>
+									<img className="rcicle" src="/assets/img/promotion/rcircle.jpg" />
+								</li>
+							</ul>
+						</Link>
+					</li>
+					<li className="promotion-past">
+						<Link to="/">
+							<ul className="flex-box list-box">
+								<li>
+									<img className="lcicle" src="/assets/img/promotion/lcircle-gray.jpg" />
+									<img className="border-center" src="/assets/img/promotion/border-center-gray.jpg" />
+									<ul className="price-area">
+										<li>
+											<span className="money-icon">
+												<span className="icon icon-money-overdue-gray"></span>
+											</span>
+											<span className="num">19</span>
+										</li>
+										<li>
+											<span className="icon icon-promotion-font"></span>
+											<br />
+											<span className="icon icon-all-server-use-font"></span>
+										</li>
+									</ul>
+									<time className="text-center time">有效期至2017-9-6</time>
+								</li>
+								<li>
+									<span className="icon icon-use-font"></span>
+									<img className="rcicle" src="/assets/img/promotion/rcircle-gray.jpg" />
+								</li>
+							</ul>
+						</Link>
+					</li>
+				</ul>
 				{this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
 				{/*暂时隐藏  */}
-				 {/* {this.state.couponsCode ? <MyPromotionCode userId={this.props.userId} couponsCode={this.state.couponsCode} /> : null}  */}
+				{/* {this.state.couponsCode ? <MyPromotionCode userId={this.props.userId} couponsCode={this.state.couponsCode} /> : null}  */}
 			</div>
 		)
 	}

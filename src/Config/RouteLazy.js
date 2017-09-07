@@ -25,6 +25,7 @@ import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/Wardro
 import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList';
 import OrderDetailContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetail';
 import PromotionCodeContainer from 'bundle-loader?lazy&name=[name]!../page/PromotionCode';
+import GetPromotionContainer from 'bundle-loader?lazy&name=[name]!../page/GetPromotion';
 import ShareContainer from 'bundle-loader?lazy&name=[name]!../page/Share';
 import UsageContainer from 'bundle-loader?lazy&name=[name]!../page/Usage';
 import FeedbackContainer from 'bundle-loader?lazy&name=[name]!../page/Feedback';
@@ -141,6 +142,11 @@ let routers = [
         path: '/promotionCode',
         exact: false,
         component: (props) => getComponent(props, PromotionCodeContainer)
+    },
+    {//成功领取优惠劵
+        path: '/getPromotion',
+        exact: false,
+        component: (props) => getComponent(props, GetPromotionContainer)
     },
      {//分享
         path: '/share',
