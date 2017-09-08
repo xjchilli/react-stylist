@@ -1,44 +1,137 @@
 //优惠码
 .pay-select-promotion {
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-
-    .promotion-list-area {
-        padding-bottom: 100px;
-
-        li {
-            .icon-svg-promotion-code {
-                display: none;
-                bottom: -6px;
-            }
+    background: rgba(0, 0, 0, .5);
+    .box {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 400px;
+        background: #ffffff;
+        width: 100%;
+    }
+    .title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: @white;
+        width: 100%;
+        font-size: 14px;
+        color: #666666;
+        font-weight: 500;
+        padding: 13px;
+        z-index: 99;
+    }
+    .close {
+        position: absolute;
+        right: 13px;
+        top: 9px;
+        z-index: 99;
+        width: 18px;
+        height: 18px;
+        &::after {
+            width: 23px;
+            height: 2px;
+            left: -3px;
+            top: 11px;
+            border-radius: 2px;
+            background: #999999;
+        }
+        &::before {
+            width: 2px;
+            height: 23px;
+            left: 8px;
+            top: 0;
+            border-radius: 2px;
+            background: #999999;
+        }
+    }
+    .list {
+        padding: 0 13px;
+        height: 100%;
+        padding-top: 46px;
+        overflow-y: auto;
+        >li {
+            border-radius: 3px;
+            border: 1px solid #e5e5e5;
+            margin-bottom: 4px;
             &.active {
-                border-bottom-color: #ED0000;
-
-                .icon-svg-promotion-code {
-                    display: block;
+                .content {
+                    li {
+                        &:nth-of-type(2) {
+                            .yes {
+                                visibility: visible;
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
-    .action-area {
-        background: #f0f0f0;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 6rem;
-        box-shadow: 5px 5px 15px #000000;
-
-        button {
-            width: 16rem;
-            margin: 1.25rem auto 0;
-            height: 40px;
-            line-height: 40px;
+        .content {
+            li {
+                height: 90px;
+                &:nth-of-type(1) {
+                    position: relative;
+                    flex: 0 0 100px;
+                    border-right: 1px dashed #e6e6e6;
+                    font-weight: bold;
+                    color: #ff6064;
+                    font-size: 15px;
+                    line-height: 107px;
+                    >span {
+                        font-size: 36px;
+                    }
+                    &::before, &::after {
+                        content: '';
+                        width: 16px;
+                        height: 8px;
+                        position: absolute;
+                        z-index: 9;
+                        border-radius: 8px 8px 0 0;
+                        background: @white;
+                        border: 1px solid #e6e6e6;
+                        border-width: 1px 1px 0 1px;
+                    }
+                    &::before {
+                        top: -1px;
+                        right: -9px;
+                        transform: rotate(180deg);
+                    }
+                    &::after {
+                        bottom: -1px;
+                        right: -9px;
+                    }
+                }
+                &:nth-of-type(2) {
+                    position: relative;
+                    flex: 1 0 auto;
+                    padding-left: 7.8%;
+                    >.service-type {
+                        margin-top: 22px;
+                        font-size: 13px;
+                        color: #333333;
+                        font-weight: 500;
+                    }
+                    >time {
+                        margin-top: 16px;
+                        display: block;
+                        font-size: 11px;
+                        color: #999999;
+                    }
+                    .yes {
+                        visibility: hidden;
+                        display: inline-block;
+                        .cicle();
+                        right: 10%;
+                        top: 50%;
+                        transform: translate(0, -50%);
+                    }
+                }
+            }
         }
     }
 }

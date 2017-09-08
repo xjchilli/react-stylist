@@ -13,7 +13,6 @@ import qs from 'query-string';
 class Nav extends Component {
     constructor(props) {
         super(props);
-        console.log(props.status);
         this.state = {
             status: props.status || ''//-1:全部 0 : 待付款  1:发布中  2 :服务中 3:待评价 10 :已完成 
         }

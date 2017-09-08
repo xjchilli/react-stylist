@@ -1,70 +1,93 @@
-.pay-msg {
-    margin: 10px;
-    border-radius: 5px;
-    background-color: @white;
-
-    .header {
-        font-size: 1.6rem;
-        display: flex;
-
-        .item {
-            padding: 15px 0;
-            flex: auto;
-
-            &:first-child {
-                padding-left: 40px;
-            }
-            &:last-child {
-                text-align: center;
-            }
-        }
+.pay-page {
+    >.service-type {
+        background: @white;
+        line-height: 70px;
+        color: #1a1a1a;
+        font-size: 16px;
+        padding-left: 13px;
+        font-weight: 500;
     }
-    .content {
-        font-size: 1.4rem;
-        margin: 0 10px;
-        padding: 30px 0 100px 30px;
-        border-top: .1rem dashed rgb(188, 188, 188);
-
-        .ground {
-            line-height: 2rem;
-        }
-        label {
-            padding-right: 20px;
-        }
-        // 优惠码信息
-        .promotion-lable {
-            word-spacing: 3px;
-        }
-        .promotion-num {
+    .pay-money {
+        margin-top: 7px;
+        padding-left: 13px;
+        background: @white;
+        li {
             position: relative;
-            display: inline-block;
-
-            &:after {
-                content: '';
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+            color: #666666;
+            font-weight: 500;
+            &:first-child {
+                border-bottom: 1px solid #e6e6e6;
+            }
+            .money {
+                display: inline-block;
+                margin-left: 20px;
+                font-size: 15px;
+                color: #ff6064;
+            }
+            .used-one {
+                display: inline-block;
+                margin-left: 5px;
+                font-size: 13px;
+                color: #999999;
+            }
+            .borrow{
                 position: absolute;
-                right: -1.5rem;
-                top: 50%;
-                margin-top: -4px;
-                width: 8px;
-                height: 8px;
-                border: 1px solid #000000;
-                border-width: 1px 1px 0 0;
-                transform: rotate(45deg);
+                top:50%;
+                right: 13px;
+                width:10px;
+                height: 10px;
+                border:1px solid #a3a3a4;
+                border-width: 0 0 1px 1px;
+                transform:translate(0,-50%) rotate(-45deg);
             }
         }
     }
-}
-.pay-btn {
-    margin: 20px auto;
-}
-.service-note-title {
-    font-size: 1.4rem;
-    margin: 0 1.5rem;
-    color: rgb(161, 161, 161);
-}
-.pay-note-content {
-    font-size: 1.2rem;
-    line-height: 2rem;
-    margin: 0 1.5rem;
-    color: rgb(161, 161, 161);
+    .to-pay {
+        margin-top: 7px;
+        li {
+            line-height: 60px;
+            background: @white;
+            &:nth-of-type(1) {
+                padding-left: 13px;
+                flex: 1 0 auto;
+                font-size: 14px;
+                color: #1a1a1a;
+                font-weight: 500;
+                .num {
+                    color: #ff6064;
+                    display: inline-block;
+                    margin-left: 3px;
+                }
+            }
+            &:nth-of-type(2) {
+                flex: 0 0 118px;
+                .pay-btn {
+                    background: #ff6064;
+                    width: 100%;
+                    line-height: 60px;
+                    font-size: 15px;
+                    height: 60px;
+                    font-weight: 500;
+                    color: #fffefe;
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+    .service-note-title {
+        margin-top: 28px;
+        margin-bottom: 12px;
+        font-size: 13px;
+        color: #999999;
+    }
+    .pay-note-content {
+        padding: 0 13px;
+        font-size: 11px;
+        line-height: 18px;
+        color: #999999;
+        text-align: justify;
+    }
 }

@@ -33,7 +33,7 @@ class GetPromotion extends Component {
                             <p className="text-center msg-text">该劵已放入你的搭配师账户</p>
                             <Link to="/" className="text-center btn use-btn">立即使用</Link>
                         </section>
-                        <span className="red-package-none">手慢了，红包被领光了！</span>
+                        <span className="red-package-none">手慢了，优惠卷被领光了！</span>
                     </section>
                     
                     <img className="cloud response_img" src="/assets/img/promotion/cloud.png" />

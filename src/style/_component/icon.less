@@ -8,19 +8,23 @@
 }
 
 //打勾
-.cicle() {
-    width: 15px;
-    height: 15px;
-    background: #01b5bb;
+.cicle(@w: 20px, @h: 20px, @bg: #ff6064) {
+    position: absolute;
+    width: @w;
+    height: @h;
+    background: @bg;
     border-radius: 50%;
-}
-
-.yes() {
-    width: 8px;
-    height: 4px;
-    border: 1px solid @white;
-    border-width: 0 0 1px 1px;
-    transform: rotate(-45deg);
+    &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%; 
+        width: 10px;
+        height: 5px;
+        border: 3px solid @white;
+        border-width: 0 0 3px 3px;
+        transform:translate(-50%,-60%) rotate(-45deg);
+    }
 }
 
 //上传图片+号小图标
@@ -59,8 +63,7 @@
 .close {
     position: absolute;
     transform: rotate(45deg);
-    &::after,
-    &::before {
+    &::after, &::before {
         content: '';
         position: absolute;
         background: #696969;

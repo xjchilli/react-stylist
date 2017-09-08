@@ -160,6 +160,7 @@ class PromotionCode extends Component {
 										</li>
 									</ul>
 									<time className="text-center time">有效期至2017-9-6</time>
+									<span className="icon icon-pasted"></span>
 								</li>
 								<li>
 									<span className="icon icon-use-font"></span>

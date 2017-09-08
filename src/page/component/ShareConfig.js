@@ -24,8 +24,8 @@ function ShareConfig({ title, desc, link, imgUrl }) {
                     nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
                     signature: jsapiSignature.signature, // 必填，签名，见附录1
                     jsApiList: [
-                        'onMenuShareTimeline',
-                        'onMenuShareAppMessage',
+                        'onMenuShareTimeline',//分享到朋友圈
+                        'onMenuShareAppMessage',//分享给朋友
                         'chooseWXPay'
                     ] // 必填
                 });

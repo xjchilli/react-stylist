@@ -5,7 +5,7 @@
 import { ToolDps } from '../../ToolDps';
 
 
-function WxPayAuth() {
+function WxAuth() {
     let url = location.href.split('#')[0];
     if (ToolDps.isWKWebview) {//用于区别ios android
         url = ToolDps.sessionItem('authUrl');
@@ -24,6 +24,8 @@ function WxPayAuth() {
                     nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
                     signature: jsapiSignature.signature, // 必填，签名，见附录1
                     jsApiList: [
+                        'onMenuShareTimeline',//分享到朋友圈
+                        'onMenuShareAppMessage',//分享给朋友
                         'chooseWXPay'
                     ] // 必填
                 });
@@ -49,4 +51,4 @@ function WxPayAuth() {
 
 }
 
-export default WxPayAuth;
+export default WxAuth;

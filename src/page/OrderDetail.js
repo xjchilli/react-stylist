@@ -9,8 +9,7 @@ import qs from 'query-string';
 import { DataLoad, GetData, Msg, ToReward, PreviewImg } from '../Component/index';
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
-import WxPayAuth from './component/WxPayAuth';
-import MyPromotionCode from './component/MyPromotionCode';
+import WxAuth from './component/WxAuth';
 // import { CSSTransitionGroup } from 'react-transition-group';
 import UseFulPromotionCode from './component/UseFulPromotionCode';
 
@@ -587,7 +586,7 @@ class OrderDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            couponsCode: props.data.couponsCode || '', //我的优惠码
+            shareTip: false,//分享提示显示
             msgShow: false,
             msgText: '', //提示内容
             commentLayer: false, //是否显示评论窗口
@@ -599,7 +598,7 @@ class OrderDetail extends Component {
 
     componentDidMount() {
         document.title = "订单详情";
-        WxPayAuth();
+        WxAuth();
     }
 
     msgLayerShow(obj) {
@@ -691,7 +690,6 @@ class OrderDetail extends Component {
                         {requirement.garderobes && requirement.garderobes.length > 0 ? <h6>搭配物品：</h6> : null}
                         {requirement.garderobes && requirement.garderobes.length > 0 ? <DaipeiGoods data={requirement.garderobes} /> : null}
                     </section>
-
                 </section>
                 {/*评论*/}
                 {comment ? <Score data={comment} /> : null}
@@ -709,15 +707,41 @@ class OrderDetail extends Component {
                 {this.state.commentLayer ? <ToCommnet commentLayerHide={this.commentLayerHide.bind(this)} collocation={collocation} order={order} msgLayerShow={this.msgLayerShow.bind(this)} endServiceTime={this.state.endServiceTime} /> : null}
                 {/*提示信息*/}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
-                {/*我的分享码 暂时隐藏*/}
-                {/* {this.state.couponsCode && order.status === 10 ? <MyPromotionCode userId={userId} couponsCode={this.state.couponsCode} /> : null} */}
                 {/*打赏*/}
                 {this.state.toReward ? <ToReward rewardCallback={() => { }} hideToReward={() => { this.setState({ toReward: false }) }} url='/wx/order/award' id={order.ordreId} /> : null}
+                {order.status === 1 || order.status === 2 || order.status === 3 || order.status === 10 ? <RedPackage shawTip={() => { this.setState({ shareTip: true }) }} /> : null}
+                {this.state.shareTip ? <RedPackageShareTip hideTip={() => { this.setState({ shareTip: false }) }} /> : null}
             </div>
         )
     }
 }
 
+/**
+ * 红包
+ */
+class RedPackage extends Component {
+    render() {
+        return (
+            <section className="red-package-area" onClick={this.props.shawTip}>
+                <img className="red-fun" src="/assets/img/promotion/red-fun.png" />
+                <img className="fahongbao" src="/assets/img/promotion/fahongbao.jpg" />
+            </section>
+        )
+    }
+}
+
+/**
+ * 红包提示
+ */
+class RedPackageShareTip extends Component {
+    render() {
+        return (
+            <section className="share-red-package" onClick={this.props.hideTip}>
+                <img className="response_img" src="/assets/img/promotion/share-red-package.png" />
+            </section>
+        )
+    }
+}
 
 export default GetData({
     id: 'OrderDetail', //应用关联使用的redux
