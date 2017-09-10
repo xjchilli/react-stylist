@@ -29,6 +29,9 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            pullingDown: false,//是否开发加载数据
+            pulldownTop: -40,//下拉刷新位置
+            pulldownText: '下拉刷新...',
             previewBigImg: false,//是否预览大图
             bigImgUrl: '',//大图url
             faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
@@ -40,32 +43,45 @@ class Profile extends Component {
     }
     componentDidMount() {
         document.title = "个人信息";
-        this.scroll = new BScroll('.profile-container', {
-            click: true,
-            scrollbar: true,
-            probeType:1,
-            pullDownRefresh:{
-                threshold:90,
-                stop:40
-            }
-        });
-        // this.scroll.on('touchEnd', (pos) => {
-        //     // 下拉动作 
-        //     if (pos.y > 50) {
-        //         console.log('刷新');
-        //         this.scroll.finishPullUp();
-        //         this.scroll.refresh()
+        // this.scroll = new BScroll('.profile-container', {
+        //     click: true,
+        //     scrollbar: true,
+        //     probeType: 3,
+        //     pullDownRefresh: {
+        //         threshold: 40,
+        //         stop: 40
         //     }
         // });
-        // this.scroll.on('beforeScrollStart', (pos) => {
-        //    console.log('滚动开始之前。');
+        // this.scroll.on('pullingDown', () => {
+        //     this.pullingDown = true;
+        //     this.setState({
+        //         pullingDown: true,
+        //         pulldownText: '加载中...'
+        //     });
+        //     console.log('在一次下拉刷新的动作后，这个时机一般用来去后端请求数据');
+        //     setTimeout(() => {
+        //         this.setState({
+        //             pullingDown: false,
+        //             pulldownText: '下拉刷新...'
+        //         });
+        //         this.scroll.finishPullDown();
+        //     }, 1000);
+
         // });
-        // this.scroll.on('scrollStart', (pos) => {
-        //     console.log('滚动开始时。');
-        //  });
-        //  this.scroll.on('scroll', (pos) => {
-        //     console.log('滚动的实时坐标');
-        //  });
+        // this.scroll.on('scroll', (pos) => {
+        //     // console.log(pos.y);
+        //     this.setState((prevState, props) => {
+        //         return {
+        //             pulldownTop: -40 + pos.y
+        //         }
+        //     });
+        //     if (pos.y > 40 && !this.state.pullingDown) {
+        //         this.setState({
+        //             pulldownText: '释放刷新...'
+        //         });
+        //     }
+
+        // });
     }
 
     render() {
@@ -202,8 +218,12 @@ class Profile extends Component {
                             }
                         </div>
                     </div>
-                    {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
                 </div>
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
+
+                <section className="pulldown-wrapper" style={{ top: this.state.pulldownTop + 'px' }}>
+                    {this.state.pulldownText}
+                </section>
             </section>
         );
     }
