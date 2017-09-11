@@ -201,7 +201,7 @@
   }
   .action-area {
     text-align: center;
-    button {
+     .to-pay-btn,button {
       display: inline-block;
       -webkit-appearance: none;
       background: #ff6064;
@@ -216,6 +216,9 @@
         margin-right: 28px;
       }
     }
+    .to-pay-btn {}
+
+
   }
   //用户评论
   .user-comment-area {
@@ -313,21 +316,23 @@
     right: 13px;
     transform: translate3d(0, -50%, 0);
     width: 64px;
-    img{width: 64px;}
-    .red-fun{
+    img {
+      width: 64px;
+    }
+    .red-fun {
       height: 61px;
       animation: bounce 0.5s linear infinite;
     }
-    .fahongbao{
+    .fahongbao {
       height: 23px;
     }
   }
-  .share-red-package{
+  .share-red-package {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,.7);
+    background: rgba(0, 0, 0, .7);
   }
 }

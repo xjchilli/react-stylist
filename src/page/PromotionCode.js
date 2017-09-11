@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { GetData, DataLoad, Msg } from "../Component/index";
 import { ToolDps } from '../ToolDps';
-// import MyPromotionCode from './component/MyPromotionCode';
 
 
 
@@ -32,7 +31,7 @@ class PromotionCode extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			couponsCode: this.props.couponsCode || '', //我的优惠码
+			couponsCode: '', //我的优惠码
 			promotionCode: '', //优惠码
 			msgShow: false,
 			msgText: '', //提示内容
@@ -53,18 +52,11 @@ class PromotionCode extends Component {
 	exchange() {
 		if (this.state.promotionCode === "") {
 			return;
-		} else if (this.state.promotionCode.length != 6) {
-			this.setState({
-				msgShow: true,
-				msgText: '优惠码长度为6位' //提示内容
-			});
-			return;
 		}
 
 		ToolDps.post('/wx/coupons/exchange', {
 			couponsCode: this.state.promotionCode
 		}).then((res) => {
-			// console.log(res);
 			if (res.succ) {
 				let data = Array.prototype.slice.apply(this.state.data);
 				data.splice(0, 0, res.data);
@@ -104,7 +96,7 @@ class PromotionCode extends Component {
 					{/*兑换优惠码*/}
 					<ul className="flex-box exchange-code-area" >
 						<li>
-							<input type="text" placeholder="输入优惠码" maxLength="6" defaultValue={this.state.promotionCode} onChange={(e) => { this.setState({ promotionCode: e.target.value.trim() }) }} />
+							<input type="text" placeholder="输入优惠码" maxLength="100" defaultValue={this.state.promotionCode} onChange={(e) => { this.setState({ promotionCode: e.target.value.trim() }) }} />
 						</li>
 						<li>
 							<button className="btn" onClick={this.exchange.bind(this)}>立即兑换</button>
@@ -112,67 +104,50 @@ class PromotionCode extends Component {
 					</ul>
 				</header>
 				<ul className="promotion-list-area">
-					<li>
-						<Link to="/">
-							<ul className="flex-box list-box">
-								<li>
-									<img className="lcicle" src="/assets/img/promotion/lcircle.jpg" />
-									<img className="border-center" src="/assets/img/promotion/border-center.jpg" />
-									<ul className="price-area">
-										<li>
-											<span className="money-icon">
-												<span className="icon icon-money-overdue"></span>
-											</span>
-											<span className="num">19</span>
-										</li>
-										<li>
-											<span className="icon icon-promotion-font"></span>
-											<br />
-											<span className="icon icon-all-server-use-font"></span>
-										</li>
-									</ul>
-									<time className="text-center time">有效期至2017-9-6</time>
+					{
+						this.state.data.map((item, index) => {
+							return (
+								<li className={item.status == 2 || item.status == 3 ? "promotion-invalid" : ""} key={index}>
+									<Link to="/needMatch">
+										<ul className="flex-box list-box">
+											<li>
+												<img className="lcicle" src={item.status == 2 || item.status == 3 ? "/assets/img/promotion/lcircle-gray.jpg" : "/assets/img/promotion/lcircle.jpg"} />
+												<img className="border-center" src={item.status == 2 || item.status == 3 ? "/assets/img/promotion/border-center-gray.jpg" : "/assets/img/promotion/border-center.jpg"} />
+												<ul className="price-area">
+													<li>
+														<span className="money-icon">
+															{item.status == 2 || item.status == 3 ? <span className="icon icon-money-overdue-gray"></span> : <span className="icon icon-money-overdue"></span>}
+														</span>
+														<span className="num">{item.price}</span>
+													</li>
+													<li>
+														<span className="icon icon-promotion-font"></span>
+														<br />
+														<span className="icon icon-all-server-use-font"></span>
+													</li>
+												</ul>
+												<time className="text-center time">有效期至{item.expiryDate}</time>
+												{
+													item.status == 2 ? <span className="icon icon-used"></span> : null
+												}
+												{
+													item.status == 3 ? <span className="icon icon-pasted"></span> : null
+												}
+
+
+											</li>
+											<li>
+												<span className="icon icon-use-font"></span>
+												<img className="rcicle" src={item.status == 2 || item.status == 3 ? "/assets/img/promotion/rcircle-gray.jpg" : "/assets/img/promotion/rcircle.jpg"} />
+											</li>
+										</ul>
+									</Link>
 								</li>
-								<li>
-									<span className="icon icon-use-font"></span>
-									<img className="rcicle" src="/assets/img/promotion/rcircle.jpg" />
-								</li>
-							</ul>
-						</Link>
-					</li>
-					<li className="promotion-past">
-						<Link to="/">
-							<ul className="flex-box list-box">
-								<li>
-									<img className="lcicle" src="/assets/img/promotion/lcircle-gray.jpg" />
-									<img className="border-center" src="/assets/img/promotion/border-center-gray.jpg" />
-									<ul className="price-area">
-										<li>
-											<span className="money-icon">
-												<span className="icon icon-money-overdue-gray"></span>
-											</span>
-											<span className="num">19</span>
-										</li>
-										<li>
-											<span className="icon icon-promotion-font"></span>
-											<br />
-											<span className="icon icon-all-server-use-font"></span>
-										</li>
-									</ul>
-									<time className="text-center time">有效期至2017-9-6</time>
-									<span className="icon icon-pasted"></span>
-								</li>
-								<li>
-									<span className="icon icon-use-font"></span>
-									<img className="rcicle" src="/assets/img/promotion/rcircle-gray.jpg" />
-								</li>
-							</ul>
-						</Link>
-					</li>
+							)
+						})
+					}
 				</ul>
 				{this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
-				{/*暂时隐藏  */}
-				{/* {this.state.couponsCode ? <MyPromotionCode userId={this.props.userId} couponsCode={this.state.couponsCode} /> : null}  */}
 			</div>
 		)
 	}
@@ -183,10 +158,7 @@ export default GetData({
 	id: 'PromotionCodeList', //应用关联使用的redux
 	component: Main, //接收数据的组件入口
 	url: '/wx/coupons/getMy',
-	data: function () {
-		// ToolDps.reloadUrl();
-		return '';
-	},
+	data: '',
 	success: (state) => {
 		return state;
 	}, //请求成功后执行的方法

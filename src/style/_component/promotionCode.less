@@ -141,7 +141,8 @@
 							color: #ffffff;
 							margin-top: 7px;
 						}
-						.icon-pasted {
+						.icon-pasted,.icon-used {
+							display: none;
 							position: absolute;
 							right: -4px;
 							top: -4px;
@@ -181,11 +182,14 @@
 					}
 				}
 			}
-			&.promotion-past {
+			&.promotion-invalid {
 				.list-box {
 					>li {
 						&:nth-of-type(1) {
 							background: #b1b1b1;
+							.icon-pasted,.icon-used{
+								display: block;
+							}
 						}
 						&:nth-of-type(2) {
 							background: #dbdbdb;

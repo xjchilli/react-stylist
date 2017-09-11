@@ -59,34 +59,6 @@ class Main extends React.Component {
                 jsapiSigna: true
             });
         });
-        // ToolDps.get('/wx/user/getJsapiSigna', {
-        //     url: encodeURIComponent(window.location.href.split('#')[0])
-        // }).then((res) => {
-        //     if (res.succ) {
-        //         let {
-        //             jsapiSignature
-        //         } = res;
-        //         wx.config({
-        //             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        //             appId: jsapiSignature.appid, // 必填，公众号的唯一标识
-        //             timestamp: jsapiSignature.timestamp, // 必填，生成签名的时间戳
-        //             nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
-        //             signature: jsapiSignature.signature, // 必填，签名，见附录1
-        //             jsApiList: [
-        //                 'checkJsApi',
-        //                 'chooseWXPay'
-        //             ] // 必填
-        //         });
-
-
-
-        //         this.setState({
-        //             jsapiSigna: true
-        //         });
-        //     }
-        // });
-
-
     }
 
 
@@ -99,18 +71,12 @@ class Main extends React.Component {
 class Pay extends React.Component {
     constructor(props) {
         super(props);
-        let {
-            data,
-            type
-        } = this.props;
         this.state = {
             isShowPromotionCode: false, //是否显示优惠券
             couponsId: '', //优惠卷id
             promotionPrice: '', //优惠价
             msgShow: false,
             msgText: '', //提示内容
-            tipsShow: false,
-            userInfo: '', //是否填写过个人信息 0：没填 1：已经填写
         }
 
         this._time = 0;
@@ -137,10 +103,6 @@ class Pay extends React.Component {
 
         ToolDps.post('/wx/order/updateCoupons', data).then((res) => {
             if (res.succ) {
-                this.setState({
-                    userInfo: res.userInfo
-                });
-
                 if (res.goPay === "1") {
                     if (typeof WeixinJSBridge == "undefined") {
                         if (document.addEventListener) {
@@ -155,16 +117,13 @@ class Pay extends React.Component {
                 } else {
                     this.setState({
                         msgShow: true,
-                        msgText: '支付成功', //提示内容
-                        tipsShow: res.userInfo == "0"
+                        msgText: '支付成功'//提示内容
                     });
 
                     this._time = setTimeout(function () {
-                        this.context.router.history.push('/fashionMoment');
+                        this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
                     }.bind(this), 1500);
                 }
-
-
             } else {
                 this.setState({
                     msgShow: true,
@@ -190,16 +149,9 @@ class Pay extends React.Component {
             },
             (res) => {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    this.setState({
-                        // msgShow: true,
-                        // msgText: '支付成功啦！', //提示内容
-                        tipsShow: this.state.userInfo == "0"
-                    });
-                    if (this.state.userInfo == "1") {
-                        this._time = setTimeout(function () {
-                            this.context.router.history.push('/fashionMoment');
-                        }.bind(this), 1500);
-                    }
+                    this._time = setTimeout(function () {
+                        this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
+                    }.bind(this), 1500);
                 } else if (res.err_msg == "get_brand_wcpay_request:fail") {
                     this.setState({
                         msgShow: true,
@@ -245,19 +197,25 @@ class Pay extends React.Component {
         return (
             <section className="full-page pay-page">
                 <p className="service-type">服务类型：{requiremntTypeName}</p>
-                <ul className="pay-money">
-                    <li onClick={()=>{this.setState({isShowPromotionCode:true})}}>
-                        使用优惠劵
-                        <span className="money">-￥19</span>
-                        <span className="used-one">（已用一张）</span>
-                        <span className="borrow"></span>
-                    </li>
-                    <li>需支付金额
-                        <span className="money">￥{payPrice}</span>
-                    </li>
-                </ul>
+                {
+                    coupons.length > 0 ? (
+                        <ul className="pay-money">
+                            <li onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
+                                使用优惠劵
+                                {this.state.promotionPrice ? <span className="money">-&yen;{this.state.promotionPrice}</span> : null}
+                                {this.state.promotionPrice ? <span className="used-one">（已用一张）</span> : null}
+
+                                <span className="borrow"></span>
+                            </li>
+                            <li>需支付金额
+                                <span className="money">&yen;{payPrice}</span>
+                            </li>
+                        </ul>
+                    ) : null
+                }
+
                 <ul className="flex-box to-pay">
-                    <li>总计: <span className="num">￥0.90</span></li>
+                    <li>总计: <span className="num">&yen;{payPrice}</span></li>
                     <li>
                         <button className="btn pay-btn" onClick={this.pay.bind(this)}>确认支付</button>
                     </li>
@@ -271,11 +229,10 @@ class Pay extends React.Component {
                     <ol>4.若对服务不满意或产生纠纷，请联系客服邮箱aaron@dapeis.com 工作日 10:00~18:00</ol>
                 </ul>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
-                <Tips isShow={this.state.tipsShow} skipPath="/fashionMoment" perfectPath="/customSuit" hideTips={() => { this.setState({ tipsShow: false }) }} />
+                {/* <Tips isShow={this.state.tipsShow} skipPath="/fashionMoment" perfectPath="/customSuit" hideTips={() => { this.setState({ tipsShow: false }) }} /> */}
                 {/*优惠码暂时隐藏*/}
                 <CSSTransitionGroup transitionName="move" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-                    {this.state.isShowPromotionCode ? <UseFulPromotionCode data={coupons} hide={()=>{this.setState({isShowPromotionCode:false})}}/> : null}
-
+                    {this.state.isShowPromotionCode ? <UseFulPromotionCode couponsId={this.state.couponsId} data={coupons} hide={() => { this.setState({ isShowPromotionCode: false }) }} selectPromotion={this.selectPromotion.bind(this)} /> : null}
                 </CSSTransitionGroup>
             </section>
         )

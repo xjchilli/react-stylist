@@ -38,6 +38,8 @@ class Home extends Component {
                 <br />
                 <Link to="/promotionCode">优惠码</Link>
                 <br />
+                <Link to="/getPromotion?couponsActiveId=13">获取优惠码</Link>
+                <br />
                 <Link to="/share?userId=171">分享</Link>
                 <br />
                 <Link to="/arrangementScheme?id=18">搭配方案</Link>

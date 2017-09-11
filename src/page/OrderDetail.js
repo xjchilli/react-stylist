@@ -10,8 +10,7 @@ import { DataLoad, GetData, Msg, ToReward, PreviewImg } from '../Component/index
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import WxAuth from './component/WxAuth';
-// import { CSSTransitionGroup } from 'react-transition-group';
-import UseFulPromotionCode from './component/UseFulPromotionCode';
+
 
 
 
@@ -104,120 +103,15 @@ class ToPay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isPay: true,//是否可以支付 true：可以支付 false：已经支付过
             data: null,
-            isShowPromotionCode: false, //是否显示优惠券
-            couponsId: '', //优惠卷id
             promotionPrice: '', //优惠价
-            coupons: [], //我的优惠码列表
         }
     }
 
     componentDidMount() {
-        //订单查询
-        ToolDps.get('/wx/order/queryCoupons', {
-            orderId: this.props.orderId
-        }).then((res) => {
-            if (res.succ) {
-                this.setState({
-                    data: res.data
-                });
-            }
-
-        });
-
 
     }
 
-
-
-    /**
-     * 支付
-     */
-    pay() {
-
-        let data = {}
-        data.orderId = this.props.orderId;
-        if (this.state.couponsId) {
-            data.couponsId = this.state.couponsId;
-        }
-
-        ToolDps.post('/wx/order/updateCoupons', data).then((res) => {
-            if (res.succ) {
-                if (res.goPay === "1") {
-                    if (typeof WeixinJSBridge == "undefined") {
-                        if (document.addEventListener) {
-                            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
-                        } else if (document.attachEvent) {
-                            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
-                            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
-                        }
-                    } else {
-                        this.onBridgeReady(res.payInfo);
-                    }
-                } else {
-                    this.props.msgLayerShow({
-                        msgShow: true,
-                        msgText: '支付成功', //提示内容
-                    });
-                    this._time = setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-
-                }
-
-            } else {
-                this.props.msgLayerShow({
-                    msgShow: true,
-                    msgText: '获取支付签名失败', //提示内容
-                });
-            }
-
-        });
-
-
-
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady);
-                document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
-            }
-        } else {
-            this.onBridgeReady();
-        }
-    }
-
-    onBridgeReady(payInfo) {
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-                "appId": payInfo.appId, //公众号名称，由商户传入
-                "timeStamp": payInfo.timeStamp, //时间戳，自1970年以来的秒数
-                "nonceStr": payInfo.nonceStr, //随机串
-                "package": payInfo.package,
-                "signType": payInfo.signType, //微信签名方式：
-                "paySign": payInfo.paySign //微信签名
-            },
-            (res) => {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    this._time = setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                    // this.props.msgLayerShow({
-                    //     msgShow: true,
-                    //     msgText: '支付成功啦！', //提示内容
-                    // });
-
-                } else if (res.err_msg == "get_brand_wcpay_request:fail") {
-                    this.props.msgLayerShow({
-                        msgShow: true,
-                        msgText: '支付失败', //提示内容
-                    });
-                }
-            }
-        );
-    }
 
     /**
      * 取消订单
@@ -240,70 +134,17 @@ class ToPay extends Component {
 
 
 
-    /**
-     * [giveUpPromotion 放弃优惠卷]
-     * @Author   potato
-     * @DateTime 2017-06-02T11:01:56+0800
-     * @return   {[type]}                 [description]
-     */
-    giveUpPromotion() {
-        this.setState({
-            couponsId: '',
-            isShowPromotionCode: false,
-            promotionPrice: ''
-        });
-    }
-
-    /**
-     * [selectPromotion 选择优惠券]
-     * @Author   potato
-     * @DateTime 2017-06-05T13:33:54+0800
-     * @param    {[type]}                 id    [优惠卷id]
-     * @param    {[type]}                 price [优惠价]
-     * @return   {[type]}                       [description]
-     */
-    selectPromotion(id, price) {
-        this.setState({
-            couponsId: id,
-            isShowPromotionCode: false,
-            promotionPrice: price
-        })
-    }
-
 
     render() {
         let price = '0.00';
-        let coupons = [];
         if (this.state.data) {
             price = this.state.data.price;
-            coupons = this.state.data.coupons
-        }
-
-        let payPrice = price;
-        if (this.state.couponsId && this.state.promotionPrice) {
-            payPrice = Number(price) - Number(this.state.promotionPrice);
-            if (payPrice == 0 || payPrice < 0) {
-                payPrice = '0.00';
-            }
         }
 
         return (
             <div className="order-action-area">
-                {
-                    coupons.length > 0 ? (
-                        <div className="text-center ground" onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
-                            <label className="promotion-lable">优 惠 卷：</label>
-                            <span className="promotion-num" >{this.state.couponsId ? '已使用优惠券' : `${coupons.length}张可用`}</span>
-                        </div>
-                    ) : null
-                }
-                { /*优惠码暂时隐藏*/}
-                {/* <CSSTransitionGroup transitionName="move" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-                    {this.state.isShowPromotionCode ? <UseFulPromotionCode data={coupons} couponsId={this.state.couponsId} selectPromotion={this.selectPromotion.bind(this)} giveUpPromotion={this.giveUpPromotion.bind(this)} /> : null}
-                </CSSTransitionGroup> */}
-
                 <div className="action-area">
-                    {this.state.isPay ? <button onClick={this.pay.bind(this)}>付款￥{payPrice ? payPrice : '0.00'}</button> : null}
+                    <Link className="to-pay-btn" to={"/pay?orderId=" + this.props.order.ordreId}>付款&yen;{this.props.order.transactionPrice}</Link>
                     <button onClick={this.orderCancel.bind(this)}>取消订单</button>
                 </div>
             </div>
@@ -677,10 +518,10 @@ class OrderDetail extends Component {
                         ) : null
                     }
                     <section className="form-content">
-                        {requirement.costCode ? <p className="text">预期花费：<span>￥{requirement.costCode}</span></p> : null}
+                        {requirement.costCode ? <p className="text">预期花费：<span>&yen;{requirement.costCode}</span></p> : null}
                         {requirement.shops.length > 0 ? <p className="text">搭配商品：<span>{requirement.shops.join('、')}</span></p> : null}
                         {requirement.scenes.length > 0 ? <p className="text">搭配场景：<span>{requirement.scenes.join('、')}</span></p> : null}
-                        <p className="text">实付金额：<span>￥{order.transactionPrice}</span></p>
+                        <p className="text">实付金额：<span>&yen;{order.transactionPrice}</span></p>
                         {requirement.time ? <p className="text">约定时间：<span>{requirement.time}</span></p> : null}
                         {requirement.addres ? <p className="text">约定地址：<span>{requirement.addres}</span></p> : null}
                     </section>
@@ -694,7 +535,7 @@ class OrderDetail extends Component {
                 {/*评论*/}
                 {comment ? <Score data={comment} /> : null}
                 {/*支付、取消订单button*/}
-                {order.status === 0 ? <ToPay orderId={order.ordreId} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
+                {order.status === 0 ? <ToPay order={order} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
                 {/*取消发布button*/}
                 {order.status === 1 ? <PublishCancel orderId={order.ordreId} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
                 {/*咨询、结束服务button*/}
@@ -709,7 +550,7 @@ class OrderDetail extends Component {
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {/*打赏*/}
                 {this.state.toReward ? <ToReward rewardCallback={() => { }} hideToReward={() => { this.setState({ toReward: false }) }} url='/wx/order/award' id={order.ordreId} /> : null}
-                {order.status === 1 || order.status === 2 || order.status === 3 || order.status === 10 ? <RedPackage shawTip={() => { this.setState({ shareTip: true }) }} /> : null}
+                {order.couponsActiveId && order.status === 1 || order.status === 2 || order.status === 3 || order.status === 10 ? <RedPackage couponsActiveId={order.couponsActiveId} shawTip={() => { this.setState({ shareTip: true }) }} /> : null}
                 {this.state.shareTip ? <RedPackageShareTip hideTip={() => { this.setState({ shareTip: false }) }} /> : null}
             </div>
         )
@@ -720,6 +561,26 @@ class OrderDetail extends Component {
  * 红包
  */
 class RedPackage extends Component {
+    componentDidMount() {
+        console.log(ToolDps.getHost);
+        wx.onMenuShareTimeline({
+            title: '送你一个私人搭配师！领优惠劵即刻享受服务！', // 分享标题
+            desc: '我刚拥有了一个私人搭配师，这感觉太棒啦！给你分享一张优惠券，你也愿意尝试一下吗？', // 分享描述
+            link: ToolDps.getHost + '/getPromotion?couponsActiveId=' + this.props.couponsActiveId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: ToolDps.getHost + '/assets/img/logo.jpg', // 分享图标
+        });
+        wx.onMenuShareAppMessage({
+            title: '送你一个私人搭配师！领优惠劵即刻享受服务！', // 分享标题
+            desc: '我刚拥有了一个私人搭配师，这感觉太棒啦！给你分享一张优惠券，你也愿意尝试一下吗？', // 分享描述
+            link: ToolDps.getHost + '/getPromotion?couponsActiveId=' + this.props.couponsActiveId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: ToolDps.getHost + '/assets/img/logo.jpg', // 分享图标
+        });
+        // wx.ready(function () {
+            
+
+        // });
+    }
+
     render() {
         return (
             <section className="red-package-area" onClick={this.props.shawTip}>
@@ -748,7 +609,6 @@ export default GetData({
     component: Main, //接收数据的组件入口
     url: '/wx/order/detail',
     data: (props, state) => {
-        // ToolDps.reloadUrl();
         let { orderId } = qs.parse(props.location.search);
         return {
             orderId: orderId
