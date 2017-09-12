@@ -8,6 +8,7 @@ import { ToolDps } from '../ToolDps';
 import { DataLoad, PreviewImg } from '../Component/index';
 import merged from 'obj-merged';
 import IM from './component/IM';
+import autosize from 'autosize';
 
 class List extends Component {
     constructor(props) {
@@ -133,6 +134,7 @@ class Chat extends IM {
 
         //重置聊天内容高度
         this.resetChatHeight();
+        autosize(document.querySelector('#J-input'));//textarea高度自适应
 
         this.signature((data) => {
             this.login(data, () => {
@@ -372,7 +374,7 @@ class Chat extends IM {
         this.setState({
             emotionFlag: false
         });
-
+        document.querySelector('#J-input').style.height = "42px";
     }
 
     /**
@@ -460,11 +462,10 @@ class Chat extends IM {
         this.setState({
             emotionFlag: false
         });
-        // this.keybordTime = setTimeout(() => {
-        //     this.setState((prevState, props) => ({
-        //         footerBottom: prevState.windowHeight - window.innerHeight
-        //     }));
-        // }, 1000);
+
+        this.keybordTime = setTimeout(() => {
+            window.scrollTo(0, 100000);
+        }, 300);
     }
 
     /**
@@ -608,7 +609,7 @@ class Chat extends IM {
                         </svg>
                         <input type="file" className="img" accept="image/*" multiple={true} onChange={this.uploadPic.bind(this)} />
                     </div>
-                    <textarea type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
+                    <textarea id="J-input" type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
                     <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
                 </footer>

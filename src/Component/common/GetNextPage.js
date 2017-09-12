@@ -74,7 +74,6 @@ const Main = (mySetting) => {
             this.redayDOM = () => {
                 var { scrollX, scrollY } = this.state;
                 if (this.get) return false; //已经加载过
-                // document.querySelector('.full-page').scrollTop = scrollY;
                 window.scrollTo(scrollX, scrollY);
                 this.get = new GetNextPage(this.dataload, {
                     url: this.getUrl(),
@@ -94,7 +93,6 @@ const Main = (mySetting) => {
                 delete this.action;
                 this.state.scrollX = window.scrollX; //记录滚动条位置
                 this.state.scrollY = window.scrollY; 
-                // this.state.scrollY = document.querySelector('.full-page').scrollTop;
 
                 this.props.setState(this.state);
             }
