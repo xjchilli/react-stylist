@@ -90,6 +90,19 @@ const Main = (mySeting) => {
             }
 
             /**
+            * 组件卸载前执行一些操作
+            */
+            this.unmount = () => {
+                if (typeof this.get != 'undefined') {
+                    this.get.end();
+                    delete this.get;
+                }
+                this.state.scrollX = window.scrollX; //记录滚动条位置
+                this.state.scrollY = window.scrollY;
+                this.props.setState(this.state);
+            }
+
+            /**
              * 获取ajax 请求url
              *
              * @returns Object
@@ -131,6 +144,21 @@ const Main = (mySeting) => {
 
         componentDidMount() {
             this.redayDOM();
+        }
+
+        /**
+         * 在组件接收到新的 props 的时候调用。在初始化渲染的时候，该方法不会调用
+         */
+        componentWillReceiveProps(np) {
+            var { location } = np;
+            var { pathname, search } = location;
+            var path = pathname + search;
+            if (this.path !== path) {
+                this.unmount(); //地址栏已经发生改变，做一些卸载前的处理
+            }
+
+            this.initState(np);
+
         }
 
         render() {

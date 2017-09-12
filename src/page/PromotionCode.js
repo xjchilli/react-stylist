@@ -31,6 +31,7 @@ class PromotionCode extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			exchangeBtn: true,//是否可以点击兑换按钮
 			couponsCode: '', //我的优惠码
 			promotionCode: '', //优惠码
 			msgShow: false,
@@ -53,6 +54,9 @@ class PromotionCode extends Component {
 		if (this.state.promotionCode === "") {
 			return;
 		}
+		this.setState({
+			exchangeBtn: false
+		});
 
 		ToolDps.post('/wx/coupons/exchange', {
 			couponsCode: this.state.promotionCode
@@ -61,12 +65,14 @@ class PromotionCode extends Component {
 				let data = Array.prototype.slice.apply(this.state.data);
 				data.splice(0, 0, res.data);
 				this.setState({
+					exchangeBtn: true,
 					msgShow: true,
 					msgText: '兑换成功', //提示内容
 					data: data
 				});
 			} else {
 				this.setState({
+					exchangeBtn: true,
 					msgShow: true,
 					msgText: res.msg, //提示内容
 				});
@@ -99,7 +105,7 @@ class PromotionCode extends Component {
 							<input type="text" placeholder="输入优惠码" maxLength="100" defaultValue={this.state.promotionCode} onChange={(e) => { this.setState({ promotionCode: e.target.value.trim() }) }} />
 						</li>
 						<li>
-							<button className="btn" onClick={this.exchange.bind(this)}>立即兑换</button>
+							<button className="btn" onClick={this.state.exchangeBtn ? this.exchange.bind(this) : null}>立即兑换</button>
 						</li>
 					</ul>
 				</header>

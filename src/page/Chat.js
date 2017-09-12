@@ -98,12 +98,15 @@ class Chat extends IM {
             emotionFlag: false, //是否显示表情选择框
             emotions: [],
             list: [], //数据列表
-            containerHeight: 500 //聊天内容高度
+            containerHeight: 500, //聊天内容高度
+            windowHeight: window.innerHeight,//窗口高度
+            footerBottom: 0,//输入框位置
         };
         let { selToID, headUrl, nickname } = qs.parse(props.location.search);
 
         this.currScrollHeight = 0; //默认当前滚动条高度
         this._time = 0;
+        this.keybordTime = 0;
         this.d = this.debounce(500, this.preHistory.bind(this));
         //保留服务器返回的最近消息时间和消息Key,用于下次向前拉取历史消息
         this.getPrePageC2CHistroyMsgInfo = {
@@ -143,6 +146,7 @@ class Chat extends IM {
 
     componentWillUnmount() {
         clearTimeout(this._time);
+        clearTimeout(this.keybordTime);
     }
 
 
@@ -456,6 +460,11 @@ class Chat extends IM {
         this.setState({
             emotionFlag: false
         });
+        // this.keybordTime = setTimeout(() => {
+        //     this.setState((prevState, props) => ({
+        //         footerBottom: prevState.windowHeight - window.innerHeight
+        //     }));
+        // }, 1000);
     }
 
     /**
@@ -589,7 +598,7 @@ class Chat extends IM {
                 <div ref={el => this.container = el} className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
                     {this.state.list.length > 0 ? <List collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
-                <footer>
+                <footer style={{ bottom: this.state.footerBottom + 'px' }}>
                     <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>
                         <use xlinkHref="/assets/img/icon.svg#svg-face" />
                     </svg>

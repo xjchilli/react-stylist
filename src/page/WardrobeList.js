@@ -368,6 +368,7 @@ class WardrobeList extends Component {
         this.pressStartTime = new Date();
     }
 
+
     /**
      * 长按结束
      */
@@ -397,7 +398,7 @@ class WardrobeList extends Component {
                                 this.state.data.map((item, index) => {
                                     return (
                                         <li className="item-3" key={index} >
-                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onTouchStart={this.longPress.bind(this)} onTouchEnd={this.pressEnd.bind(this, item.id, item.imgUrl)} ></div>
+                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onTouchStart={this.longPress.bind(this)}  onTouchEnd={this.pressEnd.bind(this, item.id, item.imgUrl)} ></div>
                                         </li>
                                     )
                                 })

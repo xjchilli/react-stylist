@@ -183,12 +183,12 @@ class Pay extends React.Component {
         let {
             requiremntTypeName,
             price,
-            coupons
+            coupons,
+            useCoupons
         } = this.props.data;
-
         let payPrice = price;
         if (this.state.couponsId && this.state.promotionPrice) {
-            payPrice = Number(price) - Number(this.state.promotionPrice);
+            payPrice = (Number(price) - Number(this.state.promotionPrice)).toFixed(2);
             if (payPrice == 0 || payPrice < 0) {
                 payPrice = '0.00';
             }
@@ -197,23 +197,23 @@ class Pay extends React.Component {
         return (
             <section className="full-page pay-page">
                 <p className="service-type">服务类型：{requiremntTypeName}</p>
-                {
-                    coupons.length > 0 ? (
-                        <ul className="pay-money">
+                {/*  */}
+                <ul className="pay-money">
+                    {
+                        coupons.length > 0 && !useCoupons ? (
                             <li onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
                                 使用优惠劵
                                 {this.state.promotionPrice ? <span className="money">-&yen;{this.state.promotionPrice}</span> : null}
                                 {this.state.promotionPrice ? <span className="used-one">（已用一张）</span> : null}
-
                                 <span className="borrow"></span>
                             </li>
-                            <li>需支付金额
-                                <span className="money">&yen;{payPrice}</span>
-                            </li>
-                        </ul>
-                    ) : null
-                }
-
+                        ) : null
+                    }
+                    <li>
+                        需支付金额
+                        <span className="money">&yen;{payPrice}</span>
+                    </li>
+                </ul>
                 <ul className="flex-box to-pay">
                     <li>总计: <span className="num">&yen;{payPrice}</span></li>
                     <li>

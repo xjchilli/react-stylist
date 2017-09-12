@@ -156,7 +156,7 @@ class OrderList extends Component {
                         return (
                             <li key={index}>
                                 <Link to={"/orderDetail?orderId=" + item.orderId} className="link">
-                                    <span className="service-type">{item.title}&nbsp;{"(￥" + item.originalPrice + ")"}</span><br />
+                                    <span className="service-type">{item.title}&nbsp;{"(￥" + item.transactionPrice + ")"}</span><br />
                                     <time className="time">{item.time}</time><br />
                                     <span className="dps-name">{item.dpsName}</span><br />
                                     <span className="status">{item.status}</span>
