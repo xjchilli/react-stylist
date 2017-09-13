@@ -562,7 +562,6 @@ class OrderDetail extends Component {
  */
 class RedPackage extends Component {
     componentDidMount() {
-        console.log(ToolDps.getHost);
         wx.onMenuShareTimeline({
             title: '送你一个私人搭配师！领优惠劵即刻享受服务！', // 分享标题
             desc: '我刚拥有了一个私人搭配师，这感觉太棒啦！给你分享一张优惠券，你也愿意尝试一下吗？', // 分享描述

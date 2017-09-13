@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { DataLoad, GetData, Msg, PreviewImg, ToReward } from "../Component/index";
 import IM from './component/IM';
 import ShareConfig from './component/ShareConfig';
+import autosize from 'autosize';
 
 
 /**
@@ -171,6 +172,7 @@ class Comment extends Component {
     }
 
     componentDidMount() {
+        autosize(document.querySelector('#J-input'));//textarea高度自适应
         ToolDps.get('/wx/comment/getPlan', {
             planId: this.state.planId
         }).then((res) => {
@@ -192,6 +194,7 @@ class Comment extends Component {
         this.setState({
             newCommentContent: '',
         })
+        document.querySelector('#J-input').style.height = "3.5rem";
         ToolDps.post('/wx/comment/plan', {
             content: this.state.newCommentContent,
             planId: this.state.planId
@@ -217,7 +220,7 @@ class Comment extends Component {
             <section className="comment-area">
                 <div id="user-comment" className="user-comment">
                     <div className="item">
-                        <input type="text" placeholder="说说你的想法吧~" value={this.state.newCommentContent} onChange={(e) => { this.setState({ newCommentContent: e.target.value }) }} />
+                        <textarea id="J-input" placeholder="说说你的想法吧~" value={this.state.newCommentContent} onChange={(e) => { this.setState({ newCommentContent: e.target.value }) }}/>
                     </div>
                     <div className="item">
                         <button className="btn" onClick={this.toComment.bind(this)}>发送</button>
@@ -381,7 +384,7 @@ class FashionMomentDetail extends IM {
         ShareConfig({
             title: this.state.plan.planName, // 分享标题
             desc: p.textContent, // 分享描述
-            link: window.location.href, // 分享链接
+            link: window.location.href.split('#')[0], // 分享链接 
             imgUrl: this.state.plan.masterImage, // 分享图标
         });
 

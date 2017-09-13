@@ -4,7 +4,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import qs from 'query-string';
+import { ToolDps } from '../ToolDps';
+import ShareConfig from './component/ShareConfig';
 import { DataLoad, GetData } from '../Component/index';
+
 
 
 class Main extends Component {
@@ -18,15 +21,27 @@ class Main extends Component {
             loadMsg
 		} = this.props.state;
         const main = data.succ ? <GetPromotion {...data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />
-        return (
-            main
-        )
+        return main;
     }
 }
 
 class GetPromotion extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        document.title = "成功领取优惠劵";
+        //分享配置
+        ShareConfig({
+            title: '送你一个私人搭配师！领优惠劵即刻享受服务！', // 分享标题
+            desc: '我刚拥有了一个私人搭配师，这感觉太棒啦！给你分享一张优惠券，你也愿意尝试一下吗？', // 分享描述
+            link: window.location.href.split('#')[0], // 分享链接
+            imgUrl: ToolDps.getHost + '/assets/img/logo.jpg', // 分享图标
+        });
+    }
+
     render() {
-        console.log(this.props);
         return (
             <section className="promotion-get-page">
                 <header>
@@ -76,7 +91,7 @@ class GetPromotion extends Component {
                 }
                 <ul className="other-user-list">
                     {
-                        this.props.drawCouponsList.map((item,index) => {
+                        this.props.drawCouponsList.map((item, index) => {
                             return (
                                 <li key={index}>
                                     <ul className="flex-box">

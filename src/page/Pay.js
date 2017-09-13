@@ -51,8 +51,6 @@ class Main extends React.Component {
 
         });
 
-
-
         //jsapi签名
         WxAuth().then(() => {
             this.setState({
@@ -72,6 +70,7 @@ class Pay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isHidePromotionCode:props.data.showCoupons,//是否因此点击优惠劵位置
             isShowPromotionCode: false, //是否显示优惠券
             couponsId: '', //优惠卷id
             promotionPrice: '', //优惠价
@@ -148,11 +147,16 @@ class Pay extends React.Component {
                 "paySign": signatureInfo.paySign //微信签名
             },
             (res) => {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
                     this._time = setTimeout(function () {
                         this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
                     }.bind(this), 1500);
-                } else if (res.err_msg == "get_brand_wcpay_request:fail") {
+                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
+                    this.setState({
+                        isHidePromotionCode:false
+                    });
+                }
+                else if (res.err_msg == "get_brand_wcpay_request:fail") {//支付失败
                     this.setState({
                         msgShow: true,
                         msgText: '支付失败', //提示内容
@@ -183,8 +187,7 @@ class Pay extends React.Component {
         let {
             requiremntTypeName,
             price,
-            coupons,
-            useCoupons
+            coupons
         } = this.props.data;
         let payPrice = price;
         if (this.state.couponsId && this.state.promotionPrice) {
@@ -200,7 +203,7 @@ class Pay extends React.Component {
                 {/*  */}
                 <ul className="pay-money">
                     {
-                        coupons.length > 0 && !useCoupons ? (
+                        coupons.length > 0 && this.state.isHidePromotionCode ? (
                             <li onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
                                 使用优惠劵
                                 {this.state.promotionPrice ? <span className="money">-&yen;{this.state.promotionPrice}</span> : null}

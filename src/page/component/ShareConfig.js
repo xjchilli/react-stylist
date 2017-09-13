@@ -6,7 +6,7 @@ import { ToolDps } from '../../ToolDps';
 
 
 function ShareConfig({ title, desc, link, imgUrl }) {
-    let url = location.href.split('#')[0];
+    let url = window.location.href.split('#')[0];
     if (ToolDps.isWKWebview) {//用于区别ios android
         url = ToolDps.sessionItem('authUrl');
     }
@@ -46,6 +46,7 @@ function ShareConfig({ title, desc, link, imgUrl }) {
                 });
 
                 wx.error(function (res) {
+                    // alert(JSON.stringify(res));
                     // window.location.reload();
                 });
 

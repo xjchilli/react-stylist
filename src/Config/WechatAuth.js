@@ -37,7 +37,7 @@ async function getUserInfo(code, setAuth) {
         ToolDps.removeLocalItem('User');
         let url = document.location.href.split('#')[0];
         document.location.href = url.replace('code', '');
-        // alert(user.msg);
+        alert(user.msg);
     }
 
 }
