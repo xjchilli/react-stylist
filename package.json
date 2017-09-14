@@ -29,6 +29,7 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "mockjs": "^1.0.1-beta3",
+    "open-browser-webpack-plugin": "^0.0.5",
     "postcss-loader": "^2.0.5",
     "react-addons-test-utils": "^15.5.1",
     "react-hot-loader": "^3.0.0-beta.7",

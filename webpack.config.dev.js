@@ -7,10 +7,12 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');//自动打开浏览器
 var HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
 });
+var IPv4 = require('./config/GetIp.js');
 
 var publicPath = '/assets/'; //服务器路径
 var p = path.resolve(__dirname + '/assets');
@@ -84,13 +86,17 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendors',
       filename: 'js/vendors.js'
-    }) //所有公用js文件打包到vendors.js
+    }), //所有公用js文件打包到vendors.js
+    new OpenBrowserPlugin({//自动打开浏览器
+      url: IPv4 + ':8000',
+      browser: 'chrome'
+    })
   ],
   externals: {//不打包文件
     "react": "React",
     "react-dom": "ReactDOM",
     'swiper': 'Swiper',
-    'flatpickr':'flatpickr'
+    'flatpickr': 'flatpickr'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.less', ".json"],
