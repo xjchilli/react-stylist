@@ -81,6 +81,15 @@ class List extends Component {
             <div>
                 <ul className="chat-content">
                     {data}
+                    {/* <li className={"friend-area"}>
+                        <img src='http://wx.qlogo.cn/mmopen/hqDXUD6csUic5fzfNcp2xe5InUO70UQqNuhEG2uOiczpj0jVgc7Y6GwibXYJIX7SIOMnIHAD8ELuibw8CRsicfUwLdw/0' alt="" />
+                        <div className="msgContent">
+                            <section className="audio-area">
+                                <audio src="http://www.runoob.com/try/demo_source/horse.mp3" controls="controls" preload="none"></audio>
+                                <time>1"</time>
+                            </section>
+                        </div>
+                    </li> */}
                 </ul>
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>
@@ -304,6 +313,9 @@ class Chat extends IM {
                 case webim.MSG_ELEMENT_TYPE.IMAGE:
                     html += this.convertImageMsgToHtml(content);
                     break;
+                case webim.MSG_ELEMENT_TYPE.SOUND:
+                    html += this.convertSoundMsgToHtml(content);
+                    break;
                 default:
                     webim.Log.error('未知消息元素类型: elemType=' + type);
                     break;
@@ -312,6 +324,35 @@ class Chat extends IM {
         return html;
     }
 
+    //切换播放audio对象
+    onChangePlayAudio(playAudio) {
+        if (curPlayAudio) {
+            if (curPlayAudio != playAudio) {
+                curPlayAudio.currentTime = 0;
+                curPlayAudio.pause();
+                curPlayAudio = playAudio;
+            }
+        } else {
+            curPlayAudio = playAudio;
+        }
+    }
+
+    //解析语音消息元素
+    convertSoundMsgToHtml(content) {
+        console.log(content);
+        var second = content.getSecond();//获取语音时长
+        var downUrl = content.getDownUrl();
+        // if (webim.BROWSER_INFO.type == 'ie' && parseInt(webim.BROWSER_INFO.ver) <= 8) {
+        //     return '[这是一条语音消息]demo暂不支持ie8(含)以下浏览器播放语音,语音URL:' + downUrl;
+        // }
+        // onplay="onChangePlayAudio(this)"
+        return '<section className="audio-area">' +
+                    '<audio id="uuid_"'+content.uuid+' src='+downUrl+' controls="controls" preload="none"></audio>' +
+                    '<time>'+second+'"</time>' +
+                '</section>';
+
+        // return '<audio id="uuid_' + content.uuid + '" src="' + downUrl + '" controls="controls"  preload="none"></audio>';
+    }
 
 
     /**

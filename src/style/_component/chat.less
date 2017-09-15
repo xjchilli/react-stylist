@@ -6,12 +6,12 @@
   }
   .chat-content {
     padding: 15px 15px 0 15px;
+    margin-bottom: 15px;
   }
   .friend-area {
     position: relative;
     margin-bottom: 10px;
-
-    >a>img,>img {
+    >a>img, >img {
       float: left;
       width: 30px;
       height: 30px;
@@ -20,14 +20,12 @@
     }
     &.self {
       text-align: right;
-
       >img {
         float: right;
         margin: 0 0 0 10px;
       }
       .msgContent {
         background-color: #b2e281;
-
         &:before {
           right: inherit;
           left: 100%;
@@ -49,7 +47,27 @@
     word-break: break-all;
     background-color: #fafafa;
     border-radius: 4px;
-
+    .audio-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 200px;
+      background: #fafafa;
+      border-radius: 4px;
+      >audio {
+        height: 100%;
+        width: 100%;
+        visibility: hidden;
+      }
+      >time {
+        position: absolute;
+        top: 50%;
+        right: -20px;
+        transform: translate3d(0, -50%, 0);
+        color: gray;
+      }
+    }
     >img {
       display: inline-block;
       vertical-align: middle;
@@ -72,7 +90,7 @@
     border-top: 1px solid rgb(221, 221, 221);
     padding: 5px 70px;
     background: rgb(242, 242, 242);
-
+    z-index: 9;
     textarea {
       width: 100%;
       -webkit-appearance: none;
@@ -99,7 +117,6 @@
     .upload-img {
       left: 7px;
       overflow: hidden;
-
       .img {
         position: absolute;
         left: 0;
@@ -122,11 +139,9 @@
       padding: 10px 5px;
       overflow-y: auto;
       flex-wrap: wrap;
-
       li {
         flex: 0 0 100/7%;
         text-align: center;
-
         >img {
           display: inline-block;
         }

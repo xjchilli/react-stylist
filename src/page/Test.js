@@ -84,6 +84,36 @@ class Profile extends Component {
         // });
     }
 
+    start() {
+        wx.startRecord();
+    }
+
+    stop() {
+        wx.stopRecord({
+            success: (res) => {
+                this.localId = res.localId;
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+
+    play() {
+        wx.playVoice({
+            localId: this.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+        });
+    }
+
+    upload() {
+        wx.uploadVoice({
+            localId: this.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: (res) => {
+                var serverId = res.serverId; // 返回音频的服务器端ID
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+
     render() {
         let {
             headImg,
@@ -133,7 +163,11 @@ class Profile extends Component {
 
         return (
             <section className="full-page profile-container">
-                <div className="content">
+                <button onClick={this.start.bind(this)} style={{ margin: '20px' }}>start</button>
+                <button onClick={this.stop.bind(this)} style={{ margin: '20px' }}>stop</button>
+                <button onClick={this.play.bind(this)} style={{ margin: '20px' }}>play</button>
+                <button onClick={this.upload.bind(this)} style={{ margin: '20px' }}>play</button>
+                {/* <div className="content">
                     <header className="flex-box">
                         <div className="item-2 head-img">
                             <img src={headImg} alt="" />
@@ -223,7 +257,7 @@ class Profile extends Component {
 
                 <section className="pulldown-wrapper" style={{ top: this.state.pulldownTop + 'px' }}>
                     {this.state.pulldownText}
-                </section>
+                </section> */}
             </section>
         );
     }

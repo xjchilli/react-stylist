@@ -26,7 +26,15 @@ function WxAuth() {
                     jsApiList: [
                         'onMenuShareTimeline',//分享到朋友圈
                         'onMenuShareAppMessage',//分享给朋友
-                        'chooseWXPay'
+                        'chooseWXPay',//支付
+                        // 'startRecord',//开始录音
+                        // 'stopRecord',//停止录音
+                        // 'onVoiceRecordEnd',//监听录音自动停止
+                        // 'playVoice',//播放语音
+                        // 'pauseVoice',//暂停播放
+                        // 'stopVoice',//停止播放
+                        // 'onVoicePlayEnd',//监听语音播放完毕
+                        // 'uploadVoice'//上传语音
                     ] // 必填
                 });
                 wx.ready(function () {
@@ -34,7 +42,7 @@ function WxAuth() {
                 });
 
                 wx.error(function (res) {
-                    // alert(JSON.stringify(res));
+                    alert(JSON.stringify(res));
                     // window.location.reload();
                 });
 
