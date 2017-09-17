@@ -72,7 +72,7 @@ class MyDps extends IM {
             });
         });
 
-  
+
 
     }
 
@@ -250,6 +250,9 @@ class MyDps extends IM {
                     break;
                 case webim.MSG_ELEMENT_TYPE.IMAGE:
                     html += "[图片]";
+                    break;
+                case webim.MSG_ELEMENT_TYPE.SOUND:
+                    html += "[语音]";
                     break;
                 default:
                     webim.Log.error('未知消息元素类型: elemType=' + type);

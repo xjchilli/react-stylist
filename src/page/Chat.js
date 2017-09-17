@@ -19,29 +19,60 @@ class List extends Component {
         }
 
         /**
-         * 预览大图 
+         * 聊天列表点击事件
          */
-        this.previewBigImg = (e) => {
+        this.chat = (e) => {
+            //查看大图片
             if (ToolDps.CName.hasClass(e.target, 'previewBigImg')) {
                 let url = e.target.getAttribute('bigimgurl');
                 this.setState({
                     previewBigImg: true,
                     bigImgUrl: url
                 });
+                return;
             }
-
+            //播放声音
+            this.onChangePlayAudio(e);
+        }
+        //切换播放audio对象
+        this.onChangePlayAudio = (e) => {
+            let currEle = e.currentTarget;
+            let targetEle = e.target;
+            while (!ToolDps.CName.hasClass(targetEle, 'audio-area')) {
+                if (targetEle == currEle) {
+                    break;
+                }
+                targetEle = targetEle.parentElement;
+            }
+            if (ToolDps.CName.hasClass(targetEle, 'audio-area')) {
+                let audio = targetEle.querySelector('audio');
+                let img = targetEle.querySelector('.sound-icon');
+                console.log(audio.paused);
+                if (audio.paused) {
+                    let audioAreas = document.querySelectorAll('.audio-area');
+                    for (let i = 0; i < audioAreas.length; i++) {
+                        audioAreas[i].querySelector('.sound-icon').setAttribute('src', '/assets/img/icon/sound.png');
+                        audioAreas[i].querySelector('audio').load();
+                    }
+                    img.setAttribute('src', '/assets/img/icon/sound.gif');
+                    audio.play();
+                } else {
+                    img.setAttribute('src', '/assets/img/icon/sound.png');
+                    audio.load();
+                }
+            }
         }
 
     }
 
     componentDidMount() {
         //绑定图片点击事件
-        document.querySelector('.chat-content').addEventListener('click', this.previewBigImg);
+        document.querySelector('.chat-content').addEventListener('click', this.chat);
     }
 
     componentWillUnmount() {
         //取消图片点击事件
-        document.querySelector('.chat-content').removeEventListener('click', this.previewBigImg);
+        document.querySelector('.chat-content').removeEventListener('click', this.chat);
     }
 
 
@@ -324,34 +355,15 @@ class Chat extends IM {
         return html;
     }
 
-    //切换播放audio对象
-    onChangePlayAudio(playAudio) {
-        if (curPlayAudio) {
-            if (curPlayAudio != playAudio) {
-                curPlayAudio.currentTime = 0;
-                curPlayAudio.pause();
-                curPlayAudio = playAudio;
-            }
-        } else {
-            curPlayAudio = playAudio;
-        }
-    }
-
     //解析语音消息元素
     convertSoundMsgToHtml(content) {
-        console.log(content);
         var second = content.getSecond();//获取语音时长
         var downUrl = content.getDownUrl();
-        // if (webim.BROWSER_INFO.type == 'ie' && parseInt(webim.BROWSER_INFO.ver) <= 8) {
-        //     return '[这是一条语音消息]demo暂不支持ie8(含)以下浏览器播放语音,语音URL:' + downUrl;
-        // }
-        // onplay="onChangePlayAudio(this)"
-        return '<section className="audio-area">' +
-                    '<audio id="uuid_"'+content.uuid+' src='+downUrl+' controls="controls" preload="none"></audio>' +
-                    '<time>'+second+'"</time>' +
-                '</section>';
-
-        // return '<audio id="uuid_' + content.uuid + '" src="' + downUrl + '" controls="controls"  preload="none"></audio>';
+        return '<section class="audio-area" style=width:' + (second + 50) + 'px >' +
+            '<img class="sound-icon" src="/assets/img/icon/sound.png" width="15" height="15" />' +
+            '<audio id="uuid_"' + content.uuid + ' src=' + downUrl + ' controls="controls" preload="none"></audio>' +
+            '<time>' + second + '"</time>' +
+            '</section>';
     }
 
 
