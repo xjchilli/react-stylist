@@ -15,7 +15,7 @@ class PreviewImg extends Component {
     render() {
         return (
             <div className="preview-container" onClick={this.props.hidePreviewBigImg}>
-                <img src={this.props.url} alt="" />
+                <img src={this.props.url} alt="" onClick={this.props.hidePreviewBigImg}/>
             </div>
         )
     }

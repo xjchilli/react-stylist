@@ -32,7 +32,6 @@
             }
         }
         .nickname {
-            padding-top: 10px;
             font-size: 14px;
             font-weight: bold;
             color: #fefefe;
@@ -40,9 +39,33 @@
         .styles {
             font-size: 10px;
             color: #fefefe;
-            height: 34px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             overflow: hidden;
             margin-top: 4px;
+        }
+        .level-area {
+            margin-top: 4px;
+            >img {
+                display: inline-block;
+                width: 13px;
+                height: 11px;
+            }
+            .levl-label {
+                display: inline-block;
+                margin: 0 7px;
+                font-size: 10px;
+                color: #fffefe;
+                font-weight: bolder;
+                line-height: 12px;
+                border-radius: 3px;
+                background: #ffbe0e;
+                padding: 0 5px;
+            }
+            .level-name {
+                font-size: 10px;
+                color: #fffefe;
+            }
         }
     }
     .remark-area {

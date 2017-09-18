@@ -13,10 +13,6 @@ import autosize from 'autosize';
 class List extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            previewBigImg: false,//是否预览大图
-            bigImgUrl: ''//大图url
-        }
 
         /**
          * 聊天列表点击事件
@@ -25,10 +21,7 @@ class List extends Component {
             //查看大图片
             if (ToolDps.CName.hasClass(e.target, 'previewBigImg')) {
                 let url = e.target.getAttribute('bigimgurl');
-                this.setState({
-                    previewBigImg: true,
-                    bigImgUrl: url
-                });
+                this.props.previewImg(url);
                 return;
             }
             //播放声音
@@ -47,7 +40,6 @@ class List extends Component {
             if (ToolDps.CName.hasClass(targetEle, 'audio-area')) {
                 let audio = targetEle.querySelector('audio');
                 let img = targetEle.querySelector('.sound-icon');
-                console.log(audio.paused);
                 if (audio.paused) {
                     let audioAreas = document.querySelectorAll('.audio-area');
                     for (let i = 0; i < audioAreas.length; i++) {
@@ -56,11 +48,19 @@ class List extends Component {
                     }
                     img.setAttribute('src', '/assets/img/icon/sound.gif');
                     audio.play();
+                    audio.addEventListener('ended', this.playEnd.bind(this,img));
                 } else {
                     img.setAttribute('src', '/assets/img/icon/sound.png');
                     audio.load();
                 }
             }
+        }
+
+        /**
+         * 播放结束
+         */
+        this.playEnd = (img,e) => {
+            img.setAttribute('src', '/assets/img/icon/sound.png');
         }
 
     }
@@ -110,20 +110,10 @@ class List extends Component {
 
         return (
             <div>
-                <ul className="chat-content">
-                    {data}
-                    {/* <li className={"friend-area"}>
-                        <img src='http://wx.qlogo.cn/mmopen/hqDXUD6csUic5fzfNcp2xe5InUO70UQqNuhEG2uOiczpj0jVgc7Y6GwibXYJIX7SIOMnIHAD8ELuibw8CRsicfUwLdw/0' alt="" />
-                        <div className="msgContent">
-                            <section className="audio-area">
-                                <audio src="http://www.runoob.com/try/demo_source/horse.mp3" controls="controls" preload="none"></audio>
-                                <time>1"</time>
-                            </section>
-                        </div>
-                    </li> */}
-                </ul>
-                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
-            </div>
+            <ul className="chat-content">
+                {data}
+            </ul>
+            </div> 
         )
     }
 }
@@ -142,6 +132,8 @@ class Chat extends IM {
             containerHeight: 500, //聊天内容高度
             windowHeight: window.innerHeight,//窗口高度
             footerBottom: 0,//输入框位置
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: ''//大图url
         };
         let { selToID, headUrl, nickname } = qs.parse(props.location.search);
 
@@ -360,8 +352,8 @@ class Chat extends IM {
         var second = content.getSecond();//获取语音时长
         var downUrl = content.getDownUrl();
         return '<section class="audio-area" style=width:' + (second + 50) + 'px >' +
-            '<img class="sound-icon" src="/assets/img/icon/sound.png" width="15" height="15" />' +
-            '<audio id="uuid_"' + content.uuid + ' src=' + downUrl + ' controls="controls" preload="none"></audio>' +
+            '<img class="sound-icon" src="/assets/img/icon/sound.png" width="12" height="15" />' +
+            '<audio  src=' + downUrl + ' controls="controls" preload="none"></audio>' +
             '<time>' + second + '"</time>' +
             '</section>';
     }
@@ -646,11 +638,22 @@ class Chat extends IM {
             containerHeight: window.innerHeight - 50
         });
     }
+
+    /**
+     * 预览图片
+     */
+    previewImg(url) {
+        this.setState({
+            previewBigImg: true,
+            bigImgUrl: url
+        });
+    }
+
     render() {
         return (
             <div className="full-page chat-page">
                 <div ref={el => this.container = el} className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
-                    {this.state.list.length > 0 ? <List collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
+                    {this.state.list.length > 0 ? <List previewImg={this.previewImg.bind(this)} collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer style={{ bottom: this.state.footerBottom + 'px' }}>
                     <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>
@@ -666,6 +669,7 @@ class Chat extends IM {
                     <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
                 </footer>
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>
         )
     }
