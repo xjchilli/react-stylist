@@ -76,9 +76,8 @@ class DpsProfile extends Component {
                             <p className="nickname">{collocation.nickName}</p>
                             <p className="styles">擅长风格：{collocation.goodsStyle}</p>
                             <section className="level-area">
-                                <img src="/assets/img/icon/auth-yes.png" />
-                                <span className="levl-label">LV.1</span>
-                                <span className="level-name">搭配爱好者</span>
+                                <img src={collocation.auditState == 2 ? "/assets/img/icon/auth-yes.png" : "/assets/img/icon/auth-no.png"} />
+                                <span className="level-name">{collocation.levelName}</span>
                             </section>
                         </li>
                     </ul>
