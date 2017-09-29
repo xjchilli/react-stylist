@@ -857,7 +857,7 @@ class LifePhoto extends Component {
                         <div className="upload-area">
                             <span className="icon icon-camera"></span>
                             <p>添加近期全身照</p>
-                            <input type="file" ref={el => this.file = el} multiple accept="image/*"  capture="camera" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                            <input type="file" ref={el => this.file = el} multiple accept="image/*" capture={ToolDps.iphone ? "" : "camera"} className="upload-file" onChange={this.uploadPhoto.bind(this)} />
                         </div>
                     </li>
                 </ul>
