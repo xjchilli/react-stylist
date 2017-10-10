@@ -145,10 +145,14 @@ class ListItem extends Component {
 class FashionMoment extends IM {
     constructor(props) {
         super(props);
+        let fashionListImg = Array.prototype.slice.apply(props.state.data);
+        let sliceArr = fashionListImg.splice(0, 1);
+        console.log(sliceArr);
+        console.log(fashionListImg);
         this.state = {
             newMsg: false,
-            loadImg: null,//需展示的时尚圈精选图片
-            fashionListImg: props.data || [],//时尚圈精选图片
+            loadImg: sliceArr[0] || null,//需展示的时尚圈精选图片
+            fashionListImg: fashionListImg || [],//时尚圈精选图片
             col1Imgs: [],//时尚圈精选图片1列
             col2Imgs: [],//时尚圈精选图片2列
             col1H: 0,//时尚圈精选图片1列高度
@@ -160,6 +164,7 @@ class FashionMoment extends IM {
          * 时尚圈精选将要展示的图片
          */
         this.willImg = function (e) {
+            // console.log('11');
             let fashionListImg = Array.prototype.slice.apply(this.state.fashionListImg);
             let willBoxEle = document.querySelector('.will-box');
 
@@ -185,7 +190,6 @@ class FashionMoment extends IM {
                     loadImg: sliceArr[0],
                     fashionListImg: fashionListImg
                 });
-                // window.addEventListener('scroll', this.pageScroll, false);
             }
         }
 
@@ -198,7 +202,11 @@ class FashionMoment extends IM {
         //     });
         // });
 
-        let fashionListImg = Array.prototype.slice.apply(this.state.fashionListImg);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps);
+        let fashionListImg = Array.prototype.slice.apply(nextProps.state.data);
         let sliceArr = fashionListImg.splice(0, 1);
         this.setState({
             loadImg: sliceArr[0],
@@ -299,11 +307,11 @@ class FashionMoment extends IM {
                             this.state.col1Imgs.map((item, index) => {
                                 return (
                                     <li className='box' key={index}>
-                                        <Link to="/">
-                                            <img src={item.url} className="main-img" />
+                                        <Link to={"/fashionMomentDetail?planId=" + item.id}>
+                                            <img src={item.masterImage} className="main-img" />
                                         </Link>
                                         <div className='text-area'>
-                                            <Link to="/">
+                                            <Link to={"/fashionMomentDetail?planId=" + item.id}>
                                                 <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
                                             </Link>
                                             <div className="dps-info">
@@ -312,8 +320,8 @@ class FashionMoment extends IM {
                                                     <span className="nickname">么么哒</span>
                                                 </Link>
                                                 <div className="zan">
-                                                    <img src="/assets/img/icon/zan.jpg" className="icon" />
-                                                    258
+                                                    <img src={item.agreeValue === 1 ? "/assets/img/icon/zan-active.jpg" : "/assets/img/icon/zan.jpg"} className="icon" />
+                                                    {item.agreeNum}
                                                 </div>
                                             </div>
                                         </div>
@@ -327,11 +335,11 @@ class FashionMoment extends IM {
                             this.state.col2Imgs.map((item, index) => {
                                 return (
                                     <li className='box' key={index}>
-                                        <Link to="/">
-                                            <img src={item.url} className="main-img" />
+                                        <Link to={"/fashionMomentDetail?planId=" + item.id}>
+                                            <img src={item.masterImage} className="main-img" />
                                         </Link>
                                         <div className='text-area'>
-                                            <Link to="/">
+                                            <Link to={"/fashionMomentDetail?planId=" + item.id}>
                                                 <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
                                             </Link>
                                             <div className="dps-info">
@@ -340,8 +348,8 @@ class FashionMoment extends IM {
                                                     <span className="nickname">么么哒</span>
                                                 </Link>
                                                 <div className="zan">
-                                                    <img src="/assets/img/icon/zan.jpg" className="icon" />
-                                                    258
+                                                    <img src={item.agreeValue === 1 ? "/assets/img/icon/zan-active.jpg" : "/assets/img/icon/zan.jpg"} className="icon" />
+                                                    {item.agreeNum}
                                                 </div>
                                             </div>
                                         </div>
@@ -354,7 +362,7 @@ class FashionMoment extends IM {
                     <ul className="hideItem">
                         <li className='box will-box'>
                             <Link to="/">
-                                <img src={this.state.loadImg ? this.state.loadImg.url : ''} className="main-img" onLoad={this.willImg.bind(this)} />
+                                <img src={this.state.loadImg ? this.state.loadImg.masterImage : ''} className="main-img" onLoad={this.willImg.bind(this)} />
                             </Link>
                             <div className='text-area'>
                                 <Link to="/">

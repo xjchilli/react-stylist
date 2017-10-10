@@ -93,7 +93,7 @@ const Main = (mySetting) => {
                 delete this.action;
                 this.state.scrollX = window.scrollX; //记录滚动条位置
                 this.state.scrollY = window.scrollY; 
-
+        
                 this.props.setState(this.state);
             }
 
@@ -209,6 +209,7 @@ const Main = (mySetting) => {
     };
 
     return connect((state) => {
+        console.log(state.FashionMoment);
         return {
             state: state[setting.id]
         }

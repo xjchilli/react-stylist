@@ -75,7 +75,7 @@ class Home extends Component {
             if (this.testMeet(document.querySelector('.loading-area'))) {
                 let fashionListImg = [
                     {
-                        url: 'http://chuantu.biz/t6/73/1506763867x1942171029.jpg?' + 100000 * Math.random(),
+                        url: '/assets/img/dog.jpg?' + 100000 * Math.random(),
                         title: '标题1',
                         id: 100000 * Math.random()
                     },
@@ -100,7 +100,7 @@ class Home extends Component {
                         id: 100000 * Math.random()
                     },
                     {
-                        url: 'http://chuantu.biz/t6/73/1506763867x1942171029.jpg?' + 100000 * Math.random(),
+                        url: '/assets/img/dog.jpg?' + 100000 * Math.random(),
                         title: '标题1',
                         id: 100000 * Math.random()
                     },
@@ -234,11 +234,11 @@ class Home extends Component {
                 <section className='today-recommend'>
                     <div className='box'>
                         <Link to="/" >
-                            <div className="lside" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}>
+                            <div className="lside" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}>
                             </div>
                             <div className="rside">
-                                <div className="r-top" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}></div>
-                                <div className="r-bottom" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}></div>
+                                <div className="r-top" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}></div>
+                                <div className="r-bottom" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}></div>
                             </div>
                             <div className="introduce-area">
                                 <div className="introduce" >曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。</div>
@@ -254,11 +254,11 @@ class Home extends Component {
                     </div>
                     <div className='box'>
                         <Link to="/" >
-                            <div className="lside" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}>
+                            <div className="lside" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}>
                             </div>
                             <div className="rside">
-                                <div className="r-top" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}></div>
-                                <div className="r-bottom" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}></div>
+                                <div className="r-top" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}></div>
+                                <div className="r-bottom" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}></div>
                             </div>
                             <div className="introduce-area">
                                 <div className="introduce" >曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。</div>
@@ -274,11 +274,11 @@ class Home extends Component {
                     </div>
                     <div className='box'>
                         <Link to="/" >
-                            <div className="lside" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}>
+                            <div className="lside" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}>
                             </div>
                             <div className="rside">
-                                <div className="r-top" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}></div>
-                                <div className="r-bottom" style={{ background: "url('http://chuantu.biz/t6/73/1506763867x1942171029.jpg')", backgroundSize: "cover" }}></div>
+                                <div className="r-top" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}></div>
+                                <div className="r-bottom" style={{ background: "url('/assets/img/dog.jpg')", backgroundSize: "cover" }}></div>
                             </div>
                             <div className="introduce-area">
                                 <div className="introduce" >曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。</div>

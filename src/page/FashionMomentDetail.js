@@ -388,11 +388,11 @@ class FashionMomentDetail extends IM {
             imgUrl: this.state.plan.masterImage, // 分享图标
         });
 
-        this.signature((data) => {
-            this.login(data, () => {
-                this.getFriends();
-            });
-        });
+        // this.signature((data) => {
+        //     this.login(data, () => {
+        //         this.getFriends();
+        //     });
+        // });
 
     }
 
