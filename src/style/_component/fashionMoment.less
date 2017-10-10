@@ -1,73 +1,117 @@
 .fashion-moment-area {
-    background: @white!important;
-    .fashion-moment-list {
-        li {
-            min-height: 25rem;
-            border-bottom: 8px solid #f0f5f9;
-            .main-img {
-                position: relative;
-                .action-area {
-                    padding: 10px 20px;
-                    background: rgba(0, 0, 0, .5);
-                    position: absolute;
-                    right: 0px;
-                    bottom: 0px;
-                    text-align: center;
-                    min-width: 65px;
-                }
-                .agree-area, .money-area {
-                    display: inline-block;
-                    .icon-heart, .icon-heart-selected {
-                        font-size: 18px;
-                    }
-                    >p {
-                        font-size: 12px;
-                        color: #ffffff;
-                    }
-                }
-                .money-area {
-                    margin-left: 25px;
-                    .icon-money {
-                        font-size: 20px;
-                    }
-                }
-            }
-            .img-content {
-                max-width: 100%;
-                max-height: 740px;
-                margin: auto;
-            }
-            .content-area {
-                .title {
-                    font-size: 22px;
-                    color: #1a1a1a;
-                    font-weight: 600;
-                    text-align: center;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    margin: 12px 0 6px;
-                }
-                time {
-                    display: block;
-                    font-size: 10px;
-                    color: #999999;
-                    text-align: center;
-                }
-                .description {
-                    margin: 30px 13px 50px;
-                    font-size: 12px;
-                    color: #999999;
-                    font-weight: 500;
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 2;
-                    word-break: break-all;
-                }
-            }
-        }
+    .fashion-list>ul {
+        float: left;
+        width: 50%;
+        padding: 0 5px 10px 5px;
     }
+    .fashion-list .box {
+        margin-bottom: 10px;
+        background: #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
+        font-size: 0;
+        border-radius: 3px;
+    }
+    .fashion-list .box .main-img {
+        width: 100%;
+        border-radius: 3px 3px 0 0;
+    }
+    .fashion-list .box .text-area {
+        position: relative;
+        height: 90px;
+        padding: 10px;
+        font-size: 15px;
+    }
+    .text-area .list-title {
+        font-size: 13px;
+        color: #333333;
+        font-weight: 500;
+        line-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    .hideItem {
+        position: fixed;
+        left: -1000px;
+        top: 0;
+        z-index: 99;
+    }
+    // loading area
+    .loading-area{
+        float: left;
+        width: 100%;
+    }
+    // background: @white!important;
+    // .fashion-moment-list {
+    //     li {
+    //         min-height: 25rem;
+    //         border-bottom: 8px solid #f0f5f9;
+    //         .main-img {
+    //             position: relative;
+    //             .action-area {
+    //                 padding: 10px 20px;
+    //                 background: rgba(0, 0, 0, .5);
+    //                 position: absolute;
+    //                 right: 0px;
+    //                 bottom: 0px;
+    //                 text-align: center;
+    //                 min-width: 65px;
+    //             }
+    //             .agree-area, .money-area {
+    //                 display: inline-block;
+    //                 .icon-heart, .icon-heart-selected {
+    //                     font-size: 18px;
+    //                 }
+    //                 >p {
+    //                     font-size: 12px;
+    //                     color: #ffffff;
+    //                 }
+    //             }
+    //             .money-area {
+    //                 margin-left: 25px;
+    //                 .icon-money {
+    //                     font-size: 20px;
+    //                 }
+    //             }
+    //         }
+    //         .img-content {
+    //             max-width: 100%;
+    //             max-height: 740px;
+    //             margin: auto;
+    //         }
+    //         .content-area {
+    //             .title {
+    //                 font-size: 22px;
+    //                 color: #1a1a1a;
+    //                 font-weight: 600;
+    //                 text-align: center;
+    //                 white-space: nowrap;
+    //                 overflow: hidden;
+    //                 text-overflow: ellipsis;
+    //                 margin: 12px 0 6px;
+    //             }
+    //             time {
+    //                 display: block;
+    //                 font-size: 10px;
+    //                 color: #999999;
+    //                 text-align: center;
+    //             }
+    //             .description {
+    //                 margin: 30px 13px 50px;
+    //                 font-size: 12px;
+    //                 color: #999999;
+    //                 font-weight: 500;
+    //                 overflow: hidden;
+    //                 display: -webkit-box;
+    //                 -webkit-box-orient: vertical;
+    //                 -webkit-line-clamp: 2;
+    //                 word-break: break-all;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 @keyframes bounce {

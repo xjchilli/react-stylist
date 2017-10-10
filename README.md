@@ -48,3 +48,19 @@ or
 yarn install
 
 ~~~
+
+~~~
+<Link to="/profile">个人信息</Link>
+<Link to="/needMatch">我要搭配</Link>
+<Link to="/myDps">我的搭配师</Link>
+<Link to="/customSuit">搭配测试</Link>
+<Link to="/wardrobeList">我的衣橱</Link>
+<Link to="/orderList">我的订单</Link>
+<Link to="/fashionMoment">我的时尚圈</Link>
+<Link to="/promotionCode">优惠码</Link>
+<Link to="/getPromotion?couponsActiveId=13">获取优惠码</Link>
+<Link to="/share?userId=171">分享</Link>
+<Link to="/arrangementScheme?id=18">搭配方案</Link>
+<Link to="/feedback">吐槽</Link>
+<Link to="/test">测试</Link>
+~~~

@@ -162,7 +162,6 @@
 }
 
 //loading end
-
 //button
 .btn {
   display: block;
@@ -171,9 +170,6 @@
   border-radius: 0.5rem;
   color: #ffffff;
   font-size: 1.7rem;
-  width: 13rem;
-  height: 3.5rem;
-  line-height: 3.5rem;
   border-width: 0;
 }
 
@@ -217,39 +213,6 @@
   opacity: 0;
 }
 
-// 淡入淡出 end
-//form input layout
-// .form-ground {
-//   display: flex;
-//   margin-bottom: 15px;
-//   .item {
-//     font-size: 16px;
-//     height: 30px;
-//     &:first-child {
-//       flex: 0 0 50px;
-//       padding-left: 10px;
-//       line-height: 30px;
-//     }
-//     &:last-child {
-//       flex: auto;
-//     }
-//     input {
-//       -webkit-appearance: none;
-//       width: 100%;
-//       height: 100%;
-//       border: 1px solid gray;
-//       border-radius: 0;
-//       font-size: 16px;
-//       background: @white;
-//       text-indent: 5px;
-//     }
-//   }
-// }
-// @media all and (max-width:320px) {
-//   .form-ground {
-//     margin-bottom: 5px;
-//   }
-// }
 .pd15 {
   padding: 15px;
 }
@@ -267,3 +230,80 @@
 }
 
 //flex layout end
+
+/* 新消息通知 start */
+
+.new-info-area {
+  position: fixed;
+  top: 17px;
+  right: 0;
+  width: 49px;
+  height: 38px;
+  line-height: 38px;
+  background: rgba(0, 0, 0, .5);
+  border-radius: 19px 0 0 19px;
+  text-align: center;
+  z-index: 999;
+}
+
+.new-info-area .news {
+  display: inline-block;
+  width: 22px;
+  height: 21px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.new-info-area img {
+  width: 22px;
+  height: 21px;
+  vertical-align: top;
+}
+
+.new-info-area .news .cicle {
+  position: absolute;
+  right: -8px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(#f63170, #f73171);
+}
+
+
+/* 新消息通知 end */
+
+// 底部tab start
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: #1a1a1a;
+  li {
+    float: left;
+    width: 20%;
+    color: @white;
+    text-align: center;
+    font-size: 0;
+    a {
+      display: block;
+      &.active {
+        p {
+          color: @white;
+        }
+      }
+    }
+    img {
+      display: inline-block;
+      margin: 7px 0 4px;
+    }
+    p {
+      color: #666666;
+      font-size: 10px;
+    }
+  }
+}
+
+//底部tab end

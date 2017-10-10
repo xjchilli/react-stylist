@@ -146,18 +146,64 @@ class FashionMoment extends IM {
     constructor(props) {
         super(props);
         this.state = {
-            newMsg: false
+            newMsg: false,
+            loadImg: null,//需展示的时尚圈精选图片
+            fashionListImg: props.data || [],//时尚圈精选图片
+            col1Imgs: [],//时尚圈精选图片1列
+            col2Imgs: [],//时尚圈精选图片2列
+            col1H: 0,//时尚圈精选图片1列高度
+            col2H: 0,//时尚圈精选图片2列高度
         }
         this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
+
+        /**
+         * 时尚圈精选将要展示的图片
+         */
+        this.willImg = function (e) {
+            let fashionListImg = Array.prototype.slice.apply(this.state.fashionListImg);
+            let willBoxEle = document.querySelector('.will-box');
+
+            if (this.state.col1H <= this.state.col2H) {
+                let col1H = this.state.col1H + willBoxEle.offsetHeight;
+                let col1Imgs = this.state.col1Imgs;
+                col1Imgs.push(this.state.loadImg);
+                let sliceArr = fashionListImg.splice(0, 1);
+                this.setState({
+                    col1H: col1H,
+                    col1Imgs: col1Imgs,
+                    loadImg: sliceArr[0],
+                    fashionListImg: fashionListImg
+                })
+            } else {
+                let col2H = this.state.col2H + willBoxEle.offsetHeight;
+                let col2Imgs = this.state.col2Imgs;
+                col2Imgs.push(this.state.loadImg);
+                let sliceArr = fashionListImg.splice(0, 1);
+                this.setState({
+                    col2H: col2H,
+                    col2Imgs: col2Imgs,
+                    loadImg: sliceArr[0],
+                    fashionListImg: fashionListImg
+                });
+                // window.addEventListener('scroll', this.pageScroll, false);
+            }
+        }
 
     }
     componentDidMount() {
         document.title = "时尚圈";
-        this.signature((data) => {
-            this.login(data, () => {
-                this.getFriends();
-            });
-        });
+        // this.signature((data) => {
+        //     this.login(data, () => {
+        //         this.getFriends();
+        //     });
+        // });
+
+        let fashionListImg = Array.prototype.slice.apply(this.state.fashionListImg);
+        let sliceArr = fashionListImg.splice(0, 1);
+        this.setState({
+            loadImg: sliceArr[0],
+            fashionListImg: fashionListImg
+        })
     }
 
     onMsgNotify(newMsgList) {
@@ -238,18 +284,99 @@ class FashionMoment extends IM {
 
 
     render() {
-        let {
-            data
-        } = this.props.state;
+        // let { data } = this.props.state;
+        // console.log(data);
         let newMsg = classNames('bell-link', {
             'active': this.state.newMsg
         });
         return (
             <div className="fashion-moment-area">
-                {
-                    data.length > 0 ? <List globalState={this.props.state} globalSetState={this.props.setState} list={data} /> : null
-                }
-                {this.props.children}
+                {/* data.length > 0 ? <List globalState={this.props.state} globalSetState={this.props.setState} list={data} /> : null */}
+
+                <div className="fashion-list clear">
+                    <ul>
+                        {
+                            this.state.col1Imgs.map((item, index) => {
+                                return (
+                                    <li className='box' key={index}>
+                                        <Link to="/">
+                                            <img src={item.url} className="main-img" />
+                                        </Link>
+                                        <div className='text-area'>
+                                            <Link to="/">
+                                                <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
+                                            </Link>
+                                            <div className="dps-info">
+                                                <Link to="/">
+                                                    <img src="/assets/img/girl.jpg" className="head-img" />
+                                                    <span className="nickname">么么哒</span>
+                                                </Link>
+                                                <div className="zan">
+                                                    <img src="/assets/img/icon/zan.jpg" className="icon" />
+                                                    258
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                    <ul>
+                        {
+                            this.state.col2Imgs.map((item, index) => {
+                                return (
+                                    <li className='box' key={index}>
+                                        <Link to="/">
+                                            <img src={item.url} className="main-img" />
+                                        </Link>
+                                        <div className='text-area'>
+                                            <Link to="/">
+                                                <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
+                                            </Link>
+                                            <div className="dps-info">
+                                                <Link to="/">
+                                                    <img src="/assets/img/girl.jpg" className="head-img" />
+                                                    <span className="nickname">么么哒</span>
+                                                </Link>
+                                                <div className="zan">
+                                                    <img src="/assets/img/icon/zan.jpg" className="icon" />
+                                                    258
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                    {/* 时尚圈精选将要展示的图片 */}
+                    <ul className="hideItem">
+                        <li className='box will-box'>
+                            <Link to="/">
+                                <img src={this.state.loadImg ? this.state.loadImg.url : ''} className="main-img" onLoad={this.willImg.bind(this)} />
+                            </Link>
+                            <div className='text-area'>
+                                <Link to="/">
+                                    <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
+                                </Link>
+                                <div className="dps-info">
+                                    <Link to="/">
+                                        <img src="/assets/img/girl.jpg" className="head-img" />
+                                        <span className="nickname">么么哒</span>
+                                    </Link>
+                                    <div className="zan">
+                                        <img src="/assets/img/icon/zan.jpg" className="icon" />
+                                        258
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div className="loading-area">
+                        {this.props.children}
+                    </div>
+                </div>
 
                 <Link to="/myDps" className={newMsg}>
                     <svg viewBox="0 0 100 100" className="icon-svg-bell" >
@@ -261,6 +388,7 @@ class FashionMoment extends IM {
         )
     }
 }
+
 
 
 export default GetNextPage({
