@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import GetNextPage from './GetNextPage';
 import GetData from './GetData';
-import { Link,NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import IM from '../../page/component/IM';
 
 
 
@@ -39,7 +41,7 @@ class Footer extends Component {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/myDps" activeClassName={tab == 2 ? "active" : ""}>
+                    <NavLink to="/dpsList" activeClassName={tab == 2 ? "active" : ""}>
                         <img src={tab == 2 ? '/assets/img/icon/tab-2-2.jpg' : '/assets/img/icon/tab-2-1.jpg'} width="15" height="22" />
                         <p>搭配师</p>
                     </NavLink>
@@ -57,7 +59,7 @@ class Footer extends Component {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/profile" activeClassName={tab == 5 ? "active" : ""}>
+                    <NavLink to="/my" activeClassName={tab == 5 ? "active" : ""}>
                         <img src={tab == 5 ? '/assets/img/icon/tab-5-2.jpg' : '/assets/img/icon/tab-5-1.jpg'} width="16" height="22" />
                         <p>我的</p>
                     </NavLink>
@@ -67,14 +69,111 @@ class Footer extends Component {
     }
 }
 
-class News extends Component {
+class News extends IM {
+    constructor(props) {
+        super(props);
+        this.state={
+            newMsg: false
+        }
+        this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
+    }
+
+    componentDidMount() {
+        this.signature((data) => {
+            this.login(data, () => {
+                this.getFriends();
+            });
+        });
+    }
+
+
+    
+    onMsgNotify(newMsgList) {
+        if (newMsgList.length > 0) {
+            this.setState({
+                newMsg: true
+            });
+        }
+
+    }
+
+
+    /**
+     * 获取好友列表
+     */
+    getFriends() {
+        let options = {
+            'From_Account': this.loginInfo.identifier,
+            'TimeStamp': 0,
+            'StartIndex': 0,
+            'GetCount': this.totalCount,
+            'LastStandardSequence': 0,
+            "TagList": [
+                "Tag_Profile_IM_Nick",
+                "Tag_Profile_IM_Image",
+                "Tag_Profile_IM_Gender"
+            ]
+        };
+
+        webim.getAllFriend(options,
+            (resp) => {
+                // console.log(resp);
+                if (resp.FriendNum > 0) {
+                    this.initRecentContactList(); //获取最近会话数据
+                }
+            },
+            (err) => {
+                console.log(err.ErrorInfo);
+            }
+        );
+    }
+
+    /**
+     * 初始化聊天界面最近会话列表
+     */
+    initRecentContactList() {
+        let options = {
+            'Count': this.reqRecentSessCount //要拉取的最近会话条数
+        };
+        webim.getRecentContactList(
+            options,
+            (resp) => {
+                if (resp.SessionItem && resp.SessionItem.length > 0) { //如果存在最近会话记录
+                    webim.syncMsgs(this.initUnreadMsgCount.bind(this)); //初始化最近会话的消息未读数
+
+                }
+
+            }
+        );
+    }
+
+    /**
+     * 初始化最近会话的消息未读数
+     */
+    initUnreadMsgCount() {
+        let sess;
+        let sessMap = webim.MsgStore.sessMap();
+        for (let i in sessMap) {
+            sess = sessMap[i];
+            // console.log(sess._impl.msgs)
+            if (sess.id() != "@TLS#144115198577104990" && sess.unread() > 0) {
+                this.setState({
+                    newMsg: true
+                });
+            }
+        }
+    }
+
+
     render() {
         return (
             <view className="new-info-area">
-                <Link to="/">
+                <Link to="/myDps">
                     <view className="news">
                         <img src="/assets/img/icon/news.png" />
-                        <view className="cicle"></view>
+                        {
+                            this.state.newMsg ? <view className="cicle"></view> : null
+                        }
                     </view>
                 </Link>
             </view>
@@ -82,4 +181,5 @@ class News extends Component {
     }
 }
 
-export { GetNextPage, GetData, DataLoad, Footer,News };
+
+export { GetNextPage, GetData, DataLoad, Footer, News };

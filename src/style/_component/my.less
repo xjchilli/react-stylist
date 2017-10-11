@@ -1,0 +1,100 @@
+.my-page {
+    font-family: 'Microsoft YaHei';
+    padding-bottom: 50px;
+    header {
+        height: 167px;
+        border-bottom: 1/3px solid #f0f0f0;
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 27px auto 20px;
+        }
+        .nickname {
+            font-size: 15px;
+            color: #333333;
+            font-weight: bold;
+        }
+    }
+    .order-area {
+        .all {
+            position: relative;
+            display: block;
+            font-size: 14px;
+            color: #1a1a1a;
+            padding: 24px 15px;
+            &:after {
+                content: '';
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                width: 10px;
+                height: 10px;
+                border: 1px solid #666666;
+                border-width: 1px 1px 0 0;
+                transform: translateY(-50%) rotate(45deg);
+            }
+        }
+        ul {
+            >li {
+                .icon {
+                    font-size: 17px;
+                }
+                a {
+                    color: #333333;
+                    >p {
+                        font-size: 12px;
+                        margin-top: 4px;
+                    }
+                }
+            }
+        }
+    }
+    .base-info-area {
+        padding: 48px 15px 8px;
+        li {
+            &:nth-of-type(odd) {
+                padding-right: 15px;
+            }
+            &:nth-of-type(even) {
+                padding-left: 15px;
+            }
+            .box {
+                height: 100px;
+                border-radius: 6px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, .06);
+                padding-top: 25px;
+                .icon {
+                    font-size: 25px;
+                }
+                p {
+                    font-size: 12px;
+                    color: #333333;
+                    margin-top: 13px;
+                }
+            }
+            margin-bottom: 15px;
+        }
+    }
+    .contact-us, .feedback {
+        position: relative;
+        font-size: 14px;
+        color: #1a1a1a;
+        display: block;
+        padding: 20px 15px;
+        &:after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #666666;
+            border-width: 1px 1px 0 0;
+            transform: translateY(-50%) rotate(45deg);
+        }
+    }
+    .contact-us {
+        border-bottom: 1/3px solid #f0f0f0;
+    }
+}

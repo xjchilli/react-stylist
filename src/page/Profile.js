@@ -30,10 +30,10 @@ class Profile extends Component {
         this.state = {
             previewBigImg: false,//是否预览大图
             bigImgUrl: '',//大图url
-            faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
-            skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦', '不太清楚'],//肤色名字
-            bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角', '不太清楚'],//男：体型名字
-            bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形', '不太清楚']//女：体型名字
+            // faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
+            // skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦', '不太清楚'],//肤色名字
+            // bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角', '不太清楚'],//男：体型名字
+            // bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形', '不太清楚']//女：体型名字
         }
 
     }
@@ -62,35 +62,79 @@ class Profile extends Component {
             bodySize,
             lifeImgs
         } = info ? info : {};
-        let sexFlag = sex === 1 ? '2' : '1';
-        let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
-        let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
-        let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
-        if (bodySize == "6") {
-            bodyImgSrc = "/assets/img/suit/face-1-5.jpg";
-        }
-        let faceName = "";
-        let skinName = "";
-        let bodyName = "";
-        if (faceshpe != "") {
-            faceName = this.state.faceNames[Number(faceshpe) - 1];
-        }
-        if (colorofskin != "") {
-            skinName = this.state.skinNames[Number(colorofskin) - 1];
-        }
+        // let sexFlag = sex === 1 ? '2' : '1';
+        // let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
+        // let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
+        // let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
+        // if (bodySize == "6") {
+        //     bodyImgSrc = "/assets/img/suit/face-1-5.jpg";
+        // }
+        // let faceName = "";
+        // let skinName = "";
+        // let bodyName = "";
+        // if (faceshpe != "") {
+        //     faceName = this.state.faceNames[Number(faceshpe) - 1];
+        // }
+        // if (colorofskin != "") {
+        //     skinName = this.state.skinNames[Number(colorofskin) - 1];
+        // }
 
-        if (bodySize != "") {
-            if (sex === 1) {
-                bodyName = this.state.bodyNamesBoy[Number(bodySize) - 1];
-            } else {
-                bodyName = this.state.bodyNamesGirl[Number(bodySize) - 1];
-            }
+        // if (bodySize != "") {
+        //     if (sex === 1) {
+        //         bodyName = this.state.bodyNamesBoy[Number(bodySize) - 1];
+        //     } else {
+        //         bodyName = this.state.bodyNamesGirl[Number(bodySize) - 1];
+        //     }
 
-        }
+        // }
 
         return (
-            <section className="full-page profile-container">
-                <header className="flex-box">
+            <section className="full-page profile-page">
+                <div className="cicle"></div>
+                <section className="box">
+                    <div className="head-img-area">
+                        <img src={headImg} className="head-img" />
+                        {sex && sex === 2 ? (
+                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                        ) : (
+                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                            )
+                        }
+                    </div>
+                    <p className="text-center nickname">{nickName}</p>
+                    <div className="text-center">
+                        <span className="address">{cityName}</span>
+                        <span className="job">{professional}</span>
+                    </div>
+                    <ul className="flex-box age-height-weight">
+                        <li className="item-3">
+                            <label>年龄</label>{age}
+                        </li>
+                        <li className="item-3">
+                            <label>身高</label>{heigh}cm
+                        </li>
+                        <li className="item-3">
+                            <label>体重</label>{weight}kg
+                        </li>
+                    </ul>
+                    <dl className="flex-box face-skin-body">
+                        <dt>脸型 ，肤色和体型</dt>
+                        <dd className="item-3">
+                            <img src="/assets/img/suit/face-1-1.jpg" width="68" height="67"/>
+                            <p className="text-center name">圆形</p>
+                        </dd>
+                        <dd className="item-3">
+                            <img src="/assets/img/suit/skin-1-1.jpg" width="68" height="67"/>
+                            <p className="text-center name">自然红润</p>
+                        </dd>
+                        <dd className="item-3">
+                            <img src="/assets/img/suit/body-1-1.jpg" width="auto" height="67" />
+                            <p className="text-center name">沙漏型</p>
+                        </dd>
+                    </dl>
+
+                </section>
+                {/* <header className="flex-box">
                     <div className="item-2 head-img">
                         <img src={headImg} alt="" />
                         {sex && sex === 2 ? (
@@ -173,7 +217,7 @@ class Profile extends Component {
                                 )
                         }
                     </div>
-                </div>
+                </div> */}
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section>
         );

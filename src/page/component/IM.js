@@ -2,12 +2,8 @@
  * IM登录 退出
  */
 
-import React, {
-	Component
-} from 'react';
-import {
-	ToolDps
-} from '../../ToolDps';
+import React, { Component } from 'react';
+import { ToolDps } from '../../ToolDps';
 
 class IM extends Component {
 	constructor() {
@@ -33,6 +29,10 @@ class IM extends Component {
 			'isLogOn': false //是否开启控制台打印日志,默认开启，选填
 		}
 	}
+
+	// componentWillUnmount() {
+	// 	this.signOut();
+	// }
 
 	/**
 	 * [signature 获取签名]
@@ -119,12 +119,12 @@ class IM extends Component {
 		if (this.loginInfo.identifier) {
 			//sdk登出
 			webim.logout(
-				function(resp) {
-					console.log(resp);
+				function (resp) {
+					// console.log(resp);
 				}
 			);
 		} else {
-			alert('未登录');
+			// alert('未登录');
 		}
 
 	}

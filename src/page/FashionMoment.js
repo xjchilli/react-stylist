@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 import { GetNextPage } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 import classNames from 'classnames';
-import IM from './component/IM';
 import LazyLoad from 'react-lazyload';
+import { Footer, News } from '../Component/index';
 
 
 /**
@@ -142,7 +142,7 @@ class ListItem extends Component {
 }
 
 
-class FashionMoment extends IM {
+class FashionMoment extends Component {
     constructor(props) {
         super(props);
         let fashionListImg = Array.prototype.slice.apply(props.state.data);
@@ -150,7 +150,6 @@ class FashionMoment extends IM {
         console.log(sliceArr);
         console.log(fashionListImg);
         this.state = {
-            newMsg: false,
             loadImg: sliceArr[0] || null,//需展示的时尚圈精选图片
             fashionListImg: fashionListImg || [],//时尚圈精选图片
             col1Imgs: [],//时尚圈精选图片1列
@@ -158,7 +157,6 @@ class FashionMoment extends IM {
             col1H: 0,//时尚圈精选图片1列高度
             col2H: 0,//时尚圈精选图片2列高度
         }
-        this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
 
         /**
          * 时尚圈精选将要展示的图片
@@ -196,11 +194,7 @@ class FashionMoment extends IM {
     }
     componentDidMount() {
         document.title = "时尚圈";
-        // this.signature((data) => {
-        //     this.login(data, () => {
-        //         this.getFriends();
-        //     });
-        // });
+       
 
     }
 
@@ -214,89 +208,10 @@ class FashionMoment extends IM {
         })
     }
 
-    onMsgNotify(newMsgList) {
-        if (newMsgList.length > 0) {
-            this.setState({
-                newMsg: true
-            });
-        }
-
-    }
-
-
-    /**
-     * 获取好友列表
-     */
-    getFriends() {
-        let options = {
-            'From_Account': this.loginInfo.identifier,
-            'TimeStamp': 0,
-            'StartIndex': 0,
-            'GetCount': this.totalCount,
-            'LastStandardSequence': 0,
-            "TagList": [
-                "Tag_Profile_IM_Nick",
-                "Tag_Profile_IM_Image",
-                "Tag_Profile_IM_Gender"
-            ]
-        };
-
-        webim.getAllFriend(options,
-            (resp) => {
-                // console.log(resp);
-                if (resp.FriendNum > 0) {
-                    this.initRecentContactList(); //获取最近会话数据
-                }
-            },
-            (err) => {
-                console.log(err.ErrorInfo);
-            }
-        );
-    }
-
-    /**
-     * 初始化聊天界面最近会话列表
-     */
-    initRecentContactList() {
-        let options = {
-            'Count': this.reqRecentSessCount //要拉取的最近会话条数
-        };
-        webim.getRecentContactList(
-            options,
-            (resp) => {
-                if (resp.SessionItem && resp.SessionItem.length > 0) { //如果存在最近会话记录
-                    webim.syncMsgs(this.initUnreadMsgCount.bind(this)); //初始化最近会话的消息未读数
-
-                }
-
-            }
-        );
-    }
-
-    /**
-     * 初始化最近会话的消息未读数
-     */
-    initUnreadMsgCount() {
-        let sess;
-        let sessMap = webim.MsgStore.sessMap();
-        for (let i in sessMap) {
-            sess = sessMap[i];
-            // console.log(sess._impl.msgs)
-            if (sess.id() != "@TLS#144115198577104990" && sess.unread() > 0) {
-                this.setState({
-                    newMsg: true
-                });
-            }
-        }
-    }
-
 
     render() {
         // let { data } = this.props.state;
         // console.log(data);
-        let newMsg = classNames('bell-link', {
-            'active': this.state.newMsg
-        });
         return (
             <div className="fashion-moment-area">
                 {/* data.length > 0 ? <List globalState={this.props.state} globalSetState={this.props.setState} list={data} /> : null */}
@@ -312,7 +227,7 @@ class FashionMoment extends IM {
                                         </Link>
                                         <div className='text-area'>
                                             <Link to={"/fashionMomentDetail?planId=" + item.id}>
-                                                <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
+                                                <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
                                                 <Link to="/">
@@ -340,7 +255,7 @@ class FashionMoment extends IM {
                                         </Link>
                                         <div className='text-area'>
                                             <Link to={"/fashionMomentDetail?planId=" + item.id}>
-                                                <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
+                                                <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
                                                 <Link to="/">
@@ -385,13 +300,8 @@ class FashionMoment extends IM {
                         {this.props.children}
                     </div>
                 </div>
-
-                <Link to="/myDps" className={newMsg}>
-                    <svg viewBox="0 0 100 100" className="icon-svg-bell" >
-                        <use xlinkHref="/assets/img/icon.svg#svg-bell" />
-                    </svg>
-                    <span className="circle"></span>
-                </Link>
+                <Footer tab="4" />
+                <News  />
             </div>
         )
     }

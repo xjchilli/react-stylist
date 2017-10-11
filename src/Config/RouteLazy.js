@@ -6,6 +6,8 @@
 import Bundle from './bundle.js';
 
 import HomeContainer from 'bundle-loader?lazy&name=[name]!../page/Home';
+import MyContainer from 'bundle-loader?lazy&name=[name]!../page/My';
+import DpsListContainer from 'bundle-loader?lazy&name=[name]!../page/DpsList';
 import DpsProfileContainer from 'bundle-loader?lazy&name=[name]!../page/DpsProfile';
 import DpsServerDetailContainer from 'bundle-loader?lazy&name=[name]!../page/DpsServerDetail';
 import ProfileContainer from 'bundle-loader?lazy&name=[name]!../page/Profile';
@@ -47,6 +49,16 @@ let routers = [
         path: '/',
         exact: true,
         component: (props) => getComponent(props, HomeContainer)
+    },
+     {//我的
+        path: '/my',
+        exact: false,
+        component: (props) => getComponent(props, MyContainer)
+    },
+    {//搭配师列表
+        path: '/dpsList',
+        exact: false,
+        component: (props) => getComponent(props, DpsListContainer)
     },
     {//个人信息
         path: '/profile',

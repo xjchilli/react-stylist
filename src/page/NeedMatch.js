@@ -7,6 +7,8 @@ import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 import qs from 'query-string';
+import { Footer } from '../Component/index';
+import { News } from '../Component/index';
 
 class NeedMatch extends Component {
     constructor(props) {
@@ -111,6 +113,8 @@ class NeedMatch extends Component {
                     </div>
                 </div>
                 {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
+                <News/>
+                <Footer tab="3" />
             </section>
         );
     }
