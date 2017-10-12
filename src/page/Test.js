@@ -4,9 +4,90 @@
  * Created by potato on 2017/3/15.
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { DataLoad, GetData, PreviewImg } from '../Component/index';
-// import BScroll from 'better-scroll';
+import PropTypes from 'prop-types';
+import { ToolDps } from '../ToolDps';
+import { Msg, City, DataLoad, GetData, PreviewImg, Loading } from '../Component/index';
+// import { is, fromJS } from 'immutable';
+import flatpickr from 'flatpickr';
+const zh = require("flatpickr/dist/l10n/zh.js").zh;
+
+/**
+ * 性别
+ */
+class Sex extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sex: props.sex || '2'
+        }
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            sex: nextProps.sex
+        });
+    }
+
+
+    render() {
+        return (
+            <ul className="sex-area flex-box">
+                <li className="item-2">
+                    <div className="text-center sex" onClick={this.props.change.bind(this, '1')}>
+                        <img src="/assets/img/suit/sex-1.jpg" width="88" height="88" />
+                        <div>
+                            <span className="isSelect">
+                                男
+                            {
+                                    this.state.sex == 1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li className="item-2 text-center">
+                    <div className="text-center sex" onClick={this.props.change.bind(this, '2')}>
+                        <img src="/assets/img/suit/sex-2.jpg" width="88" height="88" />
+                        <div>
+                            <span className="isSelect">
+                                女
+                            {
+                                    this.state.sex == 2 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        )
+    }
+}
+
+
+/**
+ * 选择您的脸型-女
+ */
+class FaceGirl extends Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    componentDidMount() {
+        document.title = "选择您的脸型";
+    }
+
+    render() {
+        return (
+            <ul>
+
+            </ul>
+        )
+    }
+}
+
 
 class Main extends Component {
     constructor(props) {
@@ -19,261 +100,197 @@ class Main extends Component {
             loadAnimation,
             loadMsg
         } = this.props.state;
-        let main = data.succ ? <Profile data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = data.succ ? <CustomSuit data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
 
         return main;
     }
 }
 
-class Profile extends Component {
+
+
+class CustomSuit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pullingDown: false,//是否开发加载数据
-            pulldownTop: -40,//下拉刷新位置
-            pulldownText: '下拉刷新...',
-            previewBigImg: false,//是否预览大图
-            bigImgUrl: '',//大图url
-            faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
-            skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦', '不太清楚'],//肤色名字
-            bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角', '不太清楚'],//男：体型名字
-            bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形', '不太清楚']//女：体型名字
+            msgShow: false,
+            msgText: '', //提示内容
+            btnText: '提交',
+            sex: '1',//性别
+            progress:2//进度
+        };
+    }
+
+    componentDidMount() {
+        document.title = "选择您的性别";
+    }
+
+
+    showMsg(isShow, tipText) {
+        this.setState({
+            msgShow: isShow,
+            msgText: tipText,
+        });
+    }
+
+
+    sendForm() {
+        let lifeImgIds = []; //未删除的生活照ID
+        let {
+            sex, //性别
+            faceshpe, //脸型
+            colorofskin, //肤色
+            bodySize, //体型
+            problems, //解决问题
+            styles, //风格
+            heigh, //身高
+            weight, //体重
+            chest, //胸围
+            waist, //腰围
+            hip, //臀围
+            professional, //职业
+            countyCode, //城市
+            birthday, //生日
+            faceImg,//正脸照
+            lifeImgs, //生活照
+        } = this.state.data;
+
+        let flag = this.tips(this.state.data);
+        if (!flag) {
+            return;
         }
 
-    }
-    componentDidMount() {
-        document.title = "个人信息";
-        // this.scroll = new BScroll('.profile-container', {
-        //     click: true,
-        //     scrollbar: true,
-        //     probeType: 3,
-        //     pullDownRefresh: {
-        //         threshold: 40,
-        //         stop: 40
-        //     }
-        // });
-        // this.scroll.on('pullingDown', () => {
-        //     this.pullingDown = true;
-        //     this.setState({
-        //         pullingDown: true,
-        //         pulldownText: '加载中...'
-        //     });
-        //     console.log('在一次下拉刷新的动作后，这个时机一般用来去后端请求数据');
-        //     setTimeout(() => {
-        //         this.setState({
-        //             pullingDown: false,
-        //             pulldownText: '下拉刷新...'
-        //         });
-        //         this.scroll.finishPullDown();
-        //     }, 1000);
 
-        // });
-        // this.scroll.on('scroll', (pos) => {
-        //     // console.log(pos.y);
-        //     this.setState((prevState, props) => {
-        //         return {
-        //             pulldownTop: -40 + pos.y
-        //         }
-        //     });
-        //     if (pos.y > 40 && !this.state.pullingDown) {
-        //         this.setState({
-        //             pulldownText: '释放刷新...'
-        //         });
-        //     }
-
-        // });
-    }
-
-    start() {
-        wx.startRecord();
-    }
-
-    stop() {
-        wx.stopRecord({
-            success: (res) => {
-                this.localId = res.localId;
-                alert(JSON.stringify(res));
+        let formdata = new FormData();
+        formdata.append('sex', sex);
+        formdata.append('faceshpe', faceshpe);
+        formdata.append('colorofskin', colorofskin);
+        formdata.append('bodySize', bodySize);
+        formdata.append('style', styles);
+        formdata.append('heigh', heigh);
+        formdata.append('weight', weight);
+        formdata.append('problem', problems);
+        formdata.append('chest', chest);
+        formdata.append('waist', waist);
+        formdata.append('hip', hip);
+        formdata.append('professional', professional);
+        formdata.append('countyCode', countyCode);
+        formdata.append('birthday', birthday);
+        if (faceImg.file) {
+            formdata.append('headImg', faceImg.file);
+        } else {
+            lifeImgIds.push(faceImg.id);
+        }
+        lifeImgs.forEach((item, index) => {
+            if (item.file) {
+                formdata.append('lifeImg', item.file);
             }
-        });
-    }
-
-    play() {
-        wx.playVoice({
-            localId: this.localId // 需要播放的音频的本地ID，由stopRecord接口获得
-        });
-    }
-
-    upload() {
-        wx.uploadVoice({
-            localId: this.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
-            isShowProgressTips: 1, // 默认为1，显示进度提示
-            success: (res) => {
-                var serverId = res.serverId; // 返回音频的服务器端ID
-                alert(JSON.stringify(res));
+            if (item.id) {
+                lifeImgIds.push(item.id);
             }
+
         });
+        formdata.append('lifeImgIds', lifeImgIds);
+
+        this.setState({
+            btnText: '提交中...'
+        });
+
+        ToolDps.post('/wx/user/save', formdata, {
+            'Content-Type': 'multipart/form-data'
+        }).then((res) => {
+            if (res.succ) {
+                this.showMsg(true, '提交成功');
+                this._time = setTimeout(() => {
+                    this.context.router.history.push('/fashionMoment');
+                }, 1000);
+            } else {
+                this.showMsg(true, '提交失败');
+            }
+            this.setState({
+                btnText: '提交'
+            });
+        });
+    }
+
+    tips(data) {
+        let {
+            faceshpe, //脸型
+            colorofskin, //肤色
+            bodySize, //体型
+            problems, //解决问题
+            styles, //风格
+            faceImg,//正脸照
+            lifeImgs, //生活照
+        } = data;
+        if (faceshpe == "") {
+            this.showMsg(true, '请选择脸型');
+            return false;
+        }
+        if (colorofskin == "") {
+            this.showMsg(true, '请选择肤色');
+            return false;
+        }
+        if (bodySize == "") {
+            this.showMsg(true, '请选择体型');
+            return false;
+        }
+        if (problems.length == 0) {
+            this.showMsg(true, '请选择希望能解决的问题');
+            return false;
+        }
+        if (styles.length == 0) {
+            this.showMsg(true, '请选择喜欢的穿衣风格');
+            return false;
+        }
+        if (faceImg.imgPath == "") {
+            this.showMsg(true, '请上传正脸照片');
+            return false;
+        }
+        if (lifeImgs.length == 0) {
+            this.showMsg(true, '请上传全身照');
+            return false;
+        }
+        return true;
     }
 
     render() {
-        let {
-            headImg,
-            nickName,
-            info
-        } = this.props.data;
-        let {
-            sex,
-            age,
-            cityName,
-            professional,
-            heigh,
-            weight,
-            chest,
-            waist,
-            hip,
-            faceshpe,
-            colorofskin,
-            bodySize,
-            lifeImgs
-        } = info ? info : {};
-        let sexFlag = sex === 1 ? '2' : '1';
-        let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
-        let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
-        let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
-        if (bodySize == "6") {
-            bodyImgSrc = "/assets/img/suit/face-1-5.jpg";
-        }
-        let faceName = "";
-        let skinName = "";
-        let bodyName = "";
-        if (faceshpe != "") {
-            faceName = this.state.faceNames[Number(faceshpe) - 1];
-        }
-        if (colorofskin != "") {
-            skinName = this.state.skinNames[Number(colorofskin) - 1];
-        }
-
-        if (bodySize != "") {
-            if (sex === 1) {
-                bodyName = this.state.bodyNamesBoy[Number(bodySize) - 1];
-            } else {
-                bodyName = this.state.bodyNamesGirl[Number(bodySize) - 1];
-            }
-
-        }
-
         return (
-            <section className="full-page profile-container">
-                <button onClick={this.start.bind(this)} style={{ margin: '20px' }}>start</button>
-                <button onClick={this.stop.bind(this)} style={{ margin: '20px' }}>stop</button>
-                <button onClick={this.play.bind(this)} style={{ margin: '20px' }}>play</button>
-                <button onClick={this.upload.bind(this)} style={{ margin: '20px' }}>play</button>
-                {/* <div className="content">
-                    <header className="flex-box">
-                        <div className="item-2 head-img">
-                            <img src={headImg} alt="" />
-                            {sex && sex === 2 ? (
-                                <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                            ) : (
-                                    <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                                )
-                            }
-                        </div>
-                        <div className="item-2">
-                            <p className="name">{nickName}</p>
-                            <ul className="flex-box box">
-                                <li>
-                                    <p className="base">
-                                        <span>{age}</span>
-                                        <span>{cityName}</span>
-                                    </p>
-                                    <p className="job">
-                                        {professional}
-                                        {!age && !cityName && !professional ? "赶紧定制你的专属信息吧~" : null}
-                                    </p>
-                                </li>
-                                <li>
-                                    <Link to="/customSuit" className="again-write">马上定制</Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </header>
-                    <div className="figure-info-area">
-                        <h3 className="title">
-                            <span className="icon icon-person-info"></span>
-                            身材信息
-                    </h3>
-                        <p>身高(cm)：<span className={heigh ? "active" : ""}>{heigh ? heigh : "去添加身高~"}</span></p>
-                        <p>体重(kg)：<span className={weight ? "active" : ""}>{weight ? weight : "去添加体重~"}</span></p>
-                        <p>三围(胸腰臀cm)：<span className={chest ? "active" : ""}>{chest ? chest : "去添加三围~"}、{waist}、{hip}</span></p>
-                        <p>脸型、肤色和体型：<span>{faceshpe ? '' : "去选择你的脸型肤色体型~"}</span></p>
-                        <div className="flex-box body-img-area">
-                            {
-                                faceshpe ? (
-                                    <div className="item-3">
-                                        <img src={faceshpeImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }} />
-                                        <p className='name'>{faceName}</p>
-                                    </div>
-                                ) : null
-                            }
-                            {
-                                colorofskin ? (
-                                    <div className="item-3">
-                                        <img src={colorofskinImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
-                                        <p className='name'>{skinName}</p>
-                                    </div>
-                                ) : null
-                            }
-                            {
-                                bodySize ? (
-                                    <div className="item-3">
-                                        <img src={bodyImgSrc} alt="" width="68" height={bodySize == "6" ? "67" : "81"} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
-                                        <p className='name'>{bodyName}</p>
-                                    </div>
-                                ) : null
-                            }
-                        </div>
-                    </div>
-                    <div className="photo-wall">
-                        <h4 className="title"><span className="icon icon-photo-wall"></span>照片墙</h4>
-                        <div className="flex-box photo-area">
-                            {
-                                lifeImgs.length > 0 ? (
-                                    lifeImgs.map((lifeImg, index) => {
-                                        return (
-                                            <div className="item-3" key={index}>
-                                                <div className="img-box" style={{ backgroundImage: 'url(' + lifeImg.imgPath + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: lifeImg.imgPath }) }}>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                ) : (
-                                        <p className="tips">去添加你的照片吧~</p>
-                                    )
-                            }
-                        </div>
-                    </div>
+            <section className="full-page customsuit-page">
+                <div className="progress">
+                    <span className="num"></span>
                 </div>
-                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
+                {
+                    this.state.progress == 1 ? <Sex sex={this.state.sex} change={(sex) => { this.setState({ sex: sex }) }} /> : null
+                }
+                {
+                    this.state.progress == 2 ? <FaceGirl sex={this.state.sex} change={(sex) => { this.setState({ sex: sex }) }} /> : null
+                }
+                
 
-                <section className="pulldown-wrapper" style={{ top: this.state.pulldownTop + 'px' }}>
-                    {this.state.pulldownText}
-                </section> */}
+                <button className="btn pre-btn">
+                    <span>上一步</span>
+                </button>
+                <button className="btn next-btn">
+                    <span>下一步</span>
+                </button>
             </section>
-        );
+        )
     }
+
 }
 
 
+export default CustomSuit;
 
-export default GetData({
-    id: 'Profile', //应用关联使用的redux
-    component: Main, //接收数据的组件入口
-    url: '/wx/user/info',
-    data: '', //发送给服务器的数据
-    success: (state) => {
-        return state;
-    }, //请求成功后执行的方法
-    error: (state) => {
-        return state
-    } //请求失败后执行的方法
-});
+// export default GetData({
+//     id: 'Profile', //应用关联使用的redux
+//     component: Main, //接收数据的组件入口
+//     url: '/wx/user/info',
+//     data: '', //发送给服务器的数据
+//     success: (state) => {
+//         return state;
+//     }, //请求成功后执行的方法
+//     error: (state) => {
+//         return state
+//     } //请求失败后执行的方法
+// });

@@ -5,7 +5,72 @@
  */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData, PreviewImg } from '../Component/index';
+
+
+//生活照
+class LifePhoto extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: null,
+            photoList: [], //生活照片
+        }
+    }
+
+    uploadPhoto(e) {
+        let self = this;
+        let files = e.target.files;
+        if (files) {
+            let targetFile = files[0];
+            let readFile = new FileReader();
+            readFile.onload = function () {
+                let imgObj = {
+                    imgPath: this.result,
+                    file: targetFile
+                };
+                self.file.value = '';
+
+            };
+            readFile.readAsDataURL(targetFile);
+        }
+    }
+
+
+    render() {
+        let imgPath = '/assets/img/girl.jpg';
+        // if (this.state.data.faceImg) {
+        //     imgPath = this.state.data.faceImg.imgPath;
+        // }
+        return (
+            <div className="lifePhoto-area">
+                <h2 className="text-center">个人照片</h2>
+                <ul className="flex-box upload-control-area">
+                    <li className="item-2">
+                        <div className="upload-area" >
+                            <span className="icon icon-camera"></span>
+                            <p>添加一张正脸照片</p>
+                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }} ></div>
+                            <input type="file" accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                        </div>
+                    </li>
+                    <li className="item-2">
+                        <div className="upload-area">
+                            <span className="icon icon-camera"></span>
+                            <p>添加近期全身照</p>
+                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }} ></div>
+                            <input type="file" accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+}
+
+
+
 
 class Main extends Component {
     constructor(props) {
@@ -28,12 +93,7 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            previewBigImg: false,//是否预览大图
-            bigImgUrl: '',//大图url
-            // faceNames: ['鹅蛋脸', '圆脸', '瓜子脸', '方脸', '不太清楚'],//脸型名字
-            // skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦', '不太清楚'],//肤色名字
-            // bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角', '不太清楚'],//男：体型名字
-            // bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形', '不太清楚']//女：体型名字
+           
         }
 
     }
@@ -58,35 +118,15 @@ class Profile extends Component {
             waist,
             hip,
             faceshpe,
+            problems,
+            styles,
             colorofskin,
             bodySize,
             lifeImgs
-        } = info ? info : {};
-        // let sexFlag = sex === 1 ? '2' : '1';
-        // let faceshpeImgSrc = "/assets/img/suit/face-" + sexFlag + "-" + faceshpe + ".jpg"; //脸型图片地址
-        // let colorofskinImgSrc = "/assets/img/suit/skin-" + sexFlag + "-" + colorofskin + ".jpg"; //肤色图片地址
-        // let bodyImgSrc = "/assets/img/suit/body-" + sexFlag + "-" + bodySize + ".jpg";
-        // if (bodySize == "6") {
-        //     bodyImgSrc = "/assets/img/suit/face-1-5.jpg";
-        // }
-        // let faceName = "";
-        // let skinName = "";
-        // let bodyName = "";
-        // if (faceshpe != "") {
-        //     faceName = this.state.faceNames[Number(faceshpe) - 1];
-        // }
-        // if (colorofskin != "") {
-        //     skinName = this.state.skinNames[Number(colorofskin) - 1];
-        // }
+        } = info ? info : {}; 
 
-        // if (bodySize != "") {
-        //     if (sex === 1) {
-        //         bodyName = this.state.bodyNamesBoy[Number(bodySize) - 1];
-        //     } else {
-        //         bodyName = this.state.bodyNamesGirl[Number(bodySize) - 1];
-        //     }
-
-        // }
+        console.log(styles);
+        console.log(problems);
 
         return (
             <section className="full-page profile-page">
@@ -120,11 +160,11 @@ class Profile extends Component {
                     <dl className="flex-box face-skin-body">
                         <dt>脸型 ，肤色和体型</dt>
                         <dd className="item-3">
-                            <img src="/assets/img/suit/face-1-1.jpg" width="68" height="67"/>
+                            <img src="/assets/img/suit/face-1-1.jpg" width="68" height="67" />
                             <p className="text-center name">圆形</p>
                         </dd>
                         <dd className="item-3">
-                            <img src="/assets/img/suit/skin-1-1.jpg" width="68" height="67"/>
+                            <img src="/assets/img/suit/skin-1-1.jpg" width="68" height="67" />
                             <p className="text-center name">自然红润</p>
                         </dd>
                         <dd className="item-3">
@@ -132,93 +172,40 @@ class Profile extends Component {
                             <p className="text-center name">沙漏型</p>
                         </dd>
                     </dl>
+                    <h6 className="title">希望能解决的问题</h6>
+                    {
+                        problems.map((item,index)=>{
 
+                        })
+                    }
+                    <ul className="flex-box solutions">
+                        <li className="item-4">脸大</li>
+                        <li className="item-4">肩宽</li>
+                        <li className="item-4">胳膊粗</li>
+                        <li className="item-4">脖子粗</li>
+                    </ul>
+                    <ul className="flex-box solutions">
+                        <li className="item-4">脸大</li>
+                        <li className="item-4">肩宽</li>
+                        <li className="item-4">胳膊粗</li>
+                        <li className="item-4">脖子粗</li>
+                    </ul>
+                    <h6 className="title">喜欢的穿衣风格</h6>
+                    <ul className="flex-box styles">
+                        <li className="item-3">中性运动风</li>
+                        <li className="item-3">日系小淸新</li>
+                        <li className="item-3">文艺复古情怀</li>
+                    </ul>
+                    <ul className="flex-box solutions">
+                        <li className="item-3">中性运动风</li>
+                        <li className="item-3">日系小淸新</li>
+                        <li className="item-3">文艺复古情怀</li>
+                    </ul>
+                    <Link to="/customSuit" className="btn text-center to-write">
+                        <span>重新填写</span>
+                    </Link>
                 </section>
-                {/* <header className="flex-box">
-                    <div className="item-2 head-img">
-                        <img src={headImg} alt="" />
-                        {sex && sex === 2 ? (
-                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                        ) : (
-                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                            )
-                        }
-                    </div>
-                    <div className="item-2">
-                        <p className="name">{nickName}</p>
-                        <ul className="flex-box box">
-                            <li>
-                                <p className="base">
-                                    <span>{age}</span>
-                                    <span>{cityName}</span>
-                                </p>
-                                <p className="job">
-                                    {professional}
-                                    {!age && !cityName && !professional ? "赶紧定制你的专属信息吧~" : null}
-                                </p>
-                            </li>
-                            <li>
-                                <Link to="/customSuit" className="again-write">马上定制</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </header>
-                <div className="figure-info-area">
-                    <h3 className="title">
-                        <span className="icon icon-person-info"></span>
-                        身材信息
-                    </h3>
-                    <p>身高(cm)：<span className={heigh ? "active" : ""}>{heigh ? heigh : "去添加身高~"}</span></p>
-                    <p>体重(kg)：<span className={weight ? "active" : ""}>{weight ? weight : "去添加体重~"}</span></p>
-                    <p>三围(胸腰臀cm)：<span className={chest ? "active" : ""}>{chest ? chest : "去添加三围~"}、{waist}、{hip}</span></p>
-                    <p>脸型、肤色和体型：<span>{faceshpe ? '' : "去选择你的脸型肤色体型~"}</span></p>
-                    <div className="flex-box body-img-area">
-                        {
-                            faceshpe ? (
-                                <div className="item-3">
-                                    <img src={faceshpeImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: faceshpeImgSrc }) }} />
-                                    <p className='name'>{faceName}</p>
-                                </div>
-                            ) : null
-                        }
-                        {
-                            colorofskin ? (
-                                <div className="item-3">
-                                    <img src={colorofskinImgSrc} alt="" width="68" height="67" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: colorofskinImgSrc }) }} />
-                                    <p className='name'>{skinName}</p>
-                                </div>
-                            ) : null
-                        }
-                        {
-                            bodySize ? (
-                                <div className="item-3">
-                                    <img src={bodyImgSrc} alt="" width="68" height={bodySize == "6" ? "67" : "81"} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: bodyImgSrc }) }} />
-                                    <p className='name'>{bodyName}</p>
-                                </div>
-                            ) : null
-                        }
-                    </div>
-                </div>
-                <div className="photo-wall">
-                    <h4 className="title"><span className="icon icon-photo-wall"></span>照片墙</h4>
-                    <div className="flex-box photo-area">
-                        {
-                            lifeImgs.length > 0 ? (
-                                lifeImgs.map((lifeImg, index) => {
-                                    return (
-                                        <div className="item-3" key={index}>
-                                            <div className="img-box" style={{ backgroundImage: 'url(' + lifeImg.imgPath + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: lifeImg.imgPath }) }}>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            ) : (
-                                    <p className="tips">去添加你的照片吧~</p>
-                                )
-                        }
-                    </div>
-                </div> */}
-                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
+                <LifePhoto />
             </section>
         );
     }

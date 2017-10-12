@@ -194,8 +194,6 @@ class FashionMoment extends Component {
     }
     componentDidMount() {
         document.title = "时尚圈";
-       
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -231,8 +229,8 @@ class FashionMoment extends Component {
                                             </Link>
                                             <div className="dps-info">
                                                 <Link to="/">
-                                                    <img src="/assets/img/girl.jpg" className="head-img" />
-                                                    <span className="nickname">么么哒</span>
+                                                    <img src={item.collocationHeadImg} className="head-img" />
+                                                    <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
                                                 <div className="zan">
                                                     <img src={item.agreeValue === 1 ? "/assets/img/icon/zan-active.jpg" : "/assets/img/icon/zan.jpg"} className="icon" />
@@ -259,8 +257,8 @@ class FashionMoment extends Component {
                                             </Link>
                                             <div className="dps-info">
                                                 <Link to="/">
-                                                    <img src="/assets/img/girl.jpg" className="head-img" />
-                                                    <span className="nickname">么么哒</span>
+                                                    <img src={item.collocationHeadImg} className="head-img" />
+                                                    <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
                                                 <div className="zan">
                                                     <img src={item.agreeValue === 1 ? "/assets/img/icon/zan-active.jpg" : "/assets/img/icon/zan.jpg"} className="icon" />
@@ -301,7 +299,7 @@ class FashionMoment extends Component {
                     </div>
                 </div>
                 <Footer tab="4" />
-                <News  />
+                <News />
             </div>
         )
     }
