@@ -209,7 +209,6 @@ const Main = (mySetting) => {
     };
 
     return connect((state) => {
-        console.log(state.FashionMoment);
         return {
             state: state[setting.id]
         }

@@ -11,184 +11,12 @@ import LazyLoad from 'react-lazyload';
 import { Footer, News } from '../Component/index';
 
 
-/**
- * (循环列表)
- *
- * @class List
- * @extends {Component}
- */
-class List extends Component {
-    render() {
-        return (
-            <ul className="fashion-moment-list">
-                {
-                    this.props.list.map((item, index) => {
-                        return <ListItem globalState={this.props.globalState} globalSetState={this.props.globalSetState} key={index} {...item} />
-                    })
-                }
-            </ul>
-        );
-    }
-}
-
-
-class ListItem extends Component {
-
-    constructor(props) {
-        super(props);
-        let {
-            agreeValue,
-            agreeNum
-        } = this.props;
-        this.state = {
-            agreeValue: agreeValue, //该用户是否点赞 0:未点赞，1已经点赞
-            agreeNum: agreeNum //点赞数
-        }
-    }
-
-    componentWillReceiveProps(np) {
-        this.setState({
-            agreeValue: np.agreeValue, //该用户是否点赞 0:未点赞，1已经点赞
-            agreeNum: np.agreeNum //点赞数
-        });
-    }
-
-    /**
-     * 点赞
-     * @planId 方案id
-     */
-    zan(planId) {
-        let globalState = this.props.globalState;
-        let oldData = globalState.data;
-        let newData = oldData.map((item, index) => {
-            let data = item;
-            if (data.id == planId) {
-                data.agreeValue = 1;
-                data.agreeNum = ++this.state.agreeNum;
-            }
-            return data;
-        })
-        globalState.data = newData;
-        this.props.globalSetState(globalState);
-
-        this.setState({
-            agreeValue: 1,
-            agreeNum: ++this.state.agreeNum
-        });
-        ToolDps.post('/wx/fashion/agree', {
-            planId: planId
-        }).then((res) => {
-            if (!res.succ) {//点赞失败
-                let newData = oldData.map((item, index) => {
-                    let data = item;
-                    if (data.id == planId) {
-                        data.agreeValue = 0;
-                        data.agreeNum = --this.state.agreeNum;
-                    }
-                    return data;
-                })
-                globalState.data = newData;
-                this.props.globalSetState(globalState);
-                alert(res.msg);
-            }
-        });
-
-    }
-
-    render() {
-        let {
-            id,
-            planName,
-            wxCreateTime,
-            masterImage,
-            awardNum,
-            content
-        } = this.props; //显示数据
-
-        let agree = classNames('icon-svg-zan', {
-            'active': this.state.agreeValue === 1
-        })
-
-        let p = document.createElement('p');
-        p.innerHTML = content;
-
-        return (
-            <li>
-                <div className="main-img">
-                    <Link to={"/fashionMomentDetail?planId=" + id}>
-                        {/* <LazyLoad height={200} overflow={true}> </LazyLoad> */}
-                        <img src={masterImage} className="img-content" alt="" />
-
-                    </Link>
-                    <div className="action-area">
-                        <div className="agree-area" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, id) : null}>
-                            <span className={this.state.agreeValue === 1 ? "icon icon-heart-selected" : "icon icon-heart"}></span>
-                            <p>{this.state.agreeNum ? this.state.agreeNum : 0}</p>
-                        </div>
-                        <div className="money-area">
-                            <span className="icon icon-money"></span>
-                            <p>{awardNum ? awardNum : 0}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="content-area">
-                    <h2 className="title">{planName}</h2>
-                    <time>{wxCreateTime}</time>
-                    <p className="description">{p.textContent}</p>
-                </div>
-            </li>
-        );
-    }
-}
-
 
 class FashionMoment extends Component {
     constructor(props) {
         super(props);
-        let fashionListImg = Array.prototype.slice.apply(props.state.data);
-        let sliceArr = fashionListImg.splice(0, 1);
-        console.log(sliceArr);
-        console.log(fashionListImg);
         this.state = {
-            loadImg: sliceArr[0] || null,//需展示的时尚圈精选图片
-            fashionListImg: fashionListImg || [],//时尚圈精选图片
-            col1Imgs: [],//时尚圈精选图片1列
-            col2Imgs: [],//时尚圈精选图片2列
-            col1H: 0,//时尚圈精选图片1列高度
-            col2H: 0,//时尚圈精选图片2列高度
-        }
-
-        /**
-         * 时尚圈精选将要展示的图片
-         */
-        this.willImg = function (e) {
-            // console.log('11');
-            let fashionListImg = Array.prototype.slice.apply(this.state.fashionListImg);
-            let willBoxEle = document.querySelector('.will-box');
-
-            if (this.state.col1H <= this.state.col2H) {
-                let col1H = this.state.col1H + willBoxEle.offsetHeight;
-                let col1Imgs = this.state.col1Imgs;
-                col1Imgs.push(this.state.loadImg);
-                let sliceArr = fashionListImg.splice(0, 1);
-                this.setState({
-                    col1H: col1H,
-                    col1Imgs: col1Imgs,
-                    loadImg: sliceArr[0],
-                    fashionListImg: fashionListImg
-                })
-            } else {
-                let col2H = this.state.col2H + willBoxEle.offsetHeight;
-                let col2Imgs = this.state.col2Imgs;
-                col2Imgs.push(this.state.loadImg);
-                let sliceArr = fashionListImg.splice(0, 1);
-                this.setState({
-                    col2H: col2H,
-                    col2Imgs: col2Imgs,
-                    loadImg: sliceArr[0],
-                    fashionListImg: fashionListImg
-                });
-            }
+            fashionListImg: props.state.data || []//时尚圈精选图片
         }
 
     }
@@ -197,27 +25,56 @@ class FashionMoment extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps);
-        let fashionListImg = Array.prototype.slice.apply(nextProps.state.data);
-        let sliceArr = fashionListImg.splice(0, 1);
         this.setState({
-            loadImg: sliceArr[0],
-            fashionListImg: fashionListImg
+            fashionListImg: nextProps.state.data
         })
+    }
+
+    calculate(fashionListImg) {
+        let col1Imgs = [],//时尚圈精选图片1列
+            col2Imgs = [],//时尚圈精选图片2列
+            col1H = 0,//时尚圈精选图片1列高度
+            col2H = 0;//时尚圈精选图片2列高度
+        let data = fashionListImg;
+        let imgW = window.innerWidth / 2 - 10;//布局图片宽度
+        let rate = imgW / fashionListImg[0].width;//比率
+
+        for (let i = 0; i < data.length; i++) {
+            data[i].width = data[i].width * rate;
+            data[i].height = data[i].height * rate;
+            if (col1H <= col2H) {
+                col1Imgs.push(data[i]);
+                col1H += data[i].height;
+            } else {
+                col2Imgs.push(data[i]);
+                col2H += data[i].height;
+            }
+        }
+
+        return {
+            col1Imgs: col1Imgs,
+            col2Imgs: col2Imgs
+        }
     }
 
 
     render() {
-        // let { data } = this.props.state;
-        // console.log(data);
+        let col1Imgs = [],//时尚圈精选图片1列
+            col2Imgs = [];//时尚圈精选图片2列
+        if (this.state.fashionListImg.length > 0) {
+            let fashion = this.calculate(this.state.fashionListImg);
+            col1Imgs = fashion.col1Imgs;
+            col2Imgs = fashion.col2Imgs;
+        }
+
+
+
         return (
             <div className="fashion-moment-area">
-                {/* data.length > 0 ? <List globalState={this.props.state} globalSetState={this.props.setState} list={data} /> : null */}
-
                 <div className="fashion-list clear">
                     <ul>
                         {
-                            this.state.col1Imgs.map((item, index) => {
+                            col1Imgs.map((item, index) => {
                                 return (
                                     <li className='box' key={index}>
                                         <Link to={"/fashionMomentDetail?planId=" + item.id}>
@@ -245,7 +102,7 @@ class FashionMoment extends Component {
                     </ul>
                     <ul>
                         {
-                            this.state.col2Imgs.map((item, index) => {
+                            col2Imgs.map((item, index) => {
                                 return (
                                     <li className='box' key={index}>
                                         <Link to={"/fashionMomentDetail?planId=" + item.id}>
@@ -272,7 +129,7 @@ class FashionMoment extends Component {
                         }
                     </ul>
                     {/* 时尚圈精选将要展示的图片 */}
-                    <ul className="hideItem">
+                    {/* <ul className="hideItem">
                         <li className='box will-box'>
                             <Link to="/">
                                 <img src={this.state.loadImg ? this.state.loadImg.masterImage : ''} className="main-img" onLoad={this.willImg.bind(this)} />
@@ -293,7 +150,7 @@ class FashionMoment extends Component {
                                 </div>
                             </div>
                         </li>
-                    </ul>
+                    </ul> */}
                     <div className="loading-area">
                         {this.props.children}
                     </div>
