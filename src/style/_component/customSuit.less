@@ -567,7 +567,7 @@
 //新设计
 .customsuit-page {
     background: @white!important;
-    padding: 4px 0 92px;
+    padding: 4px 0 112px;
     .progress {
         position: absolute;
         top: 0;
@@ -626,18 +626,17 @@
         left: 50%;
         transform: translateX(-50%);
     }
-    //性别
-    .sex-area {
+    //性别,脸型
+    .box {
         height: 100%;
         align-items: center;
         li {
             position: relative;
-            height: 100%;
             img {
                 display: inline-block;
                 margin-bottom: 20px;
             }
-            .sex {
+            .name-area {
                 position: absolute;
                 top: 50%;
                 width: 100%;
@@ -645,16 +644,179 @@
                 font-size: 14px;
                 color: #1a1a1a;
                 font-weight: 500;
-               
             }
-
-            .isSelect{
+            .decribe {
+                padding: 12px 15px 0;
+                font-size: 11px;
+                color: #333333;
+                line-height: 18px;
+            }
+            .isSelect {
                 position: relative;
-                .icon-gou2{
+                .icon-gou2 {
                     position: absolute;
-                    top:50%;
+                    top: 50%;
                     right: -20px;
                     transform: translateY(-50%);
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+    .sex-area {
+        li {
+            height: 100%;
+        }
+    }
+    .face-area {
+        li {
+            height: 50%;
+            img {
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .body-area {
+        li {
+            height: 33.3%;
+            img {
+                margin-bottom: 0;
+            }
+            .decribe {
+                padding: 0 15px;
+            }
+        }
+    }
+    .solutions-area {
+        height: 100%;
+        position: relative;
+        .solution-box-girl, .solution-box-boy {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            width: 270px;
+            height: 319px;
+            >span {
+                position: absolute;
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+                .icon-gou2 {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 13px;
+                }
+            }
+            .text-1 {
+                top: 33px;
+                left: 24px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-2 {
+                top: 61px;
+                left: 24px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-3 {
+                top: 90px;
+                left: 24px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-4 {
+                top: 176px;
+                left: 24px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-5 {
+                top: 30px;
+                right: 4px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-6 {
+                top: 63px;
+                right: 6px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-7 {
+                top: 90px;
+                right: 5px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-8 {
+                top: 148px;
+                right: 6px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+            .text-9 {
+                top: 228px;
+                right: 5px;
+                .icon-gou2 {
+                    left: -22px;
+                }
+            }
+        }
+        .solution-box-boy {
+            .text-1 {
+                top: 28px;
+                left: 24px;
+            }
+            .text-2 {
+                top: 58px;
+                left: 24px;
+            }
+            .text-3 {
+                top: 118px;
+                left: 24px;
+            }
+            .text-4 {
+                top: 180px;
+                left: 24px;
+            }
+            .text-5 {
+                top: 22px;
+                right: -2px;
+            }
+            .text-6 {
+                top: 132px;
+                right: 5px;
+            }
+            .text-7 {
+                top: 232px;
+                right: -2px;
+            }
+        }
+    }
+    .style-area{
+        padding: 13px;
+        li{
+            height: 33.3%;
+            &:nth-of-type(odd){padding-right: 7px;}
+            &:nth-of-type(even){padding-left: 7px;}
+            .style{
+                font-size: 0;
+                img{max-width: 100%;margin-bottom: 6px;}
+                .isSelect{
+                    color: #1a1a1a;
                     font-size: 13px;
                 }
             }
