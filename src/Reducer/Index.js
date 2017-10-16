@@ -61,6 +61,9 @@ const DB = (_ID = '', seting = {}) => {
 }
 
 
+const Home = DB('Home', {
+  data: null
+}); //首页
 const FashionMoment = DB('FashionMoment', {
   currentPager: 1,
   nextBtn: true,
@@ -76,33 +79,6 @@ const DpsProfile = DB('DpsProfile'); //搭配师个人信息
 
 const DpsServerDetail = DB('DpsServerDetail'); //搭配师服务详情
 
-//搭配测试
-const CustomSuit = DB('CustomSuit', {
-  headImg:'',//头像
-  nickName:'',//昵称
-  sex: 2, //性别
-  faceshpe: '', //脸型
-  colorofskin: '', //肤色
-  bodySize: '', //体型
-  problems: [], //解决问题
-  styles: [], //风格
-  heigh: '165', //身高
-  weight: '60', //体重
-  chest: '80', //胸围
-  waist: '70', //腰围
-  hip: '90', //臀围
-  professional: '', //职业
-  provinceCode: '330000', //省默认浙江省
-  cityCode: '330100', //城市默认杭州市
-  countyCode: '330106', //区默认西湖区
-  fullCityName: '', //地址
-  birthday: '', //生日
-  faceImg:{
-    imgPath:'',
-    file:null
-  },//正脸照
-  lifeImgs: [] //生活照
-}); //搭配测试
 const OrderList = DB('OrderList', {
   data: []
 }); //我的订单
@@ -115,11 +91,11 @@ const PromotionCodeList = DB('PromotionCodeList', {
 
 const reducers = combineReducers({
   User,
+  Home,
   FashionMoment,
   Profile,
   DpsProfile,
   DpsServerDetail,
-  CustomSuit,
   OrderList,
   OrderDetail,
   FashionMomentDetail,

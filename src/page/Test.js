@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 import { ToolDps } from '../ToolDps';
 import { Msg, City, DataLoad, GetData, PreviewImg, Loading } from '../Component/index';
 // import { is, fromJS } from 'immutable';
-import flatpickr from 'flatpickr';
-const zh = require("flatpickr/dist/l10n/zh.js").zh;
+// import flatpickr from 'flatpickr';
+// const zh = require("flatpickr/dist/l10n/zh.js").zh;
 
 /**
  * 性别
@@ -18,7 +18,7 @@ class Sex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sex: props.sex || 2
+            sex: props.sex || ''
         }
     }
 
@@ -857,39 +857,39 @@ class StyleGirl extends Component {
         return (
             <ul className="box flex-box style-area">
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center style" onClick={this.select.bind(this, '1')}>
                         <img src="/assets/img/suit/style-2-1.jpg" />
                         <div>
                             <span className="isSelect">
                                 韩剧女主角
                             {
-                                    this.state.solutions.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                    this.state.styles.indexOf('1') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
                                 }
                             </span>
                         </div>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center style" onClick={this.select.bind(this, '2')}>
                         <img src="/assets/img/suit/style-2-2.jpg" />
                         <div>
                             <span className="isSelect">
                                 日系小清新
                             {
-                                    this.state.solutions.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                    this.state.styles.indexOf('2') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
                                 }
                             </span>
                         </div>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center style" onClick={this.select.bind(this, '3')}>
                         <img src="/assets/img/suit/style-2-3.jpg" />
                         <div>
                             <span className="isSelect">
                                 轻熟OL系
                             {
-                                    this.state.solutions.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                    this.state.styles.indexOf('3') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
                                 }
 
                             </span>
@@ -897,39 +897,39 @@ class StyleGirl extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center style" onClick={this.select.bind(this, '4')}>
                         <img src="/assets/img/suit/style-2-4.jpg" />
                         <div>
                             <span className="isSelect">
                                 欧美出街范
                             {
-                                    this.state.solutions.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                    this.state.styles.indexOf('4') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
                                 }
                             </span>
                         </div>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center style" onClick={this.select.bind(this, '5')}>
                         <img src="/assets/img/suit/style-2-5.jpg" />
                         <div>
                             <span className="isSelect">
                                 中性运动风
                             {
-                                    this.state.solutions.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                    this.state.styles.indexOf('5') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
                                 }
                             </span>
                         </div>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center style" onClick={this.select.bind(this, '6')}>
                         <img src="/assets/img/suit/style-2-6.jpg" />
                         <div>
                             <span className="isSelect">
                                 文艺复古情怀
                             {
-                                    this.state.solutions.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                    this.state.styles.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
                                 }
                             </span>
                         </div>
@@ -940,6 +940,297 @@ class StyleGirl extends Component {
     }
 }
 
+/**
+ * 喜欢什么风格-男
+ */
+class StyleBoy extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            styles: props.styles || []
+        }
+    }
+
+    componentDidMount() {
+        document.title = "喜欢什么风格（可多选）";
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            styles: nextProps.styles
+        });
+    }
+
+    /**
+    * 选择
+    */
+    select(val) {
+        let newArr = Array.prototype.slice.apply(this.state.styles);
+        let index = newArr.indexOf(val);
+        if (index != -1) {
+            newArr.splice(index, 1);
+        } else {
+            newArr.push(val);
+        }
+        this.props.change(newArr);
+    }
+
+    render() {
+        return (
+            <ul className="box flex-box style-area">
+                <li className="item-2">
+                    <div className="text-center style" onClick={this.select.bind(this, '1')}>
+                        <img src="/assets/img/suit/style-1-1.jpg" />
+                        <div>
+                            <span className="isSelect">
+                                街头潮男风
+                            {
+                                    this.state.styles.indexOf('1') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li className="item-2">
+                    <div className="text-center style" onClick={this.select.bind(this, '2')}>
+                        <img src="/assets/img/suit/style-1-2.jpg" />
+                        <div>
+                            <span className="isSelect">
+                                绅士熟男系
+                            {
+                                    this.state.styles.indexOf('2') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li className="item-2">
+                    <div className="text-center style" onClick={this.select.bind(this, '3')}>
+                        <img src="/assets/img/suit/style-1-3.jpg" />
+                        <div>
+                            <span className="isSelect">
+                                纹身硬汉系
+                            {
+                                    this.state.styles.indexOf('3') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li className="item-2">
+                    <div className="text-center style" onClick={this.select.bind(this, '4')}>
+                        <img src="/assets/img/suit/style-1-4.jpg" />
+                        <div>
+                            <span className="isSelect">
+                                清新治愈系
+                            {
+                                    this.state.styles.indexOf('4') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li className="item-2">
+                    <div className="text-center style" onClick={this.select.bind(this, '5')}>
+                        <img src="/assets/img/suit/style-1-5.jpg" />
+                        <div>
+                            <span className="isSelect">
+                                暗黑禁欲系
+                            {
+                                    this.state.styles.indexOf('5') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        )
+    }
+}
+
+
+/**
+ * 基础信息
+ */
+class BaseInfo extends Component {
+    componentDidMount() {
+        document.title = "基础信息";
+        //年龄
+        this.age = new Swiper('.J-age', {
+            initialSlide: 23,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let age = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.props.changeAge(age);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let age = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.props.changeAge(age);
+            }
+        });
+        //身高
+        this.height = new Swiper('.J-height', {
+            initialSlide: 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let heigh = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.props.changeHeight(heigh);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let heigh = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.props.changeHeight(heigh);
+            }
+        });
+        //体重
+        this.weight = new Swiper('.J-weight', {
+            initialSlide: 25,
+            slidesPerView: 5,
+            centeredSlides: true,
+            freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let weight = swiper.slides[swiper.clickedIndex].textContent;
+                this.props.changeWeight(weight);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let weight = swiper.slides[swiper.activeIndex].textContent;
+                this.props.changeWeight(weight);
+            }
+        });
+    }
+
+    render() {
+        //年龄
+        let agehArr = [];
+        for (let i = 0; i <= 99; i++) {
+            agehArr.push(<div className="swiper-slide" key={i}>{1 + i}</div>);
+        }
+        //身高
+        let hegithArr = [];
+        for (let i = 0; i <= 75; i++) {
+            hegithArr.push(<div className="swiper-slide" key={i}>{145 + i}</div>);
+        }
+
+        //体重
+        let weightArr = [];
+        for (let i = 0; i <= 115; i++) {
+            weightArr.push(<div className="swiper-slide" key={i}>{35 + i}</div>);
+        }
+        return (
+            <ul className="baseInfo-area">
+                <li className="item">
+                    <h4 className="base-title">年龄（岁）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.age.slidePrev() }}></i>
+                        <div className="swiper-container J-age">
+                            <div className="swiper-wrapper">
+                                {agehArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.age.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="base-title">身高（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.height.slidePrev() }}></i>
+                        <div className="swiper-container J-height">
+                            <div className="swiper-wrapper">
+                                {hegithArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.height.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="base-title">体重（kg）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.weight.slidePrev() }}></i>
+                        <div className="swiper-container J-weight">
+                            <div className="swiper-wrapper">
+                                {weightArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.weight.slideNext() }}></i>
+                    </div>
+                </li>
+            </ul>
+        )
+    }
+}
+
+
+/**
+ * 其他信息
+ */
+class OtherInfo extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            timeShow: false,//时间窗口显示
+            cityShow: false, //是否显示城市窗口
+            provinceCode: '330000',//省
+            cityCode: '330100',//市
+            countyCode: '330106',//区
+            fullCityName: '',//城市名字
+        }
+    }
+
+    componentDidMount() {
+        document.title = "基础信息(选填)";
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+
+        });
+    }
+
+    /**
+ * 获取城市代码
+ * */
+    getCity(city) {
+        let {
+            currProvince,
+            currCity,
+            currArea,
+            provinceName,
+            cityName,
+            areaName
+        } = city;
+        let fullCityName = provinceName + cityName + areaName; //地址
+        this.setState({
+            cityShow: false,
+            provinceCode: currProvince,
+            cityCode: currCity,
+            countyCode: currArea,
+            fullCityName
+        });
+        this.props.changeCountyCode(currArea);
+    }
+    render() {
+
+        return (
+            <section className="otherInfo-area">
+                <label>职业</label>
+                <input type="text" maxLength={10} value={this.props.professional} onChange={(e) => { this.props.changeProfessional(e.target.value) }} />
+                <label>城市</label>
+                <input type="text" value={this.state.fullCityName} readOnly={true} onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
+                {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
+            </section>
+        )
+    }
+}
 
 
 class Main extends Component {
@@ -967,20 +1258,25 @@ class CustomSuit extends Component {
         this.state = {
             msgShow: false,
             msgText: '', //提示内容
-            btnText: '提交',
-            sex: 2,//性别
+            sex: props.data.info.sex || 2,//性别
             face: '',//脸型
             skin: '',//肤色
             body: '',//体型
             solutions: [],//希望解决的问题
-            progress: 6//进度
+            styles: [],//风格
+            age: '',//年龄
+            height: '',//身高
+            weight: '',//体重
+            professional: '',//职业
+            countyCode: '',//区
+            progress: 1//进度
         };
+        this._time = 0;
     }
 
-    componentDidMount() {
-
+    componentWillUnmount() {
+        clearTimeout(this._time);
     }
-
 
     showMsg(isShow, tipText) {
         this.setState({
@@ -989,132 +1285,78 @@ class CustomSuit extends Component {
         });
     }
 
-
     sendForm() {
-        let lifeImgIds = []; //未删除的生活照ID
-        let {
-            sex, //性别
-            faceshpe, //脸型
-            colorofskin, //肤色
-            bodySize, //体型
-            problems, //解决问题
-            styles, //风格
-            heigh, //身高
-            weight, //体重
-            chest, //胸围
-            waist, //腰围
-            hip, //臀围
-            professional, //职业
-            countyCode, //城市
-            birthday, //生日
-            faceImg,//正脸照
-            lifeImgs, //生活照
-        } = this.state.data;
-
-        let flag = this.tips(this.state.data);
-        if (!flag) {
-            return;
-        }
-
-
         let formdata = new FormData();
-        formdata.append('sex', sex);
-        formdata.append('faceshpe', faceshpe);
-        formdata.append('colorofskin', colorofskin);
-        formdata.append('bodySize', bodySize);
-        formdata.append('style', styles);
-        formdata.append('heigh', heigh);
-        formdata.append('weight', weight);
-        formdata.append('problem', problems);
-        formdata.append('chest', chest);
-        formdata.append('waist', waist);
-        formdata.append('hip', hip);
-        formdata.append('professional', professional);
-        formdata.append('countyCode', countyCode);
-        formdata.append('birthday', birthday);
-        if (faceImg.file) {
-            formdata.append('headImg', faceImg.file);
-        } else {
-            lifeImgIds.push(faceImg.id);
-        }
-        lifeImgs.forEach((item, index) => {
-            if (item.file) {
-                formdata.append('lifeImg', item.file);
-            }
-            if (item.id) {
-                lifeImgIds.push(item.id);
-            }
-
-        });
-        formdata.append('lifeImgIds', lifeImgIds);
-
-        this.setState({
-            btnText: '提交中...'
-        });
-
+        formdata.append('sex', this.state.sex);
+        formdata.append('faceshpe', this.state.face);
+        formdata.append('colorofskin', this.state.skin);
+        formdata.append('bodySize', this.state.body);
+        formdata.append('problem', this.state.solutions);
+        formdata.append('style', this.state.styles);
+        formdata.append('birthday', this.state.age);
+        formdata.append('heigh', this.state.height);
+        formdata.append('weight', this.state.weight);
+        formdata.append('professional', this.state.professional);
+        formdata.append('countyCode', this.state.countyCode);
+       
         ToolDps.post('/wx/user/save', formdata, {
             'Content-Type': 'multipart/form-data'
         }).then((res) => {
             if (res.succ) {
                 this.showMsg(true, '提交成功');
                 this._time = setTimeout(() => {
-                    this.context.router.history.push('/fashionMoment');
+                    this.context.router.history.push('/profile');
                 }, 1000);
             } else {
                 this.showMsg(true, '提交失败');
             }
-            this.setState({
-                btnText: '提交'
-            });
         });
     }
 
-    tips(data) {
-        let {
-            faceshpe, //脸型
-            colorofskin, //肤色
-            bodySize, //体型
-            problems, //解决问题
-            styles, //风格
-            faceImg,//正脸照
-            lifeImgs, //生活照
-        } = data;
-        if (faceshpe == "") {
-            this.showMsg(true, '请选择脸型');
-            return false;
+    /**
+     * 下一步
+     */
+    nextStep() {
+        let step = this.state.progress;
+        if (step == 2) {//第2步
+            if (this.state.face == "") {
+                this.showMsg(true, '请选择脸型');
+                return;
+            }
+        } else if (step == 3) {
+            if (this.state.skin == "") {
+                this.showMsg(true, '请选择肤色');
+                return;
+            }
+        } else if (step == 4) {
+            if (this.state.body == "") {
+                this.showMsg(true, '请选择体型');
+                return;
+            }
+        } else if (step == 5) {
+            if (this.state.solutions.length == 0) {
+                this.showMsg(true, '请选择需要解决的问题');
+                return;
+            }
+        } else if (step == 6) {
+            if (this.state.styles.length == 0) {
+                this.showMsg(true, '请选择风格');
+                return;
+            }
+        } else if (step >= 8) {
+            this.sendForm();//提交表单
         }
-        if (colorofskin == "") {
-            this.showMsg(true, '请选择肤色');
-            return false;
-        }
-        if (bodySize == "") {
-            this.showMsg(true, '请选择体型');
-            return false;
-        }
-        if (problems.length == 0) {
-            this.showMsg(true, '请选择希望能解决的问题');
-            return false;
-        }
-        if (styles.length == 0) {
-            this.showMsg(true, '请选择喜欢的穿衣风格');
-            return false;
-        }
-        if (faceImg.imgPath == "") {
-            this.showMsg(true, '请上传正脸照片');
-            return false;
-        }
-        if (lifeImgs.length == 0) {
-            this.showMsg(true, '请上传全身照');
-            return false;
-        }
-        return true;
+        this.setState({
+            progress: ++step
+        });
     }
 
     render() {
+        let percent = this.state.progress / 8 * 100;
         return (
             <section className="full-page customsuit-page">
                 <div className="progress">
-                    <span className="num"></span>
+                    <span className="num" style={{ width: percent + '%' }}></span>
                 </div>
                 {
                     this.state.progress == 1 ? <Sex sex={this.state.sex} change={(sex) => { this.setState({ sex: sex }) }} /> : null
@@ -1155,12 +1397,30 @@ class CustomSuit extends Component {
                 {
                     this.state.progress == 6 && this.state.sex == 2 ? <StyleGirl styles={this.state.styles} change={(styles) => { this.setState({ styles: styles }) }} /> : null
                 }
+                {/* 男风格 */}
+                {
+                    this.state.progress == 6 && this.state.sex == 1 ? <StyleBoy styles={this.state.styles} change={(styles) => { this.setState({ styles: styles }) }} /> : null
+                }
+                {/* 基础信息 */}
+                {
+                    this.state.progress == 7 ? <BaseInfo styles={this.state.styles} changeAge={(age) => { this.setState({ age: age }) }} changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} /> : null
+                }
+                {/* 基础信息(选填) */}
+                {
+                    this.state.progress == 8 ? <OtherInfo professional={this.state.professional} changeProfessional={(value) => { this.setState({ professional: value }) }} changeCountyCode={(value) => { this.setState({ countyCode: value }) }} /> : null
+                }
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
 
-                <button className="btn pre-btn">
-                    <span>上一步</span>
-                </button>
-                <button className="btn next-btn">
-                    <span>下一步</span>
+                {
+                    this.state.progress != 1 ? (
+                        <button className="btn pre-btn" onClick={() => { this.setState({ progress: --this.state.progress }) }}>
+                            <span>上一步</span>
+                        </button>
+                    ) : null
+                }
+
+                <button className="btn next-btn" onClick={this.nextStep.bind(this)}>
+                    <span>{this.state.progress == 8 ? "完成" : "下一步"}</span>
                 </button>
             </section>
         )
@@ -1169,17 +1429,17 @@ class CustomSuit extends Component {
 }
 
 
-export default CustomSuit;
+// export default CustomSuit;
 
-// export default GetData({
-//     id: 'Profile', //应用关联使用的redux
-//     component: Main, //接收数据的组件入口
-//     url: '/wx/user/info',
-//     data: '', //发送给服务器的数据
-//     success: (state) => {
-//         return state;
-//     }, //请求成功后执行的方法
-//     error: (state) => {
-//         return state
-//     } //请求失败后执行的方法
-// });
+export default GetData({
+    id: 'Profile', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/user/info',
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

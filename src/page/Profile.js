@@ -6,7 +6,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
-import { DataLoad, GetData, PreviewImg } from '../Component/index';
+import { DataLoad, GetData, Loading } from '../Component/index';
+import PropTypes from 'prop-types';
 
 
 //生活照
@@ -14,35 +15,64 @@ class LifePhoto extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: null,
-            photoList: [], //生活照片
+            msgShow: false,
+            msgText: '', //提示内容
+            imgLoding: false,//正脸照上传loading图
+            imgLoding2: false,//全身照上传loading图
+            faceLifeImg: props.faceLifeImg || '',//正脸照
+            bodyFaceImg: props.bodyFaceImg || '',//全身照
         }
     }
 
-    uploadPhoto(e) {
-        let self = this;
+    selectImg(type, e) {
         let files = e.target.files;
-        if (files) {
-            let targetFile = files[0];
+        if (files && files[0]) {
             let readFile = new FileReader();
-            readFile.onload = function () {
-                let imgObj = {
-                    imgPath: this.result,
-                    file: targetFile
-                };
-                self.file.value = '';
-
-            };
-            readFile.readAsDataURL(targetFile);
+            readFile.onload = () => {
+                this.upload(type, files[0]);
+            }
+            readFile.readAsDataURL(files[0]);
         }
     }
 
+    upload(type, file) {
+        if (type == "face") {
+            this.setState({
+                imgLoding: true
+            });
+        } else if (type == "all") {
+            this.setState({
+                imgLoding2: true
+            });
+        }
+        let formdata = new FormData();
+        formdata.append('type', type);
+        formdata.append('img', file);
+        ToolDps.post('/wx/user/uploadInfoImg', formdata, {
+            'Content-Type': 'multipart/form-data'
+        }).then((data) => {
+            if (data.succ) {
+                if (type == "face") {
+                    this.setState({
+                        imgLoding: false,
+                        faceLifeImg: data.img
+                    });
+                } else if (type == "all") {
+                    this.setState({
+                        imgLoding2: false,
+                        bodyFaceImg: data.img
+                    });
+                }
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: '上传图片失败',
+                });
+            }
+        });
+    }
 
     render() {
-        let imgPath = '/assets/img/girl.jpg';
-        // if (this.state.data.faceImg) {
-        //     imgPath = this.state.data.faceImg.imgPath;
-        // }
         return (
             <div className="lifePhoto-area">
                 <h2 className="text-center">个人照片</h2>
@@ -51,19 +81,27 @@ class LifePhoto extends Component {
                         <div className="upload-area" >
                             <span className="icon icon-camera"></span>
                             <p>添加一张正脸照片</p>
-                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }} ></div>
-                            <input type="file" accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                            <div className={this.state.faceLifeImg ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + this.state.faceLifeImg + ')' }} ></div>
+                            <input type="file" accept="image/*" className="upload-file" onChange={this.selectImg.bind(this, 'face')} />
+                            {
+                                this.state.imgLoding ? <Loading /> : null
+                            }
                         </div>
                     </li>
                     <li className="item-2">
                         <div className="upload-area">
                             <span className="icon icon-camera"></span>
                             <p>添加近期全身照</p>
-                            <div className={imgPath ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + imgPath + ')' }} ></div>
-                            <input type="file" accept="image/*" className="upload-file" onChange={this.uploadPhoto.bind(this)} />
+                            <div className={this.state.bodyFaceImg ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + this.state.bodyFaceImg + ')' }} ></div>
+                            <input type="file" accept="image/*" className="upload-file" onChange={this.selectImg.bind(this, 'all')} />
+                            {
+                                this.state.imgLoding2 ? <Loading /> : null
+                            }
                         </div>
                     </li>
                 </ul>
+
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </div>
         )
     }
@@ -75,15 +113,37 @@ class LifePhoto extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            loadAnimation: true,
+            loadMsg: '正在加载...',
+            data: null,
+        }
+    }
+
+    componentDidMount() {
+        ToolDps.get('/wx/user/info').then((res) => {
+            if (res.succ) {
+                this.setState({
+                    data: res,
+                    loadAnimation: false,
+                    loadMsg: '加载成功'
+                });
+            } else {
+                this.setState({
+                    loadAnimation: true,
+                    loadMsg: '加载失败'
+                });
+            }
+        }).catch(() => {
+            this.setState({
+                loadAnimation: true,
+                loadMsg: '加载失败'
+            });
+        });
     }
 
     render() {
-        let {
-            data,
-            loadAnimation,
-            loadMsg
-        } = this.props.state;
-        let main = data.succ ? <Profile data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = this.state.data ? <Profile data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
 
         return main;
     }
@@ -92,14 +152,19 @@ class Main extends Component {
 class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-           
-        }
-
     }
+
+    componentWillMount() {
+        if (!this.props.data.info.faceshpe) {//如果没填写过个人信息跳转填写页面
+            this.context.router.history.push('/customSuit');
+        }
+    }
+
     componentDidMount() {
         document.title = "个人信息";
     }
+
+
 
     render() {
         let {
@@ -114,19 +179,19 @@ class Profile extends Component {
             professional,
             heigh,
             weight,
-            chest,
-            waist,
-            hip,
             faceshpe,
-            problems,
-            styles,
+            faceshpeImg,
+            problemValues,
+            styleValues,
             colorofskin,
+            colorofskinImg,
             bodySize,
-            lifeImgs
-        } = info ? info : {}; 
+            bodySizeImg,
+            faceLifeImg,
+            bodyFaceImg
+        } = info;
 
-        console.log(styles);
-        console.log(problems);
+
 
         return (
             <section className="full-page profile-page">
@@ -160,68 +225,71 @@ class Profile extends Component {
                     <dl className="flex-box face-skin-body">
                         <dt>脸型 ，肤色和体型</dt>
                         <dd className="item-3">
-                            <img src="/assets/img/suit/face-1-1.jpg" width="68" height="67" />
-                            <p className="text-center name">圆形</p>
+                            <img src={faceshpeImg} width="68" height="67" />
+                            <p className="text-center name">{faceshpe}</p>
                         </dd>
                         <dd className="item-3">
-                            <img src="/assets/img/suit/skin-1-1.jpg" width="68" height="67" />
-                            <p className="text-center name">自然红润</p>
+                            <img src={colorofskinImg} width="68" height="67" />
+                            <p className="text-center name">{colorofskin}</p>
                         </dd>
                         <dd className="item-3">
-                            <img src="/assets/img/suit/body-1-1.jpg" width="auto" height="67" />
-                            <p className="text-center name">沙漏型</p>
+                            <img src={bodySizeImg} width="auto" height="67" />
+                            <p className="text-center name">{bodySize}</p>
                         </dd>
                     </dl>
                     <h6 className="title">希望能解决的问题</h6>
+                    <ul className="flex-box solutions">
+                        {
+                            problemValues.map((solution, index) => {
+                                return index < 4 ? <li className="item-4" key={index}>{solution}</li> : null
+                            })
+                        }
+                    </ul>
                     {
-                        problems.map((item,index)=>{
-
-                        })
+                        problemValues.length > 4 ? (
+                            <ul className="flex-box solutions">
+                                {
+                                    problemValues.map((solution, index) => {
+                                        return index > 3 ? <li className="item-4" key={index}>{solution}</li> : null
+                                    })
+                                }
+                            </ul>
+                        ) : null
                     }
-                    <ul className="flex-box solutions">
-                        <li className="item-4">脸大</li>
-                        <li className="item-4">肩宽</li>
-                        <li className="item-4">胳膊粗</li>
-                        <li className="item-4">脖子粗</li>
-                    </ul>
-                    <ul className="flex-box solutions">
-                        <li className="item-4">脸大</li>
-                        <li className="item-4">肩宽</li>
-                        <li className="item-4">胳膊粗</li>
-                        <li className="item-4">脖子粗</li>
-                    </ul>
                     <h6 className="title">喜欢的穿衣风格</h6>
                     <ul className="flex-box styles">
-                        <li className="item-3">中性运动风</li>
-                        <li className="item-3">日系小淸新</li>
-                        <li className="item-3">文艺复古情怀</li>
+                        {
+                            styleValues.map((style, index) => {
+                                return index < 3 ? <li className="item-3" key={index}>{style}</li> : null
+                            })
+                        }
                     </ul>
-                    <ul className="flex-box solutions">
-                        <li className="item-3">中性运动风</li>
-                        <li className="item-3">日系小淸新</li>
-                        <li className="item-3">文艺复古情怀</li>
-                    </ul>
+                    {
+                        problemValues.length > 3 ? (
+                            <ul className="flex-box styles">
+                                {
+                                    styleValues.map((style, index) => {
+                                        return index > 2 ? <li className="item-3" key={index}>{style}</li> : null
+                                    })
+                                }
+                            </ul>
+                        ) : null
+                    }
                     <Link to="/customSuit" className="btn text-center to-write">
                         <span>重新填写</span>
                     </Link>
                 </section>
-                <LifePhoto />
+                <LifePhoto faceLifeImg={faceLifeImg} bodyFaceImg={bodyFaceImg} />
             </section>
         );
     }
 }
 
 
+Profile.contextTypes = {
+    router: PropTypes.object.isRequired
+};
 
-export default GetData({
-    id: 'Profile', //应用关联使用的redux
-    component: Main, //接收数据的组件入口
-    url: '/wx/user/info',
-    data: '', //发送给服务器的数据
-    success: (state) => {
-        return state;
-    }, //请求成功后执行的方法
-    error: (state) => {
-        return state
-    } //请求失败后执行的方法
-});
+
+
+export default Main;
