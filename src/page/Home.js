@@ -75,6 +75,24 @@ class Home extends Component {
         }
     }
 
+    /**
+     * 关注搭配师
+     */
+    watchDps(collocationId) {
+        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
+            let copyRecommand = Array.prototype.slice.apply(this.state.recommand);
+            for (let i = 0; i < copyRecommand.length; i++) {
+                if (copyRecommand[i].collocationId == collocationId) {
+                    copyRecommand[i].concern = !copyRecommand[i].concern;
+                    break;
+                }
+            }
+            this.setState({
+                recommand: copyRecommand
+            });
+        });
+    }
+
 
     render() {
         let col1Imgs = [],//时尚圈精选图片1列
@@ -125,11 +143,11 @@ class Home extends Component {
                                         </div>
                                     </Link>
                                     <div className="dps-info">
-                                        <Link to="/">
+                                        <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
                                             <img src={item.headImg} className="head-img"></img>
                                             <span className="nickname">{item.nickName}</span>
                                         </Link>
-                                        <button className="btn watch-dps">{item.concern ? "取关" : "+关注"}</button>
+                                        <button className="btn watch-dps" onClick={this.watchDps.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
                                     </div>
                                 </div>
                             )
@@ -153,7 +171,7 @@ class Home extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to="/">
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
                                                     <img src={item.collocationHeadImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
@@ -181,7 +199,7 @@ class Home extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to="/">
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
                                                     <img src={item.collocationHeadImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>

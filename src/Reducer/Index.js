@@ -64,6 +64,9 @@ const DB = (_ID = '', seting = {}) => {
 const Home = DB('Home', {
   data: null
 }); //首页
+const MyWatch = DB('MyWatch',{
+  data: null
+}); //我的关注
 const FashionMoment = DB('FashionMoment', {
   currentPager: 1,
   nextBtn: true,
@@ -91,6 +94,7 @@ const PromotionCodeList = DB('PromotionCodeList', {
 
 const reducers = combineReducers({
   User,
+  MyWatch,
   Home,
   FashionMoment,
   Profile,

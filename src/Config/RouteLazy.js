@@ -6,6 +6,7 @@
 import Bundle from './bundle.js';
 
 import HomeContainer from 'bundle-loader?lazy&name=[name]!../page/Home';
+import MyWatchContainer from 'bundle-loader?lazy&name=[name]!../page/MyWatch';
 import MyContainer from 'bundle-loader?lazy&name=[name]!../page/My';
 import DpsListContainer from 'bundle-loader?lazy&name=[name]!../page/DpsList';
 import DpsProfileContainer from 'bundle-loader?lazy&name=[name]!../page/DpsProfile';
@@ -50,7 +51,12 @@ let routers = [
         exact: true,
         component: (props) => getComponent(props, HomeContainer)
     },
-     {//我的
+    {//我的关注
+        path: '/myWatch',
+        exact: false,
+        component: (props) => getComponent(props, MyWatchContainer)
+    },
+    {//我的
         path: '/my',
         exact: false,
         component: (props) => getComponent(props, MyContainer)
@@ -120,37 +126,37 @@ let routers = [
         exact: false,
         component: (props) => getComponent(props, FashionMomentDetailContainer)
     },
-     {//我的搭配师
+    {//我的搭配师
         path: '/myDps',
         exact: false,
         component: (props) => getComponent(props, MyDpsContainer)
     },
-     {//搭配方案
+    {//搭配方案
         path: '/arrangementScheme',
         exact: false,
         component: (props) => getComponent(props, ArrangementSchemeContainer)
     },
-     {//聊天
+    {//聊天
         path: '/chat',
         exact: false,
         component: (props) => getComponent(props, ChatContainer)
     },
-     {//我的衣橱
+    {//我的衣橱
         path: '/wardrobeList',
         exact: false,
         component: (props) => getComponent(props, WardrobeListContainer)
     },
-     {//我的订单
+    {//我的订单
         path: '/orderList',
         exact: false,
         component: (props) => getComponent(props, OrderListContainer)
     },
-     {//订单详情
+    {//订单详情
         path: '/orderDetail',
         exact: false,
         component: (props) => getComponent(props, OrderDetailContainer)
     },
-     {//优惠码
+    {//优惠码
         path: '/promotionCode',
         exact: false,
         component: (props) => getComponent(props, PromotionCodeContainer)
@@ -160,17 +166,17 @@ let routers = [
         exact: false,
         component: (props) => getComponent(props, GetPromotionContainer)
     },
-     {//分享
+    {//分享
         path: '/share',
         exact: false,
         component: (props) => getComponent(props, ShareContainer)
     },
-     {//使用规则
+    {//使用规则
         path: '/usage',
         exact: false,
         component: (props) => getComponent(props, UsageContainer)
     },
-     {//反馈
+    {//反馈
         path: '/feedback',
         exact: false,
         component: (props) => getComponent(props, FeedbackContainer)

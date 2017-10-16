@@ -95,7 +95,7 @@ class My extends Component {
                         </Link>
                     </li>
                     <li className="item-2">
-                        <Link to="/wardrobeList">
+                        <Link to="/myWatch">
                             <div className="box text-center">
                                 <span className="icon icon-my-watch"></span>
                                 <p>我的关注</p>

@@ -85,7 +85,7 @@ class FashionMoment extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to="/">
+                                                <Link to={"/dpsProfile?collocationId="+item.collocationId}>
                                                     <img src={item.collocationHeadImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
@@ -113,7 +113,7 @@ class FashionMoment extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to="/">
+                                                <Link to={"/dpsProfile?collocationId="+item.collocationId}>
                                                     <img src={item.collocationHeadImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
@@ -128,29 +128,6 @@ class FashionMoment extends Component {
                             })
                         }
                     </ul>
-                    {/* 时尚圈精选将要展示的图片 */}
-                    {/* <ul className="hideItem">
-                        <li className='box will-box'>
-                            <Link to="/">
-                                <img src={this.state.loadImg ? this.state.loadImg.masterImage : ''} className="main-img" onLoad={this.willImg.bind(this)} />
-                            </Link>
-                            <div className='text-area'>
-                                <Link to="/">
-                                    <div className="list-title">何穗来教你！超模的“游客照”是这个范儿~的“游客照”是这个范儿的“游客照”是这个范儿</div>
-                                </Link>
-                                <div className="dps-info">
-                                    <Link to="/">
-                                        <img src="/assets/img/girl.jpg" className="head-img" />
-                                        <span className="nickname">么么哒</span>
-                                    </Link>
-                                    <div className="zan">
-                                        <img src="/assets/img/icon/zan.jpg" className="icon" />
-                                        258
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul> */}
                     <div className="loading-area">
                         {this.props.children}
                     </div>
