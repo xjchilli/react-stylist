@@ -36,8 +36,8 @@ class Sex extends Component {
     render() {
         return (
             <ul className="box flex-box sex-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="/assets/img/suit/sex-1.jpg" width="88" height="88" />
                         <div>
                             <span className="isSelect">
@@ -49,8 +49,8 @@ class Sex extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2 text-center">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2 text-center" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="/assets/img/suit/sex-2.jpg" width="88" height="88" />
                         <div>
                             <span className="isSelect">
@@ -92,8 +92,8 @@ class FaceGirl extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-1.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -106,8 +106,8 @@ class FaceGirl extends Component {
                         <p className="text-center decribe">额头、颧骨宽度相近，下颚窄，下巴圆润</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-2.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -121,8 +121,8 @@ class FaceGirl extends Component {
                         <p className="text-center decribe">额头、颧骨、下颚宽度相近，下巴短圆润</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-3.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -136,8 +136,8 @@ class FaceGirl extends Component {
                         <p className="text-center decribe">头比颧骨宽，下颚窄下巴比较尖</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center name-area">
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-4.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -181,8 +181,8 @@ class FaceBoy extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-1.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -196,8 +196,8 @@ class FaceBoy extends Component {
                         <p className="text-center decribe">额头、颧骨宽度相近，下颚窄，下巴圆润</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-2.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -211,8 +211,8 @@ class FaceBoy extends Component {
                         <p className="text-center decribe">额头、颧骨、下颚宽度相近，下巴短圆润</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-3.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -226,8 +226,8 @@ class FaceBoy extends Component {
                         <p className="text-center decribe">额头比颧骨宽，下颚窄下巴比较尖</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-4.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -270,8 +270,8 @@ class SkinGirl extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -283,8 +283,8 @@ class SkinGirl extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -296,8 +296,8 @@ class SkinGirl extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -309,8 +309,8 @@ class SkinGirl extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -352,8 +352,8 @@ class SkinBoy extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -365,8 +365,8 @@ class SkinBoy extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -378,8 +378,8 @@ class SkinBoy extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -391,8 +391,8 @@ class SkinBoy extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg" width="68" height="67" />
                         <div>
                             <span className="isSelect">
@@ -434,8 +434,8 @@ class BodyGirl extends Component {
     render() {
         return (
             <ul className="box flex-box body-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-1.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -448,8 +448,8 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">细腰，明显的S曲线</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-2.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -462,8 +462,8 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">腹部、臀、大腿脂肪较多</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-3.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -476,8 +476,8 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">腰腹赘肉较多，臀部丰满</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center name-area">
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-4.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -490,8 +490,8 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">胸宽、腰宽、臀宽相差较小</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '5')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '5')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-5.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -533,8 +533,8 @@ class BodyBoy extends Component {
     render() {
         return (
             <ul className="box flex-box body-area">
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-1.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -547,8 +547,8 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">肩部较宽，胸腹较匀称</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-2.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -561,8 +561,8 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">腰腹部赘肉较多，肩部较小</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-3.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -575,8 +575,8 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">胸宽、腰宽、臀宽相差较小</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-4.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -589,8 +589,8 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">肩膀宽，腰部匀称，胯部较小</p>
                     </div>
                 </li>
-                <li className="item-2">
-                    <div className="text-center name-area" onClick={this.props.change.bind(this, '5')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '5')}>
+                    <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-5.jpg" width="68" height="81" />
                         <div>
                             <span className="isSelect">
@@ -856,82 +856,82 @@ class StyleGirl extends Component {
         return (
             <ul className="box flex-box style-area">
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '1')}>
+                    <div className={this.state.styles.indexOf('1') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '1')}>
                         <img src="/assets/img/suit/style-2-1.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                韩剧女主角
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            韩剧女主角
                             {
-                                    this.state.styles.indexOf('1') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('1') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '2')}>
+                    <div className={this.state.styles.indexOf('2') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '2')}>
                         <img src="/assets/img/suit/style-2-2.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                日系小清新
-                            {
-                                    this.state.styles.indexOf('2') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            日系小清新
+                        {
+                                this.state.styles.indexOf('2') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '3')}>
+                    <div className={this.state.styles.indexOf('3') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '3')}>
                         <img src="/assets/img/suit/style-2-3.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                轻熟OL系
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            轻熟OL系
                             {
-                                    this.state.styles.indexOf('3') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
+                                this.state.styles.indexOf('3') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
 
-                            </span>
-                        </div>
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '4')}>
+                    <div className={this.state.styles.indexOf('4') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '4')}>
                         <img src="/assets/img/suit/style-2-4.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                欧美出街范
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            欧美出街范
                             {
-                                    this.state.styles.indexOf('4') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('4') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '5')}>
+                    <div className={this.state.styles.indexOf('5') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '5')}>
                         <img src="/assets/img/suit/style-2-5.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                中性运动风
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            中性运动风
                             {
-                                    this.state.styles.indexOf('5') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('5') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '6')}>
+                    <div className={this.state.styles.indexOf('6') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '6')}>
                         <img src="/assets/img/suit/style-2-6.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                文艺复古情怀
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            文艺复古情怀
                             {
-                                    this.state.styles.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('6') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
             </ul>
@@ -978,69 +978,69 @@ class StyleBoy extends Component {
         return (
             <ul className="box flex-box style-area">
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '1')}>
+                    <div className={this.state.styles.indexOf('1') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '1')}>
                         <img src="/assets/img/suit/style-1-1.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                街头潮男风
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            街头潮男风
                             {
-                                    this.state.styles.indexOf('1') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('1') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '2')}>
+                    <div className={this.state.styles.indexOf('2') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '2')}>
                         <img src="/assets/img/suit/style-1-2.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                绅士熟男系
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            绅士熟男系
                             {
-                                    this.state.styles.indexOf('2') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('2') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '3')}>
+                    <div className={this.state.styles.indexOf('3') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '3')}>
                         <img src="/assets/img/suit/style-1-3.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                纹身硬汉系
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            纹身硬汉系
                             {
-                                    this.state.styles.indexOf('3') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
+                                this.state.styles.indexOf('3') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
 
-                            </span>
-                        </div>
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '4')}>
+                    <div className={this.state.styles.indexOf('4') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '4')}>
                         <img src="/assets/img/suit/style-1-4.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                清新治愈系
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            清新治愈系
                             {
-                                    this.state.styles.indexOf('4') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('4') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className="text-center style" onClick={this.select.bind(this, '5')}>
+                    <div className={this.state.styles.indexOf('5') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '5')}>
                         <img src="/assets/img/suit/style-1-5.jpg" />
-                        <div>
-                            <span className="isSelect">
-                                暗黑禁欲系
+                    </div>
+                    <div className="text-center">
+                        <span className="isSelect">
+                            暗黑禁欲系
                             {
-                                    this.state.styles.indexOf('5') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
-                                }
-                            </span>
-                        </div>
+                                this.state.styles.indexOf('5') != -1 ? (<span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>) : null
+                            }
+                        </span>
                     </div>
                 </li>
             </ul>
@@ -1436,7 +1436,8 @@ class CustomSuit extends Component {
                 }
 
                 <button className="btn next-btn" onClick={this.nextStep.bind(this)}>
-                    <span>{this.state.progress == 8 ? "完成" : "下一步"}</span>
+                    {this.state.progress == 8 ? "完成" : (<span>下一步</span>)}
+
                 </button>
             </section>
         )

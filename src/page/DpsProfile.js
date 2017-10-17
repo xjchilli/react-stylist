@@ -13,13 +13,14 @@ import BindTel from "./component/BindTel";
 
 class Main extends Component {
     render() {
+        let { tab } = qs.parse(this.props.location.search);
         let {
             data,
             loadAnimation,
             loadMsg
         } = this.props.state;
 
-        let main = data && data.succ ? <DpsProfile data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = data && data.succ ? <DpsProfile data={data} tab={tab} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
 
         return main
     }
@@ -28,10 +29,11 @@ class Main extends Component {
 class DpsProfile extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             previewBigImg: false,//是否预览大图
             bigImgUrl: '',//大图url
-            tab: 1,//1:时尚圈  2：现有服务
+            tab: Number(props.tab) || 1,//1:时尚圈  2：现有服务
             dpsServerDetail: false
         }
     }

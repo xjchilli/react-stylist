@@ -26,6 +26,16 @@ const User = (state = JSON.parse(ToolDps.localItem('User')), action) => {
 
 }
 
+//新消息
+const MyNews = (state={newMsg: false},action) => {
+  switch (action.type) {
+    case 'setNews': //获取新消息
+      return action.target;
+    default:
+      return state;
+  }
+}
+
 
 
 const DB = (_ID = '', seting = {}) => {
@@ -60,11 +70,10 @@ const DB = (_ID = '', seting = {}) => {
   }
 }
 
-
 const Home = DB('Home', {
   data: null
 }); //首页
-const MyWatch = DB('MyWatch',{
+const MyWatch = DB('MyWatch', {
   data: null
 }); //我的关注
 const FashionMoment = DB('FashionMoment', {
@@ -94,8 +103,9 @@ const PromotionCodeList = DB('PromotionCodeList', {
 
 const reducers = combineReducers({
   User,
-  MyWatch,
+  MyNews,
   Home,
+  MyWatch,
   FashionMoment,
   Profile,
   DpsProfile,

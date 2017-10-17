@@ -27,7 +27,6 @@ class Main extends Component {
 class Home extends Component {
     constructor(props) {
         super(props);
-        console.log(props.data);
         this.state = {
             fashionListImg: props.data.plans || [],//时尚圈精选图片
             recommand: props.data.recommand,//今日推荐搭配师
@@ -35,8 +34,6 @@ class Home extends Component {
             loadAnimation: true,
             loadMsg: '正在加载中',
         }
-
-
     }
 
     componentDidMount() {
@@ -124,30 +121,35 @@ class Home extends Component {
                 </div>
                 <div className='title'>
                     今日搭配师推荐
-                    <Link to="/">MORE</Link>
+                    <Link to="/dpsList">MORE</Link>
                 </div>
                 <section className='today-recommend'>
                     {
                         this.state.recommand.map((item, index) => {
                             return (
                                 <div className='box' key={index}>
-                                    <Link to="/" >
+                                    <Link to={"/dpsProfile?collocationId=" + item.collocationId} >
                                         <div className="lside" style={{ background: "url(" + item.masterImg + ")", backgroundSize: "cover" }}>
                                         </div>
-                                        <div className="rside">
-                                            <div className="r-top" style={{ background: "url(" + item.topImg + ")", backgroundSize: "cover" }}></div>
-                                            <div className="r-bottom" style={{ background: "url(" + item.buttomImg + ")", backgroundSize: "cover" }}></div>
-                                        </div>
-                                        <div className="introduce-area">
-                                            <div className="introduce" >{item.title}</div>
-                                        </div>
                                     </Link>
+                                    <div className="rside">
+                                        <Link to="">
+                                            <div className="r-top" style={{ background: "url(" + item.topImg + ")", backgroundSize: "cover" }}></div>
+                                        </Link>
+                                        <Link to="">
+                                            <div className="r-bottom" style={{ background: "url(" + item.buttomImg + ")", backgroundSize: "cover" }}></div>
+                                        </Link>
+                                    </div>
+                                    <div className="introduce-area">
+                                        <div className="introduce" >{item.title}</div>
+                                    </div>
+
                                     <div className="dps-info">
                                         <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
                                             <img src={item.headImg} className="head-img"></img>
                                             <span className="nickname">{item.nickName}</span>
                                         </Link>
-                                        <button className="btn watch-dps" onClick={this.watchDps.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                        <button className={item.concern ? "btn watch-dps watched" : "btn watch-dps"} onClick={this.watchDps.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
                                     </div>
                                 </div>
                             )

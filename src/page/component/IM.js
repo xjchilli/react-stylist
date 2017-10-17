@@ -30,9 +30,6 @@ class IM extends Component {
 		}
 	}
 
-	// componentWillUnmount() {
-	// 	this.signOut();
-	// }
 
 	/**
 	 * [signature 获取签名]

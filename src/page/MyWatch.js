@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
+import { ToolDps } from '../ToolDps';
 
 
 class Main extends Component {
@@ -12,14 +13,8 @@ class Main extends Component {
     }
 
     render() {
-        let {
-            data,
-            loadAnimation,
-            loadMsg
-        } = this.props.state;
-
+        let { data, loadAnimation, loadMsg } = this.props.state;
         let main = data && data.succ ? <MyWatch data={data.data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
-
         return main;
     }
 }
@@ -28,11 +23,31 @@ class Main extends Component {
 class MyWatch extends Component {
     constructor(props) {
         super(props);
-        console.log(props.data);
         this.state = {
             data: props.data
         }
     }
+
+    componentDidMount() {
+        document.title = "我的关注";
+    }
+
+    //取消关注
+    cancelWatch(collocationId) {
+        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
+            let copyData = Array.prototype.slice.apply(this.state.data);
+            for (let i = 0; i < copyData.length; i++) {
+                if (copyData[i].collocationId == collocationId) {
+                    copyData[i].concern = !copyData[i].concern;
+                    break;
+                }
+            }
+            this.setState({
+                data: copyData
+            });
+        });
+    }
+
     render() {
         return (
             <section className="dps-list-page my-watch-page">
@@ -43,11 +58,15 @@ class MyWatch extends Component {
                                 return (
                                     <li key={index}>
                                         <section className="dps-info" >
-                                            <img src={item.headImg} />
-                                            <span className="nickname">{item.nickName}</span>
+                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                <img src={item.headImg} />
+                                                <span className="nickname">{item.nickName}</span>
+                                            </Link>
                                             <div className="btn-area">
-                                                <Link to={"/chat?selToID="+item.timId+"&headUrl="+item.headImg+"&nickname="+item.nickName} className="btn question-btn">咨询</Link>
-                                                <button className="btn watch-btn">已关注</button>
+                                                {
+                                                    item.concern ? (<Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>) : null
+                                                }
+                                                <button className="btn watch-btn" onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
                                             </div>
                                         </section>
                                         <ul className="plan-area">
@@ -55,7 +74,9 @@ class MyWatch extends Component {
                                                 item.plans.map((plan, i) => {
                                                     return (
                                                         <li key={i}>
-                                                            <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
+                                                            <Link to={"/fashionMomentDetail?planId=" + plan.planId}>
+                                                                <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
+                                                            </Link>
                                                         </li>
                                                     )
                                                 })
@@ -72,7 +93,6 @@ class MyWatch extends Component {
     }
 }
 
-// export default MyWatch;
 
 export default GetData({
     id: 'MyWatch', //应用关联使用的redux

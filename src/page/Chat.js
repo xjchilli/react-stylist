@@ -9,6 +9,8 @@ import { DataLoad, PreviewImg } from '../Component/index';
 import merged from 'obj-merged';
 import IM from './component/IM';
 import autosize from 'autosize';
+import { connect } from 'react-redux';
+import action from '../Action/Index';
 
 class List extends Component {
     constructor(props) {
@@ -48,7 +50,7 @@ class List extends Component {
                     }
                     img.setAttribute('src', '/assets/img/icon/sound.gif');
                     audio.play();
-                    audio.addEventListener('ended', this.playEnd.bind(this,img));
+                    audio.addEventListener('ended', this.playEnd.bind(this, img));
                 } else {
                     img.setAttribute('src', '/assets/img/icon/sound.png');
                     audio.load();
@@ -59,7 +61,7 @@ class List extends Component {
         /**
          * 播放结束
          */
-        this.playEnd = (img,e) => {
+        this.playEnd = (img, e) => {
             img.setAttribute('src', '/assets/img/icon/sound.png');
         }
 
@@ -110,18 +112,20 @@ class List extends Component {
 
         return (
             <div>
-            <ul className="chat-content">
-                {data}
-            </ul>
-            </div> 
+                <ul className="chat-content">
+                    {data}
+                </ul>
+            </div>
         )
     }
 }
 
 
+
 class Chat extends IM {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             loadAnimation: true,
             loadMsg: '正在加载中',
@@ -205,6 +209,10 @@ class Chat extends IM {
         }
         //消息已读上报，以及设置会话自动已读标记
         webim.setAutoRead(this.selSess, true, true);
+        //设置未收到新消息
+        this.props.setNews({
+            newMsg: false
+        });
     }
 
 
@@ -258,6 +266,10 @@ class Chat extends IM {
         }
         //消息已读上报，并将当前会话的消息设置成自动已读
         webim.setAutoRead(this.selSess, true, true);
+        //设置未收到新消息
+        this.props.setNews({
+            newMsg: false
+        });
     }
 
     /**
@@ -653,7 +665,7 @@ class Chat extends IM {
         return (
             <div className="full-page chat-page">
                 <div ref={el => this.container = el} className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
-                    {this.state.list.length > 0 ? <List previewImg={this.previewImg.bind(this)} collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
+                    {this.state.list.length > 0 ? <List setNews={this.props.setNews.bind(this)} previewImg={this.previewImg.bind(this)} collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer style={{ bottom: this.state.footerBottom + 'px' }}>
                     <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>
@@ -675,4 +687,6 @@ class Chat extends IM {
     }
 }
 
-export default Chat;
+// export default Chat;
+
+export default connect((state) => { return { MyNews: state.MyNews }; }, action('setNews'))(Chat);

@@ -78,10 +78,10 @@ class LifePhoto extends Component {
                 <h2 className="text-center">个人照片</h2>
                 <ul className="flex-box upload-control-area">
                     <li className="item-2">
-                        <div className="upload-area" >
+                        <div className={this.state.faceLifeImg ? "upload-area active" : "upload-area"} >
                             <span className="icon icon-camera"></span>
                             <p>添加一张正脸照片</p>
-                            <div className={this.state.faceLifeImg ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + this.state.faceLifeImg + ')' }} ></div>
+                            <div className="img-show" style={{ backgroundImage: 'url(' + this.state.faceLifeImg + ')' }} ></div>
                             <input type="file" accept="image/*" className="upload-file" onChange={this.selectImg.bind(this, 'face')} />
                             {
                                 this.state.imgLoding ? <Loading /> : null
@@ -89,10 +89,10 @@ class LifePhoto extends Component {
                         </div>
                     </li>
                     <li className="item-2">
-                        <div className="upload-area">
+                        <div className={this.state.bodyFaceImg ? "upload-area active" : "upload-area"}>
                             <span className="icon icon-camera"></span>
                             <p>添加近期全身照</p>
-                            <div className={this.state.bodyFaceImg ? "img-show active" : "img-show"} style={{ backgroundImage: 'url(' + this.state.bodyFaceImg + ')' }} ></div>
+                            <div className="img-show" style={{ backgroundImage: 'url(' + this.state.bodyFaceImg + ')' }} ></div>
                             <input type="file" accept="image/*" className="upload-file" onChange={this.selectImg.bind(this, 'all')} />
                             {
                                 this.state.imgLoding2 ? <Loading /> : null
@@ -179,13 +179,13 @@ class Profile extends Component {
             professional,
             heigh,
             weight,
-            faceshpe,
+            faceshpeValues,
             faceshpeImg,
             problemValues,
             styleValues,
-            colorofskin,
+            colorofskinValues,
             colorofskinImg,
-            bodySize,
+            bodySizeValues,
             bodySizeImg,
             faceLifeImg,
             bodyFaceImg
@@ -213,12 +213,12 @@ class Profile extends Component {
                     </div>
                     <ul className="flex-box age-height-weight">
                         <li className="item-3">
-                            <label>年龄</label>{age}
+                            <label>年龄</label>{age}岁
                         </li>
-                        <li className="item-3">
+                        <li className="item-3 text-center">
                             <label>身高</label>{heigh}cm
                         </li>
-                        <li className="item-3">
+                        <li className="item-3 text-right">
                             <label>体重</label>{weight}kg
                         </li>
                     </ul>
@@ -226,15 +226,15 @@ class Profile extends Component {
                         <dt>脸型 ，肤色和体型</dt>
                         <dd className="item-3">
                             <img src={faceshpeImg} width="68" height="67" />
-                            <p className="text-center name">{faceshpe}</p>
+                            <p className="text-center name">{faceshpeValues}</p>
                         </dd>
                         <dd className="item-3">
                             <img src={colorofskinImg} width="68" height="67" />
-                            <p className="text-center name">{colorofskin}</p>
+                            <p className="text-center name">{colorofskinValues}</p>
                         </dd>
                         <dd className="item-3">
                             <img src={bodySizeImg} width="auto" height="67" />
-                            <p className="text-center name">{bodySize}</p>
+                            <p className="text-center name">{bodySizeValues}</p>
                         </dd>
                     </dl>
                     <h6 className="title">希望能解决的问题</h6>

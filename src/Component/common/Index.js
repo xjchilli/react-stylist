@@ -3,7 +3,9 @@ import GetNextPage from './GetNextPage';
 import GetData from './GetData';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import action from '../../Action/Index';
 import IM from '../../page/component/IM';
+
 
 
 
@@ -69,29 +71,38 @@ class Footer extends Component {
     }
 }
 
-class News extends IM {
+class MyNews extends IM {
     constructor(props) {
         super(props);
-        this.state={
-            newMsg: false
+        this.state = {
+            newMsg: props.MyNews.newMsg || false
         }
         this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
     }
 
     componentDidMount() {
-        // this.signature((data) => {
-        //     this.login(data, () => {
-        //         this.getFriends();
-        //     });
-        // });
+        this.signature((data) => {
+            this.login(data, () => {
+                this.getFriends();
+            });
+        });
     }
 
-
     
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            newMsg: nextProps.MyNews.newMsg
+        });
+    }
+    
+
+
+
     onMsgNotify(newMsgList) {
         if (newMsgList.length > 0) {
-            this.setState({
-                newMsg: true
+            this.props.setNews({
+                type:'set',
+                newMsg:true
             });
         }
 
@@ -157,8 +168,8 @@ class News extends IM {
             sess = sessMap[i];
             // console.log(sess._impl.msgs)
             if (sess.id() != "@TLS#144115198577104990" && sess.unread() > 0) {
-                this.setState({
-                    newMsg: true
+                this.props.setNews({
+                    newMsg:true
                 });
             }
         }
@@ -181,5 +192,6 @@ class News extends IM {
     }
 }
 
+let News = connect((state) => { return { MyNews: state.MyNews }; }, action('setNews'))(MyNews);
 
 export { GetNextPage, GetData, DataLoad, Footer, News };
