@@ -3,90 +3,84 @@
  */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { DataLoad, GetData } from '../Component/index';
+import { DataLoad, GetNextPage } from '../Component/index';
 import { Footer, News } from '../Component/index';
+import { ToolDps } from '../ToolDps';
 
-
-class Main extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        let { data, loadAnimation, loadMsg } = this.props.state;
-        let main = data && data.succ ? <DpsList data={data.data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
-        return main;
-    }
-}
 
 
 class DpsList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: props.state.data || []
+        }
+    }
+
+    //取消关注
+    cancelWatch(collocationId) {
+        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
+            let copyData = Array.prototype.slice.apply(this.state.list);
+            for (let i = 0; i < copyData.length; i++) {
+                if (copyData[i].collocationId == collocationId) {
+                    copyData[i].concern = !copyData[i].concern;
+                    break;
+                }
+            }
+            this.setState({
+                data: copyData
+            });
+        });
+    }
+
     render() {
         return (
             <section className="dps-list-page">
                 <section className="list-area">
-                    <h5 className="title">您关注的搭配师</h5>
-                    <ul>
-                        <li>
-                            <section className="dps-info">
-                                <img src="/assets/img/girl.jpg" />
-                                <span className="nickname">旱死的鱼</span>
-                                <div className="btn-area">
-                                    <button className="btn question-btn">咨询</button>
-                                </div>
-                            </section>
-                            <section className="main-img-area" style={{ backgroundImage: 'url(/assets/img/girl2.jpg)' }}>
-                                <p className="describe">
-                                    <span>
-                                        曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。擅长欧美风格和学院风的搭配。
-                                    </span>
-                                </p>
-                            </section>
-                            <ul className="flex-box small-img-area">
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <section className="dps-info">
-                                <img src="/assets/img/girl.jpg" />
-                                <span className="nickname">旱死的鱼</span>
-                                <div className="btn-area">
-                                    <button className="btn question-btn">咨询</button>
-                                </div>
-                            </section>
-                            <section className="main-img-area" style={{ backgroundImage: 'url(/assets/img/girl2.jpg)' }}>
-                                <p className="describe">
-                                    <span>
-                                        曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。擅长欧美风格和学院风的搭配。
-                                    </span>
-                                </p>
-                            </section>
-                            <ul className="flex-box small-img-area">
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </section>
-                <section className="list-area">
                     <h5 className="title">热门搭配师</h5>
                     <ul>
-                        <li>
+                        {
+                            this.state.list.map((item, index) => {
+                                return (
+                                    <li key={index}>
+                                        <section className="dps-info">
+                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                <img src={item.headImg} />
+                                                <span className="nickname">{item.nickName}</span>
+                                            </Link>
+                                            <div className="btn-area">
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>
+                                                <button className="btn watch-btn" onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                            </div>
+                                        </section>
+                                        <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                            <section className="main-img-area" style={{ backgroundImage: 'url(' + item.backgroundImg + ')' }}>
+                                                <p className="describe">
+                                                    <span>
+                                                        曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。擅长欧美风格和学院风的搭配。
+                                                </span>
+                                                </p>
+                                            </section>
+                                        </Link>
+                                        <ul className="flex-box small-img-area">
+                                            {
+                                                item.plans.map((plan, i) => {
+                                                    return (
+                                                        <li className="item-3" key={i}>
+                                                            <Link to={"/fashionMomentDetail?planId=" + plan.planId}>
+                                                                <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                    </li>
+                                )
+                            })
+                        }
+
+                        {/* <li>
                             <section className="dps-info">
                                 <img src="/assets/img/girl.jpg" />
                                 <span className="nickname">旱死的鱼</span>
@@ -113,37 +107,10 @@ class DpsList extends Component {
                                     <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <section className="dps-info">
-                                <img src="/assets/img/girl.jpg" />
-                                <span className="nickname">旱死的鱼</span>
-                                <div className="btn-area">
-                                    <button className="btn question-btn">咨询</button>
-                                    <button className="btn watch-btn">+关注</button>
-                                </div>
-                            </section>
-                            <section className="main-img-area" style={{ backgroundImage: 'url(/assets/img/girl2.jpg)' }}>
-                                <p className="describe">
-                                    <span>
-                                        曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。擅长欧美风格和学院风的搭配。
-                                    </span>
-                                </p>
-                            </section>
-                            <ul className="flex-box small-img-area">
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                            </ul>
-                        </li>
+                        </li> */}
                     </ul>
                 </section>
+                {this.props.children}
                 <News />
                 <Footer tab="2" />
             </section>
@@ -151,13 +118,19 @@ class DpsList extends Component {
     }
 }
 
-// export default DpsList;
 
-export default GetData({
-    id: 'MyWatch', //应用关联使用的redux
-    component: Main, //接收数据的组件入口
-    url: '/wx/concern/getMy',
-    data: '', //发送给服务器的数据
+export default GetNextPage({
+    id: 'HotDpsList', //应用关联使用的redux
+    component: DpsList, //接收数据的组件入口
+    url: '/wx/hostDps',
+    data: (props, state) => { //发送给服务器的数据
+        let {
+            currentPager
+        } = state;
+        return {
+            currentPager
+        }
+    },
     success: (state) => {
         return state;
     }, //请求成功后执行的方法

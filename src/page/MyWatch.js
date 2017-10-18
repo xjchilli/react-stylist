@@ -32,6 +32,14 @@ class MyWatch extends Component {
         document.title = "我的关注";
     }
 
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            data: nextProps.data
+        });
+    }
+
+
     //取消关注
     cancelWatch(collocationId) {
         ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
@@ -87,6 +95,9 @@ class MyWatch extends Component {
                             })
                         }
                     </ul>
+                    {
+                        this.state.data.length == 0 ? <p className="text-center">您暂时未关注搭配师</p> : null
+                    }
                 </section>
             </section>
         )

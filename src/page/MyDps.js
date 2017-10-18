@@ -84,9 +84,8 @@ class MyDps extends IM {
      *
      */
     onMsgNotify(newMsgList) {
-        // console.log(newMsgList)
         let sess = newMsgList[0].sess;
-        // console.log(sess)
+        console.log(sess)
         this.updateSessDiv(sess.id(), 1, sess._impl.msgs, sess.time());
     }
 
@@ -109,7 +108,6 @@ class MyDps extends IM {
 
         webim.getAllFriend(options,
             (resp) => {
-                // console.log(resp);
                 if (resp.FriendNum > 0) {
                     let friendsInfo = {}; //好友
                     let friends = resp.InfoItem;
@@ -184,9 +182,10 @@ class MyDps extends IM {
     initUnreadMsgCount() {
         let sess;
         let sessMap = webim.MsgStore.sessMap();
-        // debugger
         for (let i in sessMap) {
             sess = sessMap[i];
+            //消息已读上报，以及设置会话自动已读标记
+            webim.setAutoRead(sess, false, false);
             // console.log(sess._impl.msgs)
             this.updateSessDiv(sess.id(), sess.unread(), sess._impl.msgs, sess.time());
         }
@@ -216,9 +215,9 @@ class MyDps extends IM {
                 } else {
                     friends[to_id].unReadNum = unread_msg_count; //未读消息数量
                 }
-
             }
 
+            // console.log(friends);
             this.setState({
                 friends: friends
             });

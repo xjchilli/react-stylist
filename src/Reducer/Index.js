@@ -27,7 +27,7 @@ const User = (state = JSON.parse(ToolDps.localItem('User')), action) => {
 }
 
 //新消息
-const MyNews = (state={newMsg: false},action) => {
+const MyNews = (state = { newMsg: false }, action) => {
   switch (action.type) {
     case 'setNews': //获取新消息
       return action.target;
@@ -76,6 +76,11 @@ const Home = DB('Home', {
 const MyWatch = DB('MyWatch', {
   data: null
 }); //我的关注
+const HotDpsList = DB('HotDpsList', {
+  currentPager: 1,
+  nextBtn: true,
+  data: []
+}); //热门搭配师列表
 const FashionMoment = DB('FashionMoment', {
   currentPager: 1,
   nextBtn: true,
@@ -106,6 +111,7 @@ const reducers = combineReducers({
   MyNews,
   Home,
   MyWatch,
+  HotDpsList,
   FashionMoment,
   Profile,
   DpsProfile,

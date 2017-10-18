@@ -45,6 +45,16 @@ class Home extends Component {
         });
     }
 
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            fashionListImg: nextProps.data.plans || [],//时尚圈精选图片
+            recommand: nextProps.data.recommand,//今日推荐搭配师
+            slideshow: nextProps.data.slideshow,//Banner
+        });
+    }
+
+
     calculate(fashionListImg) {
         let col1Imgs = [],//时尚圈精选图片1列
             col2Imgs = [],//时尚圈精选图片2列
@@ -133,10 +143,10 @@ class Home extends Component {
                                         </div>
                                     </Link>
                                     <div className="rside">
-                                        <Link to="">
+                                        <Link to={"/fashionMomentDetail?planId=" + item.topPlanId}>
                                             <div className="r-top" style={{ background: "url(" + item.topImg + ")", backgroundSize: "cover" }}></div>
                                         </Link>
-                                        <Link to="">
+                                        <Link to={"/fashionMomentDetail?planId=" + item.bottomPlanId}>
                                             <div className="r-bottom" style={{ background: "url(" + item.buttomImg + ")", backgroundSize: "cover" }}></div>
                                         </Link>
                                     </div>

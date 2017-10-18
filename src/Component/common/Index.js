@@ -50,8 +50,7 @@ class Footer extends Component {
                 </li>
                 <li>
                     <NavLink to="/needMatch" activeClassName={tab == 3 ? "active" : ""}>
-                        <img src={tab == 3 ? '/assets/img/icon/tab-3-2.jpg' : '/assets/img/icon/tab-3-1.jpg'} width="23" height="22" />
-                        <p>搭配</p>
+                        <img className="da-img" src={tab == 3 ? '/assets/img/icon/tab-3-2.png' : '/assets/img/icon/tab-3-1.png'} width={tab == 3 ? "55" : "45"} height={tab == 3 ? "55" : "45"} />
                     </NavLink>
                 </li>
                 <li>
@@ -88,21 +87,21 @@ class MyNews extends IM {
         });
     }
 
-    
+
     componentWillReceiveProps(nextProps) {
         this.setState({
             newMsg: nextProps.MyNews.newMsg
         });
     }
-    
+
 
 
 
     onMsgNotify(newMsgList) {
         if (newMsgList.length > 0) {
             this.props.setNews({
-                type:'set',
-                newMsg:true
+                type: 'set',
+                newMsg: true
             });
         }
 
@@ -169,7 +168,7 @@ class MyNews extends IM {
             // console.log(sess._impl.msgs)
             if (sess.id() != "@TLS#144115198577104990" && sess.unread() > 0) {
                 this.props.setNews({
-                    newMsg:true
+                    newMsg: true
                 });
             }
         }

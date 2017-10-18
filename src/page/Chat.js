@@ -12,6 +12,7 @@ import autosize from 'autosize';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 
+
 class List extends Component {
     constructor(props) {
         super(props);
@@ -125,7 +126,6 @@ class List extends Component {
 class Chat extends IM {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             loadAnimation: true,
             loadMsg: '正在加载中',
@@ -155,7 +155,7 @@ class Chat extends IM {
         this.collocationId = selToID.replace('dps', '');//搭配师id
         this.friendHeadUrl = headUrl; //好友头像
         this.nickname = nickname; //好友昵称
-        this.selSess = null; //当前聊天会话对象
+        this.selSess = null; //当前聊天会话对象   this.selSess = null; //当前聊天会话对象
         this.reqMsgCount = 15; //每次请求的历史消息(c2c获取群)条数，仅demo用得到
 
 
@@ -209,9 +209,8 @@ class Chat extends IM {
         }
         //消息已读上报，以及设置会话自动已读标记
         webim.setAutoRead(this.selSess, true, true);
-        //设置未收到新消息
         this.props.setNews({
-            newMsg: false
+            newMsg:false
         });
     }
 
@@ -266,9 +265,8 @@ class Chat extends IM {
         }
         //消息已读上报，并将当前会话的消息设置成自动已读
         webim.setAutoRead(this.selSess, true, true);
-        //设置未收到新消息
         this.props.setNews({
-            newMsg: false
+            newMsg:false
         });
     }
 
@@ -665,7 +663,7 @@ class Chat extends IM {
         return (
             <div className="full-page chat-page">
                 <div ref={el => this.container = el} className="container" onClick={this.hideEmotion.bind(this)} onScroll={this.getChatHistory.bind(this)} style={{ height: this.state.containerHeight }}>
-                    {this.state.list.length > 0 ? <List setNews={this.props.setNews.bind(this)} previewImg={this.previewImg.bind(this)} collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
+                    {this.state.list.length > 0 ? <List previewImg={this.previewImg.bind(this)} collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer style={{ bottom: this.state.footerBottom + 'px' }}>
                     <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>

@@ -158,9 +158,9 @@ class BoyType extends Component {
                 </li>
                 <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '205')}>
                     <div className="icon-box">
-                        <span className="icon icon-girl-bag-normal normal"></span>
-                        <span className="icon icon-girl-bag-selected selected"></span>
-                        <p>包包</p>
+                        <span className="icon icon-boy-hat-normal normal"></span>
+                        <span className="icon icon-boy-hat-selected selected"></span>
+                        <p>帽子</p>
                     </div>
                 </li>
                 <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '206')}>
