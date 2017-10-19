@@ -32,12 +32,12 @@ class My extends Component {
     componentDidMount() {
     }
 
-    
 
     render() {
         let { data } = this.props;
         return (
             <section className="my-page">
+                <Footer tab="5" />
                 <header>
                     <img src={data.headImg} />
                     <p className="text-center nickname">{data.nickName}</p>
@@ -114,7 +114,7 @@ class My extends Component {
                 <a  target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us">联系客服</a>
                 <Link to="/feedback" className="feedback">我要反馈</Link>
                 <News />
-                <Footer tab="5" />
+                
             </section>
         )
     }

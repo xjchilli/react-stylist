@@ -16,35 +16,31 @@ class NeedMatch extends Component {
         this.state = {
             contact: props.data.contact || '',
             path: '', //url路径
-            isBingTelShow: false //是否显示绑定手机窗口
+            isBingTelShow: false, //是否显示绑定手机窗口
+            typeTips: 0,//1:咨询 2:购买 3：陪逛 4：衣橱整理 5：素人改造套餐一 6：素人改造套餐二 7：素人改造套餐三
         }
     }
     componentDidMount() {
         document.title = "我要搭配";
-        let index = ToolDps.sessionItem('sliderIndex');
-        let swiper1 = new Swiper('#match-banner', {
-            initialSlide: index || 0,
-            pagination: '.swiper-pagination',
-            effect: 'coverflow',
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: 'auto',
-            coverflow: {
-                rotate: 50,
-                stretch: 16,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true
-            },
-            onSlideChangeEnd: function (swiper) {
-                ToolDps.sessionItem('sliderIndex', swiper.activeIndex)
+
+    }
+
+    /**
+     * 隐藏提示
+     */
+    hideTips(e) {
+        let targetEle = e.target
+        while (targetEle.getAttribute('class') != "price-item-box") {
+            targetEle = targetEle.parentElement;
+            if (targetEle == e.currentTarget) {
+                break;
             }
-        });
-        let swiper2 = new Swiper('#content-banner', {
-            initialSlide: index || 0
-        });
-        swiper1.params.control = swiper2;
-        swiper2.params.control = swiper1;
+        }
+        if (targetEle.getAttribute('class') != "price-item-box") {
+            this.setState({
+                typeTips: 0
+            });
+        }
     }
 
     /**
@@ -67,54 +63,246 @@ class NeedMatch extends Component {
     }
     render() {
         return (
-            <section className="full-page bgWhite needMatch-entry">
-                <div id="match-banner" className="swiper-container">
-                    <div className="swiper-wrapper">
-                        <div className="swiper-slide" ></div>
-                        <div className="swiper-slide" ></div>
-                        <div className="swiper-slide" ></div>
-                        <div className="swiper-slide" ></div>
-                    </div>
-                    <div className="swiper-pagination"></div>
-                </div>
-                <div id="content-banner" className="swiper-container">
-                    <div className="swiper-wrapper">
-                        <div className="swiper-slide content-area">
-                            <h3>咨询</h3>
-                            <p>先入手了一双鞋，不知道怎么搭配？直接把鞋子照片发上来去问你的搭配师吧。想要约女票去看电影，想要一个新的形象？把衣橱里的衣物发给搭配师，搭配师会给你合理的建议。</p>
-                            <p>总之，任何搭配类的问题，都可以直接问搭配师。</p>
-                            <p>每个搭配师根据自身的经验水平，会有自己的定价，但是MS搭配师官方给出了统一的优惠价。</p>
-                            <p><em>只要在官方入口发布需求，享受统一价格<b>19.9元/次</b></em></p>
-                            <Link to="/consult" className="btn to-publish-btn" onClick={this.verifyUser.bind(this, '/consult')}>发布需求</Link>
-                        </div>
-                        <div className="swiper-slide content-area">
-                            <h3>购物</h3>
-                            <p>你可以体验一下明星般的服务，只需要告知你要买什么，在什么场合穿的，搭配师就可以根据你的需求，并结合你自身的个人特点，告诉你最优的搭配购买方案。</p>
-                            <p>每个搭配师根据自身的经验水平，会有自己的定价，但是MS搭配师官方给出了统一的优惠价。</p>
-                            <p><em>只要在官方入口发布需求，享受统一价格<b>19.9元/次</b></em></p>
-                            <Link to="/shopping" className="btn to-publish-btn" onClick={this.verifyUser.bind(this, '/shopping')}>发布需求</Link>
-                        </div>
-                        <div className="swiper-slide content-area">
-                            <h3>陪逛</h3>
-                            <p>逛街效率太低，怕被导购忽悠？可以约上搭配师陪你一起逛街，专业的搭配师给你的购买提供合理的建议，高效完成购物服务。</p>
-                            <p>每个搭配师根据自身的经验水平，会有自己的定价，但是MS搭配师官方给出了统一的优惠价。</p>
-                            <p><em>只要在官方入口发布需求，享受统一价格<b>99元/小时</b></em></p>
-                            <p>两个小时起购，具体服务时间如果不足，可以在服务过程中，再另行向搭配师协商支付。</p>
-                            <Link to="/accompanyShopping" className="btn to-publish-btn" onClick={this.verifyUser.bind(this, '/accompanyShopping')}>发布需求</Link>
-                        </div>
-                        <div className="swiper-slide content-area" >
-                            <h3>整理</h3>
-                            <p>换季没有衣服穿？总感觉去年是在裸奔？全世界的美衣都在你的衣橱里，只是你自己不知道而已。约个搭配师到家里整理衣橱，也许不用买买买，照样每天穿出新花样。</p>
-                            <p>每个搭配师根据自身的经验水平，会有自己的定价，但是MS搭配师官方给出了统一的优惠价。</p>
-                            <p><em>只要在官方入口发布需求，享受统一价格<b>99元/小时</b></em></p>
-                            <p>两个小时起购，具体服务时间如果不足，可以在服务过程中，再另行向搭配师协商支付。</p>
-                            <Link to="/neatenWardrobe" className="btn to-publish-btn" onClick={this.verifyUser.bind(this, '/neatenWardrobe')}>发布需求</Link>
-                        </div>
-                    </div>
-                </div>
+            <section className="full-page to-match-page" onClick={this.hideTips.bind(this)}>
+                <img src="/assets/img/needMatch/head.jpg" className="response_img top-img" />
+                <h2 className="title">选择服务类型</h2>
+                <ul className="type-select">
+                    <li>
+                        <h3 className="type-title">
+                            咨询
+                            <span className="price">&yen;19</span>
+                        </h3>
+                        <p className="introduce">给你提供合理的搭配建议</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 1 ? 0 : 1 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">平面布局</div>
+                                    <div className="item">&yen;19/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 1 ? "tips active" : "tips"}>
+                                <li>根据个人身材、风格及场景需求，为你解决各种搭配问题，并定制专属你的造型设计</li>
+                            </ul>
+                        </section>
+                        <Link to="/consult" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/consult')}>立刻购买</Link>
+                    </li>
+                    <li>
+                        <h3 className="type-title">
+                            购买
+                            <span className="price">&yen;38</span>
+                        </h3>
+                        <p className="introduce">给你提供最优的购买方案</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 2 ? 0 : 2 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">造型搭配设计</div>
+                                    <div className="item">&yen;19/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">购买方案</div>
+                                    <div className="item">&yen;19/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 2 ? "tips tips2 active" : "tips tips2"}>
+                                <li>1、根据个人身材、风格及场景需求，定制专属你的造型设计。</li>
+                                <li>2、根据设计建议、价格要求，为你寻找最优的搭配购买方案，让你用更少的钱遇见更美的自己。</li>
+                            </ul>
+                        </section>
+                        <Link to="/shopping" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/shopping')}>立刻购买</Link>
+                    </li>
+                    <li>
+                        <h3 className="type-title">
+                            陪逛
+                            <span className="price">&yen;198</span>
+                            <del className="origin-price">原价&yen;274</del>
+                        </h3>
+                        <p className="introduce">陪你逛街，高效率的搭配购买</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 3 ? 0 : 3 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">造型搭配设计</div>
+                                    <div className="item">&yen;19/次</div>
+                                    <div className="item">x2</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">购买方案</div>
+                                    <div className="item">&yen;19/次</div>
+                                    <div className="item">x2</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">线下陪逛</div>
+                                    <div className="item">&yen;99/小时</div>
+                                    <div className="item">x2</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 3 ? "tips tips2 active" : "tips tips2"}>
+                                <li>1、约上搭配师和你一起逛街，不仅提供量身定制的搭配方案，还能提升购物乐趣，防忽悠，高效率，够专业。</li>
+                                <li>2、搭配师提供至少两次的搭配设计和购买方案。</li>
+                            </ul>
+                        </section>
+                        <Link to="/accompanyShopping" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/accompanyShopping')}>立刻购买</Link>
+                    </li>
+                    <li>
+                        <h3 className="type-title">
+                            衣橱整理
+                            <span className="price">&yen;198</span>
+                        </h3>
+                        <p className="introduce">帮你整理衣橱，进行衣物重组搭配</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 4 ? 0 : 4 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">衣橱搭配服务</div>
+                                    <div className="item">&yen;99/小时</div>
+                                    <div className="item">x2</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 4 ? "tips tips2 active" : "tips tips2"}>
+                                <li>搭配师上门整理衣橱，根据你的个人需求，结合你衣橱里的衣服，进行全新的搭配，旧衣新穿，时尚又省钱。</li>
+                            </ul>
+                        </section>
+                        <Link to="/neatenWardrobe" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/neatenWardrobe')}>立刻购买</Link>
+                    </li>
+                    <li>
+                        <h3 className="type-title">
+                            素人改造套餐一
+                            <span className="price">&yen;199</span>
+                            <del className="origin-price">原价&yen;1150</del>
+                        </h3>
+                        <p className="introduce">专业搭配师一对一改造，个人形象设计</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 5 ? 0 : 5 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">服装搭配设计</div>
+                                    <div className="item">&yen;200/次</div>
+                                    <div className="item">x2</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">发型设计</div>
+                                    <div className="item">&yen;150/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">妆面设计</div>
+                                    <div className="item">&yen;150/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">照片拍摄</div>
+                                    <div className="item">&yen;100/组</div>
+                                    <div className="item">x2</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">线上咨询服务</div>
+                                    <div className="item">&yen;500/月</div>
+                                    <div className="item">x0.5</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 5 ? "tips tips3 active" : "tips tips3"}>
+                                <li>1、专业搭配师线下进行一对一改造，根据个人形象及要求设计并变装。</li>
+                                <li>2、根据个人脸型及服装搭配进行发型设计和打理。</li>
+                                <li>3、配合日常妆面喜好及造型风格，提供整体妆面设计。</li>
+                                <li>4、造型前后的形象拍摄，留下改造前后的珍贵回忆。</li>
+                                <li>5、免费提供一个月的线上咨询服务，解决你的一切搭配问题。</li>
+                            </ul>
+                        </section>
+                        <button className="btn to-buy-btn">立刻购买</button>
+                    </li>
+                    <li>
+                        <h3 className="type-title">
+                            素人改造套餐二
+                            <span className="price">&yen;499</span>
+                            <del className="origin-price">原价&yen;2000</del>
+                        </h3>
+                        <p className="introduce">专业搭配师一对一改造，个人形象设计</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 6 ? 0 : 6 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">服装搭配设计</div>
+                                    <div className="item">&yen;200/次</div>
+                                    <div className="item">x4</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">发型设计</div>
+                                    <div className="item">&yen;150/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">妆面设计</div>
+                                    <div className="item">&yen;150/次</div>
+                                    <div className="item">x1</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">照片拍摄</div>
+                                    <div className="item">&yen;100/组</div>
+                                    <div className="item">x4</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">线上咨询服务</div>
+                                    <div className="item">&yen;500/月</div>
+                                    <div className="item">x1</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 6 ? "tips tips3 active" : "tips tips3"}>
+                                <li>1、专业搭配师线下进行一对一改造，根据个人形象及要求设计并变装。</li>
+                                <li>2、根据个人脸型及服装搭配进行发型设计和打理。</li>
+                                <li>3、配合日常妆面喜好及造型风格，提供整体妆面设计。</li>
+                                <li>4、造型前后的形象拍摄，留下改造前后的珍贵回忆。</li>
+                                <li>5、免费提供一个月的线上咨询服务，解决你的一切搭配问题。</li>
+                            </ul>
+                        </section>
+                        <button className="btn to-buy-btn">立刻购买</button>
+                    </li>
+                    <li>
+                        <h3 className="type-title">
+                            素人改造套餐三
+                            <span className="price">&yen;999</span>
+                            <del className="origin-price">原价&yen;4050</del>
+                        </h3>
+                        <p className="introduce">专业搭配师一对一改造，个人形象设计</p>
+                        <section className="price-item-box">
+                            <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 7 ? 0 : 7 }) }}>
+                                <li className="flex-box">
+                                    <div className="item">服装搭配设计</div>
+                                    <div className="item">&yen;200/次</div>
+                                    <div className="item">x6</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">发型设计</div>
+                                    <div className="item">&yen;150/次</div>
+                                    <div className="item">x2</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">妆面设计</div>
+                                    <div className="item">&yen;150/次</div>
+                                    <div className="item">x3</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">照片拍摄</div>
+                                    <div className="item">&yen;100/组</div>
+                                    <div className="item">x6</div>
+                                </li>
+                                <li className="flex-box">
+                                    <div className="item">线上咨询服务</div>
+                                    <div className="item">&yen;500/月</div>
+                                    <div className="item">x3</div>
+                                </li>
+                            </ul>
+                            <ul className={this.state.typeTips === 7 ? "tips tips3 active" : "tips tips3"}>
+                                <li>1、专业搭配师线下进行一对一改造，根据个人形象及要求设计并变装。</li>
+                                <li>2、根据个人脸型及服装搭配进行发型设计和打理。</li>
+                                <li>3、配合日常妆面喜好及造型风格，提供整体妆面设计。</li>
+                                <li>4、造型前后的形象拍摄，留下改造前后的珍贵回忆。</li>
+                                <li>5、免费提供一个月的线上咨询服务，解决你的一切搭配问题。</li>
+                            </ul>
+                        </section>
+                        <button className="btn to-buy-btn">立刻购买</button>
+                    </li>
+                </ul>
                 {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
-                <News/>
-                <Footer tab="3" />
+                <News />
             </section>
         );
     }
@@ -133,7 +321,7 @@ class Main extends Component {
 
     render() {
         let {
-            data,
+                data,
             loadAnimation,
             loadMsg
         } = this.props.state;

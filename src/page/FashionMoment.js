@@ -71,6 +71,7 @@ class FashionMoment extends Component {
 
         return (
             <div className="fashion-moment-area">
+                <Footer tab="4" />
                 <div className="fashion-list clear">
                     <ul>
                         {
@@ -132,7 +133,7 @@ class FashionMoment extends Component {
                         {this.props.children}
                     </div>
                 </div>
-                <Footer tab="4" />
+                
                 <News />
             </div>
         )

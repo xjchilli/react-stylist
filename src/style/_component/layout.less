@@ -14,10 +14,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.bgWhite {
-  background-color: @white;
-}
-
 //icon删除
 .icon-svg-delete, .icon-svg-close {
   width: 20px;
@@ -267,27 +263,34 @@
   li {
     float: left;
     width: 20%;
+    height: 100%;
     color: @white;
     text-align: center;
     font-size: 0;
     a {
       display: block;
+      height: 100%;
+      .icon {
+        display: inline-block;
+        margin: 7px 0 4px;
+      }
+      span[class*="icon-home"],span[class*="icon-dps"],span[class*="icon-find"],span[class*="icon-my"] {
+        font-size: 22px;
+      }
       &.active {
         p {
           color: @white;
         }
-        .da-img{
-          top: -10px;
-        }
       }
     }
-    img {
-      display: inline-block;
-      margin: 7px 0 4px;
-    }
     .da-img {
-      position: relative;
-      margin-top: 0;
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 55px;
+      height: 55px;
+      margin: 0;
     }
     p {
       color: #666666;

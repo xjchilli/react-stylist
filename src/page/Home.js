@@ -111,6 +111,7 @@ class Home extends Component {
         }
         return (
             <div className="home-page">
+                <Footer tab="1" />
                 <div id="banner" className="swiper-container">
                     <div className="swiper-wrapper">
                         {
@@ -228,7 +229,7 @@ class Home extends Component {
                     </ul>
                 </div>
                 <News />
-                <Footer tab="1" />
+                
             </div>
         );
     }

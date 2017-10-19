@@ -36,6 +36,7 @@ class DpsList extends Component {
     render() {
         return (
             <section className="dps-list-page">
+                <Footer tab="2" />
                 <section className="list-area">
                     <h5 className="title">热门搭配师</h5>
                     <ul>
@@ -80,39 +81,11 @@ class DpsList extends Component {
                             })
                         }
 
-                        {/* <li>
-                            <section className="dps-info">
-                                <img src="/assets/img/girl.jpg" />
-                                <span className="nickname">旱死的鱼</span>
-                                <div className="btn-area">
-                                    <button className="btn question-btn">咨询</button>
-                                    <button className="btn watch-btn">+关注</button>
-                                </div>
-                            </section>
-                            <section className="main-img-area" style={{ backgroundImage: 'url(/assets/img/girl2.jpg)' }}>
-                                <p className="describe">
-                                    <span>
-                                        曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。擅长欧美风格和学院风的搭配。
-                                    </span>
-                                </p>
-                            </section>
-                            <ul className="flex-box small-img-area">
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                                <li className="item-3">
-                                    <div className="small-img" style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                                </li>
-                            </ul>
-                        </li> */}
                     </ul>
                 </section>
                 {this.props.children}
                 <News />
-                <Footer tab="2" />
+                
             </section>
         )
     }

@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import IM from '../../page/component/IM';
+import PropTypes from 'prop-types';
 
 
 
@@ -32,36 +33,39 @@ DataLoad.defaultProps = {
 
 //底部tab
 class Footer extends Component {
+
+    redirect() {
+        this.context.router.history.push('/needMatch');
+    }
+
     render() {
         let tab = this.props.tab;
         return (
             <ul className="footer clear">
                 <li>
                     <NavLink to="/" activeClassName={tab == 1 ? "active" : ""}>
-                        <img src={tab == 1 ? '/assets/img/icon/tab-1-2.jpg' : '/assets/img/icon/tab-1-1.jpg'} width="20" height="22" />
+                        <span className={tab == 1 ? "icon icon-home-selected" : "icon icon-home-normal"}></span>
                         <p>首页</p>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/dpsList" activeClassName={tab == 2 ? "active" : ""}>
-                        <img src={tab == 2 ? '/assets/img/icon/tab-2-2.jpg' : '/assets/img/icon/tab-2-1.jpg'} width="15" height="22" />
+                        <span className={tab == 2 ? "icon icon-dps-selected" : "icon icon-dps-normal"}></span>
                         <p>搭配师</p>
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to="/needMatch" activeClassName={tab == 3 ? "active" : ""}>
-                        <img className="da-img" src={tab == 3 ? '/assets/img/icon/tab-3-2.png' : '/assets/img/icon/tab-3-1.png'} width={tab == 3 ? "55" : "45"} height={tab == 3 ? "55" : "45"} />
-                    </NavLink>
+                <li onTouchStart={this.redirect.bind(this)}>
+                    <img className="da-img" src='/assets/img/icon/tab-3-1.png' />
                 </li>
                 <li>
                     <NavLink to="/fashionMoment" activeClassName={tab == 4 ? "active" : ""}>
-                        <img src={tab == 4 ? '/assets/img/icon/tab-4-2.jpg' : '/assets/img/icon/tab-4-1.jpg'} width="22" height="22" />
+                        <span className={tab == 4 ? "icon icon-find-selected" : "icon icon-find-normal"}></span>
                         <p>发现</p>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/my" activeClassName={tab == 5 ? "active" : ""}>
-                        <img src={tab == 5 ? '/assets/img/icon/tab-5-2.jpg' : '/assets/img/icon/tab-5-1.jpg'} width="16" height="22" />
+                        <span className={tab == 5 ? "icon icon-my-selected" : "icon icon-my-normal"}></span>
                         <p>我的</p>
                     </NavLink>
                 </li>
@@ -69,6 +73,11 @@ class Footer extends Component {
         )
     }
 }
+
+Footer.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+
 
 class MyNews extends IM {
     constructor(props) {
