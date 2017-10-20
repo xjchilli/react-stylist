@@ -208,7 +208,7 @@ class NeedMatch extends Component {
                                 <li>5、免费提供一个月的线上咨询服务，解决你的一切搭配问题。</li>
                             </ul>
                         </section>
-                        <button className="btn to-buy-btn">立刻购买</button>
+                        <Link to="/plainPeopleChange" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/neatenWardrobe')}>立刻购买</Link>
                     </li>
                     <li>
                         <h3 className="type-title">
@@ -253,7 +253,7 @@ class NeedMatch extends Component {
                                 <li>5、免费提供一个月的线上咨询服务，解决你的一切搭配问题。</li>
                             </ul>
                         </section>
-                        <button className="btn to-buy-btn">立刻购买</button>
+                        <Link to="/plainPeopleChange" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/neatenWardrobe')}>立刻购买</Link>
                     </li>
                     <li>
                         <h3 className="type-title">
@@ -298,7 +298,7 @@ class NeedMatch extends Component {
                                 <li>5、免费提供一个月的线上咨询服务，解决你的一切搭配问题。</li>
                             </ul>
                         </section>
-                        <button className="btn to-buy-btn">立刻购买</button>
+                        <Link to="/plainPeopleChange" className="btn to-buy-btn" onClick={this.verifyUser.bind(this, '/neatenWardrobe')}>立刻购买</Link>
                     </li>
                 </ul>
                 {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}

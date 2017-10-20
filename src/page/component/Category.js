@@ -55,7 +55,7 @@ class Category extends Component {
                             <li className={this.state.shops.indexOf(index + 1 + '') !== -1 ? 'active' : ''} key={index}  onClick={this.select.bind(this, index + 1 + '')}>
                                 <img src={item.url} />
                                 <p>{item.name}</p>
-                                <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
                             </li>
                         )
                     })

@@ -33,7 +33,7 @@ class NeatenWardrobe extends Component {
     }
 
     componentDidMount() {
-        document.title = "整理衣橱";
+        document.title = "衣橱整理";
         let nowDate = new Date();
         this.flatpickr = flatpickr("#date", {
             locale: zh,

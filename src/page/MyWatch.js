@@ -71,10 +71,8 @@ class MyWatch extends Component {
                                                 <span className="nickname">{item.nickName}</span>
                                             </Link>
                                             <div className="btn-area">
-                                                {
-                                                    item.concern ? (<Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>) : null
-                                                }
-                                                <button className="btn watch-btn" onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>
+                                                <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
                                             </div>
                                         </section>
                                         <ul className="plan-area">

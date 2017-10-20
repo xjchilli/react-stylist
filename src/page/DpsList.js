@@ -17,6 +17,12 @@ class DpsList extends Component {
         }
     }
 
+
+    componentDidMount() {
+        document.title = "搭配师列表";
+    }
+
+
     //取消关注
     cancelWatch(collocationId) {
         ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
@@ -51,7 +57,7 @@ class DpsList extends Component {
                                             </Link>
                                             <div className="btn-area">
                                                 <Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>
-                                                <button className="btn watch-btn" onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                                <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
                                             </div>
                                         </section>
                                         <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
@@ -85,7 +91,7 @@ class DpsList extends Component {
                 </section>
                 {this.props.children}
                 <News />
-                
+
             </section>
         )
     }

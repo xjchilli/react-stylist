@@ -21,7 +21,7 @@ class FashionMoment extends Component {
 
     }
     componentDidMount() {
-        document.title = "时尚圈";
+        document.title = "发现";
     }
 
     componentWillReceiveProps(nextProps) {

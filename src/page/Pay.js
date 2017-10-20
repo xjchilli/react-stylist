@@ -204,7 +204,7 @@ class Pay extends React.Component {
                 <ul className="pay-money">
                     {
                         coupons.length > 0 && this.state.isHidePromotionCode ? (
-                            <li onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
+                            <li className="promotionCode" onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
                                 使用优惠劵
                                 {this.state.promotionPrice ? <span className="money">-&yen;{this.state.promotionPrice}</span> : null}
                                 {this.state.promotionPrice ? <span className="used-one">（已用一张）</span> : null}

@@ -36,6 +36,36 @@ const MyNews = (state = { newMsg: false }, action) => {
   }
 }
 
+let plain = {
+  sex: 2, //性别
+  faceshpe: '', //脸型
+  colorofskin: '', //肤色
+  bodySize: '', //体型
+  problems: [], //解决问题
+  styles: [], //风格
+  heigh: '165', //身高
+  weight: '60', //体重
+  chest: '80', //胸围
+  waist: '70', //腰围
+  hip: '90', //臀围
+  professional: '', //职业
+  provinceCode: '330000', //省默认浙江省
+  cityCode: '330100', //城市默认杭州市
+  countyCode: '330106', //区默认西湖区
+  fullCityName: '', //地址
+  birthday: '', //生日
+}
+//素人改造
+const PlainChange = (state = plain, action) => {
+  switch (action.type) {
+    case 'setPlainChange': 
+      return action.target;
+    default:
+      return state;
+  }
+}
+
+
 
 
 const DB = (_ID = '', seting = {}) => {
@@ -106,6 +136,7 @@ const PromotionCodeList = DB('PromotionCodeList', {
   data: []
 }); //优惠码列表
 
+
 const reducers = combineReducers({
   User,
   MyNews,
@@ -119,7 +150,8 @@ const reducers = combineReducers({
   OrderList,
   OrderDetail,
   FashionMomentDetail,
-  PromotionCodeList
+  PromotionCodeList,
+  PlainChange
 });
 
 

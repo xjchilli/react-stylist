@@ -6,6 +6,7 @@
 import Bundle from './bundle.js';
 
 import HomeContainer from 'bundle-loader?lazy&name=[name]!../page/Home';
+import PlainPeopleChangeContainer from 'bundle-loader?lazy&name=[name]!../page/PlainPeopleChange';
 import MyWatchContainer from 'bundle-loader?lazy&name=[name]!../page/MyWatch';
 import MyContainer from 'bundle-loader?lazy&name=[name]!../page/My';
 import DpsListContainer from 'bundle-loader?lazy&name=[name]!../page/DpsList';
@@ -50,6 +51,11 @@ let routers = [
         path: '/',
         exact: true,
         component: (props) => getComponent(props, HomeContainer)
+    },
+    {//素人改造
+        path: '/plainPeopleChange',
+        exact: false,
+        component: (props) => getComponent(props, PlainPeopleChangeContainer)
     },
     {//我的关注
         path: '/myWatch',

@@ -64,7 +64,7 @@ class MatchScene extends Component {
                                     <div className="bg"></div>
                                     <span className="triangle"></span>
                                     <label>{item.name}</label>
-                                    <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                    <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
                                 </div>
                             </li>
                         )

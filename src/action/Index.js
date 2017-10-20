@@ -2,6 +2,7 @@ export default (_ID) => {
     var action = {};
     var arr = [
         'setNews',//设置新消息
+        'setPlainChange',//素人改造
         'signinSuccess', //登录成功
         'signin', //退出登录
         'setState' //设置状态

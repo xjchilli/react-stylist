@@ -150,16 +150,10 @@ class Shopping extends Component {
             <section className='matchService'>
                 <section className="box sex-switch-area">
                     <h3>性别</h3>
-                    <ul className="sex-area">
-                        <li className={this.state.sex === 2 ? "active" : ""} onClick={() => { this.setState({ sex: 2, garderobeArr: this.state.sex === 2 ? this.state.garderobeArr : [] }) }}>
-                            <span className={this.state.sex === 2 ? "icon icon-girl-active" : "icon icon-girl"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                            女
-                        </li>
-                        <li className={this.state.sex === 1 ? "active" : ""} onClick={() => { this.setState({ sex: 1, garderobeArr: this.state.sex === 1 ? this.state.garderobeArr : [] }) }}>
-                            <span className={this.state.sex === 1 ? "icon icon-man-active" : "icon icon-man"}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                            男
-                        </li>
-                    </ul>
+                    <select className="sex-area" onChange={(e) => { this.setState({ sex: Number(e.target.value) }) }} value={this.state.sex}>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
                 </section>
 
                 <section className="box occasion">

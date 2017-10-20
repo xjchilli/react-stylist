@@ -1419,7 +1419,7 @@ class CustomSuit extends Component {
                 }
                 {/* 基础信息 */}
                 {
-                    this.state.progress == 7 ? <BaseInfo styles={this.state.styles} changeAge={(age) => { this.setState({ age: age }) }} changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} /> : null
+                    this.state.progress == 7 ? <BaseInfo  changeAge={(age) => { this.setState({ age: age }) }} changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} /> : null
                 }
                 {/* 基础信息(选填) */}
                 {

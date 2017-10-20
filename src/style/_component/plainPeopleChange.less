@@ -1,0 +1,398 @@
+.plain-change-page {
+    padding: 35px 13px 85px;
+    .form-title {
+        font-size: 15px;
+        color: #1a1a1a;
+        padding-bottom: 15px;
+    }
+    .sex {
+        padding-left: 6px;
+        width: 100%;
+        height: 35px;
+        font-size: 13px;
+        color: #666666;
+        background: #f3f4f6;
+        border-width: 0;
+        appearance: none;
+    }
+    //基础信息
+    .baseInfo-area {
+        margin: 5px -13px 0;
+        >.item {
+            padding-top: 30px;
+        }
+        .form-title {
+            padding-left: 13px;
+        }
+        .swiper-area {
+            position: relative;
+            padding: 0 20px;
+            background: #f5f5f5;
+            >i {
+                border-top: 7px solid transparent;
+                border-bottom: 7px solid transparent;
+                width: 0;
+                height: 0;
+                position: absolute;
+                top: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                &.swiper-pre-btn {
+                    left: 16px;
+                    border-right: 7px solid #000;
+                }
+                &.swiper-next-btn {
+                    right: 9px;
+                    border-left: 7px solid #000;
+                }
+            }
+        }
+        .swiper-container {
+            height: 45px;
+            .swiper-slide {
+                position: relative;
+                line-height: 45px;
+                text-align: center;
+                font-size: 12px;
+                color: #333333;
+                background: #f5f5f5;
+                font-weight: 500;
+            }
+            .swiper-slide-active {
+                font-size: 14px;
+                color: #1a1a1a;
+                font-weight: bolder;
+                background: #ffffff;
+            }
+        }
+    } //肤色和体型
+    .body-area {
+        padding-top: 33px;
+        .type-select-area {
+            li {
+                width: 50%;
+                height: 72px;
+                display: inline-block;
+                &:nth-of-type(1) {
+                    padding-right: 7.5px;
+                }
+                &:nth-of-type(2) {
+                    padding-left: 7.5px;
+                }
+                .box {
+                    position: relative;
+                    border-radius: 4px;
+                    padding-top: 12px;
+                    text-align: center;
+                    font-weight: 300;
+                    font-size: 13px;
+                    >img {
+                        margin: 0 auto 2px;
+                        width: 34px;
+                        height: 34px;
+                    }
+                    .title {
+                        position: relative;
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            margin-top: -5px;
+                            transform: translate(6px, 0) rotate(-45deg);
+                            width: 6px;
+                            height: 6px;
+                            border: 1px solid #666666;
+                            border-width: 0 0 1px 1px;
+                        }
+                    }
+                    .icon-sure {
+                        visibility: hidden;
+                        position: absolute;
+                        top: 13px;
+                        right: 10px;
+                        font-size: 20px;
+                    }
+                    &.active {
+                        .icon-sure {
+                            visibility: visible;
+                        }
+                    }
+                }
+                &:nth-of-type(1) {
+                    .box {
+                        height: 100%;
+                        background-color: #eaf9f6;
+                    }
+                }
+                &:nth-of-type(2) {
+                    .box {
+                        height: 100%;
+                        background-color: #fff1f0;
+                    }
+                }
+                &:nth-of-type(3) {
+                    .box {
+                        height: 100%;
+                        background-color: #fff8dc;
+                        >img {
+                            width: 31px;
+                            height: 36px;
+                        }
+                    }
+                }
+            }
+        }
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 99;
+            background: rgba(0, 0, 0, .3);
+        }
+        .face-select-area {
+            .box {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                width: 263px;
+                height: 398px;
+                background: #ffffff;
+                >h3 {
+                    background: #e6e6e6;
+                    line-height: 28px;
+                    font-size: 14px;
+                    color: #333333;
+                    text-align: center;
+                }
+                .close {
+                    right: 3px;
+                    top: 7px;
+                    width: 25px;
+                    height: 25px;
+                }
+                .img-list {
+                    padding: 16px 37px;
+                    li {
+                        margin-bottom: 28px;
+                        &:nth-of-type(even) {
+                            padding-left: 26.5px;
+                        }
+                    }
+                }
+                .img-box {
+                    position: relative;
+                    width: 68px;
+                    >img {
+                        width: 68px;
+                        height: 67px;
+                    }
+                    >p {
+                        padding-top: 6px;
+                        text-align: center;
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #1a1a1a;
+                    }
+                    .icon-sure {
+                        visibility: hidden;
+                        font-size: 20px;
+                        position: absolute;
+                        right: 5px;
+                        top: 5px;
+                    }
+                    >small {
+                        display: block;
+                        text-align: center;
+                        font-size: 8px;
+                        color: #333333;
+                    }
+                    &.active {
+                        .icon-sure {
+                            visibility: visible;
+                        }
+                    }
+                }
+                &.face-box {
+                    height: 433px;
+                    .img-box {
+                        >img {
+                            height: 81px;
+                        }
+                    }
+                }
+            }
+        }
+    } //风格
+    .style-area {
+        padding-top: 35px;
+        ul {
+            li {
+                margin-bottom: 10px;
+                &:nth-of-type(odd) {
+                    padding-right: 5px;
+                    text-align: right;
+                }
+                &:nth-of-type(even) {
+                    padding-left: 5px;
+                    text-align: left;
+                }
+            }
+        }
+        .style-box {
+            position: relative;
+            display: inline-block;
+            border-radius: 5px;
+            >img {
+                max-width: 100%;
+                border-radius: 5px;
+            }
+            .bg {
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                background: rgba(0, 0, 0, .5);
+            }
+            .triangle {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 0;
+                height: 0;
+                border-bottom: 66px solid #ffffff;
+                border-left: 90px solid transparent;
+            }
+            label {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                font-size: 12px;
+                color: #333333;
+            }
+            .icon-sure {
+                visibility: hidden;
+                position: absolute;
+                top: 7px;
+                right: 7px;
+                font-size: 20px;
+            }
+            &.active {
+                .bg {
+                    visibility: visible;
+                }
+                .icon-sure {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+    //生活照
+    .lifePhoto-area {
+        padding-top: 20px;
+        .upload-control-area {
+            li {
+                &:nth-of-type(1) {
+                    padding-right: 5px;
+                }
+                &:nth-of-type(2) {
+                    padding-left: 5px;
+                }
+            }
+        }
+        .upload-area {
+            position: relative;
+            border: 1px dashed #cccccc;
+            height: 170px;
+            text-align: center;
+            padding-top: 45px;
+            .icon-camera {
+                font-size: 35px;
+            }
+            >p {
+                font-size: 15px;
+                color: #666666;
+                margin-top: 25px;
+            }
+            .img-show, .upload-file {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .img-show {
+                z-index: 8;
+                background-repeat: no-repeat;
+                background-size: cover;
+                .icon-fault {
+                    display: none;
+                    font-size: 15px;
+                    position: absolute;
+                    top: -8px;
+                    right: -8px;
+                }
+                &.active {
+                    .icon-fault {
+                        display: block;
+                    }
+                }
+            }
+            .upload-file {
+                z-index: 9;
+                opacity: 0;
+            }
+        }
+    }
+    //其他信息
+    .otherInfo-area {
+        .form-title {
+            padding-top: 35px;
+        }
+        >input, .birthDate {
+            display: block;
+            -webkit-appearance: none;
+            background: #f3f4f6;
+            font-size: 14px;
+            color: #333333;
+            border-width: 0;
+            width: 100%;
+            height: 35px;
+            text-indent: 6px;
+        }
+        .birthDate {
+            line-height: 30px;
+        }
+        textarea {
+            height: 73px;
+            width: 100%;
+            border-width: 0;
+            background: #f3f4f6;
+            padding: 7px 6px;
+            color: #333333;
+            font-size: 14px;
+        }
+    }
+    .note {
+        font-size: 14px;
+        color: #666666;
+    }
+    .send-btn {
+        background: #000000;
+        font-size: 17px;
+        color: #ffffff;
+        width: 173px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 3px;
+        margin: 54px auto 0;
+    }
+}

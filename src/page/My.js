@@ -24,12 +24,13 @@ class Main extends Component {
 
 
 class My extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
 
     componentDidMount() {
+        document.title = "我的";
     }
 
 
@@ -111,10 +112,10 @@ class My extends Component {
                         </Link>
                     </li>
                 </ul>
-                <a  target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us">联系客服</a>
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us">联系客服</a>
                 <Link to="/feedback" className="feedback">我要反馈</Link>
                 <News />
-                
+
             </section>
         )
     }
