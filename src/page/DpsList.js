@@ -4,8 +4,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetNextPage } from '../Component/index';
-import { Footer, News } from '../Component/index';
+import {Msg, Footer, News } from '../Component/index';
 import { ToolDps } from '../ToolDps';
+
 
 
 
@@ -13,6 +14,8 @@ class DpsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
             list: props.state.data || []
         }
     }
@@ -26,16 +29,24 @@ class DpsList extends Component {
     //取消关注
     cancelWatch(collocationId) {
         ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
-            let copyData = Array.prototype.slice.apply(this.state.list);
-            for (let i = 0; i < copyData.length; i++) {
-                if (copyData[i].collocationId == collocationId) {
-                    copyData[i].concern = !copyData[i].concern;
-                    break;
+            if (res.succ) {
+                let copyData = Array.prototype.slice.apply(this.state.list);
+                for (let i = 0; i < copyData.length; i++) {
+                    if (copyData[i].collocationId == collocationId) {
+                        copyData[i].concern = !copyData[i].concern;
+                        break;
+                    }
                 }
+                this.setState({
+                    data: copyData
+                });
+            }else{
+                this.setState({
+                    msgShow: true,
+                    msgText: '操作失败' //提示内容
+                });
             }
-            this.setState({
-                data: copyData
-            });
+
         });
     }
 
@@ -91,7 +102,7 @@ class DpsList extends Component {
                 </section>
                 {this.props.children}
                 <News />
-
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }

@@ -38,22 +38,22 @@ const MyNews = (state = { newMsg: false }, action) => {
 
 let plain = {
   sex: 2, //性别
-  faceshpe: '', //脸型
+  age:'',//年龄
+  heigh: '', //身高
+  weight: '', //体重
   colorofskin: '', //肤色
   bodySize: '', //体型
-  problems: [], //解决问题
-  styles: [], //风格
-  heigh: '165', //身高
-  weight: '60', //体重
-  chest: '80', //胸围
-  waist: '70', //腰围
-  hip: '90', //臀围
+  style: [], //风格
+  faceLifeImg:'',//正脸照
+  faceLifeImgPara:'',//正脸照上传参数
+  bodyLifeImg:'',//全身照
+  bodyLifeImgPara:'',//全身照上传参数
+  costCode:'',//预期花费
+  time:'',//预约时间，格式 yyyy-mm-dd HH:mm
+  contact:'',//联系方式
+  mendian:'',//门店
   professional: '', //职业
-  provinceCode: '330000', //省默认浙江省
-  cityCode: '330100', //城市默认杭州市
-  countyCode: '330106', //区默认西湖区
-  fullCityName: '', //地址
-  birthday: '', //生日
+  remarks:''//改造需求
 }
 //素人改造
 const PlainChange = (state = plain, action) => {

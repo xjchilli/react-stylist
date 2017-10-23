@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { DataLoad, GetData } from '../Component/index';
+import {Msg, DataLoad, GetData } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 
@@ -24,6 +24,8 @@ class MyWatch extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
             data: props.data
         }
     }
@@ -43,16 +45,24 @@ class MyWatch extends Component {
     //取消关注
     cancelWatch(collocationId) {
         ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
-            let copyData = Array.prototype.slice.apply(this.state.data);
-            for (let i = 0; i < copyData.length; i++) {
-                if (copyData[i].collocationId == collocationId) {
-                    copyData[i].concern = !copyData[i].concern;
-                    break;
+            if (res.succ) {
+                let copyData = Array.prototype.slice.apply(this.state.data);
+                for (let i = 0; i < copyData.length; i++) {
+                    if (copyData[i].collocationId == collocationId) {
+                        copyData[i].concern = !copyData[i].concern;
+                        break;
+                    }
                 }
+                this.setState({
+                    data: copyData
+                });
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: '操作失败' //提示内容
+                });
             }
-            this.setState({
-                data: copyData
-            });
+
         });
     }
 
@@ -97,6 +107,7 @@ class MyWatch extends Component {
                         this.state.data.length == 0 ? <p className="text-center">您暂时未关注搭配师</p> : null
                     }
                 </section>
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }

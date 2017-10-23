@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
 import { ToolDps } from '../ToolDps';
-import qs from 'query-string';
 
 
 class Nav extends Component {
@@ -20,13 +19,13 @@ class Nav extends Component {
 
     componentDidMount() {
         new Swiper('.order-list-nav', {
-            slidesPerView: 5
+            slidesPerView: 6
         });
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            status:nextProps.status
+            status: nextProps.status
         });
     }
 
@@ -35,35 +34,23 @@ class Nav extends Component {
         return (
             <div className="swiper-container order-list-nav">
                 <div className="swiper-wrapper">
-                    <div className={!this.state.status ? 'swiper-slide active' : 'swiper-slide'} >
-                        <Link to="/orderList">
-                            <span>全部</span>
-                        </Link>
+                    <div className={!this.state.status ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '')}>
+                        <span>全部</span>
                     </div>
-                    <div className={this.state.status === "0" ? 'swiper-slide active' : 'swiper-slide'}>
-                        <Link to="/orderList?status=0">
-                            <span>待付款</span>
-                        </Link>
+                    <div className={this.state.status === "0" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '0')}>
+                        <span>待付款</span>
                     </div>
-                    <div className={this.state.status === "1" ? 'swiper-slide active' : 'swiper-slide'}>
-                        <Link to="/orderList?status=1">
-                            <span>发布中</span>
-                        </Link>
+                    <div className={this.state.status === "1" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '1')}>
+                        <span>发布中</span>
                     </div>
-                    <div className={this.state.status === "2" ? 'swiper-slide active' : 'swiper-slide'}>
-                        <Link to="/orderList?status=2">
-                            <span>服务中</span>
-                        </Link>
+                    <div className={this.state.status === "2" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '2')}>
+                        <span>服务中</span>
                     </div>
-                    <div className={this.state.status === "3" ? 'swiper-slide active' : 'swiper-slide'}>
-                        <Link to="/orderList?status=3">
-                            <span>待评价</span>
-                        </Link>
+                    <div className={this.state.status === "3" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '3')}>
+                        <span>待评价</span>
                     </div>
-                    <div className={this.state.status === "10" ? 'swiper-slide active' : 'swiper-slide'}>
-                        <Link to="/orderList?status=10">
-                            <span>已完成</span>
-                        </Link>
+                    <div className={this.state.status === "10" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '10')}>
+                        <span>已完成</span>
                     </div>
                 </div>
             </div>
@@ -74,7 +61,7 @@ class Nav extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
-        let { status } = qs.parse(props.location.search);
+        let status = ToolDps.sessionItem('orderStatus');
         this.state = {
             status: status || '',
             data: [],
@@ -89,13 +76,10 @@ class Main extends Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
-        let { status } = qs.parse(nextProps.location.search);
-        this.setState({
-            status: status
-        });
-        this.getData(status);
+    componentWillUnmount() {
+        ToolDps.removeSessionItem('orderStatus');
     }
+
 
 
     getData(status) {
@@ -131,11 +115,20 @@ class Main extends Component {
         });
     }
 
+    statusChange(status) {
+        console.log(status);
+        this.setState({
+            status: status || '',
+            data: []
+        });
+        this.getData(status);
+    }
+
     render() {
         let main = this.state.data.length > 0 ? <OrderList data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
         return (
             <div className="full-page order-list-page">
-                <Nav status={this.state.status} />
+                <Nav status={this.state.status} statusChange={this.statusChange.bind(this)} />
                 {main}
             </div>
         )

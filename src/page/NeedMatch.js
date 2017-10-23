@@ -76,7 +76,7 @@ class NeedMatch extends Component {
                         <section className="price-item-box">
                             <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == 1 ? 0 : 1 }) }}>
                                 <li className="flex-box">
-                                    <div className="item">平面布局</div>
+                                    <div className="item">造型搭配设计</div>
                                     <div className="item">&yen;19/次</div>
                                     <div className="item">x1</div>
                                 </li>

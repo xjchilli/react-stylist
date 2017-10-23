@@ -2,8 +2,10 @@
  * 我的
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData, Footer, News } from '../Component/index';
+import { ToolDps } from '../ToolDps';
 
 class Main extends Component {
     constructor(props) {
@@ -33,6 +35,11 @@ class My extends Component {
         document.title = "我的";
     }
 
+    redirect(status) {
+        ToolDps.sessionItem('orderStatus',status);
+        this.context.router.history.push('/orderList');
+    }
+
 
     render() {
         let { data } = this.props;
@@ -44,37 +51,27 @@ class My extends Component {
                     <p className="text-center nickname">{data.nickName}</p>
                 </header>
                 <section className="order-area">
-                    <Link to="/orderList" className="all">全部订单</Link>
+                    <div className="all" onClick={this.redirect.bind(this, '')}>全部订单</div>
                     <ul className="flex-box">
-                        <li className="item-5 text-center">
-                            <Link to="/orderList?status=0" >
-                                <span className="icon icon-wait-pay"></span>
-                                <p className="text-center">待付款</p>
-                            </Link>
+                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '0')}>
+                            <span className="icon icon-wait-pay"></span>
+                            <p className="text-center">待付款</p>
                         </li>
-                        <li className="item-5 text-center">
-                            <Link to="/orderList?status=1" >
-                                <span className="icon icon-publish"></span>
-                                <p className="text-center">发布中</p>
-                            </Link>
+                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '1')}>
+                            <span className="icon icon-publish"></span>
+                            <p className="text-center">发布中</p>
                         </li>
-                        <li className="item-5 text-center">
-                            <Link to="/orderList?status=2" >
-                                <span className="icon icon-serving"></span>
-                                <p className="text-center">服务中</p>
-                            </Link>
+                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '2')}>
+                            <span className="icon icon-serving"></span>
+                            <p className="text-center">服务中</p>
                         </li>
-                        <li className="item-5 text-center">
-                            <Link to="/orderList?status=3" >
-                                <span className="icon icon-wait-comment"></span>
-                                <p className="text-center">待评价</p>
-                            </Link>
+                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '3')}>
+                            <span className="icon icon-wait-comment"></span>
+                            <p className="text-center">待评价</p>
                         </li>
-                        <li className="item-5 text-center">
-                            <Link to="/orderList?status=10" >
-                                <span className="icon icon-finish"></span>
-                                <p className="text-center">已完成</p>
-                            </Link>
+                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '10')}>
+                            <span className="icon icon-finish"></span>
+                            <p className="text-center">已完成</p>
                         </li>
                     </ul>
                 </section>
@@ -121,6 +118,9 @@ class My extends Component {
     }
 }
 
+My.contextTypes = {
+    router: PropTypes.object.isRequired
+}
 
 
 export default GetData({

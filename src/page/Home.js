@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
-import { DataLoad, Footer, News, GetData } from '../Component/index';
+import { Msg, DataLoad, Footer, News, GetData } from '../Component/index';
 
 
 class Main extends Component {
@@ -28,6 +28,8 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
             fashionListImg: props.data.plans || [],//时尚圈精选图片
             recommand: props.data.recommand,//今日推荐搭配师
             slideshow: props.data.slideshow,//Banner
@@ -87,16 +89,24 @@ class Home extends Component {
      */
     watchDps(collocationId) {
         ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
-            let copyRecommand = Array.prototype.slice.apply(this.state.recommand);
-            for (let i = 0; i < copyRecommand.length; i++) {
-                if (copyRecommand[i].collocationId == collocationId) {
-                    copyRecommand[i].concern = !copyRecommand[i].concern;
-                    break;
+            if (res.succ) {
+                let copyRecommand = Array.prototype.slice.apply(this.state.recommand);
+                for (let i = 0; i < copyRecommand.length; i++) {
+                    if (copyRecommand[i].collocationId == collocationId) {
+                        copyRecommand[i].concern = !copyRecommand[i].concern;
+                        break;
+                    }
                 }
+                this.setState({
+                    recommand: copyRecommand
+                });
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: '操作失败' //提示内容
+                });
             }
-            this.setState({
-                recommand: copyRecommand
-            });
+
         });
     }
 
@@ -229,7 +239,7 @@ class Home extends Component {
                     </ul>
                 </div>
                 <News />
-                
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </div>
         );
     }
