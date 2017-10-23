@@ -109,7 +109,6 @@ class MyNews extends IM {
     onMsgNotify(newMsgList) {
         if (newMsgList.length > 0) {
             this.props.setNews({
-                type: 'set',
                 newMsg: true
             });
         }

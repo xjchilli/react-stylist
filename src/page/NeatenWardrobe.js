@@ -40,6 +40,7 @@ class NeatenWardrobe extends Component {
             minDate: nowDate,
             disableMobile: "true",
             enableTime: true,
+            time_24hr:true,
             onChange: (selectedDates, dateStr, instance) => {
                 nowDate = selectedDates[0];
                 this.setState({

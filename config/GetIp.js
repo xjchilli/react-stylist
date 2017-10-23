@@ -2,9 +2,9 @@
  * 获取系统ip
  */
 var os = require('os');
-
 var IPv4;
-var nets = os.networkInterfaces()['以太网'];
+var nets = os.networkInterfaces()['以太网'] || os.networkInterfaces()['以太网 2'];
+
 if (!nets) {
     nets = os.networkInterfaces()['WLAN'];//无线网络
 }

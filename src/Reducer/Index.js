@@ -50,8 +50,8 @@ let plain = {
   bodyLifeImgPara:'',//全身照上传参数
   costCode:'',//预期花费
   time:'',//预约时间，格式 yyyy-mm-dd HH:mm
-  contact:'',//联系方式
   mendian:'',//门店
+  contact:'',//联系方式
   professional: '', //职业
   remarks:''//改造需求
 }

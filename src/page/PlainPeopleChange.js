@@ -1,10 +1,6 @@
 /**
  * 素人改造表单
  */
-/**
- * 搭配测试
- * Created by potato on 2017/4/18 0018.
- */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
@@ -541,7 +537,7 @@ class OtherInfo extends Component {
     }
 
 
-    
+
 
     //预期花费
     changeCost(e) {
@@ -567,7 +563,7 @@ class OtherInfo extends Component {
     }
 
     //改善需求
-    remarks(e){
+    remarks(e) {
         let copyData = merged(this.state.data);
         copyData.remarks = e.target.value;
         this.props.setPlainChange(copyData);
@@ -597,10 +593,10 @@ class OtherInfo extends Component {
                     <option value="1">杭州市西湖区三墩镇华彩国际3幢8楼02室</option>
                 </select>
                 <h3 className="form-title">联系方式 *</h3>
-                <input type="text" value={this.state.data.contact} disabled/>
+                <input type="text" value={this.state.data.contact} disabled />
                 <h3 className="form-title">职业</h3>
                 <input type="text" maxLength={10} value={this.state.data.professional} onChange={this.getProfessional.bind(this)} />
-                <h3 className="form-title">改善需求</h3>
+                <h3 className="form-title">改造需求</h3>
                 <textarea placeholder="您对此次改造有何期望，比如想参加什么场合、掩盖什么身材缺点，或者喜欢的造型特点等！" value={this.state.data.remarks} onChange={this.remarks.bind(this)}></textarea>
                 <h3 className="form-title">温馨提示</h3>
                 <p className="note">搭配师将在1-2个工作日内给您答复。如有任何疑问，可关注“Ms 搭配师”微信公众号，联系我们。</p>
@@ -620,6 +616,7 @@ class Time extends Component {
             minDate: nowDate,
             disableMobile: "true",
             enableTime: true,
+            time_24hr: true,
             onChange: (selectedDates, dateStr, instance) => {
                 this.props.getDate(dateStr);
             },
@@ -730,74 +727,56 @@ class PlainPeopleChange extends Component {
 
 
     sendForm() {
-        let lifeImgIds = []; //未删除的生活照ID
-        let {
-            sex, //性别
-            faceshpe, //脸型
-            colorofskin, //肤色
-            bodySize, //体型
-            problems, //解决问题
-            styles, //风格
-            heigh, //身高
-            weight, //体重
-            chest, //胸围
-            waist, //腰围
-            hip, //臀围
-            professional, //职业
-            countyCode, //城市
-            birthday, //生日
-            faceImg,//正脸照
-            lifeImgs, //生活照
-        } = this.state.data;
-
         let flag = this.tips(this.state.data);
         if (!flag) {
             return;
         }
 
+        let {
+            sex, //性别
+            age,//年龄
+            heigh, //身高
+            weight, //体重
+            colorofskin, //肤色
+            bodySize, //体型
+            style, //风格
+            faceLifeImgPara,//正脸照上传参数
+            bodyLifeImgPara,//全身照上传参数
+            costCode,//预期花费
+            time,//预约时间，格式 yyyy-mm-dd HH:mm
+            mendian,//门店
+            contact,//联系方式
+            professional, //职业
+            remarks//改造需求
+        } = this.state.data;
 
-        let formdata = new FormData();
-        formdata.append('sex', sex);
-        formdata.append('faceshpe', faceshpe);
-        formdata.append('colorofskin', colorofskin);
-        formdata.append('bodySize', bodySize);
-        formdata.append('style', styles);
-        formdata.append('heigh', heigh);
-        formdata.append('weight', weight);
-        formdata.append('problem', problems);
-        formdata.append('chest', chest);
-        formdata.append('waist', waist);
-        formdata.append('hip', hip);
-        formdata.append('professional', professional);
-        formdata.append('countyCode', countyCode);
-        formdata.append('birthday', birthday);
-        if (faceImg.file) {
-            formdata.append('headImg', faceImg.file);
-        } else {
-            lifeImgIds.push(faceImg.id);
+        let data={
+            sex:sex,
+            age:age,
+            heigh:heigh,
+            weight:weight,
+            colorofskin:colorofskin,
+            bodySize:bodySize,
+            style:style,
+            faceLifeImgPara:faceLifeImgPara,
+            bodyLifeImgPara:bodyLifeImgPara,
+            costCode:costCode,
+            time:time,
+            mendian:mendian,
+            contact:contact,
+            professional:professional,
+            remarks:remarks
         }
-        lifeImgs.forEach((item, index) => {
-            if (item.file) {
-                formdata.append('lifeImg', item.file);
-            }
-            if (item.id) {
-                lifeImgIds.push(item.id);
-            }
-
-        });
-        formdata.append('lifeImgIds', lifeImgIds);
-
+  
         this.setState({
             btnText: '提交中...'
         });
 
-        ToolDps.post('/wx/user/save', formdata, {
-            'Content-Type': 'multipart/form-data'
-        }).then((res) => {
+        ToolDps.post('/wx/requirement/add_prestige', data).then((res) => {
             if (res.succ) {
                 this.showMsg(true, '提交成功');
                 this._time = setTimeout(() => {
-                    this.context.router.history.push('/fashionMoment');
+                    this.context.router.history.push('/pay');
                 }, 1000);
             } else {
                 this.showMsg(true, '提交失败');
@@ -810,18 +789,15 @@ class PlainPeopleChange extends Component {
 
     tips(data) {
         let {
-            faceshpe, //脸型
             colorofskin, //肤色
             bodySize, //体型
-            problems, //解决问题
-            styles, //风格
-            faceImg,//正脸照
-            lifeImgs, //生活照
+            style, //风格
+            faceLifeImgPara,//正脸照
+            bodyLifeImgPara, //全身照
+            costCode,//预期花费
+            time,//预约时间
+            mendian//门店
         } = data;
-        if (faceshpe == "") {
-            this.showMsg(true, '请选择脸型');
-            return false;
-        }
         if (colorofskin == "") {
             this.showMsg(true, '请选择肤色');
             return false;
@@ -830,20 +806,28 @@ class PlainPeopleChange extends Component {
             this.showMsg(true, '请选择体型');
             return false;
         }
-        if (problems.length == 0) {
-            this.showMsg(true, '请选择希望能解决的问题');
-            return false;
-        }
-        if (styles.length == 0) {
+        if (style.length == 0) {
             this.showMsg(true, '请选择喜欢的穿衣风格');
             return false;
         }
-        if (faceImg.imgPath == "") {
+        if (faceLifeImgPara == "") {
             this.showMsg(true, '请上传正脸照片');
             return false;
         }
-        if (lifeImgs.length == 0) {
+        if (bodyLifeImgPara == "") {
             this.showMsg(true, '请上传全身照');
+            return false;
+        }
+        if (costCode == "") {
+            this.showMsg(true, '请选择预期花费');
+            return false;
+        }
+        if (time == "") {
+            this.showMsg(true, '请选择预约时间');
+            return false;
+        }
+        if (mendian == "") {
+            this.showMsg(true, '请选择门店');
             return false;
         }
         return true;
