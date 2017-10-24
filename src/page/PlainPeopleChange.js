@@ -13,6 +13,7 @@ import { Msg, City, PreviewImg, Loading, DataLoad } from '../Component/index';
 // import { is, fromJS } from 'immutable';
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
+import qs from 'query-string';
 
 
 //基础信息
@@ -195,14 +196,14 @@ class Type extends Component {
                         <div className={this.props.data.colorofskin != "" ? "box active" : "box"} onClick={() => { this.setState({ isSkin: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/skin-icon-2.jpg" : "/assets/img/suit/skin-icon.jpg"} />
                             <span className="title">{skinName}</span>
-                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                     <li>
                         <div className={this.props.data.bodySize != "" ? "box active" : "box"} onClick={() => { this.setState({ isBody: true }) }}>
                             <img src={sex === 1 ? "/assets/img/suit/body-icon-2.jpg" : "/assets/img/suit/body-icon.jpg"} />
                             <span className="title">{bodyName}</span>
-                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                            <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
                         </div>
                     </li>
                 </ul>
@@ -261,8 +262,10 @@ class Skin extends Component {
                                     <li className="item-2" key={index}>
                                         <div className={this.state.data.colorofskin == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
                                             <img src={item.url} />
-                                            <p>{item.name}</p>
-                                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                            <span className="img-title">
+                                                {item.name}
+                                                <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
+                                            </span>
                                         </div>
                                     </li>
                                 )
@@ -322,8 +325,11 @@ class Body extends Component {
                                     <li className="item-2" key={index}>
                                         <div className={this.state.data.bodySize == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
                                             <img src={item.url} />
-                                            <p>{item.name}</p>
-                                            <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                            <span className="img-title">
+                                                {item.name}
+                                                <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
+                                            </span>
+
                                         </div>
                                     </li>
                                 )
@@ -391,7 +397,7 @@ class Style extends Component {
                                         <div className="bg"></div>
                                         <span className="triangle"></span>
                                         <label>{item.name}</label>
-                                        <span className="icon icon-sure"><span className="path1"></span><span className="path2"></span></span>
+                                        <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
                                     </div>
                                 </li>
                             )
@@ -590,8 +596,10 @@ class OtherInfo extends Component {
                 <h3 className="form-title">预约门店 *</h3>
                 <select className="sex" onChange={this.store.bind(this)} value={this.state.data.mendian}>
                     <option value="">请选择需要预约的门店</option>
-                    <option value="1">杭州市西湖区三墩镇华彩国际3幢8楼02室</option>
+                    <option value="1">华彩国际店</option>
                 </select>
+                {this.state.data.mendian == "1" ? <p className="address">杭州市西湖区三墩镇华彩国际3幢8楼02室</p> : null}
+
                 <h3 className="form-title">联系方式 *</h3>
                 <input type="text" value={this.state.data.contact} disabled />
                 <h3 className="form-title">职业</h3>
@@ -640,6 +648,7 @@ class Time extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             loadAnimation: true,
             loadMsg: '加载中...',
@@ -695,7 +704,9 @@ class Main extends Component {
 class PlainPeopleChange extends Component {
     constructor(props) {
         super(props);
+        let { projectId } = qs.parse(props.location.search);//项目ID，需求类型
         this.state = {
+            projectId: Number(projectId) || 1,
             previewBigImg: false,//是否预览大图
             bigImgUrl: '',//大图url
             data: props.data || null,
@@ -703,6 +714,7 @@ class PlainPeopleChange extends Component {
             msgText: '', //提示内容
             btnText: '提交'
         };
+        this._time=0;
     }
 
     componentDidMount() {
@@ -717,6 +729,9 @@ class PlainPeopleChange extends Component {
         })
     }
 
+    componentWillUnmount() {
+        clearTimeout(this._time);
+    }
 
     showMsg(isShow, tipText) {
         this.setState({
@@ -750,24 +765,25 @@ class PlainPeopleChange extends Component {
             remarks//改造需求
         } = this.state.data;
 
-        let data={
-            sex:sex,
-            age:age,
-            heigh:heigh,
-            weight:weight,
-            colorofskin:colorofskin,
-            bodySize:bodySize,
-            style:style,
-            faceLifeImgPara:faceLifeImgPara,
-            bodyLifeImgPara:bodyLifeImgPara,
-            costCode:costCode,
-            time:time,
-            mendian:mendian,
-            contact:contact,
-            professional:professional,
-            remarks:remarks
+        let data = {
+            projectId: this.state.projectId,
+            sex: sex,
+            age: age,
+            heigh: heigh,
+            weight: weight,
+            colorofskin: colorofskin,
+            bodySize: bodySize,
+            style: style,
+            faceLifeImg: faceLifeImgPara,
+            bodyLifeImg: bodyLifeImgPara,
+            costCode: costCode,
+            time: time,
+            mendian: mendian,
+            contact: contact,
+            professional: professional,
+            remarks: remarks
         }
-  
+
         this.setState({
             btnText: '提交中...'
         });
@@ -776,7 +792,7 @@ class PlainPeopleChange extends Component {
             if (res.succ) {
                 this.showMsg(true, '提交成功');
                 this._time = setTimeout(() => {
-                    this.context.router.history.push('/pay');
+                    this.context.router.history.push('/pay?orderId=' + res.orderId);
                 }, 1000);
             } else {
                 this.showMsg(true, '提交失败');

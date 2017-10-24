@@ -116,7 +116,6 @@ class Main extends Component {
     }
 
     statusChange(status) {
-        console.log(status);
         this.setState({
             status: status || '',
             data: []

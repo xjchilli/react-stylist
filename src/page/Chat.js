@@ -3,6 +3,7 @@
  * Created by potato on 2017/5/17 0017.
  */
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
 import { DataLoad, PreviewImg } from '../Component/index';
@@ -127,6 +128,7 @@ class Chat extends IM {
     constructor(props) {
         super(props);
         this.state = {
+            tips: false,//服务终止的提示
             loadAnimation: true,
             loadMsg: '正在加载中',
             msgText: '', //消息内容
@@ -210,7 +212,7 @@ class Chat extends IM {
         //消息已读上报，以及设置会话自动已读标记
         webim.setAutoRead(this.selSess, true, true);
         this.props.setNews({
-            newMsg:false
+            newMsg: false
         });
     }
 
@@ -266,7 +268,7 @@ class Chat extends IM {
         //消息已读上报，并将当前会话的消息设置成自动已读
         webim.setAutoRead(this.selSess, true, true);
         this.props.setNews({
-            newMsg:false
+            newMsg: false
         });
     }
 
@@ -482,9 +484,13 @@ class Chat extends IM {
         webim.sendMsg(msg, (resp) => {
             this.addMsg(msg);
         }, (err) => {
-            console.log(err.ErrorInfo);
+            if (err.ErrorCode == 20006) {
+                this.setState({
+                    tips:true
+                });
+            }
+            console.log(err);
             //提示重发
-
         });
     }
 
@@ -616,7 +622,12 @@ class Chat extends IM {
         webim.sendMsg(msg, (resp) => {
             this.addMsg(msg);
         }, (err) => {
-            console.log(err.ErrorInfo);
+            if (err.ErrorCode == 20006) {
+                this.setState({
+                    tips:true
+                });
+            }
+            console.log(err);
         });
     }
 
@@ -679,6 +690,14 @@ class Chat extends IM {
                     <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
                 </footer>
+                {
+                    this.state.tips ? (
+                        <section className="tips-area">
+                            <div className="box">对不起，您的服务已经结束，如需搭配师继续服务，请<Link to={"dpsProfile?collocationId=" + this.collocationId + "&tab=2"}>点击购买</Link>！</div>
+                        </section>
+                    ) : null
+                }
+
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>
         )

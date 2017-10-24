@@ -493,30 +493,35 @@ class OrderDetail extends Component {
         } = this.props.data;
         return (
             <div className="order-detail-box">
-                <p className="text-center status">{order.statusStr}</p>
                 <section className="time-area">
                     <p>订单编号：<span>{order.ordreId}</span></p>
                     <p>创建时间：<span>{requirement.createTime}</span></p>
+                    <span className="status">{order.statusStr}</span>
                 </section>
+                {/*订单类型*/}
+                <h4 className="title">订单类型</h4>
+                <section className="typeName">{requirement.typeName}</section>
+                {/*搭配师*/}
+                {
+                    collocation ? <h4 className="title">搭配师</h4> : null
+                }
+                {
+                    collocation ? (
+                        <ul className="dps-area flex-box">
+                            <li>
+                                <header className="dps-header">
+                                    <img src={collocation.headImg} alt="" />
+                                </header>
+                            </li>
+                            <li>
+                                <span className="nickname">【搭配师】{collocation.nickName}</span>
+                                {order.taskTime ? <time className="match-time">匹配时间：{order.taskTime}</time> : null}
+                                {order.finshTime ? <time className="end-time">结束时间：{order.finshTime}</time> : null}
+                            </li>
+                        </ul>
+                    ) : null
+                }
                 <section className="requirement-area">
-                    <h3>{requirement.typeName}</h3>
-                    {/*搭配师*/}
-                    {
-                        collocation ? (
-                            <ul className="dps-area flex-box">
-                                <li>
-                                    <header className="dps-header">
-                                        <img src={collocation.headImg} alt="" />
-                                    </header>
-                                </li>
-                                <li>
-                                    <span className="nickname">【搭配师】{collocation.nickName}</span>
-                                    {order.taskTime ? <time className="match-time">匹配时间：{order.taskTime}</time> : null}
-                                    {order.finshTime ? <time className="end-time">结束时间：{order.finshTime}</time> : null}
-                                </li>
-                            </ul>
-                        ) : null
-                    }
                     <section className="form-content">
                         {requirement.costCode ? <p className="text">预期花费：<span>&yen;{requirement.costCode}</span></p> : null}
                         {requirement.shops.length > 0 ? <p className="text">搭配商品：<span>{requirement.shops.join('、')}</span></p> : null}
@@ -575,7 +580,7 @@ class RedPackage extends Component {
             imgUrl: ToolDps.getHost + '/assets/img/logo.jpg', // 分享图标
         });
         // wx.ready(function () {
-            
+
 
         // });
     }

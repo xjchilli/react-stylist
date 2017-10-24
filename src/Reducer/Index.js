@@ -103,6 +103,9 @@ const DB = (_ID = '', seting = {}) => {
 const Home = DB('Home', {
   data: null
 }); //首页
+const NeedMatch = DB('NeedMatch', {
+  data: null
+}); //我要搭配
 const MyWatch = DB('MyWatch', {
   data: null
 }); //我的关注
@@ -141,6 +144,7 @@ const reducers = combineReducers({
   User,
   MyNews,
   Home,
+  NeedMatch,
   MyWatch,
   HotDpsList,
   FashionMoment,

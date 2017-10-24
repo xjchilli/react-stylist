@@ -1,5 +1,5 @@
 /**
- * 购物
+ * 购买
  * Created by potato on 2017/4/24 0024.
  */
 import React, { Component } from 'react'
@@ -35,7 +35,7 @@ class Shopping extends Component {
         this._time = 0;
     }
     componentDidMount() {
-        document.title = "购物";
+        document.title = "购买";
 
     }
 

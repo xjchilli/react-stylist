@@ -104,15 +104,15 @@
                             border-width: 0 0 1px 1px;
                         }
                     }
-                    .icon-sure {
+                    .icon-gou2 {
                         visibility: hidden;
                         position: absolute;
                         top: 13px;
                         right: 10px;
-                        font-size: 20px;
+                        font-size: 15px;
                     }
                     &.active {
-                        .icon-sure {
+                        .icon-gou2 {
                             visibility: visible;
                         }
                     }
@@ -186,26 +186,29 @@
                 .img-box {
                     position: relative;
                     width: 68px;
+                    text-align: center;
                     >img {
                         width: 68px;
                         height: 67px;
                     }
-                    >p {
-                        padding-top: 6px;
+                    .img-title {
+                        position: relative;
+                        margin-top: 6px;
                         text-align: center;
                         font-size: 14px;
                         font-weight: 600;
                         color: #1a1a1a;
                     }
-                    .icon-sure {
-                        visibility: hidden;
-                        font-size: 20px;
+                    .icon-gou2 {
                         position: absolute;
-                        right: 5px;
-                        top: 5px;
+                        top: 50%;
+                        right: -18px;
+                        transform: translate(0,-50%);
+                        visibility: hidden;
+                        font-size: 13px;
                     }
                     &.active {
-                        .icon-sure {
+                        .icon-gou2 {
                             visibility: visible;
                         }
                     }
@@ -270,18 +273,19 @@
                 font-size: 12px;
                 color: #333333;
             }
-            .icon-sure {
+            .icon-gou2 {
                 visibility: hidden;
                 position: absolute;
-                top: 7px;
-                right: 7px;
-                font-size: 20px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 13px;
             }
             &.active {
                 .bg {
                     visibility: visible;
                 }
-                .icon-sure {
+                .icon-gou2 {
                     visibility: visible;
                 }
             }
@@ -350,6 +354,11 @@
     .otherInfo-area {
         .form-title {
             padding-top: 35px;
+        }
+        .address {
+            font-size: 14px;
+            color: #666666;
+            line-height: 20px;
         }
         >input, .birthDate {
             display: block;
