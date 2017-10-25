@@ -1,5 +1,5 @@
 .order-detail-box {
-  padding-bottom: 38px;
+  padding-bottom: 65px;
   background: @bg;
   .time-area {
     position: relative;
@@ -50,8 +50,7 @@
   }
   .dps-area {
     background: @white;
-
-    padding:15px 13px;
+    padding: 15px 13px;
     li {
       &:nth-of-type(1) {
         flex: 0 0 62px;
@@ -91,154 +90,296 @@
       line-height: 19px;
     }
   }
-  .requirement-area {
-    margin: 0 13px;
-    padding-top: 18px;
-    .photo-area {
-      margin-top: -10px;
-      .item-3 {
-        margin-top: 10px;
-        &:nth-of-type(3n+1) {
-          padding-right: 8px;
-        }
-        &:nth-of-type(3n+2) {
-          padding: 0 4px;
-        }
-        &:nth-of-type(3n+3) {
-          padding-left: 8px;
-        }
-        .img-show {
-          height: 110px;
-          background-repeat: no-repeat;
-          background-size: cover;
-          border: 1px solid #e6e6e6;
-        }
+  .plain-info {
+    background: @white;
+    border-bottom: 0.5px solid #ededed;
+    padding: 13px;
+    color: #333333;
+    font-size: 12px;
+    line-height: 20px;
+    li {
+      padding-right: 5px;
+      width: 0;
+      >p {
+        overflow: hidden;
+        white-space: nowrap;
       }
     }
   }
- 
   .form-content {
-    margin-top: 17px;
-    border-bottom: 1px solid #e6e6e6;
-    padding-bottom: 14px;
+    background: @white;
+    padding: 9px 13px;
     .text {
       font-size: 13px;
       color: #333333;
       line-height: 24px;
       >span {
+        position: relative;
         font-size: 12px;
+        padding: 0 7px;
+        &:after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1px;
+          height: 10px;
+          background: #cccccc;
+        }
+        &:last-child {
+          &:after {
+            display: none;
+          }
+        }
       }
     }
   }
-  .describe-area {
-    >h6 {
-      font-size: 13px;
-      color: #333333;
-      margin-top: 18px;
-      margin-bottom: 12px;
+  .skin-body {
+    background: @white;
+    padding: 15px 13px;
+    .skin-body-box {
+      display: inline-block;
+      margin-right: 50px;
+      >p {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #333333;
+        font-weight: 500;
+        text-align: center;
+      }
     }
-    >p {
+  }
+  .private-photo {
+    background: @white;
+    padding: 15px 13px;
+    >li {
+      &:nth-of-type(1) {
+        padding-right: 7.5px;
+      }
+      &:nth-of-type(2) {
+        padding-left: 7.5px;
+      }
+      .box {
+        height: 167px;
+        background-size: cover;
+      }
+    }
+  }
+  .styles-area {
+    background: @white;
+    padding: 10px;
+    >li {
+      position: relative;
       font-size: 12px;
       color: #333333;
+      font-weight: 500;
+      padding-left: 14px;
+      line-height: 23px;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 5px;
+        border-radius: 5px;
+        background: #999999;
+      }
+    }
+  }
+  .remark {
+    background: @white;
+    padding: 13px;
+    font-size: 12px;
+    color: #333333;
+  }
+  .photo-area {
+    padding: 10px 13px 15px;
+    background: @white;
+    .item-3 {
+      margin-top: 5px;
+      &:nth-of-type(3n+1) {
+        padding-right: 5px;
+      }
+      &:nth-of-type(3n+2) {
+        padding: 0 2.5px;
+      }
+      &:nth-of-type(3n+3) {
+        padding-left: 5px;
+      }
+      .img-show {
+        height: 110px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid #e6e6e6;
+      }
+    }
+  }
+  .order-item {
+    background: @white;
+    padding: 15px 13px;
+    >li {
+      font-size: 11px;
+      color: #666666;
+      font-weight: 500;
+      position: relative;
+      padding-left: 8px;
+      margin-bottom: 8px;
+      .total {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: #1a1a1a;
+        font-weight: 500;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #666666;
+      }
+      .name {
+        display: inline-block;
+        width: 90px;
+      }
+      .single-price {
+        display: inline-block;
+        width: 67px;
+      }
+    }
+  }
+  .order-total-price {
+    position: relative;
+    margin-top: 9px;
+    font-size: 13px;
+    color: #1a1a1a;
+    line-height: 35px;
+    font-weight: 500;
+    background: @white;
+    padding: 0 13px;
+    .price {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 13px;
+      text-align: right;
+      >span {
+        font-size: 12px;
+        color: #ff0000;
+      }
+      >del {
+        color: #666666;
+        font-size: 10px;
+      }
     }
   }
   .score-area {
-    padding: 0 13px;
-    margin-top: 40px;
+    padding: 15px 13px;
+    background: @white;
     .score {
-      label {
-        margin-right: 3px;
-        font-size: 13px;
-        color: #333333;
-      }
       .icon {
         margin-right: 10px;
         font-size: 16px;
       }
     }
-    .user-comment-title {
-      font-size: 13px;
-      color: #333333;
-      margin-top: 12px;
-    }
     .user-comment-content {
-      margin-top: 16px;
-      background: #f0f5f9;
       font-size: 12px;
       color: #666666;
-      padding: 7px;
+      padding: 11px 0 14px;
     }
   }
   .dps-reply {
-    >h6 {
-      font-size: 12px;
-      color: #666666;
-      margin: 15px 0 10px;
-    }
+    position: relative;
+    background: #f7f7f7;
+    padding: 9px;
+    font-size: 12px;
+    color: #666666;
     .content {
-      padding: 7px;
-      background: #f0f5f9;
-      font-size: 12px;
-      color: #666666;
+      margin-top: 6px;
+    }
+    &::before{
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: -10px;
+      width: 0;
+      height: 0;
+      border-left: 7.5px solid transparent;
+      border-right: 7.5px solid transparent;
+      border-bottom: 10px solid #f7f7f7;
     }
   }
-  .order-action-area {
-    .ground {
-      line-height: 2rem;
-      background: #1a1a1a;
-      border-radius: 5px;
-      color: @white;
-      margin: 20px 0;
-      font-size: 14px;
+  .cancle-order {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 35px;
+    background: @white;
+    padding: 0 13px;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 13px;
+      width: 8px;
+      height: 8px;
+      border: 1px solid #9d9d9d;
+      border-width: 1px 1px 0 0;
+      transform: translateY(-50%) rotate(45deg);
     }
-    // 优惠码信息
-    .promotion-lable {
-      padding-right: 20px;
-      word-spacing: 3px;
-      line-height: 24px;
+  }
+  .user-order-action-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: @white;
+    height: 57px;
+    border-top: 0.5px solid #e6e6e6;
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 13px;
+    .name {
+      color: #333333;
+      line-height: 57px;
     }
-    .promotion-num {
-      position: relative;
-      display: inline-block;
-      line-height: 24px;
-      &:after {
-        content: '';
-        position: absolute;
-        right: -1.5rem;
-        top: 50%;
-        margin-top: -4px;
-        width: 8px;
-        height: 8px;
-        border: 1px solid @white;
-        border-width: 1px 1px 0 0;
-        transform: rotate(45deg);
-      }
-    }
-    .pay-select-promotion {
-      .action-area {
-        button {
-          line-height: 34px;
-        }
-      }
+    .price {
+      line-height: 57px;
+      color: #ff0000;
+      padding-left: 5px;
     }
   }
   .action-area {
-    text-align: center;
-    .to-pay-btn, button {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    .btn {
       display: inline-block;
-      -webkit-appearance: none;
-      background: #1a1a1a;
+      padding: 0 21px;
+      line-height: 30px;
       color: #ffffff;
-      font-size: 14px;
-      padding: 8px 22px;
-      margin: 50px auto;
-      border-width: 0;
-      border-radius: 6px;
-      &:first-child {
-        margin-right: 28px;
+      font-size: 15px;
+      border-radius: 2px;
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
       }
     }
-    .to-pay-btn {}
   }
   //用户评论
   .user-comment-area {
@@ -253,6 +394,7 @@
       position: relative;
       border-radius: 8px;
       background: @white;
+      padding-bottom: 15px;
       .icon-close-gray {
         position: absolute;
         bottom: -68px;
@@ -265,7 +407,7 @@
       border-radius: 8px 8px 0 0;
       border-bottom: 1px solid #e6e6e6;
       padding: 20px 0;
-      background: #1a1a1a;
+      background: @white;
       li {
         &:nth-of-type(1) {
           flex: 0 0 85px;
@@ -292,7 +434,7 @@
       .nickname {
         margin-left: -7px;
         font-size: 14px;
-        color: #fefefe;
+        color: #333333;
         font-weight: 500;
         display: block;
         margin-bottom: 6px;
@@ -302,9 +444,9 @@
       }
       time {
         display: block;
-        color: @white;
         font-size: 11px;
         line-height: 19px;
+        color: #333333;
       }
     }
     .star-area {
@@ -326,7 +468,14 @@
         font-size: 13px;
         -webkit-appearance: none;
         border-radius: 5px;
+        background: #f7f7f7;
+        border-width: 0;
       }
+    }
+    .finish-btn {
+      margin: 15px auto 0;
+      line-height: 30px;
+      padding: 0 21px;
     }
   }
   // 红包区域
@@ -354,5 +503,11 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, .7);
+  }
+  .reward-money-area {
+    .action-area {
+      padding-top: 10px;
+      position: static;
+    }
   }
 }

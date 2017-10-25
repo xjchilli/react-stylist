@@ -36,10 +36,8 @@ class Score extends Component {
         return (
             <section className="score-area">
                 <div className="score">
-                    <label>评分：</label>
                     {scoreHtml}
                 </div>
-                <h6 className="user-comment-title">评价：</h6>
                 <p className="user-comment-content">{data.content}</p>
                 {
                     data.reply.map((item, index) => {
@@ -97,19 +95,15 @@ class DaipeiGoods extends Component {
 }
 
 /**
- * 支付  订单状态：待付款
+ * 取消订单
  */
-class ToPay extends Component {
+class CancleOrder extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: null,
-            promotionPrice: '', //优惠价
-        }
     }
 
     componentDidMount() {
-
+        clearTimeout(this.time);
     }
 
 
@@ -117,8 +111,10 @@ class ToPay extends Component {
      * 取消订单
      */
     orderCancel() {
+        let flag = window.confirm("您确定要取消订单嘛?");
+        if (!flag) return false;
         ToolDps.post('/wx/order/canel', {
-            orderId: this.props.orderId
+            orderId: this.props.order.ordreId
         }).then((res) => {
             if (res.succ) {
                 this.props.msgLayerShow({
@@ -132,29 +128,36 @@ class ToPay extends Component {
         });
     }
 
+    render() {
+        return (
+            <section className="cancle-order" onClick={this.orderCancel.bind(this)}>取消订单</section>
+        )
+    }
+}
 
+CancleOrder.contextTypes = {
+    router: PropTypes.object.isRequired
+}
 
+/**
+ * 支付  订单状态：待付款
+ */
+class ToPay extends Component {
+    constructor(props) {
+        super(props);
+        this.time = 0;
+    }
 
     render() {
-        let price = '0.00';
-        if (this.state.data) {
-            price = this.state.data.price;
-        }
-
         return (
-            <div className="order-action-area">
-                <div className="action-area">
-                    <Link className="to-pay-btn" to={"/pay?orderId=" + this.props.order.ordreId}>付款&yen;{this.props.order.transactionPrice}</Link>
-                    <button onClick={this.orderCancel.bind(this)}>取消订单</button>
-                </div>
+            <div className="action-area">
+                <Link className="btn" to={"/pay?orderId=" + this.props.order.ordreId}>付款</Link>
             </div>
         )
     }
 }
 
-ToPay.contextTypes = {
-    router: PropTypes.object.isRequired
-}
+
 
 
 /**
@@ -191,7 +194,7 @@ class PublishCancel extends Component {
     render() {
         return (
             <div className="action-area">
-                <button onClick={this.cancel.bind(this)} >取消发布</button>
+                <button className="btn" onClick={this.cancel.bind(this)} >取消发布</button>
             </div>
         )
     }
@@ -248,12 +251,12 @@ class ToChat extends Component {
         } = this.props.collocation;
         return (
             <div className="action-area">
-                <Link to={"/chat?selToID=" + timId + "&headUrl=" + headImg + "&nickname=" + nickName}>
-                    <button>沟通</button>
+                <Link className="btn" to={"/chat?selToID=" + timId + "&headUrl=" + headImg + "&nickname=" + nickName}>
+                    沟通
                 </Link>
                 {
                     !this.state.isEndService ? (
-                        <button onClick={this.endService.bind(this)}>结束服务</button>
+                        <button className="btn" onClick={this.endService.bind(this)}>结束服务</button>
                     ) : null
                 }
 
@@ -284,8 +287,8 @@ class Comment extends Component {
     render() {
         return (
             <div className="action-area">
-                <button onClick={this.showComment.bind(this)}>评价</button>
-                <button onClick={() => { this.props.rewardShow() }}>打赏</button>
+                <button className="btn" onClick={this.showComment.bind(this)}>评价</button>
+                <button className="btn" onClick={() => { this.props.rewardShow() }}>打赏</button>
             </div>
         )
     }
@@ -379,9 +382,7 @@ class ToCommnet extends Component {
                     <section className="content">
                         <textarea placeholder="评价下搭配师的服务吧~" onChange={(e) => { this.setState({ content: e.target.value }) }} value={this.state.content} />
                     </section>
-                    <div className="action-area">
-                        <button onClick={this.toComment.bind(this)}>完成</button>
-                    </div>
+                    <button className="btn finish-btn" onClick={this.toComment.bind(this)}>完成</button>
                     <span className="icon icon-close-gray" onClick={this.props.commentLayerHide}></span>
                 </section>
             </section>
@@ -396,7 +397,7 @@ class OrderFinish extends Component {
     render() {
         return (
             <div className="action-area">
-                <button onClick={() => { this.props.rewardShow() }}>打赏</button>
+                <button className="btn" onClick={() => { this.props.rewardShow() }}>打赏</button>
             </div>
         )
     }
@@ -427,6 +428,8 @@ class OrderDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            previewBigImg: false,//是否预览大图
+            bigImgUrl: '',//大图url
             shareTip: false,//分享提示显示
             msgShow: false,
             msgText: '', //提示内容
@@ -489,10 +492,12 @@ class OrderDetail extends Component {
             collocation,
             comment,
             order,
-            userId
+            userId,
+            projectItem,
+            prestigeInfo
         } = this.props.data;
         return (
-            <div className="order-detail-box">
+            <div className="full-page order-detail-box">
                 <section className="time-area">
                     <p>订单编号：<span>{order.ordreId}</span></p>
                     <p>创建时间：<span>{requirement.createTime}</span></p>
@@ -521,34 +526,153 @@ class OrderDetail extends Component {
                         </ul>
                     ) : null
                 }
+                {/*基本信息*/}
+                <h4 className="title">基本信息</h4>
                 <section className="requirement-area">
+                    {
+                        prestigeInfo ? (
+                            <ul className="flex-box plain-info">
+                                <li className="item-3"><p>性别：{prestigeInfo.sex == 2 ? "女" : "男"}</p></li>
+                                <li className="item-3"><p>职业：{prestigeInfo.professional}</p></li>
+                                <li className="item-3"><p>年龄：{prestigeInfo.age}岁</p></li>
+                                <li className="item-3"><p>身高：{prestigeInfo.heigh}cm</p></li>
+                                <li className="item-3"><p>体重：{prestigeInfo.weight}kg</p></li>
+                            </ul>
+                        ) : null
+                    }
                     <section className="form-content">
                         {requirement.costCode ? <p className="text">预期花费：<span>&yen;{requirement.costCode}</span></p> : null}
-                        {requirement.shops.length > 0 ? <p className="text">搭配商品：<span>{requirement.shops.join('、')}</span></p> : null}
-                        {requirement.scenes.length > 0 ? <p className="text">搭配场景：<span>{requirement.scenes.join('、')}</span></p> : null}
-                        <p className="text">实付金额：<span>&yen;{order.transactionPrice}</span></p>
+                        {requirement.shops.length > 0 ? (
+                            <p className="text">搭配商品：
+                                {
+                                    requirement.shops.map((shop, s) => {
+                                        return (<span key={s}>{shop}</span>)
+                                    })
+                                }
+
+                            </p>) : null}
+                        {requirement.scenes.length > 0 ? (
+                            <p className="text">搭配场景：
+                                {
+                                    requirement.scenes.map((scenes, i) => {
+                                        return (<span key={i}>{scenes}</span>)
+                                    })
+                                }
+
+                            </p>) : null}
                         {requirement.time ? <p className="text">约定时间：<span>{requirement.time}</span></p> : null}
                         {requirement.addres ? <p className="text">约定地址：<span>{requirement.addres}</span></p> : null}
                     </section>
-                    <section className="describe-area">
-                        <h6>需求描述：</h6>
-                        <p>{requirement.remark}</p>
-                        {requirement.garderobes && requirement.garderobes.length > 0 ? <h6>搭配物品：</h6> : null}
-                        {requirement.garderobes && requirement.garderobes.length > 0 ? <DaipeiGoods data={requirement.garderobes} /> : null}
-                    </section>
+                </section>
+                {/*肤色体型*/}
+                {
+                    prestigeInfo ? (<h4 className="title">肤色、体型</h4>) : null
+                }
+                {
+                    prestigeInfo ? (
+                        <section className="skin-body">
+                            <div className="skin-body-box">
+                                <img src={prestigeInfo.colorofskinImg} height="65" />
+                                <p>{prestigeInfo.colorofskinValues}</p>
+                            </div>
+                            <div className="skin-body-box">
+                                <img src={prestigeInfo.bodySizeImg} height="65" />
+                                <p>{prestigeInfo.bodySizeValues}</p>
+                            </div>
+                        </section>
+                    ) : null
+                }
+                {/*个人照片*/}
+                {
+                    prestigeInfo ? (<h4 className="title">个人照片</h4>) : null
+                }
+                {
+                    prestigeInfo ? (
+                        <ul className="flex-box private-photo">
+                            <li className="item-2">
+                                <div className="box" style={{ backgroundImage: "url(" + prestigeInfo.faceLifeImg + ")" }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: prestigeInfo.faceLifeImg }) }}></div>
+                            </li>
+                            <li className="item-2">
+                                <div className="box" style={{ backgroundImage: "url(" + prestigeInfo.bodyFaceImg + ")" }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: prestigeInfo.bodyFaceImg }) }}></div>
+                            </li>
+                        </ul>
+                    ) : null
+                }
+
+                {/*喜欢的穿衣风格*/}
+                {
+                    prestigeInfo ? (<h4 className="title">喜欢的穿衣风格</h4>) : null
+                }
+                {
+                    prestigeInfo ? (
+                        <ul className="flex-box styles-area">
+                            {
+                                prestigeInfo.styleValues.map((style, index) => {
+                                    return (<li className="item-3" key={index}>{style}</li>)
+                                })
+                            }
+                        </ul>
+                    ) : null
+                }
+
+
+                {/*需求描述*/}
+                <h4 className="title">需求描述</h4>
+                <p className="remark">{requirement.remark}</p>
+                {/*搭配物品*/}
+                {requirement.garderobes && requirement.garderobes.length > 0 ? <h4 className="title">搭配物品</h4> : null}
+                {requirement.garderobes && requirement.garderobes.length > 0 ? <DaipeiGoods data={requirement.garderobes} /> : null}
+                {/*需求描述*/}
+                <h4 className="title">套餐清单</h4>
+                <ul className="order-item">
+                    {
+                        projectItem.map((item, index) => {
+                            return (
+                                <li key={index}>
+                                    <span className="name">{item.title}</span>
+                                    <span className="single-price">&yen;{item.money}/次</span>
+                                    <span>x{item.num}</span>
+                                    <span className="total">&yen;{item.totalMoney}</span>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+                <section className="order-total-price">
+                    订单金额
+                    <div className="price">
+                        <span>&yen;{order.transactionPrice}</span>
+                        <br />
+                        {order.originalPrice != order.transactionPrice ? <del>原价:&yen;{order.originalPrice}</del> : null}
+                    </div>
                 </section>
                 {/*评论*/}
+                {comment ? <h4 className="title">评价</h4> : null}
                 {comment ? <Score data={comment} /> : null}
-                {/*支付、取消订单button*/}
-                {order.status === 0 ? <ToPay order={order} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
-                {/*取消发布button*/}
-                {order.status === 1 ? <PublishCancel orderId={order.ordreId} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
-                {/*咨询、结束服务button*/}
-                {order.status === 2 ? <ToChat collocation={collocation} order={order} msgLayerShow={this.msgLayerShow.bind(this)} commentLayerShow={this.commentLayerShow.bind(this)} /> : null}
-                {/*评价button*/}
-                {order.status === 3 ? <Comment rewardShow={this.rewardShow.bind(this)} commentLayerShow={this.commentLayerShow.bind(this)} /> : null}
-                {/*订单已完成button*/}
-                {order.status === 10 ? <OrderFinish rewardShow={this.rewardShow.bind(this)} /> : null}
+                {/* 更多操作 */}
+                {order.status === 0 ? <h4 className="title">更多操作</h4> : null}
+                {order.status === 0 ? <CancleOrder order={order} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
+
+                {/* 页面底部按钮操作 */}
+                <section className="user-order-action-area">
+                    <span className="name">订单金额:</span>
+                    <span className="price">&yen;{order.transactionPrice}</span>
+                    {/*支付*/}
+                    {order.status === 0 ? <ToPay order={order} /> : null}
+                    {/*取消发布button*/}
+                    {order.status === 1 ? <PublishCancel orderId={order.ordreId} msgLayerShow={this.msgLayerShow.bind(this)} /> : null}
+                    {/*咨询、结束服务button*/}
+                    {order.status === 2 ? <ToChat collocation={collocation} order={order} msgLayerShow={this.msgLayerShow.bind(this)} commentLayerShow={this.commentLayerShow.bind(this)} /> : null}
+                    {/*评价button*/}
+                    {order.status === 3 ? <Comment rewardShow={this.rewardShow.bind(this)} commentLayerShow={this.commentLayerShow.bind(this)} /> : null}
+                    {/*订单已完成button*/}
+                    {order.status === 10 ? <OrderFinish rewardShow={this.rewardShow.bind(this)} /> : null}
+                </section>
+
+
+
+
+
                 {/*评论窗口*/}
                 {this.state.commentLayer ? <ToCommnet commentLayerHide={this.commentLayerHide.bind(this)} collocation={collocation} order={order} msgLayerShow={this.msgLayerShow.bind(this)} endServiceTime={this.state.endServiceTime} /> : null}
                 {/*提示信息*/}
@@ -557,6 +681,7 @@ class OrderDetail extends Component {
                 {this.state.toReward ? <ToReward rewardCallback={() => { }} hideToReward={() => { this.setState({ toReward: false }) }} url='/wx/order/award' id={order.ordreId} /> : null}
                 {order.couponsActiveId && order.status === 1 || order.status === 2 || order.status === 3 || order.status === 10 ? <RedPackage couponsActiveId={order.couponsActiveId} shawTip={() => { this.setState({ shareTip: true }) }} /> : null}
                 {this.state.shareTip ? <RedPackageShareTip hideTip={() => { this.setState({ shareTip: false }) }} /> : null}
+                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>
         )
     }
