@@ -8,6 +8,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');//自动打开浏览器
+var vConsolePlugin = require('vconsole-webpack-plugin'); //手机网页调试面板
 var HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
@@ -87,6 +88,9 @@ module.exports = {
       name: 'vendors',
       filename: 'js/vendors.js'
     }), //所有公用js文件打包到vendors.js
+    new vConsolePlugin({
+      enable: true // 发布代码前记得改回 false
+    }),
     new OpenBrowserPlugin({//自动打开浏览器
       url: IPv4 + ':8000',
       browser: 'chrome'
