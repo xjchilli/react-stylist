@@ -42,7 +42,7 @@ function WxAuth() {
                 });
 
                 wx.error(function (res) {
-                    alert(JSON.stringify(res));
+                    // alert(JSON.stringify(res));
                     // window.location.reload();
                 });
 

@@ -235,7 +235,7 @@ class Main extends Component {
             loadAnimation,
             loadMsg
         } = this.props.state;
-        let main = data && data.succ && this.state.getUser ? <NeedMatch list={data.project} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = data && data.succ && this.state.getUser ? <NeedMatch list={data.project} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={''} />;
 
         return main;
     }

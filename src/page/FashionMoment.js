@@ -40,14 +40,13 @@ class FashionMoment extends Component {
         let rate = imgW / fashionListImg[0].width;//比率
 
         for (let i = 0; i < data.length; i++) {
-            data[i].width = data[i].width * rate;
-            data[i].height = data[i].height * rate;
+            let height = data[i].height * rate;
             if (col1H <= col2H) {
                 col1Imgs.push(data[i]);
-                col1H += data[i].height;
+                col1H += height;
             } else {
                 col2Imgs.push(data[i]);
-                col2H += data[i].height;
+                col2H += height;
             }
         }
 
@@ -86,7 +85,7 @@ class FashionMoment extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to={"/dpsProfile?collocationId="+item.collocationId}>
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
                                                     <img src={item.collocationHeadImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
@@ -114,7 +113,7 @@ class FashionMoment extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to={"/dpsProfile?collocationId="+item.collocationId}>
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
                                                     <img src={item.collocationHeadImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
@@ -133,7 +132,7 @@ class FashionMoment extends Component {
                         {this.props.children}
                     </div>
                 </div>
-                
+
                 <News />
             </div>
         )

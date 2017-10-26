@@ -67,14 +67,13 @@ class Home extends Component {
         let rate = imgW / fashionListImg[0].width;//比率
 
         for (let i = 0; i < data.length; i++) {
-            data[i].width = data[i].width * rate;
-            data[i].height = data[i].height * rate;
+            let height = data[i].height * rate;
             if (col1H <= col2H) {
                 col1Imgs.push(data[i]);
-                col1H += data[i].height;
+                col1H += height;
             } else {
                 col2Imgs.push(data[i]);
-                col2H += data[i].height;
+                col2H += height;
             }
         }
 
