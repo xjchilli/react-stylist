@@ -222,8 +222,8 @@ class Skin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            girlSkin: [{ name: '晶莹白皙', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg' }, { name: '自然红润', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg' }, { name: '自然偏黄', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg' }, { name: '活力小麦', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg' }],
-            boySkin: [{ name: '晶莹白皙', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg' }, { name: '自然红润', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg' }, { name: '自然偏黄', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg' }, { name: '活力小麦', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg' }],
+            girlSkin: [{ name: '晶莹白皙', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg?s=2' }, { name: '自然红润', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg?s=2' }, { name: '自然偏黄', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg?s=2' }, { name: '活力小麦', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg?s=2' }],
+            boySkin: [{ name: '晶莹白皙', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg?s=1' }, { name: '自然红润', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg?s=1' }, { name: '自然偏黄', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg?s=1' }, { name: '活力小麦', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg?s=1' }],
             data: props.data, //肤色
         }
     }
@@ -283,8 +283,8 @@ class Body extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            girlBody: [{ name: '沙漏形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-1.jpg' }, { name: '梨形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-2.jpg' }, { name: '苹果形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-3.jpg' }, { name: '直筒形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-4.jpg' }, { name: '倒三角', url: 'https://file.dapeis.com/resources/config/requirement/body-1-5.jpg' }],
-            boyBody: [{ name: '梯形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-1.jpg' }, { name: '正三角', url: 'https://file.dapeis.com/resources/config/requirement/body-2-2.jpg' }, { name: '矩形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-3.jpg' }, { name: '倒三角', url: 'https://file.dapeis.com/resources/config/requirement/body-2-4.jpg' }, { name: '椭圆形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-5.jpg' }],
+            girlBody: [{ name: '沙漏形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-1.jpg?s=2' }, { name: '梨形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-2.jpg?s=2' }, { name: '苹果形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-3.jpg?s=2' }, { name: '直筒形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-4.jpg?s=2' }, { name: '倒三角', url: 'https://file.dapeis.com/resources/config/requirement/body-2-5.jpg?s=2' }],
+            boyBody: [{ name: '梯形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-1.jpg?s=1' }, { name: '正三角', url: 'https://file.dapeis.com/resources/config/requirement/body-1-2.jpg?s=1' }, { name: '矩形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-3.jpg?s=1' }, { name: '倒三角', url: 'https://file.dapeis.com/resources/config/requirement/body-1-4.jpg?s=1' }, { name: '椭圆形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-5.jpg?s=1' }],
             data: props.data, //体型
         }
 
@@ -598,7 +598,7 @@ class OtherInfo extends Component {
                     <option value="">请选择需要预约的门店</option>
                     <option value="1">华彩国际店</option>
                 </select>
-                {this.state.data.mendian == "1" ? <p className="address">杭州市西湖区三墩镇华彩国际3幢8楼02室</p> : null}
+                {this.state.data.mendian == "1" ? <p className="address">杭州市西湖区三墩镇华彩国际3幢8楼902室</p> : null}
 
                 <h3 className="form-title">联系方式 *</h3>
                 <input type="text" value={this.state.data.contact} disabled />
@@ -714,7 +714,7 @@ class PlainPeopleChange extends Component {
             msgText: '', //提示内容
             btnText: '提交'
         };
-        this._time=0;
+        this._time = 0;
     }
 
     componentDidMount() {

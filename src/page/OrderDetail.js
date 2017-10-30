@@ -572,11 +572,11 @@ class OrderDetail extends Component {
                     prestigeInfo ? (
                         <section className="skin-body">
                             <div className="skin-body-box">
-                                <img src={prestigeInfo.colorofskinImg} height="65" />
+                                <img src={prestigeInfo.colorofskinImg+"?v=1"} height="65" />
                                 <p>{prestigeInfo.colorofskinValues}</p>
                             </div>
                             <div className="skin-body-box">
-                                <img src={prestigeInfo.bodySizeImg} height="65" />
+                                <img src={prestigeInfo.bodySizeImg+"?v=1"} height="65" />
                                 <p>{prestigeInfo.bodySizeValues}</p>
                             </div>
                         </section>

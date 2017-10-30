@@ -94,7 +94,7 @@ class FaceGirl extends Component {
             <ul className="box flex-box face-area">
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-1.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-1.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 鹅蛋脸
@@ -108,7 +108,7 @@ class FaceGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-2.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-2.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 圆脸
@@ -123,7 +123,7 @@ class FaceGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-3.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-3.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 瓜子脸
@@ -138,7 +138,7 @@ class FaceGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area">
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-4.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-4.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 方脸
@@ -183,7 +183,7 @@ class FaceBoy extends Component {
             <ul className="box flex-box face-area">
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-1.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-1.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 鹅蛋脸
@@ -198,7 +198,7 @@ class FaceBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-2.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-2.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 圆脸
@@ -213,7 +213,7 @@ class FaceBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-3.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-3.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 瓜子脸
@@ -228,7 +228,7 @@ class FaceBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/face-2-4.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/face-1-4.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 方脸
@@ -272,7 +272,7 @@ class SkinGirl extends Component {
             <ul className="box flex-box face-area">
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 白皙晶莹
@@ -285,7 +285,7 @@ class SkinGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 自然红润
@@ -298,7 +298,7 @@ class SkinGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 自然偏黄
@@ -311,7 +311,7 @@ class SkinGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg?s=2" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 活力小麦
@@ -354,7 +354,7 @@ class SkinBoy extends Component {
             <ul className="box flex-box face-area">
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 白皙晶莹
@@ -367,7 +367,7 @@ class SkinBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 自然红润
@@ -380,7 +380,7 @@ class SkinBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 自然偏黄
@@ -393,7 +393,7 @@ class SkinBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg" width="68" height="67" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg?s=1" width="68" height="67" />
                         <div>
                             <span className="isSelect">
                                 活力小麦
@@ -436,7 +436,7 @@ class BodyGirl extends Component {
             <ul className="box flex-box body-area">
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-1.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-1.jpg?s=2" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 沙漏形
@@ -450,7 +450,7 @@ class BodyGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-2.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-2.jpg?s=2" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 梨形
@@ -464,7 +464,7 @@ class BodyGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-3.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-3.jpg?s=2" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 苹果形
@@ -478,7 +478,7 @@ class BodyGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area">
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-4.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-4.jpg?s=2" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 直筒形
@@ -492,7 +492,7 @@ class BodyGirl extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '5')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-5.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-5.jpg?s=2" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 倒三角
@@ -535,7 +535,7 @@ class BodyBoy extends Component {
             <ul className="box flex-box body-area">
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-1.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-1.jpg?s=1" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 梯形
@@ -549,7 +549,7 @@ class BodyBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-2.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-2.jpg?s=1" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 正三角
@@ -563,7 +563,7 @@ class BodyBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-3.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-3.jpg?s=1" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 矩形
@@ -577,7 +577,7 @@ class BodyBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-4.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-4.jpg?s=1" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 倒三角
@@ -591,7 +591,7 @@ class BodyBoy extends Component {
                 </li>
                 <li className="item-2" onTouchStart={this.props.change.bind(this, '5')}>
                     <div className="text-center name-area" >
-                        <img src="https://file.dapeis.com/resources/config/requirement/body-2-5.jpg" width="68" height="81" />
+                        <img src="https://file.dapeis.com/resources/config/requirement/body-1-5.jpg?s=1" width="68" height="81" />
                         <div>
                             <span className="isSelect">
                                 椭圆形
@@ -1419,7 +1419,7 @@ class CustomSuit extends Component {
                 }
                 {/* 基础信息 */}
                 {
-                    this.state.progress == 7 ? <BaseInfo  changeAge={(age) => { this.setState({ age: age }) }} changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} /> : null
+                    this.state.progress == 7 ? <BaseInfo changeAge={(age) => { this.setState({ age: age }) }} changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} /> : null
                 }
                 {/* 基础信息(选填) */}
                 {

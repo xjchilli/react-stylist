@@ -188,7 +188,7 @@ let routers = [
         component: (props) => getComponent(props, FeedbackContainer)
     },
     {//测试用
-        path: '/test',
+        path: '/userChange',
         exact: false,
         component: (props) => getComponent(props, TestContainer)
     },

@@ -225,15 +225,15 @@ class Profile extends Component {
                     <dl className="flex-box face-skin-body">
                         <dt>脸型 ，肤色和体型</dt>
                         <dd className="item-3">
-                            <img src={faceshpeImg} width="68" height="67" />
+                            <img src={faceshpeImg + "?v=1"} width="68" height="67" />
                             <p className="text-center name">{faceshpeValues}</p>
                         </dd>
                         <dd className="item-3">
-                            <img src={colorofskinImg} width="68" height="67" />
+                            <img src={colorofskinImg + "?v=1"} width="68" height="67" />
                             <p className="text-center name">{colorofskinValues}</p>
                         </dd>
                         <dd className="item-3">
-                            <img src={bodySizeImg} width="auto" height="67" />
+                            <img src={bodySizeImg + "?v=1"} width="auto" height="67" />
                             <p className="text-center name">{bodySizeValues}</p>
                         </dd>
                     </dl>

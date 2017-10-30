@@ -70,6 +70,9 @@ class NeedMatch extends Component {
                 <ul className="type-select">
                     {
                         this.state.list.map((item, index) => {
+                            if (this.props.plain && index < 4) {//表示是首页跳转过来的
+                                return;
+                            }
                             return (
                                 <li key={index}>
                                     <h3 className="type-title">
@@ -78,7 +81,6 @@ class NeedMatch extends Component {
                                         {
                                             item.originalPrice != item.transactionPrice ? (<del className="origin-price">原价&yen;{item.originalPrice}</del>) : null
                                         }
-
                                     </h3>
                                     <p className="introduce">{item.remarks}</p>
                                     <section className="price-item-box">
@@ -212,7 +214,9 @@ class NeedMatch extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+        let { plain } = qs.parse(props.location.search);//是否是首页跳转过来
         this.state = {
+            plain: plain || null,
             getUser: false,//是否已经获取用户信息
             contact: ''
         }
@@ -235,7 +239,7 @@ class Main extends Component {
             loadAnimation,
             loadMsg
         } = this.props.state;
-        let main = data && data.succ && this.state.getUser ? <NeedMatch list={data.project} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={''} />;
+        let main = data && data.succ && this.state.getUser ? <NeedMatch plain={this.state.plain} list={data.project} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={''} />;
 
         return main;
     }

@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetNextPage } from '../Component/index';
-import {Msg, Footer, News } from '../Component/index';
+import { Msg, Footer, News } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 
@@ -40,7 +40,7 @@ class DpsList extends Component {
                 this.setState({
                     data: copyData
                 });
-            }else{
+            } else {
                 this.setState({
                     msgShow: true,
                     msgText: '操作失败' //提示内容
@@ -75,8 +75,8 @@ class DpsList extends Component {
                                             <section className="main-img-area" style={{ backgroundImage: 'url(' + item.backgroundImg + ')' }}>
                                                 <p className="describe">
                                                     <span>
-                                                        曾经担任明星御用设计师，杭州年度十佳服装设计师，英国留学。擅长欧美风格和学院风的搭配。
-                                                </span>
+                                                        {item.honor}
+                                                    </span>
                                                 </p>
                                             </section>
                                         </Link>

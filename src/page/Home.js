@@ -127,7 +127,7 @@ class Home extends Component {
                             this.state.slideshow.map((item, index) => {
                                 return (
                                     <div className="swiper-slide" key={index} >
-                                        <Link to="/">
+                                        <Link to="/needMatch?plain=true">
                                             <img className="response_img" src={item.img} />
                                         </Link>
                                     </div>
