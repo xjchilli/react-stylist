@@ -48,9 +48,9 @@ async function getUserInfo(code, setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props, setAuth) {
-    // if (!JSON.parse(ToolDps.localItem('User'))) {
-    //     localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oGHrAvwpDzGjKnPRxHIiCamlAR2o  oGHrAv2QLJaScmtYKnK-oVvF81S8
-    // }
+    if (!JSON.parse(ToolDps.localItem('User'))) {
+        localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oGHrAvwpDzGjKnPRxHIiCamlAR2o  oGHrAv2QLJaScmtYKnK-oVvF81S8
+    }
 
     // if (!ToolDps.sessionItem('redirectUrl')) {
     //     ToolDps.removeLocalItem('User');

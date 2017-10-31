@@ -621,7 +621,7 @@ class Time extends Component {
         let nowDate = new Date();
         this.flatpickr = flatpickr("#birthDate", {
             locale: zh,
-            minDate: nowDate,
+            minDate: nowDate.getTime() + (7 * 24 * 60 * 60 * 1000),//预约时间为7天后
             disableMobile: "true",
             enableTime: true,
             time_24hr: true,

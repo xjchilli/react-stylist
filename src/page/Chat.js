@@ -430,6 +430,7 @@ class Chat extends IM {
         if (msgContent.trim() === "") return;
         this.handleMsgSend(msgContent);
         this.setState({
+            msgText:'',
             emotionFlag: false
         });
         document.querySelector('#J-input').style.height = "42px";
@@ -485,7 +486,7 @@ class Chat extends IM {
         webim.sendMsg(msg, (resp) => {
             this.addMsg(msg);
         }, (err) => {
-            if (err.ErrorCode == 20006) {
+            if (err.ErrorCode == 20006) {//被禁言了
                 this.setState({
                     tips:true
                 });
