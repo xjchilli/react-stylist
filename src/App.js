@@ -2,6 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
+import initReactFastclick from 'react-fastclick';//处理react click失效问题
+initReactFastclick();
 
 
 //开发模式下用mock.js

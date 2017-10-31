@@ -36,7 +36,7 @@ class Sex extends Component {
     render() {
         return (
             <ul className="box flex-box sex-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="/assets/img/suit/sex-1.jpg" width="88" height="88" />
                         <div>
@@ -49,7 +49,7 @@ class Sex extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2 text-center" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2 text-center" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="/assets/img/suit/sex-2.jpg" width="88" height="88" />
                         <div>
@@ -92,7 +92,7 @@ class FaceGirl extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-1.jpg?s=2" width="68" height="67" />
                         <div>
@@ -106,7 +106,7 @@ class FaceGirl extends Component {
                         <p className="text-center decribe">额头、颧骨宽度相近，下颚窄，下巴圆润</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-2.jpg?s=2" width="68" height="67" />
                         <div>
@@ -121,7 +121,7 @@ class FaceGirl extends Component {
                         <p className="text-center decribe">额头、颧骨、下颚宽度相近，下巴短圆润</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-3.jpg?s=2" width="68" height="67" />
                         <div>
@@ -136,7 +136,7 @@ class FaceGirl extends Component {
                         <p className="text-center decribe">头比颧骨宽，下颚窄下巴比较尖</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area">
                         <img src="https://file.dapeis.com/resources/config/requirement/face-2-4.jpg?s=2" width="68" height="67" />
                         <div>
@@ -181,7 +181,7 @@ class FaceBoy extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-1.jpg?s=1" width="68" height="67" />
                         <div>
@@ -196,7 +196,7 @@ class FaceBoy extends Component {
                         <p className="text-center decribe">额头、颧骨宽度相近，下颚窄，下巴圆润</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-2.jpg?s=1" width="68" height="67" />
                         <div>
@@ -211,7 +211,7 @@ class FaceBoy extends Component {
                         <p className="text-center decribe">额头、颧骨、下颚宽度相近，下巴短圆润</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-3.jpg?s=1" width="68" height="67" />
                         <div>
@@ -226,7 +226,7 @@ class FaceBoy extends Component {
                         <p className="text-center decribe">额头比颧骨宽，下颚窄下巴比较尖</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/face-1-4.jpg?s=1" width="68" height="67" />
                         <div>
@@ -270,7 +270,7 @@ class SkinGirl extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg?s=2" width="68" height="67" />
                         <div>
@@ -283,7 +283,7 @@ class SkinGirl extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg?s=2" width="68" height="67" />
                         <div>
@@ -296,7 +296,7 @@ class SkinGirl extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg?s=2" width="68" height="67" />
                         <div>
@@ -309,7 +309,7 @@ class SkinGirl extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg?s=2" width="68" height="67" />
                         <div>
@@ -352,7 +352,7 @@ class SkinBoy extends Component {
     render() {
         return (
             <ul className="box flex-box face-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg?s=1" width="68" height="67" />
                         <div>
@@ -365,7 +365,7 @@ class SkinBoy extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg?s=1" width="68" height="67" />
                         <div>
@@ -378,7 +378,7 @@ class SkinBoy extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg?s=1" width="68" height="67" />
                         <div>
@@ -391,7 +391,7 @@ class SkinBoy extends Component {
                         </div>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg?s=1" width="68" height="67" />
                         <div>
@@ -434,7 +434,7 @@ class BodyGirl extends Component {
     render() {
         return (
             <ul className="box flex-box body-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-1.jpg?s=2" width="68" height="81" />
                         <div>
@@ -448,7 +448,7 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">细腰，明显的S曲线</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-2.jpg?s=2" width="68" height="81" />
                         <div>
@@ -462,7 +462,7 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">腹部、臀、大腿脂肪较多</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-3.jpg?s=2" width="68" height="81" />
                         <div>
@@ -476,7 +476,7 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">腰腹赘肉较多，臀部丰满</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area">
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-4.jpg?s=2" width="68" height="81" />
                         <div>
@@ -490,7 +490,7 @@ class BodyGirl extends Component {
                         <p className="text-center decribe">胸宽、腰宽、臀宽相差较小</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '5')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '5')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-2-5.jpg?s=2" width="68" height="81" />
                         <div>
@@ -533,7 +533,7 @@ class BodyBoy extends Component {
     render() {
         return (
             <ul className="box flex-box body-area">
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '1')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '1')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-1.jpg?s=1" width="68" height="81" />
                         <div>
@@ -547,7 +547,7 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">肩部较宽，胸腹较匀称</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '2')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '2')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-2.jpg?s=1" width="68" height="81" />
                         <div>
@@ -561,7 +561,7 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">腰腹部赘肉较多，肩部较小</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '3')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '3')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-3.jpg?s=1" width="68" height="81" />
                         <div>
@@ -575,7 +575,7 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">胸宽、腰宽、臀宽相差较小</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '4')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '4')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-4.jpg?s=1" width="68" height="81" />
                         <div>
@@ -589,7 +589,7 @@ class BodyBoy extends Component {
                         <p className="text-center decribe">肩膀宽，腰部匀称，胯部较小</p>
                     </div>
                 </li>
-                <li className="item-2" onTouchStart={this.props.change.bind(this, '5')}>
+                <li className="item-2" onClick={this.props.change.bind(this, '5')}>
                     <div className="text-center name-area" >
                         <img src="https://file.dapeis.com/resources/config/requirement/body-1-5.jpg?s=1" width="68" height="81" />
                         <div>
@@ -662,57 +662,57 @@ class SolutionGirl extends Component {
             <section className="solutions-area">
                 <div className="solution-box-girl">
                     <img src="/assets/img/suit/solution-1.jpg" width="270" height="319" />
-                    <span className="text-1" onTouchStart={this.select.bind(this, '1')}>
+                    <span className="text-1" onClick={this.select.bind(this, '1')}>
                         脸大
                         {
                             this.state.solutions.indexOf('1') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-2" onTouchStart={this.select.bind(this, '2')}>
+                    <span className="text-2" onClick={this.select.bind(this, '2')}>
                         肩宽
                         {
                             this.state.solutions.indexOf('2') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-3" onTouchStart={this.select.bind(this, '3')}>
+                    <span className="text-3" onClick={this.select.bind(this, '3')}>
                         胳膊粗
                         {
                             this.state.solutions.indexOf('3') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
 
-                    <span className="text-4" onTouchStart={this.select.bind(this, '4')}>
+                    <span className="text-4" onClick={this.select.bind(this, '4')}>
                         小粗腿
                         {
                             this.state.solutions.indexOf('4') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-5" onTouchStart={this.select.bind(this, '5')}>
+                    <span className="text-5" onClick={this.select.bind(this, '5')}>
                         脖子粗
                         {
                             this.state.solutions.indexOf('5') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-6" onTouchStart={this.select.bind(this, '6')}>
+                    <span className="text-6" onClick={this.select.bind(this, '6')}>
                         大胸
                         {
                             this.state.solutions.indexOf('6') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
 
-                    <span className="text-7" onTouchStart={this.select.bind(this, '7')}>
+                    <span className="text-7" onClick={this.select.bind(this, '7')}>
                         平胸
                         {
                             this.state.solutions.indexOf('7') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-8" onTouchStart={this.select.bind(this, '8')}>
+                    <span className="text-8" onClick={this.select.bind(this, '8')}>
                         PP大
                         {
                             this.state.solutions.indexOf('8') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-9" onTouchStart={this.select.bind(this, '9')}>
+                    <span className="text-9" onClick={this.select.bind(this, '9')}>
                         小短腿
                         {
                             this.state.solutions.indexOf('9') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
@@ -766,45 +766,45 @@ class SolutionBoy extends Component {
             <section className="solutions-area">
                 <div className="solution-box-boy">
                     <img src="/assets/img/suit/solution-2.jpg" width="276" height="323" />
-                    <span className="text-1" onTouchStart={this.select.bind(this, '1')}>
+                    <span className="text-1" onClick={this.select.bind(this, '1')}>
                         脸大
                         {
                             this.state.solutions.indexOf('1') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-2" onTouchStart={this.select.bind(this, '2')}>
+                    <span className="text-2" onClick={this.select.bind(this, '2')}>
                         肩宽
                         {
                             this.state.solutions.indexOf('2') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-3" onTouchStart={this.select.bind(this, '5')}>
+                    <span className="text-3" onClick={this.select.bind(this, '5')}>
                         啤酒肚
                         {
                             this.state.solutions.indexOf('5') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
 
-                    <span className="text-4" onTouchStart={this.select.bind(this, '3')}>
+                    <span className="text-4" onClick={this.select.bind(this, '3')}>
                         小粗腿
                         {
                             this.state.solutions.indexOf('3') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-5" onTouchStart={this.select.bind(this, '4')}>
+                    <span className="text-5" onClick={this.select.bind(this, '4')}>
                         脖子粗
                         {
                             this.state.solutions.indexOf('4') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
-                    <span className="text-6" onTouchStart={this.select.bind(this, '7')}>
+                    <span className="text-6" onClick={this.select.bind(this, '7')}>
                         翘臀
                         {
                             this.state.solutions.indexOf('7') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
                         }
                     </span>
 
-                    <span className="text-7" onTouchStart={this.select.bind(this, '6')}>
+                    <span className="text-7" onClick={this.select.bind(this, '6')}>
                         小短腿
                         {
                             this.state.solutions.indexOf('6') != -1 ? <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span> : null
@@ -856,7 +856,7 @@ class StyleGirl extends Component {
         return (
             <ul className="box flex-box style-area">
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('1') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '1')}>
+                    <div className={this.state.styles.indexOf('1') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '1')}>
                         <img src="/assets/img/suit/style-2-1.jpg" />
                     </div>
                     <div className="text-center">
@@ -869,7 +869,7 @@ class StyleGirl extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('2') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '2')}>
+                    <div className={this.state.styles.indexOf('2') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '2')}>
                         <img src="/assets/img/suit/style-2-2.jpg" />
                     </div>
                     <div className="text-center">
@@ -882,7 +882,7 @@ class StyleGirl extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('3') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '3')}>
+                    <div className={this.state.styles.indexOf('3') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '3')}>
                         <img src="/assets/img/suit/style-2-3.jpg" />
                     </div>
                     <div className="text-center">
@@ -896,7 +896,7 @@ class StyleGirl extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('4') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '4')}>
+                    <div className={this.state.styles.indexOf('4') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '4')}>
                         <img src="/assets/img/suit/style-2-4.jpg" />
                     </div>
                     <div className="text-center">
@@ -909,7 +909,7 @@ class StyleGirl extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('5') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '5')}>
+                    <div className={this.state.styles.indexOf('5') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '5')}>
                         <img src="/assets/img/suit/style-2-5.jpg" />
                     </div>
                     <div className="text-center">
@@ -922,7 +922,7 @@ class StyleGirl extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('6') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '6')}>
+                    <div className={this.state.styles.indexOf('6') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '6')}>
                         <img src="/assets/img/suit/style-2-6.jpg" />
                     </div>
                     <div className="text-center">
@@ -978,7 +978,7 @@ class StyleBoy extends Component {
         return (
             <ul className="box flex-box style-area">
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('1') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '1')}>
+                    <div className={this.state.styles.indexOf('1') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '1')}>
                         <img src="/assets/img/suit/style-1-1.jpg" />
                     </div>
                     <div className="text-center">
@@ -991,7 +991,7 @@ class StyleBoy extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('2') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '2')}>
+                    <div className={this.state.styles.indexOf('2') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '2')}>
                         <img src="/assets/img/suit/style-1-2.jpg" />
                     </div>
                     <div className="text-center">
@@ -1004,7 +1004,7 @@ class StyleBoy extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('3') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '3')}>
+                    <div className={this.state.styles.indexOf('3') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '3')}>
                         <img src="/assets/img/suit/style-1-3.jpg" />
                     </div>
                     <div className="text-center">
@@ -1018,7 +1018,7 @@ class StyleBoy extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('4') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '4')}>
+                    <div className={this.state.styles.indexOf('4') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '4')}>
                         <img src="/assets/img/suit/style-1-4.jpg" />
                     </div>
                     <div className="text-center">
@@ -1031,7 +1031,7 @@ class StyleBoy extends Component {
                     </div>
                 </li>
                 <li className="item-2">
-                    <div className={this.state.styles.indexOf('5') != -1 ? "text-center style active" : "text-center style"} onTouchStart={this.select.bind(this, '5')}>
+                    <div className={this.state.styles.indexOf('5') != -1 ? "text-center style active" : "text-center style"} onClick={this.select.bind(this, '5')}>
                         <img src="/assets/img/suit/style-1-5.jpg" />
                     </div>
                     <div className="text-center">

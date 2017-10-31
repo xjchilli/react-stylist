@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import IM from '../../page/component/IM';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 
 
@@ -34,9 +34,9 @@ DataLoad.defaultProps = {
 //底部tab
 class Footer extends Component {
 
-    redirect() {
-        this.context.router.history.push('/needMatch');
-    }
+    // redirect() {
+    //     this.context.router.history.push('/needMatch');
+    // }
 
     render() {
         let tab = this.props.tab;
@@ -54,8 +54,11 @@ class Footer extends Component {
                         <p>搭配师</p>
                     </NavLink>
                 </li>
-                <li onTouchStart={this.redirect.bind(this)}>
-                    <img className="da-img" src='/assets/img/icon/tab-3-1.png' />
+                <li>
+                    <NavLink to="/needMatch" >
+                        <img className="da-img" src='/assets/img/icon/tab-3-1.png' />
+
+                    </NavLink>
                 </li>
                 <li>
                     <NavLink to="/fashionMoment" activeClassName={tab == 4 ? "active" : ""}>
@@ -74,9 +77,9 @@ class Footer extends Component {
     }
 }
 
-Footer.contextTypes = {
-    router: PropTypes.object.isRequired
-};
+// Footer.contextTypes = {
+//     router: PropTypes.object.isRequired
+// };
 
 
 class MyNews extends IM {

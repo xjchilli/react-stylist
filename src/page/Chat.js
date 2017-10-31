@@ -24,6 +24,7 @@ class List extends Component {
         this.chat = (e) => {
             //查看大图片
             if (ToolDps.CName.hasClass(e.target, 'previewBigImg')) {
+                console.log('1');
                 let url = e.target.getAttribute('bigimgurl');
                 this.props.previewImg(url);
                 return;
@@ -704,6 +705,5 @@ class Chat extends IM {
     }
 }
 
-// export default Chat;
 
 export default connect((state) => { return { MyNews: state.MyNews }; }, action('setNews'))(Chat);

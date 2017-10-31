@@ -8,14 +8,18 @@
  *
  * {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
  */
-import React, {Component} from 'react';
+import React from 'react';
 
 
-class PreviewImg extends Component {
+class PreviewImg extends React.Component {   
+    hide(event) {
+        event.preventDefault();
+        this.props.hidePreviewBigImg();
+    }
     render() {
         return (
-            <div className="preview-container" onClick={this.props.hidePreviewBigImg}>
-                <img src={this.props.url} alt="" onClick={this.props.hidePreviewBigImg}/>
+            <div className="preview-container" onClick={this.hide.bind(this)}>
+                <img src={this.props.url} alt="" />
             </div>
         )
     }

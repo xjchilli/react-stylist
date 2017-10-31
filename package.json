@@ -57,6 +57,7 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
+    "react-fastclick": "^3.0.2",
     "react-lazyload": "^2.2.7",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",
