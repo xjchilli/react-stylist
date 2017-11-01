@@ -39,7 +39,7 @@ class FashionMoment extends Component {
         let imgW = window.innerWidth / 2 - 10;//布局图片宽度
         for (let i = 0; i < data.length; i++) {
             let rate = imgW / data[i].width;//比率
-            let height = data[i].height * rate;
+            let height = data[i].height * rate + 100;
             if (col1H <= col2H) {
                 col1Imgs.push(data[i]);
                 col1H += height;

@@ -91,11 +91,11 @@ class MyNews extends IM {
     }
 
     componentDidMount() {
-        // this.signature((data) => {
-        //     this.login(data, () => {
-        //         this.getFriends();
-        //     });
-        // });
+        this.signature((data) => {
+            this.login(data, () => {
+                this.getFriends();
+            });
+        });
     }
 
 

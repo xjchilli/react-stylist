@@ -238,7 +238,7 @@ class Profile extends Component {
                         </dd>
                     </dl>
                     <h6 className="title">希望能解决的问题</h6>
-                    <ul className="flex-box solutions">
+                    <ul className="flex-box solutions" style={{borderBottomWidth:ToolDps.iphone ? '0.3px' : '1px'}}>
                         {
                             problemValues.map((solution, index) => {
                                 return index < 4 ? <li className="item-4" key={index}>{solution}</li> : null
@@ -247,7 +247,7 @@ class Profile extends Component {
                     </ul>
                     {
                         problemValues.length > 4 ? (
-                            <ul className="flex-box solutions">
+                            <ul className="flex-box solutions" style={{borderBottomWidth:ToolDps.iphone ? '0.3px' : '1px'}}>
                                 {
                                     problemValues.map((solution, index) => {
                                         return index > 3 ? <li className="item-4" key={index}>{solution}</li> : null
@@ -257,7 +257,7 @@ class Profile extends Component {
                         ) : null
                     }
                     <h6 className="title">喜欢的穿衣风格</h6>
-                    <ul className="flex-box styles">
+                    <ul className="flex-box styles" style={{borderBottomWidth:ToolDps.iphone ? '0.3px' : '1px'}}>
                         {
                             styleValues.map((style, index) => {
                                 return index < 3 ? <li className="item-3" key={index}>{style}</li> : null
@@ -266,7 +266,7 @@ class Profile extends Component {
                     </ul>
                     {
                         problemValues.length > 3 ? (
-                            <ul className="flex-box styles">
+                            <ul className="flex-box styles" style={{borderBottomWidth:ToolDps.iphone ? '0.3px' : '1px'}}>
                                 {
                                     styleValues.map((style, index) => {
                                         return index > 2 ? <li className="item-3" key={index}>{style}</li> : null

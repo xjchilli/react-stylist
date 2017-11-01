@@ -25,7 +25,7 @@ class DapeisInfo extends Component {
             id
         } = this.props.collocation;
         return (
-            <header>
+            <header style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
                 <div className="item">
                     <Link to={"/dpsProfile?collocationId=" + id}>
                         <img src={headImg} alt="" />
@@ -170,8 +170,8 @@ class WatchDps extends React.Component {
 
     render() {
         return (
-            <section className="watch-dps-area">
-                <p className="watch-title">关注搭配师，看更多TA的好文章</p>
+            <section className="watch-dps-area" style={{ borderWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
+                <p className="watch-title" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>关注搭配师，看更多TA的好文章</p>
                 <ul className="flex-box">
                     <li>
                         <Link to={"/dpsProfile?collocationId=" + this.state.collocation.id}>
@@ -195,29 +195,16 @@ class WatchDps extends React.Component {
  * 评论
  */
 class Comment extends Component {
-    constructor(props) {
-        super(props);
-        let { id } = this.props.plan;
-        this.state = {
-            planId: id, //方案id
-            arrays: [], //评论列表
-        }
-    }
-
     componentDidMount() {
         ToolDps.get('/wx/comment/getPlan', {
-            planId: this.state.planId
+            planId: this.props.plan.id
         }).then((res) => {
             if (res.succ) {
                 this.props.setCommentNum(res.pager.arrays.length);
-                this.setState({
-                    arrays: res.pager.arrays
-                })
+                this.props.addComment(res.pager.arrays);
             }
         });
     }
-
-
 
     render() {
         return (
@@ -225,9 +212,9 @@ class Comment extends Component {
                 <div className="comment-num">{this.props.commentTotalNum}次评论</div>
                 <ul className="comment-list">
                     {
-                        this.state.arrays.map((item, index) => {
+                        this.props.commentList.map((item, index) => {
                             return (
-                                <li key={index}>
+                                <li key={index} style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
                                     <section className="box">
                                         <div className="item">
                                             <img src={item.headImg} alt="" />
@@ -248,7 +235,7 @@ class Comment extends Component {
                                     {
                                         item.reply.length > 0 ?
                                             (
-                                                <section className="dps-reply-box">
+                                                <section className="dps-reply-box" style={{ borderTopWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
                                                     {
                                                         item.reply.map((data, i) => {
                                                             return <AuthorReply data={data} key={i} />
@@ -282,12 +269,20 @@ class UserComment extends React.Component {
             msgText: '', //提示内容
             newCommentContent: ''
         }
+        this.time = 0;
     }
 
     componentDidMount() {
-        // autosize(document.querySelector(this.textarea));//textarea高度自适应
+        autosize(this.textarea);//textarea高度自适应
         this.textarea.focus();
-        window.scrollTo(0, 100000);
+        this.time = setTimeout(function () {
+            window.scrollTo(0, 100000);
+        }, 200)
+
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.time);
     }
 
     /**
@@ -299,20 +294,16 @@ class UserComment extends React.Component {
         this.setState({
             newCommentContent: '',
         })
-        // document.querySelector('#J-input').style.height = "3.5rem";
         ToolDps.post('/wx/comment/plan', {
             content: this.state.newCommentContent,
             planId: this.props.plan.id
         }).then((res) => {
             if (res.succ) {
-                console.log(res);
                 this.props.hide();
-                // let commentArr = Array.prototype.slice.apply(this.state.arrays);
-                // commentArr.splice(0, 0, res.data);
+                let commentArr = Array.prototype.slice.apply(this.props.commentList);
+                commentArr.splice(0, 0, res.data);
                 this.props.setCommentNum(Number(this.props.commentTotalNum) + 1);
-                // this.setState({
-                //     arrays: commentArr
-                // })
+                this.props.addComment(commentArr);
             } else {
                 this.setState({
                     msgShow: true,
@@ -327,7 +318,7 @@ class UserComment extends React.Component {
             <section className="user-to-comment-area" >
                 <div className="bg" onClick={this.props.hide}></div>
                 <div className="box">
-                    <textarea ref={(el) => { this.textarea = el; }} placeholder="说说你的想法吧~" value={this.state.newCommentContent} onChange={(e) => { this.setState({ newCommentContent: e.target.value }) }} />
+                    <textarea style={{ borderWidth: ToolDps.iphone ? '0.5px' : '1px' }} ref={(el) => { this.textarea = el; }} placeholder="说说你的想法吧~" value={this.state.newCommentContent} onChange={(e) => { this.setState({ newCommentContent: e.target.value }) }} />
                     <button className="btn" onClick={this.toComment.bind(this)}>发表评论</button>
                 </div>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
@@ -402,7 +393,7 @@ class Footer extends Component {
 
     render() {
         return (
-            <footer>
+            <footer style={{ borderTopWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
                 <section className="to-write" onClick={() => { this.setState({ toComment: true }) }}>
                     <span className="icon icon-write"></span>
                     写下你的评论...
@@ -419,7 +410,7 @@ class Footer extends Component {
                         </a>
                     </li>
                 </ul>
-                {this.state.toComment ? <UserComment commentTotalNum={this.props.commentTotalNum} setCommentNum={this.props.setCommentNum} plan={this.props.plan} hide={() => { this.setState({ toComment: false }) }} /> : null}
+                {this.state.toComment ? <UserComment commentTotalNum={this.props.commentTotalNum} setCommentNum={this.props.setCommentNum} commentList={this.props.commentList} addComment={this.props.addComment} plan={this.props.plan} hide={() => { this.setState({ toComment: false }) }} /> : null}
             </footer>
         )
     }
@@ -428,14 +419,7 @@ class Footer extends Component {
 class FashionMomentDetail extends Component {
     constructor(props) {
         super(props);
-        let {
-            data: {
-                awardUserAvatar,
-            collocation,
-            plan,
-            concern
-            }
-        } = props.state;
+        let { awardUserAvatar, collocation, plan, concern } = props.data;
         this.state = {
             awardUserAvatar: awardUserAvatar,
             collocation: collocation,
@@ -459,6 +443,16 @@ class FashionMomentDetail extends Component {
             desc: p.textContent, // 分享描述
             link: window.location.href.split('#')[0], // 分享链接 
             imgUrl: this.state.plan.masterImage, // 分享图标
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let { awardUserAvatar, collocation, plan, concern } = nextProps.data;
+        this.setState({
+            awardUserAvatar: awardUserAvatar,
+            collocation: collocation,
+            plan: plan,
+            concern: concern,
         });
     }
 
@@ -501,22 +495,14 @@ class FashionMomentDetail extends Component {
     }
 
     render() {
-        // let {
-        //     data: {
-        //         awardUserAvatar,
-        //         collocation,
-        //         plan
-        //         }
-        // } = this.props.state;
-
         return (
             <section className="fashionMomentDetailArea">
                 <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
                 <Content plan={this.state.plan} />
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />
                 <WatchDps collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
-                <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
-                <Footer plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} />
+                <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} commentList={this.state.commentList} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
+                <Footer plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} commentList={this.state.commentList} addComment={this.addComment.bind(this)} />
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
@@ -539,7 +525,7 @@ class Main extends Component {
         if (data) {
             succ = data.succ;
         }
-        let main = succ ? <FashionMomentDetail {...this.props} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = succ ? <FashionMomentDetail data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
         return main;
     }
 }
