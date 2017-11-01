@@ -62,7 +62,7 @@ class DpsProfile extends Component {
         let sex = collocation.sex;
         return (
             <section className="full-page dps-profile-page">
-                <header>
+                <header style={{ backgroundImage: 'url(' + collocation.backgroundImg + ')' }}>
                     <ul className="flex-box">
                         <li>
                             <div className="head-img" style={{ backgroundImage: 'url(' + collocation.headImg + ')' }} onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: collocation.headImg }) }}>

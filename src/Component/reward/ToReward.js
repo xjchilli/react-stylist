@@ -200,6 +200,13 @@ class ToReward extends Component {
         });
     }
 
+    /**
+     * 隐藏打赏窗口
+     */
+    hide(e){
+        e.preventDefault();
+        this.props.hideToReward()
+    }
 
     render() {
         return (
@@ -232,7 +239,7 @@ class ToReward extends Component {
                             微信支付
                         </span>
                     </div>
-                    <span className="close-btn" onClick={() => { this.props.hideToReward() }}>
+                    <span className="close-btn" onClick={this.hide.bind(this)}>
                         <svg viewBox="0 0 1024 1024" className="icon-svg-close">
                             <use xlinkHref="/assets/img/icon.svg#svg-close" />
                         </svg>

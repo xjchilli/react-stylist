@@ -10,6 +10,21 @@ import { ToolDps } from '../ToolDps';
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            orderLoad: false,//订单数量是否查询完成
+            orderData: null//订单数
+        }
+    }
+
+    componentDidMount() {
+        ToolDps.get(' /wx/user/getMyCenter').then((res) => {
+            if (res.succ) {
+                this.setState({
+                    orderLoad: true,
+                    orderData: res.data
+                })
+            }
+        });
     }
 
     render() {
@@ -18,7 +33,7 @@ class Main extends Component {
             loadAnimation,
             loadMsg
         } = this.props.state;
-        let main = data.succ ? <My data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = data.succ && this.state.orderLoad ? <My data={data} orderData={this.state.orderData} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={''} />;
 
         return main;
     }
@@ -36,13 +51,13 @@ class My extends Component {
     }
 
     redirect(status) {
-        ToolDps.sessionItem('orderStatus',status);
+        ToolDps.sessionItem('orderStatus', status);
         this.context.router.history.push('/orderList');
     }
 
 
     render() {
-        let { data } = this.props;
+        let { data, orderData } = this.props;
         return (
             <section className="my-page">
                 <Footer tab="5" />
@@ -54,19 +69,27 @@ class My extends Component {
                     <div className="all" onClick={this.redirect.bind(this, '')}>全部订单</div>
                     <ul className="flex-box">
                         <li className="item-5 text-center" onClick={this.redirect.bind(this, '0')}>
-                            <span className="icon icon-wait-pay"></span>
+                            <span className="icon icon-wait-pay">
+                                {orderData.orderWaitPayTotal === 0 ? null : <i className="num">{orderData.orderWaitPayTotal}</i>}
+                            </span>
                             <p className="text-center">待付款</p>
                         </li>
                         <li className="item-5 text-center" onClick={this.redirect.bind(this, '1')}>
-                            <span className="icon icon-publish"></span>
+                            <span className="icon icon-publish">
+                                {orderData.orderReleaseTotal === 0 ? null : <i className="num">{orderData.orderReleaseTotal}</i>}
+                            </span>
                             <p className="text-center">发布中</p>
                         </li>
                         <li className="item-5 text-center" onClick={this.redirect.bind(this, '2')}>
-                            <span className="icon icon-serving"></span>
+                            <span className="icon icon-serving">
+                                {orderData.orderServiceTotal === 0 ? null : <i className="num">{orderData.orderServiceTotal}</i>}
+                            </span>
                             <p className="text-center">服务中</p>
                         </li>
                         <li className="item-5 text-center" onClick={this.redirect.bind(this, '3')}>
-                            <span className="icon icon-wait-comment"></span>
+                            <span className="icon icon-wait-comment">
+                                {orderData.orderWaitCommentTotal === 0 ? null : <i className="num">{orderData.orderWaitCommentTotal}</i>}
+                            </span>
                             <p className="text-center">待评价</p>
                         </li>
                         <li className="item-5 text-center" onClick={this.redirect.bind(this, '10')}>

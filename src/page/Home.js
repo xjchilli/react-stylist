@@ -64,9 +64,8 @@ class Home extends Component {
             col2H = 0;//时尚圈精选图片2列高度
         let data = fashionListImg;
         let imgW = window.innerWidth / 2 - 10;//布局图片宽度
-        let rate = imgW / fashionListImg[0].width;//比率
-
         for (let i = 0; i < data.length; i++) {
+            let rate = imgW / data[i].width;//比率
             let height = data[i].height * rate;
             if (col1H <= col2H) {
                 col1Imgs.push(data[i]);
@@ -198,7 +197,7 @@ class Home extends Component {
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
                                                 <div className="zan">
-                                                    <img src={item.agreeValue === 1 ? "/assets/img/icon/zan-active.jpg" : "/assets/img/icon/zan.jpg"} className="icon" />
+                                                    {item.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
                                                     {item.agreeNum}
                                                 </div>
                                             </div>
@@ -226,7 +225,7 @@ class Home extends Component {
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
                                                 <div className="zan">
-                                                    <img src={item.agreeValue === 1 ? "/assets/img/icon/zan-active.jpg" : "/assets/img/icon/zan.jpg"} className="icon" />
+                                                    {item.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
                                                     {item.agreeNum}
                                                 </div>
                                             </div>

@@ -57,7 +57,6 @@ class Footer extends Component {
                 <li>
                     <NavLink to="/needMatch" >
                         <img className="da-img" src='/assets/img/icon/tab-3-1.png' />
-
                     </NavLink>
                 </li>
                 <li>
@@ -92,11 +91,11 @@ class MyNews extends IM {
     }
 
     componentDidMount() {
-        this.signature((data) => {
-            this.login(data, () => {
-                this.getFriends();
-            });
-        });
+        // this.signature((data) => {
+        //     this.login(data, () => {
+        //         this.getFriends();
+        //     });
+        // });
     }
 
 

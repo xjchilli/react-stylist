@@ -205,7 +205,7 @@ class DeleteImg extends Component {
         return (
             <section className="delete-img-area">
                 <section className="btn-area">
-                    <button className="btn" onClick={this.delete.bind(this)}>删除这件衣服</button>
+                    <button className="btn" onClick={this.delete.bind(this)}>删除</button>
                     <button className="btn" onClick={this.props.close}>取消</button>
                 </section>
             </section>

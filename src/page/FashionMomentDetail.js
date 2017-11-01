@@ -11,7 +11,6 @@ import classNames from 'classnames';
 import { DataLoad, GetData, Msg, PreviewImg, ToReward } from "../Component/index";
 import ShareConfig from './component/ShareConfig';
 import autosize from 'autosize';
-import { News } from '../Component/index';
 
 
 /**
@@ -26,22 +25,28 @@ class DapeisInfo extends Component {
             id
         } = this.props.collocation;
         return (
-            <Link to={"/dpsProfile?collocationId=" + id}>
-                <header>
-                    <div className="item">
+            <header>
+                <div className="item">
+                    <Link to={"/dpsProfile?collocationId=" + id}>
                         <img src={headImg} alt="" />
-                        {sex && sex === 2 ? (
+                    </Link>
+                    {/* {sex && sex === 2 ? (
                             <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                         ) : (
                                 <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
                             )
-                        }
-                    </div>
-                    <div className="item">
-                        <p className="nickname">{nickName}</p>
-                    </div>
-                </header>
-            </Link>
+                        } */}
+                </div>
+                <div className="item">
+                    <p className="nickname">{nickName}</p>
+                </div>
+
+                <div className="item">
+                    <Link to={"/dpsProfile?collocationId=" + id + "&tab=2"} className='btn question-btn'>咨询</Link>
+                    <button className={this.props.concern ? 'btn watch-btn active' : 'btn watch-btn'} onClick={this.props.watchOrCancel}>{this.props.concern ? "已关注" : "+关注"}</button>
+                </div>
+            </header>
+
         )
     }
 }
@@ -80,14 +85,14 @@ class Content extends Component {
     render() {
         let {
             planName,
-            createTime,
+            wxCreateTime,
             // smallImg,
             content
         } = this.props.plan;
         return (
             <section className="content">
                 <h1>{planName}</h1>
-                <time>{createTime}</time>
+                <time>{"发表于" + wxCreateTime}</time>
                 <div className="text" dangerouslySetInnerHTML={{ __html: content }}></div>
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section >
@@ -132,8 +137,8 @@ class ReWard extends Component {
     render() {
         return (
             <section className="reward-area">
-                <p>打赏一杯咖啡吧~</p>
-                <button className="btn" onClick={() => { this.setState({ toReward: true }) }}>打赏</button>
+                <p className="text-center">打赏一杯咖啡吧~</p>
+                <button className="btn" onClick={() => { this.setState({ toReward: true }) }}>打赏支持</button>
                 {this.state.awardUserAvatar.length > 0 ? <p className="reward-num">{this.state.awardUserAvatar.length}人打赏</p> : null}
                 <div className="reward-person">
                     {
@@ -150,29 +155,56 @@ class ReWard extends Component {
     }
 }
 
+/**
+ * 关注搭配师
+ */
+class WatchDps extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            collocation: props.collocation
+        }
 
+    }
+
+
+    render() {
+        return (
+            <section className="watch-dps-area">
+                <p className="watch-title">关注搭配师，看更多TA的好文章</p>
+                <ul className="flex-box">
+                    <li>
+                        <Link to={"/dpsProfile?collocationId=" + this.state.collocation.id}>
+                            <img src={this.state.collocation.headImg} />
+                        </Link>
+                    </li>
+                    <li>
+                        <h4 className="dps-nickname">{this.state.collocation.nickName}</h4>
+                        <p className="introduce">{this.state.collocation.honor}</p>
+                    </li>
+                    <li>
+                        <button className={this.props.concern ? "btn active" : "btn"} onClick={this.props.watchOrCancel}>{this.props.concern ? "已关注" : "+关注"}</button>
+                    </li>
+                </ul>
+            </section>
+        )
+    }
+}
 
 /**
  * 评论
  */
 class Comment extends Component {
-
     constructor(props) {
         super(props);
-        let {
-            id
-        } = this.props.plan;
+        let { id } = this.props.plan;
         this.state = {
-            msgShow: false,
-            msgText: '', //提示内容
             planId: id, //方案id
             arrays: [], //评论列表
-            newCommentContent: ''
         }
     }
 
     componentDidMount() {
-        autosize(document.querySelector('#J-input'));//textarea高度自适应
         ToolDps.get('/wx/comment/getPlan', {
             planId: this.state.planId
         }).then((res) => {
@@ -185,27 +217,102 @@ class Comment extends Component {
         });
     }
 
+
+
+    render() {
+        return (
+            <section className="comment-area" id="user-comment" >
+                <div className="comment-num">{this.props.commentTotalNum}次评论</div>
+                <ul className="comment-list">
+                    {
+                        this.state.arrays.map((item, index) => {
+                            return (
+                                <li key={index}>
+                                    <section className="box">
+                                        <div className="item">
+                                            <img src={item.headImg} alt="" />
+                                            {/* {item.sex && item.sex === 2 ? (
+                                                <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                            ) : (
+                                                    <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
+                                                )
+                                            } */}
+                                            {/* <i className="gender">{item.sex === 1 ? '♂' : '♀'}</i> */}
+                                        </div>
+                                        <div className="item">
+                                            <p className="nickname">{item.nickName}</p>
+                                            <time>{item.time}</time>
+                                            <p className="comment-content">{item.content}</p>
+                                        </div>
+                                    </section>
+                                    {
+                                        item.reply.length > 0 ?
+                                            (
+                                                <section className="dps-reply-box">
+                                                    {
+                                                        item.reply.map((data, i) => {
+                                                            return <AuthorReply data={data} key={i} />
+                                                        })
+                                                    }
+                                                </section>
+                                            ) : null
+                                    }
+
+
+                                </li>
+                            )
+                        })
+                    }
+
+                </ul>
+
+            </section>
+        )
+    }
+}
+
+/**
+ * 用户评论
+ */
+class UserComment extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
+            newCommentContent: ''
+        }
+    }
+
+    componentDidMount() {
+        // autosize(document.querySelector(this.textarea));//textarea高度自适应
+        this.textarea.focus();
+        window.scrollTo(0, 100000);
+    }
+
     /**
-     * 评论
-     * */
+    * 评论
+    * */
     toComment() {
         let newCommentContent = this.state.newCommentContent;
         if (!newCommentContent.trim()) return;
         this.setState({
             newCommentContent: '',
         })
-        document.querySelector('#J-input').style.height = "3.5rem";
+        // document.querySelector('#J-input').style.height = "3.5rem";
         ToolDps.post('/wx/comment/plan', {
             content: this.state.newCommentContent,
-            planId: this.state.planId
+            planId: this.props.plan.id
         }).then((res) => {
             if (res.succ) {
-                let commentArr = Array.prototype.slice.apply(this.state.arrays);
-                commentArr.splice(0, 0, res.data);
-                this.props.setCommentNum(commentArr.length);
-                this.setState({
-                    arrays: commentArr
-                })
+                console.log(res);
+                this.props.hide();
+                // let commentArr = Array.prototype.slice.apply(this.state.arrays);
+                // commentArr.splice(0, 0, res.data);
+                this.props.setCommentNum(Number(this.props.commentTotalNum) + 1);
+                // this.setState({
+                //     arrays: commentArr
+                // })
             } else {
                 this.setState({
                     msgShow: true,
@@ -217,47 +324,12 @@ class Comment extends Component {
 
     render() {
         return (
-            <section className="comment-area">
-                <div id="user-comment" className="user-comment">
-                    <div className="item">
-                        <textarea id="J-input" placeholder="说说你的想法吧~" value={this.state.newCommentContent} onChange={(e) => { this.setState({ newCommentContent: e.target.value }) }}/>
-                    </div>
-                    <div className="item">
-                        <button className="btn" onClick={this.toComment.bind(this)}>发送</button>
-                    </div>
+            <section className="user-to-comment-area" >
+                <div className="bg" onClick={this.props.hide}></div>
+                <div className="box">
+                    <textarea ref={(el) => { this.textarea = el; }} placeholder="说说你的想法吧~" value={this.state.newCommentContent} onChange={(e) => { this.setState({ newCommentContent: e.target.value }) }} />
+                    <button className="btn" onClick={this.toComment.bind(this)}>发表评论</button>
                 </div>
-                <ul className="comment-list">
-                    {
-                        this.state.arrays.map((item, index) => {
-                            return (
-                                <li key={index}>
-                                    <div className="item">
-                                        <img src={item.headImg} alt="" />
-                                        {item.sex && item.sex === 2 ? (
-                                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                                        ) : (
-                                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                                            )
-                                        }
-                                        {/* <i className="gender">{item.sex === 1 ? '♂' : '♀'}</i> */}
-                                    </div>
-                                    <div className="item">
-                                        <p className="nickname">{item.nickName}</p>
-                                        <time>{item.time}</time>
-                                        <p className="comment-content">{item.content}</p>
-                                        {
-                                            item.reply.map((data, i) => {
-                                                return <AuthorReply data={data} key={i} />
-                                            })
-                                        }
-
-                                    </div>
-                                </li>
-                            )
-                        })
-                    }
-
-                </ul>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
@@ -272,9 +344,10 @@ class AuthorReply extends Component {
         let data = this.props.data;
         return (
             <section className="reply-area">
-                <p className="author-nickname">作者回复</p>
-                <time>{data.createTime}</time>
-                <p className="comment-content">{data.content}</p>
+                <div className="comment-content">
+                    <span>{data.nickName + "的回复："}</span>
+                    {data.content}
+                </div>
             </section>
         )
     }
@@ -292,7 +365,7 @@ class Footer extends Component {
             agreeValue: agreeValue, //该用户是否点赞 0:未点赞，1已经点赞
             agreeNum: agreeNum, //	点赞数
             id: id, //方案id
-            commentTotalNum: this.props.commentTotalNum //评论总条数
+            toComment: false
         }
     }
 
@@ -300,7 +373,6 @@ class Footer extends Component {
         this.setState({
             agreeValue: nextProps.plan.agreeValue,
             agreeNum: nextProps.plan.agreeNum,
-            commentTotalNum: nextProps.commentTotalNum
         });
     }
 
@@ -329,29 +401,25 @@ class Footer extends Component {
 
 
     render() {
-        let agree = classNames('icon-svg-zan', {
-            'active': this.state.agreeValue === 1
-        })
         return (
             <footer>
-                <div className="item" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, this.state.id) : null}>
-                    <span className="agree" >
-                        <svg viewBox="0 0 200 200" className={agree} >
-                            <use xlinkHref="/assets/img/icon.svg#svg-zan" />
-                        </svg>
-                    </span>
-                    <p className="num">{this.state.agreeNum ? this.state.agreeNum : 0}</p>
-                </div>
-                <div className="item">
-                    <a href="#user-comment">
-                        <span className="agree" >
-                            <svg viewBox="0 0 1024 1024" className="icon-svg-comment" >
-                                <use xlinkHref="/assets/img/icon.svg#svg-comment" />
-                            </svg>
-                        </span>
-                        <p className="num">{this.state.commentTotalNum}</p>
-                    </a>
-                </div>
+                <section className="to-write" onClick={() => { this.setState({ toComment: true }) }}>
+                    <span className="icon icon-write"></span>
+                    写下你的评论...
+                </section>
+                <ul className="flex-box">
+                    <li className="item-2" onClick={this.state.agreeValue === 0 || !this.state.agreeValue ? this.zan.bind(this, this.state.id) : null}>
+                        {this.state.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
+                        <span className="num">{this.state.agreeNum ? this.state.agreeNum : 0}</span>
+                    </li>
+                    <li className="item-2">
+                        <a href="#user-comment">
+                            <span className="icon icon-msg"></span>
+                            <span className="num">{this.props.commentTotalNum}</span>
+                        </a>
+                    </li>
+                </ul>
+                {this.state.toComment ? <UserComment commentTotalNum={this.props.commentTotalNum} setCommentNum={this.props.setCommentNum} plan={this.props.plan} hide={() => { this.setState({ toComment: false }) }} /> : null}
             </footer>
         )
     }
@@ -362,13 +430,22 @@ class FashionMomentDetail extends Component {
         super(props);
         let {
             data: {
-                plan
+                awardUserAvatar,
+            collocation,
+            plan,
+            concern
             }
         } = props.state;
         this.state = {
+            awardUserAvatar: awardUserAvatar,
+            collocation: collocation,
             plan: plan,
+            concern: concern,
             commentTotalNum: 0, //评论总条数
             planId: plan.id, //方案id
+            msgShow: false,
+            msgText: '', //提示内容
+            commentList: []//评论数据
         };
     }
 
@@ -396,26 +473,51 @@ class FashionMomentDetail extends Component {
         });
     }
 
-    render() {
+    /**
+     * 添加评论数据
+     */
+    addComment(listData) {
+        this.setState({
+            commentList: listData
+        });
+    }
 
-        let {
-            data: {
-                awardUserAvatar,
-            collocation,
-            plan
+    /**
+     * 关注或者取关
+     */
+    watchOrCancel() {
+        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: this.state.collocation.id }).then((res) => {
+            if (res.succ) {
+                this.setState({
+                    concern: !this.state.concern
+                });
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: '操作失败' //提示内容
+                });
             }
-        } = this.props.state;
+        });
+    }
+
+    render() {
+        // let {
+        //     data: {
+        //         awardUserAvatar,
+        //         collocation,
+        //         plan
+        //         }
+        // } = this.props.state;
 
         return (
             <section className="fashionMomentDetailArea">
-                <div className="bgWhite box" >
-                    <DapeisInfo collocation={collocation} />
-                    <Content plan={plan} />
-                    <ReWard awardUserAvatar={awardUserAvatar} planId={this.state.planId} />
-                    <Comment plan={plan} setCommentNum={this.setCommentNum.bind(this)} />
-                </div>
-                <Footer plan={plan} commentTotalNum={this.state.commentTotalNum} />
-                <News/>
+                <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
+                <Content plan={this.state.plan} />
+                <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />
+                <WatchDps collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
+                <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
+                <Footer plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} />
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
