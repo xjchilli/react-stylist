@@ -85,7 +85,7 @@ class MyDps extends IM {
      */
     onMsgNotify(newMsgList) {
         let sess = newMsgList[0].sess;
-        console.log(sess)
+        // console.log(sess)
         this.updateSessDiv(sess.id(), 1, sess._impl.msgs, sess.time());
     }
 

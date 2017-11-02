@@ -572,11 +572,11 @@ class OrderDetail extends Component {
                     prestigeInfo ? (
                         <section className="skin-body">
                             <div className="skin-body-box">
-                                <img src={prestigeInfo.colorofskinImg+"?v=1"} height="65" />
+                                <img src={prestigeInfo.colorofskinImg + "?v=1"} height="65" />
                                 <p>{prestigeInfo.colorofskinValues}</p>
                             </div>
                             <div className="skin-body-box">
-                                <img src={prestigeInfo.bodySizeImg+"?v=1"} height="65" />
+                                <img src={prestigeInfo.bodySizeImg + "?v=1"} height="65" />
                                 <p>{prestigeInfo.bodySizeValues}</p>
                             </div>
                         </section>
@@ -668,18 +668,13 @@ class OrderDetail extends Component {
                     {/*订单已完成button*/}
                     {order.status === 10 ? <OrderFinish rewardShow={this.rewardShow.bind(this)} /> : null}
                 </section>
-
-
-
-
-
                 {/*评论窗口*/}
                 {this.state.commentLayer ? <ToCommnet commentLayerHide={this.commentLayerHide.bind(this)} collocation={collocation} order={order} msgLayerShow={this.msgLayerShow.bind(this)} endServiceTime={this.state.endServiceTime} /> : null}
                 {/*提示信息*/}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {/*打赏*/}
                 {this.state.toReward ? <ToReward rewardCallback={() => { }} hideToReward={() => { this.setState({ toReward: false }) }} url='/wx/order/award' id={order.ordreId} /> : null}
-                {order.couponsActiveId && order.status === 1 || order.status === 2 || order.status === 3 || order.status === 10 ? <RedPackage couponsActiveId={order.couponsActiveId} shawTip={() => { this.setState({ shareTip: true }) }} /> : null}
+                {(order.status === 1 || order.status === 2 || order.status === 3 || order.status === 10) && order.couponsActiveId ? <RedPackage couponsActiveId={order.couponsActiveId} shawTip={() => { this.setState({ shareTip: true }) }} /> : null}
                 {this.state.shareTip ? <RedPackageShareTip hideTip={() => { this.setState({ shareTip: false }) }} /> : null}
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>

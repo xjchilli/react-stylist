@@ -7,8 +7,7 @@ import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 import qs from 'query-string';
-import { Footer } from '../Component/index';
-import { News } from '../Component/index';
+import { Footer, News } from '../Component/index';
 
 class NeedMatch extends Component {
     constructor(props) {
@@ -44,6 +43,7 @@ class NeedMatch extends Component {
         }
     }
 
+
     /**
      * 
      * [verifyUser 验证是否绑定过手机]
@@ -64,7 +64,8 @@ class NeedMatch extends Component {
     }
     render() {
         return (
-            <section className="full-page to-match-page" onClick={this.hideTips.bind(this)}>
+            <section className="to-match-page" onClick={this.hideTips.bind(this)}>
+                <Footer tab="3" />
                 <img src="/assets/img/needMatch/head.jpg" className="response_img top-img" />
                 <h2 className="title">选择服务类型</h2>
                 <ul className="type-select">
@@ -84,7 +85,7 @@ class NeedMatch extends Component {
                                     </h3>
                                     <p className="introduce">{item.remarks}</p>
                                     <section className="price-item-box">
-                                        <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == (index + 1) ? 0 : (index + 1) }) }}>
+                                        <ul className="price-item" onTouchStart={() => { this.setState({ typeTips: this.state.typeTips == (index + 1) ? 0 : (index + 1) }) }}>
                                             {
                                                 item.items.map((list, i) => {
                                                     return (
