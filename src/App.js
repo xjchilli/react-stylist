@@ -5,12 +5,7 @@ import { Provider } from 'react-redux';
 // import initReactFastclick from 'react-fastclick';//处理react click失效问题
 // initReactFastclick();
 // var FastClick = require('fastclick');
-// if ('addEventListener' in document) {
-// 	document.addEventListener('DOMContentLoaded', function () {
-// 		FastClick.attach(document.body);
-// 	}, false);
-// }
-
+// FastClick.attach(document.body);
 
 //开发模式下用mock.js
 if (process.env.NODE_ENV !== 'production') {

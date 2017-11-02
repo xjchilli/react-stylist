@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ToolDps } from '../ToolDps';
 import { Msg, City, DataLoad, GetData, PreviewImg, Loading } from '../Component/index';
+var FastClick = require('fastclick');
 // import { is, fromJS } from 'immutable';
 // import flatpickr from 'flatpickr';
 // const zh = require("flatpickr/dist/l10n/zh.js").zh;
@@ -1273,6 +1274,10 @@ class CustomSuit extends Component {
         this._time = 0;
     }
 
+    componentDidMount(){
+        FastClick.attach(this.page);
+    }
+
     componentWillUnmount() {
         clearTimeout(this._time);
     }
@@ -1370,7 +1375,7 @@ class CustomSuit extends Component {
     render() {
         let percent = this.state.progress / 8 * 100;
         return (
-            <section className="full-page customsuit-page">
+            <section className="full-page customsuit-page" ref={(el) => this.page = el}>
                 <div className="progress">
                     <span className="num" style={{ width: percent + '%' }}></span>
                 </div>

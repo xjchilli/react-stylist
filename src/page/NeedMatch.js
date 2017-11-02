@@ -8,6 +8,8 @@ import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 import qs from 'query-string';
 import { Footer, News } from '../Component/index';
+var FastClick = require('fastclick');
+
 
 class NeedMatch extends Component {
     constructor(props) {
@@ -22,7 +24,7 @@ class NeedMatch extends Component {
     }
     componentDidMount() {
         document.title = "我要搭配";
-
+        FastClick.attach(this.page);
     }
 
     /**
@@ -64,7 +66,7 @@ class NeedMatch extends Component {
     }
     render() {
         return (
-            <section className="to-match-page" onClick={this.hideTips.bind(this)}>
+            <section className="to-match-page" ref={(el) => this.page = el} onClick={this.hideTips.bind(this)}>
                 <Footer tab="3" />
                 <img src="/assets/img/needMatch/head.jpg" className="response_img top-img" />
                 <h2 className="title">选择服务类型</h2>
@@ -85,7 +87,7 @@ class NeedMatch extends Component {
                                     </h3>
                                     <p className="introduce">{item.remarks}</p>
                                     <section className="price-item-box">
-                                        <ul className="price-item" onTouchStart={() => { this.setState({ typeTips: this.state.typeTips == (index + 1) ? 0 : (index + 1) }) }}>
+                                        <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == (index + 1) ? 0 : (index + 1) }) }}>
                                             {
                                                 item.items.map((list, i) => {
                                                     return (

@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import IM from '../../page/component/IM';
+var FastClick = require('fastclick');
 // import PropTypes from 'prop-types';
 
 
@@ -37,11 +38,14 @@ class Footer extends Component {
     // redirect() {
     //     this.context.router.history.push('/needMatch');
     // }
+    componentDidMount(){
+        FastClick.attach(this.footer);
+    }
 
     render() {
         let tab = this.props.tab;
         return (
-            <ul className="footer clear">
+            <ul className="footer clear" ref={(el) => this.footer = el}>
                 <li>
                     <NavLink to="/" activeClassName={tab == 1 ? "active" : ""}>
                         <span className={tab == 1 ? "icon icon-home-selected" : "icon icon-home-normal"}></span>
