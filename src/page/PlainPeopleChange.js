@@ -663,9 +663,9 @@ class Main extends Component {
                 let { info } = res;
                 let copyData = merged(this.state.data);
                 copyData.sex = info.sex;
-                copyData.age = info.age;
-                copyData.heigh = info.heigh;
-                copyData.weight = info.weight;
+                copyData.age = info.age || '24';
+                copyData.heigh = info.heigh || '165';
+                copyData.weight = info.weight || '60';
                 copyData.colorofskin = info.colorofskin;
                 copyData.bodySize = info.bodySize;
                 copyData.style = info.styles;
