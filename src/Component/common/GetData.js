@@ -94,7 +94,7 @@ const Main = (mySeting) => {
             */
             this.unmount = () => {
                 if (typeof this.get != 'undefined') {
-                    this.get.end();
+                    // this.get.end();
                     delete this.get;
                 }
                 this.state.scrollX = window.scrollX; //记录滚动条位置

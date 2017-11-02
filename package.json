@@ -49,6 +49,7 @@
     "better-scroll": "^1.2.6",
     "bundle-loader": "^0.5.5",
     "classnames": "^2.2.5",
+    "fastclick": "^1.0.6",
     "flatpickr": "^3.0.6",
     "immutable": "^3.8.1",
     "obj-merged": "^1.0.5",
