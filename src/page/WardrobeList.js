@@ -230,6 +230,7 @@ class WardrobeList extends Component {
             data: [],
             imgLoading: false//图片加载loading
         }
+        this.longPressT = 0;//长按定时
     }
 
     componentDidMount() {
@@ -363,23 +364,25 @@ class WardrobeList extends Component {
     /**
    * 长按
    */
-    longPress(e) {
+    longPress(gid, e) {
         e.preventDefault();
         this.pressStartTime = new Date();
+        this.longPressT = setTimeout(() => {
+            this.setState({
+                deleteImgWindow: true,
+                gid: gid
+            });
+        }, 500);
     }
 
 
     /**
      * 长按结束
      */
-    pressEnd(gid, bigImgUrl, e) {
-        let time = new Date().getTime() - this.pressStartTime;
-        if (time > 800) {
-            this.setState({
-                deleteImgWindow: true,
-                gid: gid
-            });
-        } else {
+    pressEnd(bigImgUrl) {
+        clearTimeout(this.longPressT);
+        console.log(new Date() - this.pressStartTime);
+        if ((new Date() - this.pressStartTime) < 500) {//点击
             this.setState({
                 previewBigImg: true,
                 bigImgUrl: bigImgUrl
@@ -398,7 +401,7 @@ class WardrobeList extends Component {
                                 this.state.data.map((item, index) => {
                                     return (
                                         <li className="item-3" key={index} >
-                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onTouchStart={this.longPress.bind(this)}  onTouchEnd={this.pressEnd.bind(this, item.id, item.imgUrl)} ></div>
+                                            <div id={"gid-" + item.id} className="img-box" style={{ backgroundImage: 'url(' + item.imgUrl + ')' }} onTouchStart={this.longPress.bind(this, item.id)} onTouchEnd={this.pressEnd.bind(this, item.imgUrl)} ></div>
                                         </li>
                                     )
                                 })
