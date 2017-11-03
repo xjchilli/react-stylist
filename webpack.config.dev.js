@@ -9,6 +9,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打�
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');//自动打开浏览器
 var vConsolePlugin = require('vconsole-webpack-plugin'); //手机网页调试面板
+var NpmInstallPlugin=require('npm-install-webpack-plugin');//自动安装依赖
 var HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
@@ -94,6 +95,16 @@ module.exports = {
     new OpenBrowserPlugin({//自动打开浏览器
       url: IPv4 + ':8000',
       browser: 'chrome'
+    }),
+    new NpmInstallPlugin({
+      // Use --save or --save-dev
+      dev: false,
+      // Install missing peerDependencies
+      peerDependencies: true,
+      // Reduce amount of console logging
+      quiet: false,
+      // npm command used inside company, yarn is not supported yet
+      npm: 'npm'
     })
   ],
   externals: {//不打包文件

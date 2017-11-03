@@ -141,7 +141,7 @@ class ReWard extends Component {
             <section className="reward-area">
                 <p className="text-center">打赏一杯咖啡吧~</p>
                 <button className="btn" onClick={() => { this.setState({ toReward: true }) }}>打赏支持</button>
-                {this.state.awardUserAvatar.length > 0 ? <p className="reward-num">{this.state.awardUserAvatar.length}人打赏</p> : null}
+                {this.state.awardUserAvatar.length > 0 ? <p className="reward-num text-center">{this.state.awardUserAvatar.length}人打赏</p> : null}
                 <div className="reward-person">
                     {
                         this.state.awardUserAvatar.map((url, index) => {
@@ -210,7 +210,7 @@ class Comment extends Component {
 
     render() {
         return (
-            <section className="comment-area"  name="user-comment">
+            <section className="comment-area" name="user-comment">
                 <div className="comment-num">{this.props.commentTotalNum}次评论</div>
                 <ul className="comment-list">
                     {
@@ -350,40 +350,26 @@ class Footer extends Component {
 
     constructor(props) {
         super(props);
-        let { agreeNum, agreeValue, id } = this.props.plan;
+        let { id } = this.props.plan;
         this.state = {
-            agreeValue: agreeValue, //该用户是否点赞 0:未点赞，1已经点赞
-            agreeNum: agreeNum, //	点赞数
             id: id, //方案id
             toComment: false,//去评论
             newCommentContent: ''//评论内容
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            agreeValue: nextProps.plan.agreeValue,
-            agreeNum: nextProps.plan.agreeNum,
-        });
-    }
 
     /**
      * 点赞
      * @planId 方案id
      */
     zan(planId) {
-        this.setState({
-            agreeValue: 1,
-            agreeNum: ++this.state.agreeNum
-        });
+        this.props.setZan(1, ++this.props.plan.agreeNum);
         ToolDps.post('/wx/fashion/agree', {
             planId: planId
         }).then((res) => {
             if (!res.succ) {
-                this.setState({
-                    agreeValue: 0,
-                    agreeNum: --this.state.agreeNum
-                });
+                this.props.setZan(0, --this.props.plan.agreeNum);
                 alert('点赞失败');
             }
         });
@@ -398,12 +384,12 @@ class Footer extends Component {
                     写下你的评论...
                 </section>
                 <ul className="flex-box">
-                    <li className="item-2" onClick={this.state.agreeValue === 0 ? this.zan.bind(this, this.state.id) : null}>
-                        {this.state.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
-                        <span className="num">{this.state.agreeNum ? this.state.agreeNum : 0}</span>
+                    <li className="item-2" onClick={this.props.plan.agreeValue === 0 ? this.zan.bind(this, this.state.id) : null}>
+                        {this.props.plan.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
+                        <span className="num">{this.props.plan.agreeNum ? this.props.plan.agreeNum : 0}</span>
                     </li>
                     <li className="item-2" >
-                        <Lk activeClass="active"  to="user-comment" spy={true} smooth={true} duration={500}>
+                        <Lk activeClass="active" to="user-comment" spy={true} smooth={true} duration={500}>
                             <span className="icon icon-msg"></span>
                             <span className="num">{this.props.commentTotalNum}</span>
                         </Lk>
@@ -476,6 +462,18 @@ class FashionMomentDetail extends Component {
     }
 
     /**
+     * 设置点赞
+     */
+    setZan(zanFlag, zanNum) {
+        let plan = this.state.plan;
+        plan.agreeValue = zanFlag;
+        plan.agreeNum = zanNum;
+        this.setState({
+            plan: plan
+        })
+    }
+
+    /**
      * 关注或者取关
      */
     watchOrCancel() {
@@ -501,7 +499,7 @@ class FashionMomentDetail extends Component {
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />
                 <WatchDps collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
                 <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} commentList={this.state.commentList} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
-                <Footer plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} commentList={this.state.commentList} addComment={this.addComment.bind(this)} />
+                <Footer plan={this.state.plan} setZan={this.setZan.bind(this)} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} commentList={this.state.commentList} addComment={this.addComment.bind(this)} />
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )

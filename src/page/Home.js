@@ -7,6 +7,7 @@ import { ToolDps } from '../ToolDps';
 import { Msg, DataLoad, Footer, News, GetData } from '../Component/index';
 
 
+
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -126,9 +127,9 @@ class Home extends Component {
                             this.state.slideshow.map((item, index) => {
                                 return (
                                     <div className="swiper-slide" key={index} >
-                                        <Link to="/needMatch?plain=true">
+                                        <a href={item.url}>
                                             <img className="response_img" src={item.img} />
-                                        </Link>
+                                        </a>
                                     </div>
                                 )
                             })
