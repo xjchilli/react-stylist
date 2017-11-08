@@ -236,6 +236,15 @@ class Main extends Component {
         });
     }
 
+
+    componentWillReceiveProps(nextProps) {
+        let { plain } = qs.parse(nextProps.location.search);//是否是首页跳转过来
+        this.setState({
+            plain: plain || null
+        });
+    }
+
+
     render() {
         let {
             data,

@@ -73,6 +73,9 @@ const Main = (mySeting) => {
                     success,
                     error
                 } = this.props.seting;
+                var { scrollX, scrollY } = this.state;
+                if (this.get) return false; //已经加载过
+                window.scrollTo(scrollX, scrollY); //设置滚动条位置
                 this.get = ToolDps.get(this.getUrl(), this.getData()).then((res) => {
                     this.state.loadMsg = '加载成功';
                     if (!res.succ) {
@@ -147,6 +150,14 @@ const Main = (mySeting) => {
         }
 
         /**
+         * 在组件的更新已经同步到 DOM 中之后立刻被调用。该方法不会在初始化渲染的时候调用。
+         * 使用该方法可以在组件更新之后操作 DOM 元素。
+         */
+        componentDidUpdate() {
+            this.redayDOM();
+        }
+
+        /**
          * 在组件接收到新的 props 的时候调用。在初始化渲染的时候，该方法不会调用
          */
         componentWillReceiveProps(np) {
@@ -160,6 +171,17 @@ const Main = (mySeting) => {
             this.initState(np);
 
         }
+
+        /**
+         * 在组件从 DOM 中移除的时候立刻被调用。
+         * 在该方法中执行任何必要的清理，比如无效的定时器，
+         * 或者清除在 componentDidMount 中创建的 DOM 元素
+         */
+        componentWillUnmount() {
+            this.unmount(); //地址栏已经发生改变，做一些卸载前的处理
+        }
+
+
 
         render() {
             return <this.props.seting.component {...this.props} state={this.state} />
