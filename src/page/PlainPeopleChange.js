@@ -658,10 +658,7 @@ class Time extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            loadAnimation: true,
-            loadMsg: '加载中...',
             data: props.state || null
         }
     }
@@ -669,9 +666,9 @@ class Main extends Component {
 
     componentDidMount() {
         ToolDps.get('/wx/user/info').then((res) => {
+            let copyData = merged(this.state.data);
             if (res.succ) {
                 let { info } = res;
-                let copyData = merged(this.state.data);
                 copyData.sex = info.sex;
                 copyData.age = info.age || '24';
                 copyData.heigh = info.heigh || '165';
@@ -681,17 +678,13 @@ class Main extends Component {
                 copyData.style = info.styles;
                 copyData.contact = res.contact;
                 copyData.professional = info.professional;
-                this.props.setPlainChange(copyData);
-                this.setState({
-                    loadAnimation: false,
-                    loadMsg: '加载成功'
-                });
+                copyData.loadAnimation = false;
+                copyData.loadMsg = "加载成功";
             } else {
-                this.setState({
-                    loadAnimation: true,
-                    loadMsg: '加载失败'
-                });
+                copyData.loadAnimation = true;
+                copyData.loadMsg = "加载成功";
             }
+            this.props.setPlainChange(copyData);
         });
     }
 
@@ -704,7 +697,7 @@ class Main extends Component {
 
 
     render() {
-        let main = !this.state.loadAnimation ? <PlainPeopleChange {...this.props} data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
+        let main = !this.state.data.loadAnimation ? <PlainPeopleChange {...this.props} data={this.state.data} /> : <DataLoad loadAnimation={this.state.data.loadAnimation} loadMsg={this.state.data.loadMsg} />;
 
         return main;
     }

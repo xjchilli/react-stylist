@@ -53,7 +53,9 @@ let plain = {
   mendian:'',//门店
   contact:'',//联系方式
   professional: '', //职业
-  remarks:''//改造需求
+  remarks:'',//改造需求
+  loadAnimation: true,
+  loadMsg: '加载中...',
 }
 //素人改造
 const PlainChange = (state = plain, action) => {

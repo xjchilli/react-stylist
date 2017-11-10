@@ -90,7 +90,7 @@ module.exports = {
       filename: 'js/vendors.js'
     }), //所有公用js文件打包到vendors.js
     new vConsolePlugin({
-      enable: false // 发布代码前记得改回 false
+      enable: true // 发布代码前记得改回 false
     }),
     new OpenBrowserPlugin({//自动打开浏览器
       url: IPv4 + ':8000',
