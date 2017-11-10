@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
-import { DataLoad, PreviewImg } from '../Component/index';
+import { DataLoad, PreviewImg, Loading } from '../Component/index';
 import merged from 'obj-merged';
 import IM from './component/IM';
 import autosize from 'autosize';
@@ -24,7 +24,6 @@ class List extends Component {
         this.chat = (e) => {
             //查看大图片
             if (ToolDps.CName.hasClass(e.target, 'previewBigImg')) {
-                console.log('1');
                 let url = e.target.getAttribute('bigimgurl');
                 this.props.previewImg(url);
                 return;
@@ -90,7 +89,8 @@ class List extends Component {
             let {
                 isSelf,
                 headUrl,
-                content
+                content,
+                loading
             } = item;
             let selfClass = '';
             if (isSelf) {
@@ -99,15 +99,24 @@ class List extends Component {
             data.push(
                 <li className={"friend-area" + selfClass} key={index}>
                     {
-                        selfClass ? (<img src={headUrl} alt="" />) : (
-                            <a href={'/dpsProfile?collocationId=' + this.props.collocationId}>
+                        selfClass ? (
+                            <Link to={'/profile'}>
                                 <img src={headUrl} alt="" />
-                            </a>
-                        )
+                            </Link>
+                        ) : (
+                                <Link to={'/dpsProfile?collocationId=' + this.props.collocationId}>
+                                    <img src={headUrl} alt="" />
+                                </Link>
+                            )
 
                     }
+                    <section className="content-box">
+                        <div className="msgContent" dangerouslySetInnerHTML={{ __html: content }}></div>
+                        {
+                            loading ? <Loading /> : null
+                        }
 
-                    <div className="msgContent" dangerouslySetInnerHTML={{ __html: content }}></div>
+                    </section>
                 </li>
             )
         });
@@ -207,7 +216,7 @@ class Chat extends IM {
             if (newMsg.getSession().id() == this.selToID) { //为当前聊天对象的消息
                 //在聊天窗体中新增一条消息
                 // console.log(newMsg);
-                this.addMsg(newMsg);
+                this.addMsg(newMsg, false, false);
             }
         }
         //消息已读上报，以及设置会话自动已读标记
@@ -276,8 +285,9 @@ class Chat extends IM {
     /**
      * 聊天页面增加一条消息
      * @prepend 是否是获取前一页数据
+     * @isLoading 是否加载中
      */
-    addMsg(msg, prepend) {
+    addMsg(msg, prepend, isLoading) {
         let isSelfSend, fromAccountImage;
         isSelfSend = msg.getIsSend(); //消息是否为自己发的
         if (isSelfSend) { //如果是自己发的消息
@@ -289,9 +299,11 @@ class Chat extends IM {
 
         let list = Array.prototype.slice.apply(this.state.list);
         let obj = {
-            isSelf: isSelfSend,
-            headUrl: fromAccountImage,
-            content: contentHtml
+            isSelf: isSelfSend,//是否是自己发送
+            headUrl: fromAccountImage,//头像地址
+            content: contentHtml,//发送内容
+            seq: msg.getSeq(),//序列号
+            loading: isLoading || false//是否加载成功
         };
         list.push(obj);
         clearTimeout(this._time);
@@ -305,7 +317,7 @@ class Chat extends IM {
 
             li.innerHTML = '<img src=' + fromAccountImage + ' alt=""><div class="msgContent">' + contentHtml + '</div>';
             document.querySelector('.chat-content').insertBefore(li, document.querySelector('.chat-content').firstChild);
-            //50代表一条聊天记录默认高度
+            //50代表一条聊天记录默认高度50代表一条聊天记录默认高度50代表一条聊天记录默认高度50代表一条聊天记录默认高度
             this.container.scrollTop = this.container.scrollHeight - this.currScrollHeight - 50;
 
             return;
@@ -411,14 +423,14 @@ class Chat extends IM {
     convertImageMsgToHtml(content) {
         var smallImage = content.getImage(webim.IMAGE_TYPE.SMALL); //小图
         var bigImage = content.getImage(webim.IMAGE_TYPE.LARGE); //大图
-        var oriImage = content.getImage(webim.IMAGE_TYPE.ORIGIN); //原图
+        // var oriImage = content.getImage(webim.IMAGE_TYPE.ORIGIN); //原图
         if (!bigImage) {
             bigImage = smallImage;
         }
-        if (!oriImage) {
-            oriImage = smallImage;
-        }
-        return "<img class='previewBigImg' src=" + smallImage.getUrl() + "#" + bigImage.getUrl() + "#" + oriImage.getUrl() + "  id=" + content.getImageId() + " bigImgUrl=" + bigImage.getUrl() + " />";
+        // if (!oriImage) {
+        //     oriImage = smallImage;
+        // }
+        return "<img class='previewBigImg' src=" + smallImage.getUrl() + "  id=" + content.getImageId() + " bigImgUrl=" + bigImage.getUrl() + " />";
     }
 
     /**
@@ -430,7 +442,7 @@ class Chat extends IM {
         if (msgContent.trim() === "") return;
         this.handleMsgSend(msgContent);
         this.setState({
-            msgText:'',
+            msgText: '',
             emotionFlag: false
         });
         document.querySelector('#J-input').style.height = "42px";
@@ -483,16 +495,35 @@ class Chat extends IM {
         }
         msg.sending = 1;
         msg.originContent = msgContent;
+        this.addMsg(msg, null, true);
         webim.sendMsg(msg, (resp) => {
-            this.addMsg(msg);
+            this.sendSuccess(msg);
+            // this.addMsg(msg);
         }, (err) => {
             if (err.ErrorCode == 20006) {//被禁言了
                 this.setState({
-                    tips:true
+                    tips: true
                 });
             }
             console.log(err);
             //提示重发
+        });
+    }
+
+    /**
+     * 发送成功处理
+     */
+    sendSuccess(msg) {
+        let seq = msg.getSeq();
+        let list = Array.prototype.slice.apply(this.state.list);
+        let newList = list.map((item) => {
+            if (item.seq == seq) {
+                item.loading = false;
+            }
+            return item;
+        })
+        this.setState({
+            list: newList
         });
     }
 
@@ -577,15 +608,37 @@ class Chat extends IM {
                 'businessType': businessType //业务类型
             };
             //上传图片
-            webim.uploadPic(opt,
-                (resp) => {
-                    this.sendPic(resp, file.name); //上传成功发送图片
-                },
-                (err) => {
-                    console.log(err.ErrorInfo);
-                }
-            );
-
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                let seq = Math.random() * 10000;//序列号
+                let contentHtml = this.picture(reader.result);
+                let list = Array.prototype.slice.apply(this.state.list);
+                let obj = {
+                    isSelf: true,//是否是自己发送
+                    headUrl: this.loginInfo.headurl,//头像地址
+                    content: contentHtml,//发送内容
+                    seq: seq,//序列号
+                    loading: true//是否加载成功
+                };
+                list.push(obj);
+                this.setState({
+                    list: list
+                });
+                this._time = setTimeout(() => {
+                    this.container.scrollTop = this.container.scrollHeight;
+                }, 300);
+                ((seq) => {
+                    webim.uploadPic(opt,
+                        (resp) => {
+                            this.sendPic(resp, seq); //上传成功发送图片
+                        },
+                        (err) => {
+                            console.log(err.ErrorInfo);
+                        }
+                    );
+                })(seq);
+            }
+            reader.readAsDataURL(file);
         }
 
     }
@@ -593,9 +646,9 @@ class Chat extends IM {
     /**
      * 发送图片消息
      * @param images
-     * @param imgName
+     * @param seq 自定义序列号
      */
-    sendPic(images, imgName) {
+    sendPic(images, seq) {
         if (!this.selSess) {
             this.selSess = new webim.Session(this.selType, this.selToID, this.selToID, this.friendHeadUrl, Math.round(new Date().getTime() / 1000));
         }
@@ -622,15 +675,31 @@ class Chat extends IM {
         msg.addImage(images_obj);
         //调用发送图片消息接口
         webim.sendMsg(msg, (resp) => {
-            this.addMsg(msg);
+            let list = Array.prototype.slice.apply(this.state.list);
+            let newList = list.map((item) => {
+                if (item.seq == seq) {
+                    item.loading = false;
+                }
+                return item;
+            })
+            this.setState({
+                list: newList
+            });
         }, (err) => {
             if (err.ErrorCode == 20006) {
                 this.setState({
-                    tips:true
+                    tips: true
                 });
             }
             console.log(err);
         });
+    }
+
+    /**
+     * 封装图片html格式
+     */
+    picture(imgPath) {
+        return "<img class='previewBigImg' src=" + imgPath + "  bigImgUrl=" + imgPath + " />";
     }
 
     /**

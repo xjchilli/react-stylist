@@ -20,7 +20,7 @@
     }
     &.self {
       text-align: right;
-      >img {
+      a>img {
         float: right;
         margin: 0 0 0 10px;
       }
@@ -32,6 +32,23 @@
           border-right-color: transparent;
           border-left-color: #b2e281;
         }
+      }
+    }
+  }
+  .content-box {
+    position: relative;
+    padding: 7px 0;
+    display: inline;
+    .spinner {
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 25px;
+      height: 25px;
+      margin: 0;
+      .container1 > div, .container2 > div, .container3 > div {
+        width: 3px;
+        height: 3px;
       }
     }
   }
@@ -77,7 +94,8 @@
     >img {
       display: inline-block;
       vertical-align: middle;
-      max-width: 100%;
+      max-width: 100px;
+      max-height: 200px;
     }
     &:before {
       content: " ";
