@@ -7,7 +7,7 @@ import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 import qs from 'query-string';
-import { Footer, News } from '../Component/index';
+import { News } from '../Component/index';
 var FastClick = require('fastclick');
 
 

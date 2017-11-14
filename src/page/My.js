@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { DataLoad, GetData, Footer, News } from '../Component/index';
+import { DataLoad, GetData, News } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 class Main extends Component {
@@ -61,7 +61,7 @@ class My extends Component {
         return (
             <section className="my-page">
                 {/* <Footer tab="5" /> */}
-                <header style={{borderBottomWidth:ToolDps.iphone ? '0.3px' : '1px'}}>
+                <header style={{ borderBottomWidth: ToolDps.iphone ? '0.3px' : '1px' }}>
                     <img src={data.headImg} />
                     <p className="text-center nickname">{data.nickName}</p>
                 </header>

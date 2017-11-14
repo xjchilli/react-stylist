@@ -8,7 +8,7 @@ import { GetNextPage } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import { Footer, News } from '../Component/index';
+import { News } from '../Component/index';
 
 
 

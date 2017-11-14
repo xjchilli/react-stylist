@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetNextPage } from '../Component/index';
-import { Msg, Footer, News } from '../Component/index';
+import { Msg, News } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 
