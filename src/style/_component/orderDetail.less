@@ -1,6 +1,17 @@
 .order-detail-box {
   padding-bottom: 65px;
   background: @bg;
+  .order-timer-area {
+    background: #ff5778;
+    padding: 15px 0 15px 30px;
+    color: @white;
+    strong {
+      font-size: 16px;
+    }
+    p {
+      font-size: 12px;
+    }
+  }
   .time-area {
     position: relative;
     background: @white;
@@ -310,7 +321,7 @@
     .content {
       margin-top: 6px;
     }
-    &::before{
+    &::before {
       content: '';
       position: absolute;
       left: 30px;

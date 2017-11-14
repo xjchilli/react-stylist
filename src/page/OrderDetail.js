@@ -11,8 +11,73 @@ import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import WxAuth from './component/WxAuth';
 
+/**
+ * 定时器
+ */
+class Timer extends React.Component {
+    constructor(props) {
+        super(props);
+        let t = ToolDps.second2Hour(props.appointTime);
+        this.state = {
+            time: props.appointTime,
+            showTime: (t.h < 10 ? '0' + t.h : t.h) + '小时' + (t.m < 10 ? '0' + t.m : t.m) + '分钟' + (t.s < 10 ? '0' + t.s : t.s) + '秒'
+        }
+        this.timer = 0;
+    }
+
+    componentDidMount() {
+        this.timer = setInterval(() => {
+            this.setState((prevState, props) => {
+                let time = --prevState.time;
+                let t = ToolDps.second2Hour(time);
+                if (time <= 10) {
+                    this.orderCancel();
+                    return;
+                }
+                return {
+                    time: time,
+                    showTime: (t.h < 10 ? '0' + t.h : t.h) + '小时' + (t.m < 10 ? '0' + t.m : t.m) + '分钟' + (t.s < 10 ? '0' + t.s : t.s) + '秒'
+                }
+            });
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        ToolDps.second2Hour(nextProps.appointTime);
+        this.setState({
+            time: nextProps.appointTime
+        });
+    }
 
 
+    /**
+    * 取消订单
+    */
+    orderCancel() {
+        ToolDps.post('/wx/order/canel', {
+            orderId: this.props.order.ordreId
+        }).then((res) => {
+            if (res.succ) {
+                window.location.reload();
+            }
+        });
+    }
+
+
+    render() {
+
+        return (
+            <section className="order-timer-area">
+                <strong>等待买家付款</strong>
+                <p>{this.state.showTime}后自动取消订单</p>
+            </section>
+        )
+    }
+}
 
 /**
  * 用户对搭配师评价
@@ -488,6 +553,7 @@ class OrderDetail extends Component {
 
     render() {
         let {
+            appointTime,
             requirement,
             collocation,
             comment,
@@ -498,6 +564,8 @@ class OrderDetail extends Component {
         } = this.props.data;
         return (
             <div className="full-page order-detail-box">
+                {/* 定时器 */}
+                {order.status === 0 && appointTime && appointTime > 0 ? <Timer order={order} appointTime={appointTime} /> : null}
                 <section className="time-area">
                     <p>订单编号：<span>{order.ordreId}</span></p>
                     <p>创建时间：<span>{requirement.createTime}</span></p>

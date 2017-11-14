@@ -211,6 +211,7 @@ ToolDps.formatDate = function (str) {
     }
 }
 
+
 /**
  * 时间转换
  */
@@ -238,6 +239,25 @@ ToolDps.convertDate = function (date, formate) {
         .replace(/s+/, second);
 }
 
+/**
+ * 秒 转 时分秒
+ */
+ToolDps.second2Hour = (time) => {
+    let h = 0,//小时
+        m = 0,//分钟
+        s = 0,//秒
+        t = time;//总秒数
+    h = parseInt(t / 60 / 60);
+    t = t - h * 3600;
+    m = parseInt(t / 60);
+    t = t - m * 60;
+    s = t;
+    return {
+        h: h,
+        m: m,
+        s: s
+    }
+}
 
 
 /**
