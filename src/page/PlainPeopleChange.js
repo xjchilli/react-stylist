@@ -707,7 +707,7 @@ class Main extends Component {
 class PlainPeopleChange extends Component {
     constructor(props) {
         super(props);
-        let { projectId, activeId } = qs.parse(props.location.search);//项目ID，需求类型
+        let { projectId } = qs.parse(props.location.search);//项目ID，需求类型
         this.state = {
             projectId: Number(projectId) || 1,
             previewBigImg: false,//是否预览大图
@@ -715,29 +715,13 @@ class PlainPeopleChange extends Component {
             data: props.data || null,
             msgShow: false,
             msgText: '', //提示内容
-            btnText: '提交',
-            activeId: activeId || "",//本次活动id:1 存在则可以参加本次活动
-            activityShow: true,
-            canJoin: true,//是否可以参加活动
-            joinPeople: 0//推广人数
+            btnText: '提交'
         };
         this._time = 0;
     }
 
     componentDidMount() {
         document.title = "素人改造";
-        if (this.state.activeId) {//可以参加活动
-            ToolDps.get('/wx/getActiveResult').then((res) => {
-                console.log(res);
-                if (res.succ) {
-                    this.setState({
-                        canJoin: res.canJoin,
-                        joinPeople: res.promotionNum
-                    });
-                }
-            });
-        }
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -783,7 +767,6 @@ class PlainPeopleChange extends Component {
         } = this.state.data;
 
         let data = {
-            activeId: this.state.activeId,
             projectId: this.state.projectId,
             sex: sex,
             age: age,
@@ -884,28 +867,6 @@ class PlainPeopleChange extends Component {
     render() {
         return (
             <section className="plain-change-page">
-                {
-                    this.state.activeId && this.state.activityShow ? (
-                        <section className="activity-tips-box">
-                            {
-                                this.state.joinPeople == 20 ? (
-                                    <div>
-                                        <p>您已拥有<span className="num" >{this.state.joinPeople}</span>张10元抵用券，可以参与免费改造报名啦~</p>
-                                        <p>邀请更多好友关注，限量版礼品等你来拿！</p>
-                                    </div>
-                                ) : (
-                                        <div>
-                                            <p>您已拥有<span className="num" >{this.state.joinPeople}</span>张抵用券，还差<span className="num">{20 - this.state.joinPeople}</span>张就可以免费报名啦~</p>
-                                            <p>赶快去邀请朋友关注公众号，助你变身吧！</p>
-                                            <p>1位好友关注=10元抵用券，邀请人数越多，越有机会获得限量版礼品！</p>
-                                        </div>
-                                    )
-                            }
-                            <span className="icon icon-close2" onClick={() => { this.setState({ activityShow: false }) }}></span>
-                        </section>
-                    ) : null
-                }
-
                 <h3 className="form-title">性别</h3>
                 <select className="sex" onChange={(e) => { this.changeSex(Number(e.target.value)) }} value={this.state.data.sex}>
                     <option value="1">男</option>
@@ -916,9 +877,7 @@ class PlainPeopleChange extends Component {
                 <Style setPlainChange={this.props.setPlainChange} data={this.state.data} />
                 <LifePhoto setPlainChange={this.props.setPlainChange} data={this.state.data} />
                 <OtherInfo setPlainChange={this.props.setPlainChange} data={this.state.data} />
-                {
-                    this.state.activeId && !this.state.canJoin ? <button className="btn send-btn" style={{ backgroundColor: '#cccccc' }}>{this.state.btnText}</button> : <button className="btn send-btn" onClick={this.sendForm.bind(this)} >{this.state.btnText}</button>
-                }
+                <button className="btn send-btn" onClick={this.sendForm.bind(this)} >{this.state.btnText}</button>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section >

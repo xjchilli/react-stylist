@@ -6,6 +6,7 @@
 import Bundle from './bundle.js';
 
 import HomeContainer from 'bundle-loader?lazy&name=[name]!../page/Home';
+import GratefulParentActivity from 'bundle-loader?lazy&name=[name]!../page/GratefulParentActivity';
 import PlainPeopleChangeContainer from 'bundle-loader?lazy&name=[name]!../page/PlainPeopleChange';
 import MyWatchContainer from 'bundle-loader?lazy&name=[name]!../page/MyWatch';
 import MyContainer from 'bundle-loader?lazy&name=[name]!../page/My';
@@ -51,6 +52,11 @@ let routers = [
         path: '/',
         exact: true,
         component: (props) => getComponent(props, HomeContainer)
+    },
+    {//感恩活动
+        path: '/gratefulParentActivity',
+        exact: false,
+        component: (props) => getComponent(props, GratefulParentActivity)
     },
     {//素人改造
         path: '/plainPeopleChange',
