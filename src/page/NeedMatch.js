@@ -67,7 +67,7 @@ class NeedMatch extends Component {
     render() {
         return (
             <section className="to-match-page" ref={(el) => this.page = el} onClick={this.hideTips.bind(this)}>
-                <Footer tab="3" />
+                {/* <Footer tab="3" /> */}
                 <img src="/assets/img/needMatch/head.jpg" className="response_img top-img" />
                 <h2 className="title">选择服务类型</h2>
                 <ul className="type-select">

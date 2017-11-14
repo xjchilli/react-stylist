@@ -69,7 +69,7 @@ class FashionMoment extends Component {
 
         return (
             <div className="fashion-moment-area">
-                <Footer tab="4" />
+                {/* <Footer tab="4" /> */}
                 <div className="fashion-list clear">
                     <ul>
                         {

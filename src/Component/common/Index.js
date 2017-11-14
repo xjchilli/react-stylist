@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router'
 import GetNextPage from './GetNextPage';
 import GetData from './GetData';
 import { Link, NavLink } from 'react-router-dom';
@@ -33,17 +34,26 @@ DataLoad.defaultProps = {
 }
 
 //底部tab
-class Footer extends Component {
-
-    // redirect() {
-    //     this.context.router.history.push('/needMatch');
-    // }
-    componentDidMount(){
+class PageFooter extends Component {
+    componentDidMount() {
         FastClick.attach(this.footer);
     }
 
+
     render() {
-        let tab = this.props.tab;
+        const { pathname } = this.props.location;
+        let tab = '1';
+        if (/(^\/$)/g.test(pathname)) {//首页
+            tab = '1';
+        } else if (/(^\/dpsList)/g.test(pathname)) {//热门搭配师
+            tab = '2';
+        } else if (/(^\/needMatch)/g.test(pathname)) {//我要搭配
+            tab = '3';
+        } else if (/(^\/fashionMoment$)/g.test(pathname)) {//发现
+            tab = '4';
+        } else if (/(^\/my)/g.test(pathname)) {//我的
+            tab = '5';
+        }
         return (
             <ul className="footer clear" ref={(el) => this.footer = el}>
                 <li>
@@ -80,6 +90,8 @@ class Footer extends Component {
     }
 }
 
+let Footer = withRouter(PageFooter);
+
 // Footer.contextTypes = {
 //     router: PropTypes.object.isRequired
 // };
@@ -95,11 +107,11 @@ class MyNews extends IM {
     }
 
     componentDidMount() {
-        // this.signature((data) => {
-        //     this.login(data, () => {
-        //         this.getFriends();
-        //     });
-        // });
+        this.signature((data) => {
+            this.login(data, () => {
+                this.getFriends();
+            });
+        });
     }
 
 

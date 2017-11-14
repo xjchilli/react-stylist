@@ -53,7 +53,7 @@ class DpsList extends Component {
     render() {
         return (
             <section className="dps-list-page">
-                <Footer tab="2" />
+                {/* <Footer tab="2" /> */}
                 <section className="list-area">
                     <h5 className="title" style={{borderBottomWidth:ToolDps.iphone ? '0.5px' : '1px'}}>热门搭配师</h5>
                     <ul>
