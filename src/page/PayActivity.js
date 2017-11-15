@@ -31,7 +31,7 @@ class Main extends React.Component {
         let { orderId } = qs.parse(this.props.location.search);
 
         //订单查询
-        ToolDps.get('/wx/order/queryCoupons', {
+        ToolDps.post('/wx/active/queryOrder', {
             orderId: orderId
         }).then((res) => {
             if (res.succ) {
@@ -61,19 +61,15 @@ class Main extends React.Component {
 
 
     render() {
-        let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <Pay data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
+        let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <PayActivity data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
         return main;
     }
 }
 
-class Pay extends React.Component {
+class PayActivity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isHidePromotionCode: props.data.showCoupons,//是否因此点击优惠劵位置
-            isShowPromotionCode: false, //是否显示优惠券
-            couponsId: '', //优惠卷id
-            promotionPrice: '', //优惠价
             msgShow: false,
             msgText: '', //提示内容
             reqPay: false,//是否请求支付
@@ -93,16 +89,10 @@ class Pay extends React.Component {
      * 支付
      */
     pay() {
-        let data = {}
-        data.orderId = this.props.data.orderId;
-        if (this.state.couponsId) {
-            data.couponsId = this.state.couponsId;
-        }
-
         this.setState({
             reqPay: true
         });
-        ToolDps.post('/wx/order/updateCoupons', data).then((res) => {
+        ToolDps.post('/wx/active/getPayInfo', { orderId: this.props.data.orderId }).then((res) => {
             this.setState({
                 reqPay: false
             });
@@ -121,11 +111,11 @@ class Pay extends React.Component {
                 } else {
                     this.setState({
                         msgShow: true,
-                        msgText: '支付成功'//提示内容
+                        msgText: '报名成功'//提示内容
                     });
 
                     this._time = setTimeout(function () {
-                        this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
+                        this.context.router.history.push('/');
                     }.bind(this), 1500);
                 }
             } else {
@@ -153,8 +143,12 @@ class Pay extends React.Component {
             },
             (res) => {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
+                    this.setState({
+                        msgShow: true,
+                        msgText: '报名成功'//提示内容
+                    });
                     this._time = setTimeout(function () {
-                        this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
+                        this.context.router.history.push('/');
                     }.bind(this), 1500);
                 } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
                     this.setState({
@@ -172,63 +166,22 @@ class Pay extends React.Component {
     }
 
 
-    /**
-     * [selectPromotion 选择优惠卷]
-     * @Author   potato
-     * @DateTime 2017-06-05T13:33:54+0800
-     * @param    {[type]}                 id    [优惠卷id]
-     * @param    {[type]}                 price [优惠价]
-     * @return   {[type]}                       [description]
-     */
-    selectPromotion(id, price) {
-        this.setState({
-            couponsId: id,
-            isShowPromotionCode: false,
-            promotionPrice: price
-        })
-    }
-
     render() {
         let {
-            requiremntTypeName,
+            typeName,
             price,
             coupons
         } = this.props.data;
-        let payPrice = price;
-        if (this.state.couponsId && this.state.promotionPrice) {
-            payPrice = (Number(price) - Number(this.state.promotionPrice)).toFixed(2);
-            if (payPrice == 0 || payPrice < 0) {
-                payPrice = '0.00';
-            }
-        }
 
         return (
             <section className="full-page pay-page">
-                <p className="service-type">服务类型：{requiremntTypeName}</p>
-                {/*  */}
-                <ul className="pay-money">
-                    {
-                        coupons.length > 0 && this.state.isHidePromotionCode ? (
-                            <li className="promotionCode" onClick={() => { this.setState({ isShowPromotionCode: true }) }}>
-                                使用优惠劵
-                                {this.state.promotionPrice ? <span className="money">-&yen;{this.state.promotionPrice}</span> : null}
-                                {this.state.promotionPrice ? <span className="used-one">（已用一张）</span> : null}
-                                <span className="borrow"></span>
-                            </li>
-                        ) : null
-                    }
-                    <li>
-                        需支付金额
-                        <span className="money">&yen;{payPrice}</span>
-                    </li>
-                </ul>
+                <p className="service-type">服务类型：{typeName}</p>
                 <ul className="flex-box to-pay">
-                    <li>总计: <span className="num">&yen;{payPrice}</span></li>
+                    <li>总计: <span className="num">&yen;{price}</span></li>
                     <li>
                         <button className="btn pay-btn" onClick={this.state.reqPay ? null : this.pay.bind(this)}>确认支付</button>
                     </li>
                 </ul>
-
                 <h6 className="text-center service-note-title">服务须知</h6>
                 <ul className="pay-note-content">
                     <ol>1.需求发布并支付后，匹配到的搭配师将抢单并服务用户</ol>
@@ -237,18 +190,13 @@ class Pay extends React.Component {
                     <ol>4.若对服务不满意或产生纠纷，请联系客服邮箱aaron@dapeis.com 工作日 10:00~18:00</ol>
                 </ul>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
-                {/* <Tips isShow={this.state.tipsShow} skipPath="/fashionMoment" perfectPath="/customSuit" hideTips={() => { this.setState({ tipsShow: false }) }} /> */}
-                {/*优惠码暂时隐藏*/}
-                <CSSTransitionGroup transitionName="move" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-                    {this.state.isShowPromotionCode ? <UseFulPromotionCode couponsId={this.state.couponsId} data={coupons} hide={() => { this.setState({ isShowPromotionCode: false }) }} selectPromotion={this.selectPromotion.bind(this)} /> : null}
-                </CSSTransitionGroup>
             </section>
         )
     }
 }
 
 
-Pay.contextTypes = {
+PayActivity.contextTypes = {
     router: PropTypes.object.isRequired
 }
 

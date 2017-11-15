@@ -20,6 +20,7 @@ import ShoppingContainer from 'bundle-loader?lazy&name=[name]!../page/Shopping';
 import AccompanyShoppingContainer from 'bundle-loader?lazy&name=[name]!../page/AccompanyShopping';
 import NeatenWardrobeContainer from 'bundle-loader?lazy&name=[name]!../page/NeatenWardrobe';
 import PayContainer from 'bundle-loader?lazy&name=[name]!../page/Pay';
+import PayActivityContainer from 'bundle-loader?lazy&name=[name]!../page/PayActivity';
 import CustomSuitContainer from 'bundle-loader?lazy&name=[name]!../page/CustomSuit';
 import FashionMomentContainer from 'bundle-loader?lazy&name=[name]!../page/FashionMoment';
 import FashionMomentDetailContainer from 'bundle-loader?lazy&name=[name]!../page/FashionMomentDetail';
@@ -122,6 +123,11 @@ let routers = [
         path: '/pay',
         exact: false,
         component: (props) => getComponent(props, PayContainer)
+    },
+    {//支付-活动
+        path: '/payActivity',
+        exact: false,
+        component: (props) => getComponent(props, PayActivityContainer)
     },
     {//搭配测试
         path: '/customSuit',

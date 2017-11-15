@@ -43,15 +43,15 @@ class PageFooter extends Component {
     render() {
         const { pathname } = this.props.location;
         let tab = '1';
-        if (/(^\/$)/g.test(pathname)) {//首页
+        if (/(^\/$)/.test(pathname)) {//首页
             tab = '1';
-        } else if (/(^\/dpsList)/g.test(pathname)) {//热门搭配师
+        } else if (/(^\/dpsList$)/.test(pathname)) {//热门搭配师
             tab = '2';
-        } else if (/(^\/needMatch)/g.test(pathname)) {//我要搭配
+        } else if (/(^\/needMatch)/.test(pathname)) {//我要搭配
             tab = '3';
-        } else if (/(^\/fashionMoment$)/g.test(pathname)) {//发现
+        } else if (/(^\/fashionMoment$)/.test(pathname)) {//发现
             tab = '4';
-        } else if (/(^\/my)/g.test(pathname)) {//我的
+        } else if (/(^\/my$)/.test(pathname)) {//我的
             tab = '5';
         }
         return (

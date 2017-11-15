@@ -1,0 +1,128 @@
+.grateful-page {
+    background: @bg;
+    header {
+        position: relative;
+        background: #cc3333;
+        font-size: 10px;
+        color: #ffffff;
+        padding: 9px 23px 9px 13px;
+        line-height: 15px;
+        .icon-close2 {
+            position: absolute;
+            right: 13px;
+            top: 10px;
+            font-size: 10px;
+        }
+    }
+    >h1 {
+        line-height: 40px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #666666;
+        padding-left: 13px;
+    }
+    .select-item {
+        margin: 0 13px;
+        >li {
+            background: @white;
+            margin-bottom: 8px;
+            .layout {
+                position: relative;
+                .lside {
+                    position: absolute;
+                    height: 92px;
+                }
+                .rside {
+                    min-height: 92px;
+                    padding: 13px 13px 13px 105px;
+                    font-weight: 500;
+                    >strong {
+                        color: #1a1a1a;
+                        font-size: 14px;
+                    }
+                    .text-1 {
+                        padding-top: 14px;
+                    }
+                    >p {
+                        color: #666666;
+                        font-size: 11px;
+                    }
+                    .icon-gou2 {
+                        font-size: 13px;
+                        position: absolute;
+                        right: 13px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+                @media screen and (min-width:375px) {
+                    .rside {
+                        padding-right: 40px;
+                        .icon-gou2 {
+                            right: 27px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .form-area {
+        background: @white;
+        margin: 12px 13px 0;
+        padding: 0 10px 50px;
+        border-top: 1px solid transparent;
+        label {
+            color: #1a1a1a;
+            font-size: 15px;
+            display: block;
+            margin: 35px 0 15px;
+        }
+        input, textarea {
+            width: 100%;
+            height: 35px;
+            border-radius: 2px;
+            background: #f3f4f6;
+            appearance: none;
+            border-width: 0;
+            color: #333333;
+            font-size: 14px;
+            font-weight: 500;
+            text-indent: 5px;
+            ::-webkit-input-placeholder {
+                color: #999999;
+            }
+        }
+        >address {
+            font-size: 14px;
+            color: #666666;
+            line-height: 20px;
+        }
+        textarea {
+            height: 73px;
+            padding: 9px 5px;
+        }
+        .send-btn {
+            margin: 55px auto 0;
+            line-height: 40px;
+            width: 173px;
+        }
+        .noJoin-btn {
+            background-color: #dddddd;
+        }
+    }
+    .tips-area {
+        margin-top: 35px;
+        dt {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        dd {
+            font-size: 11px;
+            color: #666666;
+            line-height: 18px;
+            margin-bottom: 2px;
+            word-break: break-all;
+        }
+    }
+}

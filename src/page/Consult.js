@@ -144,7 +144,7 @@ class Consult extends Component {
                 this.setState({
                     btn: '发布',
                     msgShow: true,
-                    msgText: '发布'
+                    msgText: '发布失败'
                 });
             }
         });

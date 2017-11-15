@@ -10,7 +10,7 @@ class App extends React.Component {
 
         this.state = {
             auth: false,//是否微信授权
-            filterRouter: this.filterLogin(props) || false
+            filterRouter: this.filterRouter(props) || false
         };
         this.setAuth = () => {
             this.setState({
@@ -26,7 +26,7 @@ class App extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            filterRouter: this.filterLogin(nextProps) || false
+            filterRouter: this.filterRouter(nextProps) || false
         });
     }
 
@@ -40,9 +40,9 @@ class App extends React.Component {
      * 发现:/fashionMoment
      * 我的：/my
      */
-    filterLogin(props) {
+    filterRouter(props) {
         const { pathname } = props.location;
-        return /(^\/$|^\/dpsList|^\/needMatch|^\/fashionMoment$|^\/my)/g.test(pathname);
+        return /(^\/$|^\/dpsList$|^\/needMatch|^\/fashionMoment$|^\/my$)/.test(pathname);
     }
 
     render() {

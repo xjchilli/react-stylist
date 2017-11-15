@@ -17,7 +17,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        ToolDps.get(' /wx/user/getMyCenter').then((res) => {
+        ToolDps.get('/wx/user/getMyCenter').then((res) => {
             if (res.succ) {
                 this.setState({
                     orderLoad: true,
