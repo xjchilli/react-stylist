@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ToolDps } from '../ToolDps';
 
+
 class Test extends React.Component {
     /**
      * 切换账号
@@ -22,7 +23,7 @@ class Test extends React.Component {
         return (
             <section className="test-page">
                 <h1 className="text-center" style={{ color: 'red' }}>测试前先切换到自己的账号</h1>
-                <ul >
+                <ul>
                     <li onClick={this.changeAccount.bind(this, 'oGHrAv2QLJaScmtYKnK-oVvF81S8')}>[Smart]potato[Smart]</li>
                     <li onClick={this.changeAccount.bind(this, 'oGHrAvwpDzGjKnPRxHIiCamlAR2o')}>potato</li>
                     <li onClick={this.changeAccount.bind(this, 'oGHrAvxWYOEx-C_BnZWf4E4hvXEQ')}>袁勇</li>

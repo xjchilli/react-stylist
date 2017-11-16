@@ -2,21 +2,35 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { wechatAuth } from './WechatAuth';
 import routers from './RouteLazy';// 懒加载
-import { Footer } from '../Component/index';
+import { Footer, shake, UserFeedbackLayer } from '../Component/index';
+import { ToolDps } from '../ToolDps';
+
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             auth: false,//是否微信授权
-            filterRouter: this.filterRouter(props) || false
+            filterRouter: this.filterRouter(props) || false,
+            shake: false//是否显示摇一摇
         };
         this.setAuth = () => {
             this.setState({
                 auth: true
             });
         };
+        //启用摇一摇功能
+        this.dpsShake = shake(() => {
+            this.setState({
+                shake: true
+            });
+        });
+
+        //如果禁用过就不能启动摇一摇
+        if (!ToolDps.localItem('disableShake')) {
+            this.dpsShake.add();
+        }
+
     }
 
     componentDidMount() {
@@ -31,6 +45,25 @@ class App extends React.Component {
     }
 
 
+    /**
+     * 禁用摇一摇
+     */
+    disableShake() {
+        this.dpsShake.remove();
+        this.setState({
+            shake: false
+        });
+        ToolDps.localItem('disableShake', 'true');
+    }
+
+    /**
+     * 关闭摇一摇功能
+     */
+    closeShake() {
+        this.setState({
+            shake: false
+        });
+    }
 
     /**
      * 拦截登录路由 
@@ -48,10 +81,19 @@ class App extends React.Component {
     render() {
         let layout = this.state.filterRouter ? (
             <section>
+                {/* 底部tab */}
                 <Footer />
                 {this.props.children}
+                {/* 摇一摇显示反馈入口 */}
+                {this.state.shake ? <UserFeedbackLayer closeShake={this.closeShake.bind(this)} disableShake={this.disableShake.bind(this)} /> : null}
             </section>
-        ) : this.props.children;
+        ) : (
+                <section>
+                    {this.props.children}
+                    {/* 摇一摇显示反馈入口 */}
+                    {this.state.shake ? <UserFeedbackLayer closeShake={this.closeShake.bind(this)} disableShake={this.disableShake.bind(this)} /> : null}
+                </section>
+            );
         let main = this.state.auth ? layout : null;
         return main;
     }

@@ -92,9 +92,6 @@ class PageFooter extends Component {
 
 let Footer = withRouter(PageFooter);
 
-// Footer.contextTypes = {
-//     router: PropTypes.object.isRequired
-// };
 
 
 class MyNews extends IM {
