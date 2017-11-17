@@ -76,9 +76,9 @@ class Main extends Component {
     }
 
 
-    componentWillUnmount() {
-        ToolDps.removeSessionItem('orderStatus');
-    }
+    // componentWillUnmount() {
+    //     ToolDps.removeSessionItem('orderStatus');
+    // }
 
 
 
@@ -120,6 +120,7 @@ class Main extends Component {
             status: status || '',
             data: []
         });
+        ToolDps.sessionItem('orderStatus', status);
         this.getData(status);
     }
 

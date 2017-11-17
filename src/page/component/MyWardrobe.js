@@ -374,21 +374,24 @@ class MyWardrobe extends Component {
             typeCode: this.state.typeCode
         }
 
-        let newArr = Array.prototype.slice.apply(this.state.selectGoods);
-        let flag = this.checkSelected(id);
-        if (flag) {
-            newArr.splice(this.index, 1);
-        } else {
-            newArr.push(imgObj);
-        }
+        // let newArr = Array.prototype.slice.apply(this.state.selectGoods);
+        // let flag = this.checkSelected(id);
+        // if (flag) {
+        //     newArr.splice(this.index, 1);
+        // } else {
+        //     newArr.push(imgObj);
+        // }
 
-        if (newArr.length > 6) {
-            this.setState({
-                msgShow: true,
-                msgText: '最多选择6张'
-            });
-            return;
-        }
+        let newArr = [];
+        newArr.push(imgObj);
+
+        // if (newArr.length > 1) {
+        //     this.setState({
+        //         msgShow: true,
+        //         msgText: '最多选择1张'
+        //     });
+        //     return;
+        // }
 
         this.setState({
             selectGoods: newArr
@@ -412,10 +415,10 @@ class MyWardrobe extends Component {
     }
 
     addCloth() {
-        if (this.state.selectGoods.length > 6) {
+        if (this.state.selectGoods.length > 1) {
             this.setState({
                 msgShow: true,
-                msgText: '最多选择6张', //提示内容
+                msgText: '最多选择1张', //提示内容
             });
             return;
         }

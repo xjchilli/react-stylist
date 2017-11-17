@@ -70,7 +70,7 @@ class PageFooter extends Component {
                 </li>
                 <li>
                     <NavLink to="/needMatch" >
-                        <img className="da-img" src='/assets/img/icon/tab-3-1.png' style={tab == 3 ? { width: '55px', height: '55px' } : { width: '30px', height: '30px' }} />
+                        <img className="da-img" src='/assets/img/icon/tab-3-1.png'  />
                     </NavLink>
                 </li>
                 <li>

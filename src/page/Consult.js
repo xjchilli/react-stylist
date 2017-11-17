@@ -223,7 +223,7 @@ class Consult extends Component {
                         }
 
                         {
-                            this.state.garderobeArr.length < 6 ? (
+                            this.state.garderobeArr.length == 0 ? (
                                 <li className="item-3">
                                     <div className="goods-img-show add-btn" onClick={() => { this.setState({ myWardrobe: true }) }}></div>
                                 </li>

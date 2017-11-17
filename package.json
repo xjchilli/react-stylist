@@ -1,9 +1,9 @@
 {
-  "name": "webpack2-build",
+  "name": "react-stylist",
   "version": "1.0.0",
   "description": "",
   "main": "App.js",
-  "repository ": "git@git.coding.net:dapeis/stylist-subscription-account.git",
+  "repository ": "https://github.com/xiaowang1314/react-stylist.git",
   "scripts": {
     "build": "webpack --config webpack.config.pro.js --progress --colors -p",
     "analyze": "webpack --config webpack.config.pro.js --progress --colors -p --json --profile > stats.json",
