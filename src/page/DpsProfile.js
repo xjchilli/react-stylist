@@ -61,7 +61,8 @@ class DpsProfile extends Component {
         });
         let sex = collocation.sex;
         return (
-            <section className="full-page dps-profile-page">
+            // full-page
+            <section className="dps-profile-page">
                 <header style={{ backgroundImage: 'url(' + collocation.backgroundImg + ')' }}>
                     <ul className="flex-box">
                         <li>

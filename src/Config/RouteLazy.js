@@ -37,6 +37,7 @@ import UsageContainer from 'bundle-loader?lazy&name=[name]!../page/Usage';
 import FeedbackContainer from 'bundle-loader?lazy&name=[name]!../page/Feedback';
 import NotFoundPageContainer from 'bundle-loader?lazy&name=[name]!../page/NotFoundPage';
 import Server500Container from 'bundle-loader?lazy&name=[name]!../page/Server500';
+import UserChangeContainer from 'bundle-loader?lazy&name=[name]!../page/UserChange';
 import TestContainer from 'bundle-loader?lazy&name=[name]!../page/Test';
 
 
@@ -199,8 +200,13 @@ let routers = [
         exact: false,
         component: (props) => getComponent(props, FeedbackContainer)
     },
-    {//测试用
+    {//切换用户
         path: '/userChange',
+        exact: false,
+        component: (props) => getComponent(props, UserChangeContainer)
+    },
+    {//test
+        path: '/test',
         exact: false,
         component: (props) => getComponent(props, TestContainer)
     },

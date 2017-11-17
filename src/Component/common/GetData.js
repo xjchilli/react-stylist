@@ -59,10 +59,10 @@ const Main = (mySeting) => {
                 this.path = pathname + search;
 
                 if (typeof state.path[this.path] === 'object' && state.path[this.path].path === this.path) {
-                    this.state = state.path[this.path];
+                    this.myState = state.path[this.path];
                 } else {
-                    this.state = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
-                    this.state.path = this.path;
+                    this.myState = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
+                    this.myState.path = this.path;
                 }
 
             }
@@ -73,21 +73,21 @@ const Main = (mySeting) => {
                     success,
                     error
                 } = this.props.seting;
-                var { scrollX, scrollY } = this.state;
+                var { scrollX, scrollY } = this.myState;
                 if (this.get) return false; //已经加载过
                 window.scrollTo(scrollX, scrollY); //设置滚动条位置
                 this.get = ToolDps.get(this.getUrl(), this.getData()).then((res) => {
-                    this.state.loadMsg = '加载成功';
+                    this.myState.loadMsg = '加载成功';
                     if (!res.succ) {
-                        this.state.loadMsg = res.msg;
+                        this.myState.loadMsg = res.msg;
                     }
-                    this.state.loadAnimation = false;
-                    this.state.data = res;
-                    this.props.setState(success(this.state) || this.state);
+                    this.myState.loadAnimation = false;
+                    this.myState.data = res;
+                    this.props.setState(success(this.myState) || this.myState);
                 }).catch(() => {
-                    this.state.loadMsg = '加载失败';
-                    this.state.loadAnimation = false;
-                    this.props.setState(success(this.state) || this.state);
+                    this.myState.loadMsg = '加载失败';
+                    this.myState.loadAnimation = false;
+                    this.props.setState(success(this.myState) || this.myState);
                 });
 
             }
@@ -100,9 +100,9 @@ const Main = (mySeting) => {
                     // this.get.end();
                     delete this.get;
                 }
-                this.state.scrollX = window.scrollX; //记录滚动条位置
-                this.state.scrollY = window.scrollY;
-                this.props.setState(this.state);
+                this.myState.scrollX = window.scrollX; //记录滚动条位置
+                this.myState.scrollY = window.scrollY;
+                this.props.setState(this.myState);
             }
 
             /**
@@ -115,7 +115,7 @@ const Main = (mySeting) => {
                     url
                 } = this.props.seting;
                 if (typeof url === 'function') {
-                    return url(this.props, this.state);
+                    return url(this.props, this.myState);
                 } else if (url && typeof url === 'string') {
                     return url;
                 } else {
@@ -134,7 +134,7 @@ const Main = (mySeting) => {
                     data
                 } = this.props.seting;
                 if (typeof data === 'function') {
-                    return data(this.props, this.state);
+                    return data(this.props, this.myState);
                 } else if (data && typeof data === 'string') {
                     return data;
                 } else {
@@ -184,7 +184,7 @@ const Main = (mySeting) => {
 
 
         render() {
-            return <this.props.seting.component {...this.props} state={this.state} />
+            return <this.props.seting.component {...this.props} state={this.myState} />
         }
     }
 

@@ -4,7 +4,7 @@ import { wechatAuth } from './WechatAuth';
 import routers from './RouteLazy';// 懒加载
 import { Footer, shake, UserFeedbackLayer } from '../Component/index';
 import { ToolDps } from '../ToolDps';
-
+const dpsShake = shake();//摇一摇实例化
 
 class App extends React.Component {
     constructor(props) {
@@ -19,16 +19,14 @@ class App extends React.Component {
                 auth: true
             });
         };
-        //启用摇一摇功能
-        this.dpsShake = shake(() => {
-            this.setState({
-                shake: true
-            });
-        });
 
         //如果禁用过就不能启动摇一摇
         if (!ToolDps.localItem('disableShake')) {
-            this.dpsShake.add();
+            dpsShake.add(() => {
+                this.setState({
+                    shake: true
+                });
+            });
         }
 
     }
@@ -49,7 +47,7 @@ class App extends React.Component {
      * 禁用摇一摇
      */
     disableShake() {
-        this.dpsShake.remove();
+        dpsShake.remove();
         this.setState({
             shake: false
         });

@@ -8,7 +8,7 @@
             (global.shake = factory());
 }(this, (function () {
 
-    let shake = function (cb) {
+    let shake = function () {
         //设置临界值,这个值可根据自己的需求进行设定，默认就3000也差不多了
         var shakeThreshold = 3000;
         //设置最后更新时间，用于对比
@@ -20,7 +20,7 @@
             lastShakeX = 0,
             lastShakeY = 0,
             lastShakeZ = 0;
-        let deviceMotionHandler = (event) => {
+        function deviceMotionHandler(cb,event) {
             //获得重力加速
             var acceleration = event.accelerationIncludingGravity;
             //获得当前时间戳
@@ -47,18 +47,19 @@
 
         return {
             //增加设备摇一摇功能
-            add: function () {
+            add: function (cb) {
+                this.deviceMotionHandler = deviceMotionHandler.bind(this, cb);
                 //先判断设备是否支持HTML5摇一摇功能
                 if (window.DeviceMotionEvent) {
                     //获取移动速度，得到device移动时相对之前某个时间的差值比
-                    window.addEventListener('devicemotion', deviceMotionHandler);
+                    window.addEventListener('devicemotion', this.deviceMotionHandler);
                 } else {
                     alert('您好，你目前所用的设备好像不支持重力感应哦！');
                 }
             },
             //移除设备摇一摇功能
             remove: function () {
-                window.removeEventListener('devicemotion', deviceMotionHandler);
+                window.removeEventListener('devicemotion', this.deviceMotionHandler);
             }
         }
     }
