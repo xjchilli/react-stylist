@@ -9,6 +9,7 @@ import { ToolDps } from '../ToolDps';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import { News } from '../Component/index';
+var FastClick = require('fastclick');
 
 
 
@@ -22,6 +23,7 @@ class FashionMoment extends Component {
     }
     componentDidMount() {
         document.title = "发现";
+        FastClick.attach(this.page);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -68,7 +70,7 @@ class FashionMoment extends Component {
 
 
         return (
-            <div className="fashion-moment-area">
+            <div className="fashion-moment-area" ref={(el) => this.page = el}>
                 {/* <Footer tab="4" /> */}
                 <div className="fashion-list clear">
                     <ul>

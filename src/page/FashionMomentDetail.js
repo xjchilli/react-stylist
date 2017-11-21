@@ -13,6 +13,7 @@ import ShareConfig from './component/ShareConfig';
 import autosize from 'autosize';
 import Scroll from 'react-scroll';
 var Lk = Scroll.Link;
+var FastClick = require('fastclick');
 
 
 /**
@@ -420,6 +421,7 @@ class FashionMomentDetail extends Component {
 
     componentDidMount() {
         document.title = "时尚圈详情";
+        FastClick.attach(this.page);
         let p = document.createElement('p');
         p.innerHTML = this.state.plan.content;
         //分享配置
@@ -493,7 +495,7 @@ class FashionMomentDetail extends Component {
 
     render() {
         return (
-            <section className="fashionMomentDetailArea">
+            <section className="fashionMomentDetailArea" ref={(el) => this.page = el}>
                 <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
                 <Content plan={this.state.plan} />
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />
@@ -501,6 +503,9 @@ class FashionMomentDetail extends Component {
                 <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} commentList={this.state.commentList} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
                 <Footer plan={this.state.plan} setZan={this.setZan.bind(this)} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} commentList={this.state.commentList} addComment={this.addComment.bind(this)} />
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+                <Link to="/" className="home-link">
+                    <span className="icon icon-home"></span>
+                </Link>
             </section>
         )
     }
