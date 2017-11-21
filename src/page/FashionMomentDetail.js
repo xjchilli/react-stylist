@@ -13,7 +13,7 @@ import ShareConfig from './component/ShareConfig';
 import autosize from 'autosize';
 import Scroll from 'react-scroll';
 var Lk = Scroll.Link;
-var FastClick = require('fastclick');
+// var FastClick = require('fastclick');
 
 
 /**
@@ -421,7 +421,7 @@ class FashionMomentDetail extends Component {
 
     componentDidMount() {
         document.title = "时尚圈详情";
-        FastClick.attach(this.page);
+        // FastClick.attach(this.page);
         let p = document.createElement('p');
         p.innerHTML = this.state.plan.content;
         //分享配置
@@ -495,7 +495,8 @@ class FashionMomentDetail extends Component {
 
     render() {
         return (
-            <section className="fashionMomentDetailArea" ref={(el) => this.page = el}>
+            // ref={(el) => this.page = el}
+            <section className="fashionMomentDetailArea" >
                 <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
                 <Content plan={this.state.plan} />
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />

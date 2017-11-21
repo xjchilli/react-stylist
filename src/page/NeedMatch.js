@@ -8,7 +8,7 @@ import { DataLoad, GetData } from '../Component/index';
 import BindTel from "./component/BindTel";
 import qs from 'query-string';
 import { News } from '../Component/index';
-var FastClick = require('fastclick');
+// var FastClick = require('fastclick');
 
 
 class NeedMatch extends Component {
@@ -24,7 +24,7 @@ class NeedMatch extends Component {
     }
     componentDidMount() {
         document.title = "我要搭配";
-        FastClick.attach(this.page);
+        // FastClick.attach(this.page);
     }
 
     /**
@@ -66,8 +66,8 @@ class NeedMatch extends Component {
     }
     render() {
         return (
-            <section className="to-match-page" ref={(el) => this.page = el} onClick={this.hideTips.bind(this)}>
-                {/* <Footer tab="3" /> */}
+            // ref={(el) => this.page = el}
+            <section className="to-match-page"  onClick={this.hideTips.bind(this)}>
                 <img src="/assets/img/needMatch/head.jpg" className="response_img top-img" />
                 <h2 className="title">选择服务类型</h2>
                 <ul className="type-select">

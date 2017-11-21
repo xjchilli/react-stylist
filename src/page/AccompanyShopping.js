@@ -36,7 +36,8 @@ class AccompanyShopping extends Component {
             provinceCode: '330000', //省代码
             cityCode: '330100', //市代码
             countyCode: '330106', //区代码
-            fullCityName: '' //省市区名称
+            fullCityName: '', //省市区名称
+            timeShow: false,//时间窗口显示
 
         }
         this._time = 0;
@@ -45,24 +46,24 @@ class AccompanyShopping extends Component {
     componentDidMount() {
         document.title = "陪逛";
         let nowDate = new Date();
-        this.flatpickr = flatpickr("#date", {
-            locale: zh,
-            minDate: nowDate,
-            disableMobile: "true",
-            enableTime: true,
-            time_24hr:true,
-            onChange: (selectedDates, dateStr, instance) => {
-                nowDate = selectedDates[0];
-                this.setState({
-                    date: dateStr
-                });
-            },
-            onOpen: () => {
-                this.setState({
-                    date: ToolDps.convertDate(nowDate, 'YYYY-MM-DD hh:mm')
-                });
-            }
-        });
+        // this.flatpickr = flatpickr("#date", {
+        //     locale: zh,
+        //     minDate: nowDate,
+        //     disableMobile: "true",
+        //     enableTime: true,
+        //     time_24hr:true,
+        //     onChange: (selectedDates, dateStr, instance) => {
+        //         nowDate = selectedDates[0];
+        //         this.setState({
+        //             date: dateStr
+        //         });
+        //     },
+        //     onOpen: () => {
+        //         this.setState({
+        //             date: ToolDps.convertDate(nowDate, 'YYYY-MM-DD hh:mm')
+        //         });
+        //     }
+        // });
 
     }
 
@@ -74,7 +75,7 @@ class AccompanyShopping extends Component {
 
     componentWillUnmount() {
         clearTimeout(this._time);
-        this.flatpickr.destroy();
+        // this.flatpickr.destroy();
     }
 
 
@@ -243,7 +244,11 @@ class AccompanyShopping extends Component {
                 </section>
                 <section className="box other-area">
                     <h3 className="title">约定时间</h3>
-                    <input id="date" type="text" value={this.state.date} readOnly={true} placeholder='请选择约定时间' onFocus={(e) => { e.target.blur() }} />
+                    <div id="date" className="date" onClick={() => { this.setState({ timeShow: true }) }}>
+                        {this.state.date}
+                        {this.state.timeShow ? <Time closeTimeWindow={() => { this.setState({ timeShow: false }) }} initDate={this.state.date} getDate={(val) => { this.setState({ date: val }) }} /> : null}
+                    </div>
+                    {/* <input id="date" type="text" value={this.state.date} readOnly={true} placeholder='请选择约定时间' onFocus={(e) => { e.target.blur() }} /> */}
                     {/* <div id="date" className={this.state.date ? "date-area t-active" : "date-area"}>
                         {this.state.date ? this.state.date : '请选择约定时间'}
                     </div> */}
@@ -276,6 +281,42 @@ class AccompanyShopping extends Component {
 
 AccompanyShopping.contextTypes = {
     router: PropTypes.object.isRequired
+}
+
+
+
+/**
+ * 时间
+ */
+class Time extends Component {
+    componentDidMount() {
+        let nowDate = new Date();
+        this.flatpickr = flatpickr("#date", {
+            locale: zh,
+            minDate: nowDate,
+            disableMobile: "true",
+            enableTime: true,
+            time_24hr: true,
+            defaultDate: this.props.initDate,
+            onChange: (selectedDates, dateStr, instance) => {
+                this.props.getDate(dateStr);
+            },
+            onClose: (selectedDates, dateStr, instance) => {
+                this.props.closeTimeWindow();
+            }
+        });
+        this.flatpickr.open();
+
+    }
+
+    componentWillUnmount() {
+        this.flatpickr.close();
+
+    }
+
+    render() {
+        return null;
+    }
 }
 
 

@@ -601,7 +601,7 @@ class OtherInfo extends Component {
                 <h3 className="form-title">预约时间 *</h3>
                 <div id="birthDate" className="birthDate" onClick={() => { this.setState({ timeShow: true }) }}>
                     {this.state.data.time}
-                    {this.state.timeShow ? <Time birthday={this.state.data.time} getDate={this.getDate.bind(this)} /> : null}
+                    {this.state.timeShow ? <Time closeTimeWindow={() => { this.setState({ timeShow: false }) }} initDate={this.state.data.time} getDate={this.getDate.bind(this)} /> : null}
                 </div>
                 <h3 className="form-title">预约门店 *</h3>
                 <select className="sex" onChange={this.store.bind(this)} value={this.state.data.mendian}>
@@ -635,11 +635,12 @@ class Time extends Component {
             disableMobile: "true",
             enableTime: true,
             time_24hr: true,
+            defaultDate:this.props.initDate,
             onChange: (selectedDates, dateStr, instance) => {
                 this.props.getDate(dateStr);
             },
             onClose: (selectedDates, dateStr, instance) => {
-                this.props.getDate(dateStr);
+                this.props.closeTimeWindow();
             }
         });
         this.flatpickr.open();
@@ -648,6 +649,7 @@ class Time extends Component {
 
     componentWillUnmount() {
         this.flatpickr.close();
+
     }
 
     render() {

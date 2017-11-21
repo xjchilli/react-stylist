@@ -6,7 +6,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import IM from '../../page/component/IM';
-var FastClick = require('fastclick');
+// var FastClick = require('fastclick');
 // import PropTypes from 'prop-types';
 
 
@@ -36,7 +36,7 @@ DataLoad.defaultProps = {
 //底部tab
 class PageFooter extends Component {
     componentDidMount() {
-        FastClick.attach(this.footer);
+        // FastClick.attach(this.footer);
     }
 
 
@@ -55,7 +55,8 @@ class PageFooter extends Component {
             tab = '5';
         }
         return (
-            <ul className="footer clear" ref={(el) => this.footer = el}>
+            // ref={(el) => this.footer = el}
+            <ul className="footer clear" >
                 <li>
                     <NavLink to="/" activeClassName={tab == 1 ? "active" : ""}>
                         <span className={tab == 1 ? "icon icon-home-selected" : "icon icon-home-normal"}></span>

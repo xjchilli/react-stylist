@@ -27,38 +27,39 @@ class NeatenWardrobe extends Component {
             provinceCode: '330000', //省代码
             cityCode: '330100', //市代码
             countyCode: '330106', //区代码
-            fullCityName: '' //省市区名称
+            fullCityName: '', //省市区名称
+            timeShow: false,//时间窗口显示
         }
         this._time = 0;
     }
 
     componentDidMount() {
         document.title = "衣橱整理";
-        let nowDate = new Date();
-        this.flatpickr = flatpickr("#date", {
-            locale: zh,
-            minDate: nowDate,
-            disableMobile: "true",
-            enableTime: true,
-            time_24hr:true,
-            onChange: (selectedDates, dateStr, instance) => {
-                nowDate = selectedDates[0];
-                this.setState({
-                    date: dateStr
-                });
-            },
-            onOpen: () => {
-                this.setState({
-                    date: ToolDps.convertDate(nowDate, 'YYYY-MM-DD hh:mm')
-                });
-            }
-        });
+        // let nowDate = new Date();
+        // this.flatpickr = flatpickr("#date", {
+        //     locale: zh,
+        //     minDate: nowDate,
+        //     disableMobile: "true",
+        //     enableTime: true,
+        //     time_24hr:true,
+        //     onChange: (selectedDates, dateStr, instance) => {
+        //         nowDate = selectedDates[0];
+        //         this.setState({
+        //             date: dateStr
+        //         });
+        //     },
+        //     onOpen: () => {
+        //         this.setState({
+        //             date: ToolDps.convertDate(nowDate, 'YYYY-MM-DD hh:mm')
+        //         });
+        //     }
+        // });
     }
 
 
     componentWillUnmount() {
         clearTimeout(this._time);
-        this.flatpickr.destroy();
+        // this.flatpickr.destroy();
     }
 
 
@@ -160,12 +161,18 @@ class NeatenWardrobe extends Component {
 
     }
 
+
+
     render() {
         return (
             <section className='matchService'>
                 <section className="box other-area">
                     <h3 className="title">约定时间</h3>
-                    <input id="date" type="text" value={this.state.date} readOnly={true} placeholder='请选择约定时间' onFocus={(e) => { e.target.blur() }} />
+                    <div id="date" className="date" onClick={() => { this.setState({ timeShow: true }) }}>
+                        {this.state.date}
+                        {this.state.timeShow ? <Time closeTimeWindow={() => { this.setState({ timeShow: false }) }} initDate={this.state.date} getDate={(val) => { this.setState({ date: val }) }} /> : null}
+                    </div>
+                    {/* <input id="date" type="text" value={this.state.date} readOnly={true} placeholder='请选择约定时间' onFocus={(e) => { e.target.blur() }} /> */}
                     <h3>约定地址</h3>
                     <input id="city" type="text" value={this.state.fullCityName} readOnly={true} placeholder='请选择城市' onClick={() => { this.setState({ cityShow: true }) }} onFocus={(e) => { e.target.blur() }} />
                     {this.state.cityShow ? <City defaultProvince={this.state.provinceCode} defaultCity={this.state.cityCode} defaultArea={this.state.countyCode} getCity={this.getCity.bind(this)} close={() => { this.setState({ cityShow: false }) }} /> : null}
@@ -185,6 +192,40 @@ NeatenWardrobe.contextTypes = {
     router: PropTypes.object.isRequired
 }
 
+
+/**
+ * 时间
+ */
+class Time extends Component {
+    componentDidMount() {
+        let nowDate = new Date();
+        this.flatpickr = flatpickr("#date", {
+            locale: zh,
+            minDate: nowDate,
+            disableMobile: "true",
+            enableTime: true,
+            time_24hr: true,
+            defaultDate:this.props.initDate,
+            onChange: (selectedDates, dateStr, instance) => {
+                this.props.getDate(dateStr);
+            },
+            onClose: (selectedDates, dateStr, instance) => {
+                this.props.closeTimeWindow();
+            }
+        });
+        this.flatpickr.open();
+
+    }
+
+    componentWillUnmount() {
+        this.flatpickr.close();
+
+    }
+
+    render() {
+        return null;
+    }
+}
 
 
 export default NeatenWardrobe;
