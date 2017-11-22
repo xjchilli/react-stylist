@@ -67,16 +67,19 @@ class List extends Component {
             img.setAttribute('src', '/assets/img/icon/sound.png');
         }
 
+
     }
 
     componentDidMount() {
         //绑定图片点击事件
         document.querySelector('.chat-content').addEventListener('click', this.chat);
+       
     }
 
     componentWillUnmount() {
         //取消图片点击事件
         document.querySelector('.chat-content').removeEventListener('click', this.chat);
+        
     }
 
 

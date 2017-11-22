@@ -18,7 +18,7 @@ class PreviewImg extends React.Component {
     }
     render() {
         return (
-            <div className="preview-container" onClick={this.hide.bind(this)}>
+            <div className="preview-container" onClick={this.hide.bind(this)} onTouchStart={(e)=>{e.preventDefault()}}>
                 <img src={this.props.url} alt="" />
             </div>
         )
