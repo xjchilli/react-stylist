@@ -19,7 +19,6 @@ var IPv4 = require('./config/GetIp.js');
 var publicPath = '/assets/'; //服务器路径
 var p = path.resolve(__dirname + '/assets');
 
-
 //入口文件
 var entry = {
   app: './src/App.js',
