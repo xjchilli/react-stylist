@@ -12,7 +12,7 @@ import MatchScene from "./component/MatchScene";
 import { Msg } from "../Component/index";
 import { ToolDps } from '../ToolDps';
 import flatpickr from 'flatpickr';
-import { DataLoad, GetData } from '../Component/index';
+import { DataLoad, GetData,Button } from '../Component/index';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
 
 class AccompanyShopping extends Component {
@@ -270,7 +270,8 @@ class AccompanyShopping extends Component {
                     </div>
                     <h3>需求描述</h3>
                     <textarea className="word-describe" placeholder="您描述的越仔细，搭配师能给您更精准的服务哦 ~" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
-                    <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
+                    <Button className="btn publishBtn" onClick={this.publish.bind(this)}  shineColor="#1a1a1a" >{this.state.btn}</Button>
+                    {/* <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button> */}
                 </section>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>

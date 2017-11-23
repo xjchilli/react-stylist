@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
-import { City, Msg } from "../Component/index";
+import { City, Msg, Button } from "../Component/index";
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
 
@@ -180,7 +180,8 @@ class NeatenWardrobe extends Component {
                     <input type="text" placeholder="请填写详细地址" onChange={(e) => { this.setState({ addres: e.target.value }) }} />
                     <h3>需求描述</h3>
                     <textarea className="word-describe" placeholder="您描述的越仔细，搭配师能给您更精准的服务哦 ~" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea>
-                    <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
+                    <Button className="btn publishBtn" onClick={this.publish.bind(this)} shineColor="#1a1a1a" >{this.state.btn}</Button>
+                    {/* <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button> */}
                 </section>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
@@ -205,7 +206,7 @@ class Time extends Component {
             disableMobile: "true",
             enableTime: true,
             time_24hr: true,
-            defaultDate:this.props.initDate,
+            defaultDate: this.props.initDate,
             onChange: (selectedDates, dateStr, instance) => {
                 this.props.getDate(dateStr);
             },

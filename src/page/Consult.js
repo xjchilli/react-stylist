@@ -11,7 +11,7 @@ import MyWardrobe from "./component/MyWardrobe";
 import MatchScene from "./component/MatchScene";
 import { Msg } from "../Component/index";
 import { ToolDps } from '../ToolDps';
-import { DataLoad, GetData } from '../Component/index';
+import { DataLoad, GetData, Button } from '../Component/index';
 
 
 
@@ -230,7 +230,8 @@ class Consult extends Component {
                             ) : null
                         }
                     </ul>
-                    <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button>
+                    <Button className="btn publishBtn" onClick={this.publish.bind(this)}  shineColor="#1a1a1a" >{this.state.btn}</Button>
+                    {/* <button className="btn publishBtn" onClick={this.publish.bind(this)}>{this.state.btn}</button> */}
                 </section>
 
                 {this.state.myWardrobe ? <MyWardrobe sex={this.state.sex} garderobeArr={this.state.garderobeArr} addCloth={this.addCloth.bind(this)} closeMyWardrobe={() => { this.setState({ myWardrobe: false }) }} /> : null}

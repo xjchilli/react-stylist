@@ -9,7 +9,7 @@ import merged from 'obj-merged';
 import { ToolDps } from '../ToolDps';
 import action from '../Action/Index';
 import classNames from 'classnames';
-import { Msg, City, PreviewImg, Loading, DataLoad } from '../Component/index';
+import { Msg, City, PreviewImg, Loading, DataLoad,Button } from '../Component/index';
 // import { is, fromJS } from 'immutable';
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
@@ -879,7 +879,8 @@ class PlainPeopleChange extends Component {
                 <Style setPlainChange={this.props.setPlainChange} data={this.state.data} />
                 <LifePhoto setPlainChange={this.props.setPlainChange} data={this.state.data} />
                 <OtherInfo setPlainChange={this.props.setPlainChange} data={this.state.data} />
-                <button className="btn send-btn" onClick={this.sendForm.bind(this)} >{this.state.btnText}</button>
+                <Button className="btn send-btn" onClick={this.sendForm.bind(this)}  shineColor="#1a1a1a" >{this.state.btnText}</Button>
+                {/* <button className="btn send-btn" onClick={this.sendForm.bind(this)} >{this.state.btnText}</button> */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section >

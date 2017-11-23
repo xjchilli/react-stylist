@@ -132,6 +132,7 @@ class My extends Component {
                         </Link>
                     </li>
                 </ul>
+                <Link to="/myAsset" className="myAsset" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>我的资产</Link>
                 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>联系客服</a>
                 <Link to="/feedback" className="feedback">我要反馈</Link>
                 <News />

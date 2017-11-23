@@ -10,6 +10,7 @@ import ToReward from './reward/index';
 import Loading from './loading/Loading';
 import shake from './shake/index';
 import UserFeedbackLayer from './feedback/index';
+import Button from './button/index';
 
 export {
     GetNextPage,
@@ -25,5 +26,6 @@ export {
     ToReward,
     Loading,
     shake,
-    UserFeedbackLayer
+    UserFeedbackLayer,
+    Button
 }
