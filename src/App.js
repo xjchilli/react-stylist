@@ -16,9 +16,12 @@ import route from './Config/Route';
 import 'swiper'
 import './Style/dps.less';
 
+
 ReactDOM.render(
 	<Provider store={store}>
 		{route}
 	</Provider>,
 	document.getElementById('app')
 );
+
+
