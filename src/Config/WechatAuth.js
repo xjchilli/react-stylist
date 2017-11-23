@@ -48,7 +48,7 @@ async function getUserInfo(code, setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props, setAuth) {
-     localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
+     //localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
     // if (!JSON.parse(ToolDps.localItem('User'))) {
     //     localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oGHrAvwpDzGjKnPRxHIiCamlAR2o  oGHrAv2QLJaScmtYKnK-oVvF81S8
     // }
