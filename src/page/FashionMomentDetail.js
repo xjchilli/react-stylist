@@ -89,12 +89,16 @@ class Content extends Component {
         let {
             planName,
             wxCreateTime,
-            // smallImg,
+            typeVal,
             content
         } = this.props.plan;
         return (
             <section className="content">
                 <h1>{planName}</h1>
+                {
+                    typeVal ? <label>{typeVal}</label> : null
+                }
+                <br />
                 <time>{"发表于" + wxCreateTime}</time>
                 <div className="text" dangerouslySetInnerHTML={{ __html: content }}></div>
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
@@ -493,7 +497,11 @@ class FashionMomentDetail extends Component {
         });
     }
 
+
+
     render() {
+        //分享用户id
+        let sourceUserId = ToolDps.sessionItem('sourceUserId');
         return (
             // ref={(el) => this.page = el}
             <section className="fashionMomentDetailArea" >
@@ -504,6 +512,14 @@ class FashionMomentDetail extends Component {
                 <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} commentList={this.state.commentList} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
                 <Footer plan={this.state.plan} setZan={this.setZan.bind(this)} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} commentList={this.state.commentList} addComment={this.addComment.bind(this)} />
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
+                {/* 用户分享来源才会出现这个按钮 */}
+                {
+                    sourceUserId ? (
+                        <Link to={"/plainPeopleChange?projectId=5&sourceUserId=" + sourceUserId} className="join-link">
+                            立即参加改造
+                    </Link>
+                    ) : null
+                }
                 <Link to="/" className="home-link">
                     <span className="icon icon-home"></span>
                 </Link>
@@ -516,6 +532,19 @@ class FashionMomentDetail extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.saveSourceUserId(props);
+
+    }
+
+    /**
+     * 保存分享用户id
+     * @param {*} props 
+     */
+    saveSourceUserId(props) {
+        let { sourceUserId } = qs.parse(props.location.search);
+        if (sourceUserId) {
+            ToolDps.sessionItem('sourceUserId', sourceUserId);
+        }
     }
 
     render() {

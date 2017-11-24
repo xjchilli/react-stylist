@@ -120,10 +120,17 @@ class ToReward extends Component {
             return
         };
         if (Number(rewardMoney.trim()) <= 0) return;
-        ToolDps.post(this.state.url, {
+        let data = {
             money: rewardMoney.trim(),
             id: this.state.id
-        }).then((res) => {
+        }
+        //分享用户id
+        let sourceUserId = ToolDps.sessionItem('sourceUserId');
+        if (sourceUserId) {
+            data['sourceUserId'] = sourceUserId;
+        }
+
+        ToolDps.post(this.state.url, data).then((res) => {
             // console.log(res)
             if (res.succ) {
                 this.pay(res.payInfo);
@@ -203,7 +210,7 @@ class ToReward extends Component {
     /**
      * 隐藏打赏窗口
      */
-    hide(e){
+    hide(e) {
         e.preventDefault();
         this.props.hideToReward()
     }

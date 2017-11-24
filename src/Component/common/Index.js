@@ -201,16 +201,16 @@ class MyNews extends IM {
 
     render() {
         return (
-            <view className="new-info-area">
+            <section className="new-info-area">
                 <Link to="/myDps">
-                    <view className="news">
+                    <div className="news">
                         <img src="/assets/img/icon/news.png" />
                         {
-                            this.state.newMsg ? <view className="cicle"></view> : null
+                            this.state.newMsg ? <span className="cicle"></span> : null
                         }
-                    </view>
+                    </div>
                 </Link>
-            </view>
+            </section>
         )
     }
 }

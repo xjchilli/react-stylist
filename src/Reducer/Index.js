@@ -111,7 +111,12 @@ const NeedMatch = DB('NeedMatch', {
 }); //我要搭配
 const MyWatch = DB('MyWatch', {
   data: null
-}); //我的关注
+}); 
+//我的资产
+const MyAsset = DB('MyAsset', {
+  data: null
+});
+//我的关注
 const HotDpsList = DB('HotDpsList', {
   currentPager: 1,
   nextBtn: true,
@@ -149,6 +154,7 @@ const reducers = combineReducers({
   Home,
   NeedMatch,
   MyWatch,
+  MyAsset,
   HotDpsList,
   FashionMoment,
   Profile,
