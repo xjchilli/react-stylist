@@ -50,12 +50,6 @@ class MyAsset extends React.Component {
                             )
                         })
                     }
-                    {/* <dd style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
-                        <p className='nickname'>啊飘打赏</p>
-                        <time className='time'>11-22  08:30</time>
-                        <span className='num'>+0.60</span>
-                    </dd> */}
-
                 </dl>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
@@ -64,7 +58,6 @@ class MyAsset extends React.Component {
 }
 
 
-// export default MyAsset;
 
 export default GetData({
     id: 'MyAsset', //应用关联使用的redux
