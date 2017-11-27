@@ -425,7 +425,6 @@ class FashionMomentDetail extends Component {
 
     componentDidMount() {
         document.title = "时尚圈详情";
-        // FastClick.attach(this.page);
         let p = document.createElement('p');
         p.innerHTML = this.state.plan.content;
         //分享配置
@@ -532,9 +531,8 @@ class FashionMomentDetail extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.saveSourceUserId(props);
-
     }
+
 
     /**
      * 保存分享用户id
@@ -543,7 +541,8 @@ class Main extends Component {
     saveSourceUserId(props) {
         let { sourceUserId } = qs.parse(props.location.search);
         if (sourceUserId) {
-            ToolDps.sessionItem('sourceUserId', sourceUserId);
+            ToolDps.sessionItem('sourceUserId', sourceUserId);//用户id
+            ToolDps.sessionItem('resourceCollocaitonId', props.state.data.collocation.id);//搭配师id
         }
     }
 
@@ -556,6 +555,7 @@ class Main extends Component {
         let succ = false;
         if (data) {
             succ = data.succ;
+            if (succ) this.saveSourceUserId(this.props);
         }
         let main = succ ? <FashionMomentDetail data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
         return main;

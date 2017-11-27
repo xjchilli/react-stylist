@@ -56,7 +56,7 @@ class PageFooter extends Component {
         }
         return (
             // ref={(el) => this.footer = el}
-            <ul className="footer clear" >
+            <ul className="footer clear">
                 <li>
                     <NavLink to="/" activeClassName={tab == 1 ? "active" : ""}>
                         <span className={tab == 1 ? "icon icon-home-selected" : "icon icon-home-normal"}></span>
@@ -75,7 +75,7 @@ class PageFooter extends Component {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/fashionMoment" activeClassName={tab == 4 ? "active" : ""}>
+                    <NavLink to="/fashionMoment" activeClassName={tab == 4 ? "active" : ""} >
                         <span className={tab == 4 ? "icon icon-find-selected" : "icon icon-find-normal"}></span>
                         <p>发现</p>
                     </NavLink>

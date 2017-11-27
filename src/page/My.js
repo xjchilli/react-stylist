@@ -60,7 +60,6 @@ class My extends Component {
         let { data, orderData } = this.props;
         return (
             <section className="my-page">
-                {/* <Footer tab="5" /> */}
                 <header style={{ borderBottomWidth: ToolDps.iphone ? '0.3px' : '1px' }}>
                     <img src={data.headImg} />
                     <p className="text-center nickname">{data.nickName}</p>

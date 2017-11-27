@@ -790,6 +790,7 @@ class PlainPeopleChange extends Component {
         let sourceUserId = ToolDps.sessionItem('sourceUserId');
         if (sourceUserId) {
             data['sourceUserId'] = sourceUserId;
+            data['resourceCollocaitonId'] = ToolDps.sessionItem('resourceCollocaitonId');
         }
 
 
