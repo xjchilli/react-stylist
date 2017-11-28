@@ -41,6 +41,9 @@ let plain = {
   age:'',//年龄
   heigh: '', //身高
   weight: '', //体重
+  chest:'',//胸围
+  waist:'',//腰围
+  hip:'',
   colorofskin: '', //肤色
   bodySize: '', //体型
   style: [], //风格

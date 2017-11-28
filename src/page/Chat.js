@@ -73,13 +73,13 @@ class List extends Component {
     componentDidMount() {
         //绑定图片点击事件
         document.querySelector('.chat-content').addEventListener('click', this.chat);
-       
+
     }
 
     componentWillUnmount() {
         //取消图片点击事件
         document.querySelector('.chat-content').removeEventListener('click', this.chat);
-        
+
     }
 
 
@@ -751,15 +751,12 @@ class Chat extends IM {
                     {this.state.list.length > 0 ? <List previewImg={this.previewImg.bind(this)} collocationId={this.collocationId} list={this.state.list} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />}
                 </div>
                 <footer style={{ bottom: this.state.footerBottom + 'px' }}>
-                    <svg viewBox="0 0 1024 1024" className="icon-svg-face icon-face" onClick={() => { this.setState({ emotionFlag: !this.state.emotionFlag }) }}>
-                        <use xlinkHref="/assets/img/icon.svg#svg-face" />
-                    </svg>
-                    <div className="upload-img">
-                        <svg viewBox="0 0 1024 1024" className="icon-svg-img" onClick={() => { this.setState({ emotionFlag: true }) }}>
-                            <use xlinkHref="/assets/img/icon.svg#svg-img" />
-                        </svg>
+                    <div className="upload-img" onClick={() => { this.setState({ emotionFlag: false }) }}>
+                        <span className="icon icon-img" ></span>
                         <input type="file" className="img" accept="image/*" multiple={true} onChange={this.uploadPic.bind(this)} />
                     </div>
+                    <span className="icon icon-emotion" onClick={() => { this.setState({ emotionFlag: true }) }}></span>
+
                     <textarea id="J-input" type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
                     <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}

@@ -605,6 +605,9 @@ class OrderDetail extends Component {
                                 <li className="item-3"><p>年龄：{prestigeInfo.age}岁</p></li>
                                 <li className="item-3"><p>身高：{prestigeInfo.heigh}cm</p></li>
                                 <li className="item-3"><p>体重：{prestigeInfo.weight}kg</p></li>
+                                <li className="item-3"><p>胸围：{prestigeInfo.chest}cm</p></li>
+                                <li className="item-3"><p>腰围：{prestigeInfo.waist}cm</p></li>
+                                <li className="item-3"><p>臀围：{prestigeInfo.hip}cm</p></li>
                             </ul>
                         ) : null
                     }

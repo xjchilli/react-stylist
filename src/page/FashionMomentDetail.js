@@ -283,7 +283,7 @@ class UserComment extends React.Component {
         this.textarea.focus();
         this.time = setTimeout(function () {
             window.scrollTo(0, 100000);
-        }, 200)
+        }, 300)
 
     }
 

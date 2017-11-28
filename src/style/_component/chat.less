@@ -111,15 +111,17 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    border-top: 1px solid rgb(221, 221, 221);
-    padding: 5px 70px;
-    background: rgb(242, 242, 242);
+    border-top: 1px solid #e5e5e5;
+    padding: 5px 87px;
+    background: #f5f5f7;
     z-index: 1;
+    font-size: 0;
     textarea {
       width: 100%;
       -webkit-appearance: none;
       height: 100%;
-      border-width: 0;
+      border: 1px solid #e6e6e6;
+      border-radius: 4px;
       padding: 5px;
       resize: none;
       font-size: 14px;
@@ -127,31 +129,43 @@
     }
     .send-btn {
       position: absolute;
-      right: 5px;
+      right: 13px;
       top: 50%;
       transform: translate(0, -50%);
-      width: 60px;
+      width: 65px;
       font-size: 14px;
-      line-height: 40px
+      line-height: 33px;
+      border-radius:3px;
+      background: #000000;
+      color: #f5f5f7;
+      font-size: 17px;
+      font-weight: 500;
     }
-    .upload-img, .icon-face {
+    .upload-img, .icon-emotion {
+      font-size: 28px;
       position: absolute;
       top: 50%;
       transform: translate(0, -50%);
     }
     .upload-img {
-      left: 7px;
-      overflow: hidden;
+      left: 13px;
+      width: 28px;
+      height: 28px;
+      font-size: 0;
+      .icon-img {
+        font-size: 28px;
+      }
       .img {
         position: absolute;
+        top: 0;
         left: 0;
         height: 100%;
         width: 100%;
         opacity: 0;
       }
     }
-    .icon-face {
-      left: 43px;
+    .icon-emotion {
+      left: 50px;
     }
     .emotions-area {
       position: absolute;

@@ -1056,29 +1056,12 @@ class StyleBoy extends Component {
 class BaseInfo extends Component {
     componentDidMount() {
         document.title = "基础信息";
-        //年龄
-        this.age = new Swiper('.J-age', {
-            initialSlide: 23,
-            slidesPerView: 5,
-            centeredSlides: true,
-            freeMode: true,
-            freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let age = swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.props.changeAge(age);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let age = swiper.slides[swiper.activeIndex].textContent.trim();
-                this.props.changeAge(age);
-            }
-        });
         //身高
         this.height = new Swiper('.J-height', {
             initialSlide: 20,
             slidesPerView: 5,
             centeredSlides: true,
-            freeMode: true,
+            // freeMode: true,
             freeModeSticky: true,
             onTap: (swiper) => {
                 swiper.slideTo(swiper.clickedIndex, 100, false);
@@ -1095,7 +1078,7 @@ class BaseInfo extends Component {
             initialSlide: 25,
             slidesPerView: 5,
             centeredSlides: true,
-            freeMode: true,
+            // freeMode: true,
             freeModeSticky: true,
             onTap: (swiper) => {
                 swiper.slideTo(swiper.clickedIndex, 100, false);
@@ -1107,39 +1090,87 @@ class BaseInfo extends Component {
                 this.props.changeWeight(weight);
             }
         });
+        //胸围
+        this.chest = new Swiper('.J-chest', {
+            initialSlide: 30,
+            slidesPerView: 5,
+            centeredSlides: true,
+            // freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let chest = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.props.changeChest(chest);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let chest = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.props.changeChest(chest);
+            }
+        });
+        //腰围
+        this.waist = new Swiper('.J-waist', {
+            initialSlide: 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            // freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let waist = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.props.changeWaist(waist);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let waist = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.props.changeWaist(waist);
+            }
+        });
+        //臀围
+        this.hip = new Swiper('.J-hip', {
+            initialSlide: 40,
+            slidesPerView: 5,
+            centeredSlides: true,
+            // freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let hip = swiper.slides[swiper.clickedIndex].textContent.trim();
+                this.props.changeHip(hip);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let hip = swiper.slides[swiper.activeIndex].textContent.trim();
+                this.props.changeHip(hip);
+            }
+        });
     }
 
     render() {
-        //年龄
-        let agehArr = [];
-        for (let i = 0; i <= 99; i++) {
-            agehArr.push(<div className="swiper-slide" key={i}>{1 + i}</div>);
-        }
         //身高
         let hegithArr = [];
         for (let i = 0; i <= 75; i++) {
             hegithArr.push(<div className="swiper-slide" key={i}>{145 + i}</div>);
         }
-
         //体重
         let weightArr = [];
         for (let i = 0; i <= 115; i++) {
             weightArr.push(<div className="swiper-slide" key={i}>{35 + i}</div>);
         }
+        //胸围
+        let chesthArr = [];
+        for (let i = 0; i <= 100; i++) {
+            chesthArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
+        }
+        //腰围
+        let waistArr = [];
+        for (let i = 0; i <= 100; i++) {
+            waistArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
+        }
+        //臀围
+        let hipArr = [];
+        for (let i = 0; i <= 100; i++) {
+            hipArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
+        }
         return (
             <ul className="baseInfo-area">
-                <li className="item">
-                    <h4 className="base-title">年龄（岁）</h4>
-                    <div className="swiper-area">
-                        <i className="swiper-pre-btn" onClick={() => { this.age.slidePrev() }}></i>
-                        <div className="swiper-container J-age">
-                            <div className="swiper-wrapper">
-                                {agehArr}
-                            </div>
-                        </div>
-                        <i className="swiper-next-btn" onClick={() => { this.age.slideNext() }}></i>
-                    </div>
-                </li>
                 <li className="item">
                     <h4 className="base-title">身高（cm）</h4>
                     <div className="swiper-area">
@@ -1162,6 +1193,42 @@ class BaseInfo extends Component {
                             </div>
                         </div>
                         <i className="swiper-next-btn" onClick={() => { this.weight.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="base-title">胸围（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.chest.slidePrev() }}></i>
+                        <div className="swiper-container J-chest">
+                            <div className="swiper-wrapper">
+                                {chesthArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.chest.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="base-title">腰围（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.waist.slidePrev() }}></i>
+                        <div className="swiper-container J-waist">
+                            <div className="swiper-wrapper">
+                                {waistArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.waist.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="base-title">臀围（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.hip.slidePrev() }}></i>
+                        <div className="swiper-container J-hip">
+                            <div className="swiper-wrapper">
+                                {hipArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.hip.slideNext() }}></i>
                     </div>
                 </li>
             </ul>
@@ -1190,12 +1257,6 @@ class OtherInfo extends Component {
         document.title = "基础信息(选填)";
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-
-        });
-    }
-
     /**
  * 获取城市代码
  * */
@@ -1218,10 +1279,20 @@ class OtherInfo extends Component {
         });
         this.props.changeCountyCode(currArea);
     }
-    render() {
 
+    render() {
+        //身高
+        let ageArr = [];
+        for (let i = 0; i <= 100; i++) {
+            ageArr.push(<option key={i} value={10 + i}>{10 + i}岁</option>);
+        }
         return (
             <section className="otherInfo-area">
+                <label>年龄</label>
+                <select value={this.props.age} onChange={(e) => { this.props.changeAge(e.target.value) }}>
+                    <option value=''>请选择年龄</option>
+                    {ageArr}
+                </select>
                 <label>职业</label>
                 <input type="text" maxLength={10} value={this.props.professional} onChange={(e) => { this.props.changeProfessional(e.target.value) }} />
                 <label>城市</label>
@@ -1264,18 +1335,17 @@ class CustomSuit extends Component {
             body: '',//体型
             solutions: [],//希望解决的问题
             styles: [],//风格
-            age: '',//年龄
             height: '',//身高
             weight: '',//体重
+            chest: '',//胸围
+            waist: '',//腰围
+            hip: '',//臀围
+            age: '',//年龄
             professional: '',//职业
             countyCode: '',//区
-            progress: 1//进度
+            progress:1//进度
         };
         this._time = 0;
-    }
-
-    componentDidMount(){
-        // FastClick.attach(this.page);
     }
 
     componentWillUnmount() {
@@ -1316,6 +1386,9 @@ class CustomSuit extends Component {
         formdata.append('birthday', this.state.age);
         formdata.append('heigh', this.state.height);
         formdata.append('weight', this.state.weight);
+        formdata.append('chest', this.state.chest);
+        formdata.append('waist', this.state.waist);
+        formdata.append('hip', this.state.hip);
         formdata.append('professional', this.state.professional);
         formdata.append('countyCode', this.state.countyCode);
 
@@ -1364,6 +1437,18 @@ class CustomSuit extends Component {
                 return;
             }
         } else if (step >= 8) {
+            if (!this.state.age) {
+                this.showMsg(true, '请选择年龄');
+                return;
+            }
+            if (!this.state.professional) {
+                this.showMsg(true, '请选择职业');
+                return;
+            }
+            if (!this.state.countyCode) {
+                this.showMsg(true, '请选择城市');
+                return;
+            }
             this.sendForm();//提交表单
             return;
         }
@@ -1425,11 +1510,11 @@ class CustomSuit extends Component {
                 }
                 {/* 基础信息 */}
                 {
-                    this.state.progress == 7 ? <BaseInfo changeAge={(age) => { this.setState({ age: age }) }} changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} /> : null
+                    this.state.progress == 7 ? <BaseInfo changeHeight={(height) => { this.setState({ height: height }) }} changeWeight={(weight) => { this.setState({ weight: weight }) }} changeChest={(chest) => { this.setState({ chest: chest }) }} changeWaist={(waist) => { this.setState({ waist: waist }) }} changeHip={(hip) => { this.setState({ hip: hip }) }} /> : null
                 }
                 {/* 基础信息(选填) */}
                 {
-                    this.state.progress == 8 ? <OtherInfo professional={this.state.professional} changeProfessional={(value) => { this.setState({ professional: value }) }} changeCountyCode={(value) => { this.setState({ countyCode: value }) }} /> : null
+                    this.state.progress == 8 ? <OtherInfo age={this.state.age} changeAge={(value) => { this.setState({ age: value }) }} professional={this.state.professional} changeProfessional={(value) => { this.setState({ professional: value }) }} changeCountyCode={(value) => { this.setState({ countyCode: value }) }} /> : null
                 }
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
 

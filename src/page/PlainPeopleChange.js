@@ -28,12 +28,15 @@ class BaseInfo extends Component {
         let ageIndex = Number(this.state.data.age) - 1; //年龄
         let heighIndex = Number(this.state.data.heigh) - 145; //身高
         let weightIndex = Number(this.state.data.weight) - 35; //体重
+        let chestIndex = Number(this.state.data.chest) - 50; //胸围
+        let waistIndex = Number(this.state.data.waist) - 50; //腰围
+        let hipIndex = Number(this.state.data.hip) - 50; //臀围
         //年龄
         this.age = new Swiper('.J-age', {
             initialSlide: ageIndex || 23,
             slidesPerView: 5,
             centeredSlides: true,
-            freeMode: true,
+            // freeMode: true,
             freeModeSticky: true,
             onTap: (swiper) => {
                 swiper.slideTo(swiper.clickedIndex, 100, false);
@@ -54,7 +57,7 @@ class BaseInfo extends Component {
             initialSlide: heighIndex || 20,
             slidesPerView: 5,
             centeredSlides: true,
-            freeMode: true,
+            // freeMode: true,
             freeModeSticky: true,
             onTap: (swiper) => {
                 swiper.slideTo(swiper.clickedIndex, 100, false);
@@ -75,7 +78,7 @@ class BaseInfo extends Component {
             initialSlide: weightIndex || 25,
             slidesPerView: 5,
             centeredSlides: true,
-            freeMode: true,
+            // freeMode: true,
             freeModeSticky: true,
             onTap: (swiper) => {
                 swiper.slideTo(swiper.clickedIndex, 100, false);
@@ -88,6 +91,69 @@ class BaseInfo extends Component {
                 let weight = swiper.slides[swiper.activeIndex].textContent;
                 let copyData = merged(this.state.data);
                 copyData.weight = weight;
+                this.props.setPlainChange(copyData);
+            }
+        });
+        //胸围
+        this.chest = new Swiper('.J-chest', {
+            initialSlide: chestIndex || 30,
+            slidesPerView: 5,
+            centeredSlides: true,
+            // freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let chest = swiper.slides[swiper.clickedIndex].textContent.trim();
+                let copyData = merged(this.state.data);
+                copyData.chest = chest;
+                this.props.setPlainChange(copyData);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let chest = swiper.slides[swiper.activeIndex].textContent.trim();
+                let copyData = merged(this.state.data);
+                copyData.chest = chest;
+                this.props.setPlainChange(copyData);
+            }
+        });
+        //腰围
+        this.waist = new Swiper('.J-waist', {
+            initialSlide: waistIndex || 20,
+            slidesPerView: 5,
+            centeredSlides: true,
+            // freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let waist = swiper.slides[swiper.clickedIndex].textContent.trim();
+                let copyData = merged(this.state.data);
+                copyData.waist = waist;
+                this.props.setPlainChange(copyData);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let waist = swiper.slides[swiper.activeIndex].textContent.trim();
+                let copyData = merged(this.state.data);
+                copyData.waist = waist;
+                this.props.setPlainChange(copyData);
+            }
+        });
+        //臀围
+        this.hip = new Swiper('.J-hip', {
+            initialSlide: hipIndex || 40,
+            slidesPerView: 5,
+            centeredSlides: true,
+            // freeMode: true,
+            freeModeSticky: true,
+            onTap: (swiper) => {
+                swiper.slideTo(swiper.clickedIndex, 100, false);
+                let hip = swiper.slides[swiper.clickedIndex].textContent.trim();
+                let copyData = merged(this.state.data);
+                copyData.hip = hip;
+                this.props.setPlainChange(copyData);
+            },
+            onTransitionEnd: (swiper) => { //slide改变
+                let hip = swiper.slides[swiper.activeIndex].textContent.trim();
+                let copyData = merged(this.state.data);
+                copyData.hip = hip;
                 this.props.setPlainChange(copyData);
             }
         });
@@ -117,6 +183,21 @@ class BaseInfo extends Component {
             weightArr.push(<div className="swiper-slide" key={i}>{35 + i}</div>);
         }
 
+        //胸围
+        let chesthArr = [];
+        for (let i = 0; i <= 100; i++) {
+            chesthArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
+        }
+        //腰围
+        let waistArr = [];
+        for (let i = 0; i <= 100; i++) {
+            waistArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
+        }
+        //臀围
+        let hipArr = [];
+        for (let i = 0; i <= 100; i++) {
+            hipArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
+        }
         return (
             <ul className="baseInfo-area">
                 <li className="item">
@@ -153,6 +234,42 @@ class BaseInfo extends Component {
                             </div>
                         </div>
                         <i className="swiper-next-btn" onClick={() => { this.weight.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="form-title">胸围（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.chest.slidePrev() }}></i>
+                        <div className="swiper-container J-chest">
+                            <div className="swiper-wrapper">
+                                {chesthArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.chest.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="form-title">腰围（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.waist.slidePrev() }}></i>
+                        <div className="swiper-container J-waist">
+                            <div className="swiper-wrapper">
+                                {waistArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.waist.slideNext() }}></i>
+                    </div>
+                </li>
+                <li className="item">
+                    <h4 className="form-title">臀围（cm）</h4>
+                    <div className="swiper-area">
+                        <i className="swiper-pre-btn" onClick={() => { this.hip.slidePrev() }}></i>
+                        <div className="swiper-container J-hip">
+                            <div className="swiper-wrapper">
+                                {hipArr}
+                            </div>
+                        </div>
+                        <i className="swiper-next-btn" onClick={() => { this.hip.slideNext() }}></i>
                     </div>
                 </li>
             </ul>
@@ -675,6 +792,9 @@ class Main extends Component {
                 copyData.age = info.age || '24';
                 copyData.heigh = info.heigh || '165';
                 copyData.weight = info.weight || '60';
+                copyData.chest = info.chest || '80';
+                copyData.waist = info.waist || '70';
+                copyData.hip = info.hip || '90';
                 copyData.colorofskin = info.colorofskin;
                 copyData.bodySize = info.bodySize;
                 copyData.style = info.styles;
@@ -755,6 +875,9 @@ class PlainPeopleChange extends Component {
             age,//年龄
             heigh, //身高
             weight, //体重
+            chest,//胸围
+            waist,//腰围
+            hip,//臀围
             colorofskin, //肤色
             bodySize, //体型
             style, //风格
@@ -774,6 +897,9 @@ class PlainPeopleChange extends Component {
             age: age,
             heigh: heigh,
             weight: weight,
+            chest: chest,
+            waist: waist,
+            hip: hip,
             colorofskin: colorofskin,
             bodySize: bodySize,
             style: style,

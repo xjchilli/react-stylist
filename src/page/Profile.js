@@ -179,6 +179,9 @@ class Profile extends Component {
             professional,
             heigh,
             weight,
+            chest,
+            waist,
+            hip,
             faceshpeValues,
             faceshpeImg,
             problemValues,
@@ -215,11 +218,20 @@ class Profile extends Component {
                         <li className="item-3">
                             <label>年龄</label>{age}岁
                         </li>
-                        <li className="item-3 text-center">
+                        <li className="item-3">
                             <label>身高</label>{heigh}cm
                         </li>
-                        <li className="item-3 text-right">
+                        <li className="item-3">
                             <label>体重</label>{weight}kg
+                        </li>
+                        <li className="item-3">
+                            <label>胸围</label>{chest}cm
+                        </li>
+                        <li className="item-3">
+                            <label>腰围</label>{waist}cm
+                        </li>
+                        <li className="item-3">
+                            <label>臀围</label>{hip}cm
                         </li>
                     </ul>
                     <dl className="flex-box face-skin-body">
