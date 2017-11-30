@@ -9,7 +9,7 @@
  * {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
  */
 import React from 'react';
-
+// import { imgScale } from '../index';
 
 class PreviewImg extends React.Component {
 
@@ -20,49 +20,54 @@ class PreviewImg extends React.Component {
     //         isMove: 0,
     //         isEnd: 0
     //     }
-    //     this.move = this.move.bind(this);
     // }
 
-    // componentDidMount() {
-    //     this.imgEle.addEventListener('touchstart', (e) => {
-    //         this.setState({
-    //             num: e.touches.length
-    //         });
-    //         console.log(e.touches.length);
+    componentDidMount() {
+        // let scale = imgScale({
+        //     ele: this.imgEle,//图片元素
+        //     ctEle: this.ctEle,//图片容器元素
+        //     startListen: (e) => {//实时监听
+        //         // console.log('start', e);
+        //         this.setState({
+        //             num: e.touches.length,
+        //             isEnd: 0
+        //         });
+        //     },
+        //     moveListen: (e) => {//实时监听
+        //         // console.log('move', e);
+        //         if (e.touches.length > 1) {
+        //             this.setState({
+        //                 isMove: 'a:' + e.touches[0].pageX + " : " + e.touches[0].pageY + '     b:' + e.touches[1].pageX + " : " + e.touches[1].pageY
+        //             });
+        //         } else {
+        //             this.setState({
+        //                 isMove: 'a:' + e.touches[0].pageX + " : " + e.touches[0].pageY
+        //             });
+        //         }
 
-    //         this.imgEle.addEventListener('touchmove', this.move);//move 
-    //     });
+        //     },
+        //     endListen: (e) => {//实时监听
+        //         // console.log('end', e);
+        //         this.setState({
+        //             isEnd: 1
+        //         });
+        //     }
+        // });
 
-
-
-    //     this.imgEle.addEventListener('touchend', (e) => {
-    //         this.imgEle.removeEventListener('touchmove', this.move);
-    //         this.setState({
-    //             isEnd: Math.random() * 100
-    //         });
-    //     });
-
-
-    // }
-
-    // move() {
-    //     this.setState({
-    //         isMove: Math.random() * 100
-    //     });
-    // }
-
+    }
 
     hide(event) {
         event.preventDefault();
         this.props.hidePreviewBigImg();
     }
     render() {
+
         return (
-            <div className="preview-container" onClick={this.hide.bind(this)} onTouchStart={(e) => { e.preventDefault() }}>
+            <div ref={(el) => this.ctEle = el} className="preview-container" onClick={this.hide.bind(this)} onTouchStart={(e) => { e.preventDefault() }}>
                 {/* <p style={{ color: 'red' }}>{this.state.num}</p>
                 <p style={{ color: 'red' }}>isMove:{this.state.isMove}</p>
                 <p style={{ color: 'red' }}>isMove:{this.state.isEnd}</p> */}
-                <img src={this.props.url} alt="" ref={(el) => this.imgEle = el} />
+                <img id='img' src={this.props.url} alt="" ref={(el) => this.imgEle = el} />
             </div>
         )
     }
