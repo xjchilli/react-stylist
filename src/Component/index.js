@@ -9,6 +9,7 @@ import PreviewImg from './preview/index';
 import ToReward from './reward/index';
 import Loading from './loading/Loading';
 import shake from './shake/index';
+import imgScale from './imgScale/index';
 import UserFeedbackLayer from './feedback/index';
 import Button from './button/index';
 
@@ -26,6 +27,7 @@ export {
     ToReward,
     Loading,
     shake,
+    imgScale,
     UserFeedbackLayer,
     Button
 }
