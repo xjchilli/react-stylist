@@ -1,0 +1,72 @@
+.pick-date-area {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 99;
+    .bg{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background: rgba(0, 0, 0, .5);
+    }
+    .select-date-area {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 102;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        min-height: 250px;
+    }
+    .action-area {
+        position: relative;
+        height: 50px;
+        background: #f5f5f5;
+        border-top: 1px solid #d1d1d1;
+        >button {
+            width: 100px;
+            height: 49px;
+            border-width: 0;
+            background: @white;
+            font-size: 14px;
+            &:last-child {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background: rgb(234, 60, 59);
+                color: @white;
+            }
+        }
+    }
+    .date-area {
+        display: flex;
+        height: 200px;
+        background: #f5f5f5;
+        font-size: 14px;
+        color: #000000;
+        .date-item {
+            flex: 0 0 33.3%;
+            overflow: hidden;
+        }
+        .swiper-wrapper {
+            height: 200px;
+        }
+        .swiper-container {
+            background: #f5f5f5;
+        }
+        .swiper-slide {
+            line-height: 40px;
+            height: 40px;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .swiper-slide-active {
+            background: @white;
+        }
+    }
+}

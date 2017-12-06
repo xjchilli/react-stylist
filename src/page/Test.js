@@ -14,7 +14,9 @@ class Test extends React.Component {
         return (
             <section>
                 <input type="text" />
-                <Date />
+                <Date option={{
+                    defaultDate: '2017-12-06'
+                }} />
             </section>
         )
     }
