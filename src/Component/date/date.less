@@ -5,7 +5,7 @@
     bottom: 0;
     top: 0;
     z-index: 99;
-    .bg{
+    .bg {
         position: absolute;
         left: 0;
         right: 0;
@@ -21,11 +21,31 @@
         transform: translate(-50%, -50%);
         width: 90%;
         min-height: 250px;
+        background: #f5f5f5;
+        .swiper-wrapper {
+            height: 200px;
+        }
+        .swiper-container {
+            background: #f5f5f5;
+        }
+        .swiper-slide {
+            line-height: 40px;
+            height: 40px;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: rgba(128, 128, 128, .7);
+        }
+        .swiper-slide-active {
+            background: @white;
+        }
+        .swiper-slide-active, .swiper-slide-prev, .swiper-slide-next {
+            color: #000000;
+        }
     }
     .action-area {
         position: relative;
         height: 50px;
-        background: #f5f5f5;
         border-top: 1px solid #d1d1d1;
         >button {
             width: 100px;
@@ -42,31 +62,29 @@
             }
         }
     }
+    .pick-date-title {
+        text-align: center;
+        font-size: 16px;
+        line-height: 40px;
+        border-bottom: 1px solid rgb(82, 174, 229);
+        color: rgb(82, 174, 229);
+    }
     .date-area {
         display: flex;
         height: 200px;
-        background: #f5f5f5;
         font-size: 14px;
-        color: #000000;
+
         .date-item {
             flex: 0 0 33.3%;
             overflow: hidden;
         }
-        .swiper-wrapper {
-            height: 200px;
-        }
-        .swiper-container {
-            background: #f5f5f5;
-        }
-        .swiper-slide {
-            line-height: 40px;
-            height: 40px;
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-        .swiper-slide-active {
-            background: @white;
+    }
+    .time-area {
+        text-align: center;
+        font-size: 14px;
+        .date-item {
+            width: 33.3%;
+            display: inline-block;
         }
     }
 }
