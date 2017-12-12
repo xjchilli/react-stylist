@@ -101,7 +101,7 @@ class NeedMatch extends Component {
                                             }
                                         </ul>
                                         {
-                                            this.state.typeTips === 1 && item.id == "1" ? (
+                                            this.state.typeTips === item.id && item.id == "1" ? (
                                                 <ul className="tips">
                                                     {
                                                         item.specification.map((description, j) => {
@@ -114,7 +114,7 @@ class NeedMatch extends Component {
                                         }
 
                                         {
-                                            this.state.typeTips === 2 && item.id == "2" ? (
+                                            this.state.typeTips === item.id && item.id == "2" ? (
                                                 <ul className="tips tips2">
                                                     {
                                                         item.specification.map((description, j) => {
@@ -125,7 +125,7 @@ class NeedMatch extends Component {
                                             ) : null
                                         }
                                         {
-                                            this.state.typeTips === 3 && item.id == "3" ? (
+                                            this.state.typeTips === item.id && item.id == "3" ? (
                                                 <ul className="tips tips2">
                                                     {
                                                         item.specification.map((description, j) => {
@@ -136,7 +136,7 @@ class NeedMatch extends Component {
                                             ) : null
                                         }
                                         {
-                                            this.state.typeTips === 4 && item.id == "4" ? (
+                                            this.state.typeTips === item.id && item.id == "4" ? (
                                                 <ul className="tips tips2">
                                                     {
                                                         item.specification.map((description, j) => {
@@ -147,7 +147,7 @@ class NeedMatch extends Component {
                                             ) : null
                                         }
                                         {
-                                            this.state.typeTips === 5 && item.id == "5" ? (
+                                            this.state.typeTips === item.id && item.id == "5" ? (
                                                 <ul className="tips tips3">
                                                     {
                                                         item.specification.map((description, j) => {
@@ -158,7 +158,7 @@ class NeedMatch extends Component {
                                             ) : null
                                         }
                                         {
-                                            this.state.typeTips === 6 && item.id == "6" ? (
+                                            this.state.typeTips === item.id && item.id == "6" ? (
                                                 <ul className="tips tips3">
                                                     {
                                                         item.specification.map((description, j) => {
@@ -169,7 +169,7 @@ class NeedMatch extends Component {
                                             ) : null
                                         }
                                         {
-                                            this.state.typeTips === 7 && item.id == "7" ? (
+                                            this.state.typeTips === item.id && item.id == "7" ? (
                                                 <ul className="tips tips3">
                                                     {
                                                         item.specification.map((description, j) => {
