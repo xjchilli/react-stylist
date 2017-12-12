@@ -1,10 +1,12 @@
 import React from 'react';
-import { Date } from '../Component/index';
+import { MyDate } from '../Component/index';
 
 class Test extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = {
+            value: ''
+        };
 
     }
 
@@ -14,7 +16,10 @@ class Test extends React.Component {
         return (
             <section>
                 <input type="text" />
-                <Date />
+                <MyDate option={{
+                    defaultDate: new Date(),
+                    startDate:'2017-12-17'
+                }} />
             </section>
         )
     }

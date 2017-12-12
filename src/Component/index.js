@@ -12,7 +12,7 @@ import shake from './shake/index';
 import imgScale from './imgScale/index';
 import UserFeedbackLayer from './feedback/index';
 import Button from './button/index';
-import Date from './date/index';
+import MyDate from './date/index';
 
 export {
     GetNextPage,
@@ -31,5 +31,5 @@ export {
     imgScale,
     UserFeedbackLayer,
     Button,
-    Date
+    MyDate
 }

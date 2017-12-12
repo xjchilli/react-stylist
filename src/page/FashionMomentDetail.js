@@ -515,7 +515,7 @@ class FashionMomentDetail extends Component {
                 {
                     sourceUserId ? (
                         <Link to={"/plainPeopleChange?projectId=5&sourceUserId=" + sourceUserId} className="join-link">
-                            立即参加改造
+                            我也要体验
                     </Link>
                     ) : null
                 }

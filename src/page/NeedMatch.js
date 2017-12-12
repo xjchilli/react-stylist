@@ -87,7 +87,7 @@ class NeedMatch extends Component {
                                     </h3>
                                     <p className="introduce">{item.remarks}</p>
                                     <section className="price-item-box">
-                                        <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips == (index + 1) ? 0 : (index + 1) }) }}>
+                                        <ul className="price-item" onClick={() => { this.setState({ typeTips: this.state.typeTips === item.id ? 0 : item.id }) }}>
                                             {
                                                 item.items.map((list, i) => {
                                                     return (
