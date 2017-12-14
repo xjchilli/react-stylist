@@ -6,65 +6,102 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
-import { Msg, Tips, DataLoad } from "../Component/index";
+import { Msg, Tips, DataLoad, GetData } from "../Component/index";
 import classNames from "classnames";
 import { CSSTransitionGroup } from 'react-transition-group';
 import UseFulPromotionCode from './component/UseFulPromotionCode';
 import WxAuth from './component/WxAuth';
-
-
+import BindTel from "./component/BindTel";
 
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadAnimation: true,
-            loadMsg: '加载中...',
-            isQueryCoupons: false, //订单查询是否成功
-            data: null,
-            jsapiSigna: false //js签名是否成功
+            jsapiSigna: false, //js签名是否成功
+            isGetUser: false,//用户信息是否查询完成
+            contact: '',
         }
-
     }
+
     componentDidMount() {
-        let { orderId } = qs.parse(this.props.location.search);
-
-        //订单查询
-        ToolDps.get('/wx/order/queryCoupons', {
-            orderId: orderId
-        }).then((res) => {
-            if (res.succ) {
-                this.setState({
-                    loadAnimation: true,
-                    loadMsg: '查询成功',
-                    isQueryCoupons: res.succ,
-                    data: res.data
-                });
-            } else {
-                this.setState({
-                    loadAnimation: false,
-                    loadMsg: '查询失败',
-                    isQueryCoupons: res.succ
-                });
-            }
-
-        });
-
         //jsapi签名
         WxAuth().then(() => {
             this.setState({
                 jsapiSigna: true
             });
         });
-    }
 
+        ToolDps.get('/wx/user/info').then((res) => {
+            if (res.succ) {
+                this.setState({
+                    isGetUser: true,
+                    contact: res.contact || ''
+                });
+            }
+        });
+    }
 
     render() {
-        let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <Pay data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
-        return main;
+        let { data, loadAnimation, loadMsg } = this.props.state;
+        let main = data && data.succ && this.state.jsapiSigna && this.state.isGetUser ? <Pay data={data.data} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        return main
     }
 }
+
+
+
+
+// class Main extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             loadAnimation: true,
+//             loadMsg: '加载中...',
+//             isQueryCoupons: false, //订单查询是否成功
+//             data: null,
+//             jsapiSigna: false //js签名是否成功
+//         }
+
+//     }
+//     componentDidMount() {
+//         let { orderId } = qs.parse(this.props.location.search);
+
+//         //订单查询
+//         ToolDps.get('/wx/order/queryCoupons', {
+//             orderId: orderId
+//         }).then((res) => {
+//             if (res.succ) {
+//                 this.setState({
+//                     loadAnimation: true,
+//                     loadMsg: '查询成功',
+//                     isQueryCoupons: res.succ,
+//                     data: res.data
+//                 });
+//             } else {
+//                 this.setState({
+//                     loadAnimation: false,
+//                     loadMsg: '查询失败',
+//                     isQueryCoupons: res.succ
+//                 });
+//             }
+
+//         });
+
+//         //jsapi签名
+//         WxAuth().then(() => {
+//             this.setState({
+//                 jsapiSigna: true
+//             });
+//         });
+//     }
+
+
+//     render() {
+//         let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <Pay data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
+//         return main;
+//     }
+// }
 
 class Pay extends React.Component {
     constructor(props) {
@@ -77,6 +114,8 @@ class Pay extends React.Component {
             msgShow: false,
             msgText: '', //提示内容
             reqPay: false,//是否请求支付
+            contact: props.contact || '',//联系方式
+            isBingTelShow: false, //是否显示绑定手机窗口
         }
         this._time = 0;
     }
@@ -93,6 +132,14 @@ class Pay extends React.Component {
      * 支付
      */
     pay() {
+        if (!this.state.contact) {
+            this.setState({
+                msgShow: true,
+                msgText: '联系方式不能为空'//提示内容
+            });
+            return;
+        }
+
         let data = {}
         data.orderId = this.props.data.orderId;
         if (this.state.couponsId) {
@@ -205,7 +252,6 @@ class Pay extends React.Component {
         return (
             <section className="full-page pay-page">
                 <p className="service-type">服务类型：{requiremntTypeName}</p>
-                {/*  */}
                 <ul className="pay-money">
                     {
                         coupons.length > 0 && this.state.isHidePromotionCode ? (
@@ -217,6 +263,11 @@ class Pay extends React.Component {
                             </li>
                         ) : null
                     }
+                    <li onClick={() => { this.setState({ isBingTelShow: true }) }}>
+                        <em>*</em>联系方式
+                        <span className="money">{this.state.contact}</span>
+                        <span className="borrow"></span>
+                    </li>
                     <li>
                         需支付金额
                         <span className="money">&yen;{payPrice}</span>
@@ -236,8 +287,8 @@ class Pay extends React.Component {
                     <ol>3.线上订单:未被抢单可以取消，若搭配师已抢单，并进行相关服务，则概不退款</ol>
                     <ol>4.若对服务不满意或产生纠纷，请联系客服邮箱aaron@dapeis.com 工作日 10:00~18:00</ol>
                 </ul>
+                {this.state.isBingTelShow ? <BindTel close={(contact) => { this.setState({ isBingTelShow: false, contact: contact }) }} /> : null}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
-                {/* <Tips isShow={this.state.tipsShow} skipPath="/fashionMoment" perfectPath="/customSuit" hideTips={() => { this.setState({ tipsShow: false }) }} /> */}
                 {/*优惠码暂时隐藏*/}
                 <CSSTransitionGroup transitionName="move" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
                     {this.state.isShowPromotionCode ? <UseFulPromotionCode couponsId={this.state.couponsId} data={coupons} hide={() => { this.setState({ isShowPromotionCode: false }) }} selectPromotion={this.selectPromotion.bind(this)} /> : null}
@@ -253,4 +304,23 @@ Pay.contextTypes = {
 }
 
 
-export default Main;
+// export default Main;
+
+
+export default GetData({
+    id: 'PayOrder', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/order/queryCoupons',
+    data: (props, state) => {
+        let { orderId } = qs.parse(props.location.search);
+        return {
+            orderId: orderId
+        }
+    }, //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

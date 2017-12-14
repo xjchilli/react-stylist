@@ -16,6 +16,7 @@ import DpsProfileContainer from 'bundle-loader?lazy&name=[name]!../page/DpsProfi
 import DpsServerDetailContainer from 'bundle-loader?lazy&name=[name]!../page/DpsServerDetail';
 import ProfileContainer from 'bundle-loader?lazy&name=[name]!../page/Profile';
 import NeedMatchContainer from 'bundle-loader?lazy&name=[name]!../page/NeedMatch';
+import ServiceIntroduceContainer from 'bundle-loader?lazy&name=[name]!../page/ServiceIntroduce';
 import ConsultContainer from 'bundle-loader?lazy&name=[name]!../page/Consult';
 import ShoppingContainer from 'bundle-loader?lazy&name=[name]!../page/Shopping';
 import AccompanyShoppingContainer from 'bundle-loader?lazy&name=[name]!../page/AccompanyShopping';
@@ -105,6 +106,11 @@ let routers = [
         path: '/needMatch',
         exact: false,
         component: (props) => getComponent(props, NeedMatchContainer)
+    },
+    {//我要搭配服务介绍
+        path: '/serviceIntroduce',
+        exact: false,
+        component: (props) => getComponent(props, ServiceIntroduceContainer)
     },
     {//咨询
         path: '/consult',

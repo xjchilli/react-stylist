@@ -115,6 +115,9 @@ const NeedMatch = DB('NeedMatch', {
 const MyWatch = DB('MyWatch', {
   data: null
 }); 
+//支付订单
+const PayOrder = DB('PayOrder'); 
+
 //我的资产
 const MyAsset = DB('MyAsset', {
   data: null
@@ -156,6 +159,7 @@ const reducers = combineReducers({
   MyNews,
   Home,
   NeedMatch,
+  PayOrder,
   MyWatch,
   MyAsset,
   HotDpsList,

@@ -2,21 +2,20 @@
  * 绑定手机号
  * Created by potato on 2017/5/5 0005.
  */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React from 'react';
 import { ToolDps } from '../../ToolDps';
 import { Msg } from "../../Component/index";
+import { clearInterval } from 'timers';
 
-class BindTel extends Component {
+class BindTel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: this.props.path || '', //url路径
       msgShow: false,
       msgText: '', //提示内容
       getCodeBtnText: '获取验证码',
       second: 60, //默认60秒
-      pending: false, //验证码发送中
+      pending: true, //验证码是否可以发送
       tel: '',
       verifyCode: ''
     }
@@ -35,9 +34,6 @@ class BindTel extends Component {
    * 获取验证码
    */
   getCodeBtn() {
-    if (this.state.pending) { //是否已经发送验证码
-      return;
-    }
     let flag = ToolDps.reg.tel(this.state.tel);
     if (!flag) {
       this.setState({
@@ -53,6 +49,9 @@ class BindTel extends Component {
       });
       return;
     }
+    this.setState({
+      pending: false
+    });
     ToolDps.post('/wx/sms/bind/send', {
       contact: this.state.tel
     }).then((res) => {
@@ -105,7 +104,7 @@ class BindTel extends Component {
         });
 
         this._time2 = setTimeout(() => {
-          this.context.router.history.push(this.state.path);
+          this.props.close(this.state.tel);
         }, 1000);
 
       } else {
@@ -126,25 +125,25 @@ class BindTel extends Component {
    * 启动定时器
    */
   startTimer() {
+    this._time = setTimeout(this.time.bind(this), 1000);
+  }
+
+  time() {
     let second = this.state.second; //秒
-    this._time = setInterval(function () {
-      second--;
+    second--;
+    if (second <= 0) {
+      this.setState({
+        second: 60,
+        getCodeBtnText: '重发',
+        pending: true //发送中
+      });
+    } else {
       this.setState({
         second: second,
         getCodeBtnText: second + '秒后重发',
-        pending: true //发送中
       });
-      if (second === 0) {
-        clearInterval(this._time);
-        this.setState({
-          second: 60,
-          getCodeBtnText: '重发',
-          pending: false //发送中
-        });
-        return;
-      }
-
-    }.bind(this), 1000);
+      this._time = setTimeout(this.time.bind(this), 1000);
+    }
   }
 
   render() {
@@ -161,21 +160,16 @@ class BindTel extends Component {
             <div className="item">
               <span className="icon icon-lock"></span>
               <input type="tel" placeholder="请输入验证码" maxLength={4} value={this.state.verifyCode} onChange={(e) => { this.setState({ verifyCode: e.target.value }) }} />
-              <span className="getCodeBtn" onClick={this.getCodeBtn.bind(this)}>{this.state.getCodeBtnText}</span>
+              <span className="getCodeBtn" onClick={this.state.pending ? this.getCodeBtn.bind(this) : null}>{this.state.getCodeBtnText}</span>
             </div>
           </div>
           <button className="btn bindBtn" onClick={this.bindTel.bind(this)}>绑定</button>
-          <p className="text-center tips">绑定后可体验更多服务</p>
         </div>
         {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
       </section>
     )
   }
 
-}
-
-BindTel.contextTypes = {
-  router: PropTypes.object.isRequired
 }
 
 

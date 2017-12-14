@@ -7,7 +7,6 @@ import qs from 'query-string';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData, PreviewImg } from '../Component/index';
 import { ToolDps } from '../ToolDps';
-import BindTel from "./component/BindTel";
 
 
 
@@ -172,25 +171,17 @@ class DpsServer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            contact: '',
             windowShow: false, //是否显示窗口
             data: null
         }
     }
 
     componentDidMount() {
-        ToolDps.get('/wx/user/info').then((res) => {
+        ToolDps.get("/wx/fashion/" + this.props.shopId + "/topic").then((res) => {
             if (res.succ) {
                 this.setState({
-                    contact: res.contact
-                });
-                ToolDps.get("/wx/fashion/" + this.props.shopId + "/topic").then((res) => {
-                    if (res.succ) {
-                        this.setState({
-                            windowShow: true,
-                            data: res.data
-                        });
-                    }
+                    windowShow: true,
+                    data: res.data
                 });
             }
         });
@@ -199,7 +190,7 @@ class DpsServer extends Component {
 
 
     render() {
-        let main = this.state.windowShow ? <DpsServerDetail close={this.props.close} contact={this.state.contact} data={this.state.data} /> : null;
+        let main = this.state.windowShow ? <DpsServerDetail close={this.props.close} data={this.state.data} /> : null;
         return main;
     }
 }
@@ -208,30 +199,11 @@ class DpsServerDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            contact: props.contact || '',
             path: '', //url路径
-            isBingTelShow: false //是否显示绑定手机窗口
         }
     }
 
-    /**
-      * 
-      * [verifyUser 验证是否绑定过手机]
-      * @param  {[type]} path  [url路由]
-      * @param  {[type]} event [点击事件]
-      * @return {[type]}       [description]
-      */
-    verifyUser(path, event) {
-        if (!this.state.contact) {
-            event.preventDefault();
-            this.setState({
-                path: path,
-                isBingTelShow: true
-            });
-            return;
-        }
-
-    }
+   
 
     render() {
         let { id, type, price, content } = this.props.data;//type 1:咨询,2:购物,3:逛街,4：衣橱整理
@@ -273,10 +245,9 @@ class DpsServerDetail extends Component {
                     <section className="content">
                         {content}
                     </section>
-                    <Link to={service.url} className="btn buy-btn text-center" onClick={this.verifyUser.bind(this, service.url)}>立即购买</Link>
+                    <Link to={service.url} className="btn buy-btn text-center" >立即购买</Link>
                     <span className="icon icon-close-gray" onClick={this.props.close}></span>
                 </section>
-                {this.state.isBingTelShow ? <BindTel path={this.state.path} move={() => { this.setState({ isBingTelShow: false }) }} /> : null}
             </section>
         )
     }
