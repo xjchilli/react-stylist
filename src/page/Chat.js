@@ -179,10 +179,7 @@ class Chat extends IM {
 
     componentDidMount() {
         document.title = this.nickname;
-
-
         window.addEventListener('resize', this.resetChatHeight.bind(this));
-
         //重置聊天内容高度
         this.resetChatHeight();
         autosize(document.querySelector('#J-input'));//textarea高度自适应
@@ -312,13 +309,16 @@ class Chat extends IM {
         clearTimeout(this._time);
         if (prepend) {
             let li = document.createElement('li');
+            let aLink = '';
             if (isSelfSend) {
                 li.className = "friend-area self"; //自己
+                aLink = '/profile';
             } else {
                 li.className = "friend-area"; //好友
+                aLink = "/dpsProfile?collocationId=" + this.collocationId;
             }
 
-            li.innerHTML = '<img src=' + fromAccountImage + ' alt=""><div class="msgContent">' + contentHtml + '</div>';
+            li.innerHTML = '<a href=' + aLink + '><img src=' + fromAccountImage + ' alt=""></a><div class="msgContent">' + contentHtml + '</div>';
             document.querySelector('.chat-content').insertBefore(li, document.querySelector('.chat-content').firstChild);
             //50代表一条聊天记录默认高度50代表一条聊天记录默认高度50代表一条聊天记录默认高度50代表一条聊天记录默认高度
             this.container.scrollTop = this.container.scrollHeight - this.currScrollHeight - 50;
@@ -561,8 +561,9 @@ class Chat extends IM {
         });
 
         this.keybordTime = setTimeout(() => {
+            // this.container.scrollTop = this.container.scrollHeight;
             window.scrollTo(0, 100000);
-        }, 300);
+        }, 1300);
     }
 
     /**

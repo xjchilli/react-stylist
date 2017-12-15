@@ -21,7 +21,7 @@ var p = path.resolve(__dirname + '/assets');
 //入口文件
 var entry = {
     app: './src/App.js',
-    vendors: ['react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper']
+    vendors: ['react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper','fastclick']
 };
 
 module.exports = {
