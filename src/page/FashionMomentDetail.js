@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
 import classNames from 'classnames';
-import { DataLoad, GetData, Msg, PreviewImg, ToReward } from "../Component/index";
+import { DataLoad, GetData, Msg, PreviewImg, SwiperPreview, ToReward } from "../Component/index";
 import ShareConfig from './component/ShareConfig';
 import autosize from 'autosize';
 import Scroll from 'react-scroll';
@@ -61,22 +61,37 @@ class Content extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            previewBigImg: false,//是否预览大图
-            bigImgUrl: ''//大图url
+            swiperImgPreview: false,//是否预览图片
+            imgArr: [],//预览图片地址
+            previemImgIndex: 0,//图片预览下标
         }
         this.show = this.showImg.bind(this);
     }
 
     componentDidMount() {
+        this.getImgPath();
         document.querySelector('.content .text').addEventListener('click', this.show);
+    }
+
+    getImgPath() {
+        let imgArr = [];
+        let eles = document.querySelectorAll('.content .text img');
+        for (let i = 0; i < eles.length; i++) {
+            imgArr.push(eles[i].getAttribute('src'));
+        }
+
+        this.setState({
+            imgArr
+        });
     }
 
     showImg(e) {
         if (e.target.nodeName.toLowerCase() == "img") {//点击图片
             let imgUrl = e.target.getAttribute('src');
+            let index = this.state.imgArr.indexOf(imgUrl);
             this.setState({
-                previewBigImg: true,
-                bigImgUrl: imgUrl
+                swiperImgPreview: true,
+                previemImgIndex: index
             });
         }
     }
@@ -101,7 +116,9 @@ class Content extends Component {
                 <br />
                 <time>{"发表于" + wxCreateTime}</time>
                 <div className="text" dangerouslySetInnerHTML={{ __html: content }}></div>
-                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
+                {
+                    this.state.swiperImgPreview && this.state.imgArr.length > 0 ? <SwiperPreview imgArr={this.state.imgArr} previemImgIndex={this.state.previemImgIndex} close={() => { this.setState({ swiperImgPreview: false }) }} /> : null
+                }
             </section >
         )
     }

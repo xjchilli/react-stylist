@@ -5,7 +5,7 @@ import { GetNextPage, GetData, DataLoad, Footer, News } from './common/index';
 import City from './city/index';
 import Slider from './slider/index';
 import { Tips, Msg } from './tips/index';
-import PreviewImg from './preview/index';
+import { PreviewImg, SwiperPreview } from './preview/index';
 import ToReward from './reward/index';
 import Loading from './loading/Loading';
 import shake from './shake/index';
@@ -25,6 +25,7 @@ export {
     Tips,
     Msg,
     PreviewImg,
+    SwiperPreview,
     ToReward,
     Loading,
     shake,

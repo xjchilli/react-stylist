@@ -1,4 +1,5 @@
 
-import PreviewImg from './previewImg';
+import PreviewImg from './PreviewImg';
+import SwiperPreview from './SwiperPreview';
 
-export default PreviewImg;
+export { PreviewImg, SwiperPreview };
