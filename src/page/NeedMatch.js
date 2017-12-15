@@ -57,8 +57,8 @@ class NeedMatch extends Component {
                                             </ul>
                                         </section>
                                     </Link>
-                                    <Link to={"/serviceIntroduce?id=" + item.id} className="btn to-buy-btn" >立刻购买</Link>
-                                    {/* {
+                                    {/* <Link to={"/serviceIntroduce?id=" + item.id} className="btn to-buy-btn" >立刻购买</Link> */}
+                                    {
                                         item.id == 1 ? <Link to="/consult" className="btn to-buy-btn" >立刻购买</Link> : null
                                     }
                                     {
@@ -78,7 +78,7 @@ class NeedMatch extends Component {
                                     }
                                     {
                                         item.id == 7 ? <Link to="/plainPeopleChange?projectId=7" className="btn to-buy-btn" >立刻购买</Link> : null
-                                    } */}
+                                    }
                                 </li>
                             )
                         })

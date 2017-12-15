@@ -54,7 +54,6 @@ let plain = {
   costCode:'',//预期花费
   time:'',//预约时间，格式 yyyy-mm-dd HH:mm
   mendian:'',//门店
-  contact:'',//联系方式
   professional: '', //职业
   remarks:'',//改造需求
   loadAnimation: true,

@@ -6,7 +6,12 @@ import React from 'react';
 
 
 class SwiperPreview extends React.Component {
+    constructor(props) {
+        super(props);
+        this.disableMoveEvent = this.disableTouchmove.bind(this);
+    }
     componentDidMount() {
+        document.querySelector('body').addEventListener('touchmove', this.disableMoveEvent);
         new Swiper('.swiper-container', {
             initialSlide: this.props.previemImgIndex || 0,
             observer: true,
@@ -14,11 +19,20 @@ class SwiperPreview extends React.Component {
             pagination: '.swiper-pagination',
             zoomMax: 5,
             zoomMin: 1,
-            onTap:()=>{
+            onTap: () => {
                 this.props.close();
             }
         });
     }
+
+    componentWillUnmount() {
+        document.querySelector('body').removeEventListener('touchmove', this.disableMoveEvent);
+    }
+
+    disableTouchmove(e) {
+        e.preventDefault();
+    }
+
     render() {
         return (
             <section className='swiper-img-preview'>

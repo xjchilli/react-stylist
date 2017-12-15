@@ -44,7 +44,7 @@ class Home extends Component {
         let swiper1 = new Swiper('#banner', {
             pagination: '.swiper-pagination',
             loop: true,
-            autoplay: 5000
+            autoplay: 4000
         });
     }
 

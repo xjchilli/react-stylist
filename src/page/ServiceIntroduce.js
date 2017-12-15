@@ -27,7 +27,7 @@ class ServiceIntroduce extends React.Component {
         document.title = this.props.data.title;
     }
     render() {
-        console.log(this.props.data);
+        // console.log(this.props.data);
         let id = this.props.id;
         let experienceLink = '/';
         switch (id) {
@@ -58,7 +58,9 @@ class ServiceIntroduce extends React.Component {
         return (
             <section className='service-introduce-page'>
                 <section dangerouslySetInnerHTML={{ __html: this.props.data.specifiation }}></section>
-                <Link to={experienceLink} className='btn to-experience-btn'>{this.props.data.btnVal}</Link>
+                <div className='btn-area'>
+                    <Link to={experienceLink} className='btn to-experience-btn'>{this.props.data.btnVal}</Link>
+                </div>
             </section>
         )
     }

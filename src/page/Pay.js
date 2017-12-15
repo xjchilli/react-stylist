@@ -43,8 +43,9 @@ class Main extends React.Component {
     }
 
     render() {
-        let { data, loadAnimation, loadMsg } = this.props.state;
-        let main = data && data.succ && this.state.jsapiSigna && this.state.isGetUser ? <Pay data={data.data} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        //loadMsg
+        let { data, loadAnimation } = this.props.state;
+        let main = data && data.succ && this.state.jsapiSigna && this.state.isGetUser ? <Pay data={data.data} contact={this.state.contact} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={''} />;
         return main
     }
 }

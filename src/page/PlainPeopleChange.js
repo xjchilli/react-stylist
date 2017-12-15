@@ -685,15 +685,6 @@ class OtherInfo extends Component {
         this.props.setPlainChange(copyData);
     }
 
-    /**
-     * 获取联系方式
-     * @param {*} e 
-     */
-    getContact(e) {
-        let copyData = merged(this.state.data);
-        copyData.contact = e.target.value;
-        this.props.setPlainChange(copyData);
-    }
 
     //改善需求
     remarks(e) {
@@ -726,9 +717,6 @@ class OtherInfo extends Component {
                     <option value="1">华彩国际店</option>
                 </select>
                 {this.state.data.mendian == "1" ? <p className="address">杭州市西湖区三墩镇华彩国际3幢8楼902室</p> : null}
-
-                <h3 className="form-title">联系方式 *</h3>
-                <input type="text" value={this.state.data.contact} placeholder="手机/微信号" onChange={this.getContact.bind(this)} />
                 <h3 className="form-title">职业</h3>
                 <input type="text" maxLength={10} value={this.state.data.professional} onChange={this.getProfessional.bind(this)} />
                 <h3 className="form-title">改造需求</h3>
@@ -798,7 +786,6 @@ class Main extends Component {
                 copyData.colorofskin = info.colorofskin;
                 copyData.bodySize = info.bodySize;
                 copyData.style = info.styles;
-                copyData.contact = res.contact;
                 copyData.professional = info.professional;
                 copyData.loadAnimation = false;
                 copyData.loadMsg = "加载成功";
@@ -844,6 +831,11 @@ class PlainPeopleChange extends Component {
 
     componentDidMount() {
         document.title = "素人改造";
+        ToolDps.get('/wx/project/' + this.state.projectId + '/detail').then((res) => {
+            if (res.succ) {
+                document.title = res.data.title;
+            }
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -886,7 +878,6 @@ class PlainPeopleChange extends Component {
             costCode,//预期花费
             time,//预约时间，格式 yyyy-mm-dd HH:mm
             mendian,//门店
-            contact,//联系方式
             professional, //职业
             remarks//改造需求
         } = this.state.data;
@@ -908,7 +899,6 @@ class PlainPeopleChange extends Component {
             costCode: costCode,
             time: time,
             mendian: mendian,
-            contact: contact,
             professional: professional,
             remarks: remarks
         }
@@ -949,7 +939,6 @@ class PlainPeopleChange extends Component {
             costCode,//预期花费
             time,//预约时间
             mendian,//门店
-            contact//联系方式
         } = data;
         if (colorofskin == "") {
             this.showMsg(true, '请选择肤色');
@@ -981,10 +970,6 @@ class PlainPeopleChange extends Component {
         }
         if (mendian == "") {
             this.showMsg(true, '请选择门店');
-            return false;
-        }
-        if (contact == "") {
-            this.showMsg(true, '请填写联系方式');
             return false;
         }
         return true;
