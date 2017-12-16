@@ -9,7 +9,7 @@ import { ToolDps } from '../ToolDps';
 import { DataLoad, PreviewImg, Loading } from '../Component/index';
 import merged from 'obj-merged';
 import IM from './component/IM';
-import autosize from 'autosize';
+// import autosize from 'autosize';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 
@@ -182,7 +182,8 @@ class Chat extends IM {
         window.addEventListener('resize', this.resetChatHeight.bind(this));
         //重置聊天内容高度
         this.resetChatHeight();
-        autosize(document.querySelector('#J-input'));//textarea高度自适应
+        this.initFakeTextareaH();
+        // autosize(document.querySelector('#J-input'));//textarea高度自适应
 
         this.signature((data) => {
             this.login(data, () => {
@@ -193,12 +194,27 @@ class Chat extends IM {
 
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.msgText !== this.state.msgText) {//发送内容发生变化
+            let H = this.copyText.offsetHeight;
+            this.Jinput.style.height = H + 'px';
+            console.log(H);
+        }
+    }
+
 
     componentWillUnmount() {
         clearTimeout(this._time);
         clearTimeout(this.keybordTime);
     }
 
+    /**
+     * 初始化伪输入框高度
+     */
+    initFakeTextareaH() {
+        let W = this.Jinput.offsetWidth;
+        this.copyText.style.width = W + 'px';
+    }
 
 
     /**
@@ -561,8 +577,9 @@ class Chat extends IM {
         });
 
         this.keybordTime = setTimeout(() => {
-            // this.container.scrollTop = this.container.scrollHeight;
-            window.scrollTo(0, 100000);
+            this.container.scrollTop = this.container.scrollHeight;
+            // console.log(document.querySelector('.full-page').scrollTop,this.container.scrollTop);
+            // window.scrollTo(0, 100000);
         }, 1300);
     }
 
@@ -745,6 +762,7 @@ class Chat extends IM {
         });
     }
 
+
     render() {
         return (
             <div className="full-page chat-page">
@@ -757,10 +775,11 @@ class Chat extends IM {
                         <input type="file" className="img" accept="image/*" multiple={true} onChange={this.uploadPic.bind(this)} />
                     </div>
                     <span className="icon icon-emotion" onClick={() => { this.setState({ emotionFlag: true }) }}></span>
-
-                    <textarea id="J-input" type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
+                    <div ref={(el) => { this.copyText = el }} className='textarea-text'>{this.state.msgText}</div>
+                    <textarea id="J-input" ref={(el) => { this.Jinput = el }} type="text" value={this.state.msgText} onChange={(e) => { this.setState({ msgText: e.target.value }) }} onFocus={this.hideEmotion.bind(this)} />
                     <button className="btn send-btn" onClick={this.onSendMsg.bind(this)}>发送</button>
                     {this.state.emotionFlag ? (<ul className="emotions-area">{this.state.emotions}</ul>) : null}
+
                 </footer>
                 {
                     this.state.tips ? (

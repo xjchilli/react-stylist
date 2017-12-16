@@ -125,7 +125,10 @@
       padding: 5px;
       resize: none;
       font-size: 14px;
+      line-height: 16px;
       max-height: 300px;
+      word-break: break-all;
+      font-family: "PingFang SC", "Arial", 'Microsoft YaHei';
     }
     .send-btn {
       position: absolute;
@@ -135,7 +138,7 @@
       width: 65px;
       font-size: 14px;
       line-height: 33px;
-      border-radius:3px;
+      border-radius: 3px;
       background: #000000;
       color: #f5f5f7;
       font-size: 17px;
@@ -209,5 +212,19 @@
         color: red;
       }
     }
+  }
+  .textarea-text{
+    position: absolute;
+    left: -1000px;
+    top:-100px;
+    z-index: 0;
+    border: 1px solid #e6e6e6;
+    min-height: 44px;
+    font-size: 14px;
+    word-break: break-all;
+    padding: 5px;
+    background: red;
+    line-height: 16px;
+    visibility: hidden;
   }
 }
