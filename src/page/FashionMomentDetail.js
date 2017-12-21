@@ -13,7 +13,6 @@ import ShareConfig from './component/ShareConfig';
 import autosize from 'autosize';
 import Scroll from 'react-scroll';
 var Lk = Scroll.Link;
-// var FastClick = require('fastclick');
 
 
 /**
@@ -299,7 +298,14 @@ class UserComment extends React.Component {
         autosize(this.textarea);//textarea高度自适应
         this.textarea.focus();
         this.time = setTimeout(function () {
-            window.scrollTo(0, 100000);
+            let container=document.querySelector('.fashionMomentDetailArea');
+            let flag = ToolDps.checkDeviceVersion();//处理ios 11.2.1输入框被键盘覆盖问题
+            if (flag) {
+                container.scrollTop = container.scrollHeight;
+            } else {
+                window.scrollTo(0, 100000);
+            }
+            // window.scrollTo(0, 100000);
         }, 300)
 
     }
@@ -520,7 +526,7 @@ class FashionMomentDetail extends Component {
         let sourceUserId = ToolDps.sessionItem('sourceUserId');
         return (
             // ref={(el) => this.page = el}
-            <section className="fashionMomentDetailArea" >
+            <section className="fashionMomentDetailArea" style={{ height: window.innerHeight + 'px' }}>
                 <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
                 <Content plan={this.state.plan} />
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />
