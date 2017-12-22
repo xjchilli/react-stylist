@@ -55,56 +55,58 @@ class GirlType extends Component {
 
 
         return (
-            <ul className="lside" >
-                <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '100')}>
+            <div className="lside" >
+                <span className='line' style={{ top: (this.state.activeIndex - 1) * 76 + 'px' }}></span>
+                <span className='triangle' style={{ top: 38 + (this.state.activeIndex - 1) * 76 + 'px' }}></span>
+                <div className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '100')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-dress-normal normal"></span>
                         <span className="icon icon-girl-dress-selected selected"></span>
                         {goods0 != 0 ? (<label>{goods0}</label>) : null}
                         <p>裙子</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 2 ? "active" : ""} onClick={this.select.bind(this, 2, '101')}>
+                </div>
+                <div className={this.state.activeIndex === 2 ? "active" : ""} onClick={this.select.bind(this, 2, '101')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-coat-normal normal" ></span>
                         <span className="icon icon-girl-coat-selected selected"></span>
                         {goods1 != 0 ? (<label>{goods1}</label>) : null}
                         <p>上衣</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '102')}>
+                </div>
+                <div className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '102')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-trousers-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-girl-trousers-selected selected" style={{ fontSize: '28px' }}></span>
                         {goods2 != 0 ? (<label>{goods2}</label>) : null}
                         <p>裤子</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '103')}>
+                </div>
+                <div className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '103')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-underweaer-normal normal" style={{ fontSize: '17px' }}></span>
                         <span className="icon icon-girl-underweaer-selected selected" style={{ fontSize: '17px' }}></span>
                         {goods3 != 0 ? (<label>{goods3}</label>) : null}
                         <p>内衣</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '104')}>
+                </div>
+                <div className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '104')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-shoes-normal normal" style={{ fontSize: '16px' }}></span>
                         <span className="icon icon-girl-shoes-selected selected" style={{ fontSize: '16px' }}></span>
                         {goods4 != 0 ? (<label>{goods4}</label>) : null}
                         <p>鞋子</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '105')}>
+                </div>
+                <div className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '105')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-bag-normal normal" style={{ fontSize: '21px' }}></span>
                         <span className="icon icon-girl-bag-selected selected" style={{ fontSize: '21px' }}></span>
                         {goods5 != 0 ? (<label>{goods5}</label>) : null}
                         <p>包包</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '106')}>
+                </div>
+                <div className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '106')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-ornaments-normal normal" style={{ fontSize: '26px' }}></span>
                         <span className="icon icon-girl-ornaments-selected selected" style={{ fontSize: '26px' }}>
@@ -118,16 +120,16 @@ class GirlType extends Component {
                         {goods6 != 0 ? (<label>{goods6}</label>) : null}
                         <p>配饰</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 8 ? "active" : ""} onClick={this.select.bind(this, 8, '107')}>
+                </div>
+                <div className={this.state.activeIndex === 8 ? "active" : ""} onClick={this.select.bind(this, 8, '107')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-beauty-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-girl-beauty-selected selected" style={{ fontSize: '28px' }}></span>
                         <p>美妆</p>
                         {goods7 != 0 ? (<label>{goods7}</label>) : null}
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         )
     }
 }
@@ -174,32 +176,34 @@ class BoyType extends Component {
             }
         }
         return (
-            <ul className="lside">
-                <li className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '200')}>
+            <div className="lside">
+                <span className='line' style={{ top: (this.state.activeIndex - 1) * 76 + 'px' }}></span>
+                <span className='triangle' style={{ top: 38 + (this.state.activeIndex - 1) * 76 + 'px' }}></span>
+                <div className={this.state.activeIndex === 1 ? "active" : ""} onClick={this.select.bind(this, 1, '200')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-jacket-normal normal"></span>
                         <span className="icon icon-boy-jacket-selected selected"></span>
                         {goods0 != 0 ? (<label>{goods0}</label>) : null}
                         <p>上衣</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 2 ? "active" : ""} onClick={this.select.bind(this, 2, '201')}>
+                </div>
+                <div className={this.state.activeIndex === 2 ? "active" : ""} onClick={this.select.bind(this, 2, '201')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-trousers-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-boy-trousers-selected selected" style={{ fontSize: '28px' }}></span>
                         {goods1 != 0 ? (<label>{goods1}</label>) : null}
                         <p>裤子</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '203')}>
+                </div>
+                <div className={this.state.activeIndex === 3 ? "active" : ""} onClick={this.select.bind(this, 3, '203')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-shorts-normal normal" style={{ fontSize: '15px' }}></span>
                         <span className="icon icon-boy-shorts-selected selected" style={{ fontSize: '15px' }}></span>
                         {goods2 != 0 ? (<label>{goods2}</label>) : null}
                         <p>内衣</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '204')}>
+                </div>
+                <div className={this.state.activeIndex === 4 ? "active" : ""} onClick={this.select.bind(this, 4, '204')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-coat-normal normal" style={{ fontSize: '28px' }}></span>
                         <span className="icon icon-boy-coat-selected selected" style={{ fontSize: '28px' }}>
@@ -214,24 +218,24 @@ class BoyType extends Component {
                         {goods3 != 0 ? (<label>{goods3}</label>) : null}
                         <p>外套</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '205')}>
+                </div>
+                <div className={this.state.activeIndex === 5 ? "active" : ""} onClick={this.select.bind(this, 5, '205')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-shoes-normal normal" style={{ fontSize: '20px' }}></span>
                         <span className="icon icon-boy-shoes-selected selected" style={{ fontSize: '20px' }}></span>
                         {goods4 != 0 ? (<label>{goods4}</label>) : null}
                         <p>鞋子</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '206')}>
+                </div>
+                <div className={this.state.activeIndex === 6 ? "active" : ""} onClick={this.select.bind(this, 6, '206')}>
                     <div className="icon-box">
                         <span className="icon icon-girl-bag-normal normal"></span>
                         <span className="icon icon-girl-bag-selected selected"></span>
                         {goods5 != 0 ? (<label>{goods5}</label>) : null}
                         <p>包包</p>
                     </div>
-                </li>
-                <li className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '207')}>
+                </div>
+                <div className={this.state.activeIndex === 7 ? "active" : ""} onClick={this.select.bind(this, 7, '207')}>
                     <div className="icon-box">
                         <span className="icon icon-boy-ornaments-normal normal" style={{ fontSize: '27px' }}></span>
                         <span className="icon icon-boy-ornaments-selected selected" style={{ fontSize: '27px' }}>
@@ -245,8 +249,8 @@ class BoyType extends Component {
                         {goods6 != 0 ? (<label>{goods6}</label>) : null}
                         <p>配饰</p>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         )
     }
 }

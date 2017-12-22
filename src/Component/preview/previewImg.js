@@ -63,7 +63,8 @@ class PreviewImg extends React.Component {
     render() {
 
         return (
-            <div ref={(el) => this.ctEle = el} className="preview-container" onClick={this.hide.bind(this)} onTouchStart={(e) => { e.preventDefault() }}>
+            // onTouchStart={(e) => { e.preventDefault() }}
+            <div ref={(el) => this.ctEle = el} className="preview-container" onClick={this.hide.bind(this)} >
                 {/* <p style={{ color: 'red' }}>{this.state.num}</p>
                 <p style={{ color: 'red' }}>isMove:{this.state.isMove}</p>
                 <p style={{ color: 'red' }}>isMove:{this.state.isEnd}</p> */}

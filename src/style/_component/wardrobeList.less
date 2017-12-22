@@ -2,14 +2,37 @@
     background: #f0f5f9!important;
     position: relative;
     .lside {
+        position: relative;
         flex: 0 0 75px;
         width: 75px;
         height: 100%;
         overflow-y: auto;
-        li {
+        .line{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 76px;
+            z-index: 9;
+            background: #1a1a1a;
+            transition: all 0.5s ease;
+        }
+        .triangle{
+            position: absolute;
+            left: 70px;
+            top: 38px;
+            z-index: 9;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-right: 5px solid #f0f5f9;
+            border-bottom: 5px solid transparent;
+            transition: all 0.5s ease;
+        }
+        >div {
             position: relative;
             background: @white;
-            height: 77px;
+            height: 76px;
             border-bottom: 1px solid #e6e6e6;
             text-align: center;
             .icon-box {
@@ -50,27 +73,27 @@
                         display: block;
                     }
                 }
-                &:before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 5px;
-                    height: 100%;
-                    background: #1a1a1a;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    right: 0;
-                    top: 50%;
-                    transform: translate(0, -50%);
-                    width: 0;
-                    height: 0;
-                    border-top: 5px solid transparent;
-                    border-right: 5px solid #f0f5f9;
-                    border-bottom: 5px solid transparent;
-                }
+                // &:before {
+                //     content: '';
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     width: 5px;
+                //     height: 100%;
+                //     background: #1a1a1a;
+                // }
+                // &:after {
+                //     content: '';
+                //     position: absolute;
+                //     right: 0;
+                //     top: 50%;
+                //     transform: translate(0, -50%);
+                //     width: 0;
+                //     height: 0;
+                //     border-top: 5px solid transparent;
+                //     border-right: 5px solid #f0f5f9;
+                //     border-bottom: 5px solid transparent;
+                // }
             }
         }
     }

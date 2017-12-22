@@ -5,7 +5,9 @@ class Test extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ''
+            value: '',
+            time: '',
+            timeShow: false
         };
 
     }
@@ -15,11 +17,16 @@ class Test extends React.Component {
     render() {
         return (
             <section>
-                <input type="text" />
-                <MyDate option={{
-                    defaultDate: new Date(),
-                    startDate:'2017-12-17'
-                }} />
+                <input type="text" value={this.state.time} onClick={()=>{this.setState({timeShow:true})}}/>
+                {
+                    this.state.timeShow ? <MyDate option={{
+                        defaultDate: new Date(),
+                        startDate: '2017-12-17',
+                        sure: (time) => { this.setState({ time: time }) },
+                        cancel: () => {this.setState({timeShow:false}) }
+                    }} /> : null
+                }
+
             </section>
         )
     }

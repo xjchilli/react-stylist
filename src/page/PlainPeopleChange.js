@@ -9,7 +9,7 @@ import merged from 'obj-merged';
 import { ToolDps } from '../ToolDps';
 import action from '../Action/Index';
 import classNames from 'classnames';
-import { Msg, City, PreviewImg, Loading, DataLoad, Button } from '../Component/index';
+import { Msg, City, PreviewImg, Loading, DataLoad, Button, MyDate } from '../Component/index';
 // import { is, fromJS } from 'immutable';
 import flatpickr from 'flatpickr';
 const zh = require("flatpickr/dist/l10n/zh.js").zh;
@@ -638,6 +638,7 @@ class OtherInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            startDate: this.getSevenDayForDate(),
             timeShow: false,//时间窗口显示
             data: props.data || null,
         }
@@ -648,6 +649,16 @@ class OtherInfo extends Component {
         this.setState({
             data: nextProps.data
         });
+    }
+
+    /**
+     * 获取7天后时间
+     */
+    getSevenDayForDate() {
+        let startDate = new Date();
+        let d = startDate.getDate();
+        startDate.setDate(d + 7);
+        return startDate;
     }
 
     /**
@@ -693,6 +704,7 @@ class OtherInfo extends Component {
         this.props.setPlainChange(copyData);
     }
 
+
     render() {
         return (
             <div className="otherInfo-area">
@@ -707,10 +719,19 @@ class OtherInfo extends Component {
                     <option value="6">不限</option>
                 </select>
                 <h3 className="form-title">预约时间 *</h3>
-                <div id="birthDate" className="birthDate" onClick={() => { this.setState({ timeShow: true }) }}>
+                <div className="birthDate" onClick={() => { this.setState({ timeShow: true }) }}>
                     {this.state.data.time}
-                    {this.state.timeShow ? <Time closeTimeWindow={() => { this.setState({ timeShow: false }) }} initDate={this.state.data.time} getDate={this.getDate.bind(this)} /> : null}
+                    {/* {this.state.timeShow ? <Time closeTimeWindow={() => { this.setState({ timeShow: false }) }} initDate={this.state.data.time} getDate={this.getDate.bind(this)} /> : null} */}
                 </div>
+                {
+                    this.state.timeShow ? <MyDate option={{
+                        defaultDate: this.state.data.time,
+                        startDate: this.state.startDate,
+                        sure: this.getDate.bind(this),
+                        cancel: () => { this.setState({ timeShow: false }) }
+                    }} /> : null
+                }
+
                 <h3 className="form-title">预约门店 *</h3>
                 <select className="sex" onChange={this.store.bind(this)} value={this.state.data.mendian}>
                     <option value="">请选择需要预约的门店</option>

@@ -19,7 +19,9 @@ class SwiperPreview extends React.Component {
             pagination: '.swiper-pagination',
             zoomMax: 5,
             zoomMin: 1,
-            onTap: () => {
+            paginationType: 'fraction',
+            onTap: (swiper, event) => {
+                event.preventDefault();
                 this.props.close();
             }
         });
@@ -33,9 +35,10 @@ class SwiperPreview extends React.Component {
         e.preventDefault();
     }
 
+
     render() {
         return (
-            <section className='swiper-img-preview'>
+            <section className='swiper-img-preview' >
                 <div className='bg'></div>
                 <div className="swiper-container">
                     <div className="swiper-wrapper">

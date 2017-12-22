@@ -43,21 +43,27 @@
             color: #000000;
         }
     }
+    @media screen and(max-height: 480px) {
+        .select-date-area {
+            transform: translate(-50%, -50%) scale(0.85);
+        }
+    }
     .action-area {
         position: relative;
         height: 50px;
-        border-top: 1px solid #d1d1d1;
+        border-top: 1px solid #00b38a;
         >button {
             width: 100px;
             height: 49px;
             border-width: 0;
             background: @white;
             font-size: 14px;
+            border-radius: 0;
             &:last-child {
                 position: absolute;
                 right: 0;
                 top: 0;
-                background: rgb(234, 60, 59);
+                background: #00b38a;
                 color: @white;
             }
         }
@@ -66,14 +72,13 @@
         text-align: center;
         font-size: 16px;
         line-height: 40px;
-        border-bottom: 1px solid rgb(82, 174, 229);
-        color: rgb(82, 174, 229);
+        border-bottom: 1px solid #00b38a;
+        color: #00b38a;
     }
     .date-area {
         display: flex;
         height: 200px;
         font-size: 14px;
-
         .date-item {
             flex: 0 0 33.3%;
             overflow: hidden;
