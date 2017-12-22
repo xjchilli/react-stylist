@@ -10,10 +10,9 @@ import { ToolDps } from '../ToolDps';
 import classNames from 'classnames';
 import { DataLoad, GetData, Msg, PreviewImg, SwiperPreview, ToReward } from "../Component/index";
 import ShareConfig from './component/ShareConfig';
-import autosize from 'autosize';
+// import autosize from 'autosize';
 import Scroll from 'react-scroll';
 var Lk = Scroll.Link;
-// var FastClick = require('fastclick');
 
 
 /**
@@ -296,12 +295,19 @@ class UserComment extends React.Component {
     }
 
     componentDidMount() {
-        autosize(this.textarea);//textarea高度自适应
+        // autosize(this.textarea);//textarea高度自适应
+        this.initFakeTextareaH();
         this.textarea.focus();
-        this.time = setTimeout(function () {
-            window.scrollTo(0, 100000);
-        }, 300)
+        this.keyboardHandle();
 
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.newCommentContent !== this.props.newCommentContent) {//发送内容发生变化
+            let H = this.copyText.offsetHeight;
+            this.textarea.style.height = H + 'px';
+            // console.log(H);
+        }
     }
 
     componentWillUnmount() {
@@ -334,12 +340,41 @@ class UserComment extends React.Component {
         });
     }
 
+
+    /**
+     * 键盘处理
+     */
+    keyboardHandle() {
+        let H = this.copyText.offsetHeight;
+        this.textarea.style.height = H + 'px';
+        this.time = setTimeout(function () {
+            let container = document.querySelector('.fashionMomentDetailArea');
+            let flag = ToolDps.checkDeviceVersion();//处理ios 11.2.1输入框被键盘覆盖问题
+            if (flag) {
+                container.scrollTop = container.scrollHeight;
+            } else {
+                window.scrollTo(0, 100000);
+            }
+            // window.scrollTo(0, 100000);
+        }, 300)
+    }
+
+       /**
+     * 初始化伪输入框高度
+     */
+    initFakeTextareaH() {
+        let W = this.textarea.offsetWidth;
+        this.copyText.style.width = W + 'px';
+    }
+
+
     render() {
         return (
             <section className="user-to-comment-area" >
                 <div className="bg" onClick={this.props.hide}></div>
                 <div className="box">
-                    <textarea style={{ borderWidth: ToolDps.iphone ? '0.5px' : '1px' }} ref={(el) => { this.textarea = el; }} placeholder="说说你的想法吧~" value={this.props.newCommentContent} onChange={(e) => { this.props.setNewCommentContent(e.target.value.trim()) }} />
+                    <div ref={(el) => { this.copyText = el }} className='textarea-text'>{this.props.newCommentContent}</div>
+                    <textarea style={{ borderWidth: ToolDps.iphone ? '0.5px' : '1px' }} ref={(el) => { this.textarea = el; }} placeholder="说说你的想法吧~" value={this.props.newCommentContent} onChange={(e) => { this.props.setNewCommentContent(e.target.value.trim()) }} onFocus={this.keyboardHandle.bind(this)} />
                     <button className="btn" onClick={this.toComment.bind(this)}>发表评论</button>
                 </div>
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
@@ -520,7 +555,7 @@ class FashionMomentDetail extends Component {
         let sourceUserId = ToolDps.sessionItem('sourceUserId');
         return (
             // ref={(el) => this.page = el}
-            <section className="fashionMomentDetailArea" >
+            <section className="fashionMomentDetailArea" style={{ height: window.innerHeight + 'px' }}>
                 <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
                 <Content plan={this.state.plan} />
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />

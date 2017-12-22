@@ -399,6 +399,20 @@ ToolDps.isWKWebview = window.__wxjs_is_wkwebview ? true : false;//为true时是�
  */
 ToolDps.iphone = /(iPhone)/i.test(navigator.userAgent) ? true : false;
 
+/**
+ * 检查ios设备系统版本11.2.1
+ * note:处理ios 11.2.1输入框被键盘覆盖问题
+ */
+ToolDps.checkDeviceVersion=function(){
+    let flag = false;
+    if (ToolDps.iphone) {
+        let patt = /11_2_1/g;//ios系统版本11.2.1
+        flag = patt.test(navigator.appVersion);
+        console.log('test:',navigator.appVersion);
+    }
+    return flag;
+}
+
 
 /**
  * 获取域名

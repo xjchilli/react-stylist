@@ -198,7 +198,7 @@ class Chat extends IM {
         if (prevState.msgText !== this.state.msgText) {//发送内容发生变化
             let H = this.copyText.offsetHeight;
             this.Jinput.style.height = H + 'px';
-            console.log(H);
+            // console.log(H);
         }
     }
 
@@ -208,18 +208,6 @@ class Chat extends IM {
         clearTimeout(this.keybordTime);
     }
 
-
-    /**
-     * 检查手机系统版本
-     */
-    checkDeviceVersion() {
-        let flag = false;
-        if (ToolDps.iphone) {
-            let patt = /11_2_1/g;//ios系统版本11.2.1
-            flag = patt.test(navigator.appVersion);
-        }
-        return flag;
-    }
 
     /**
      * 初始化伪输入框高度
@@ -590,13 +578,13 @@ class Chat extends IM {
         });
 
         this.keybordTime = setTimeout(() => {
-            let flag = this.checkDeviceVersion();//处理ios 11.2.1输入框被键盘覆盖问题
+            let flag = ToolDps.checkDeviceVersion();//处理ios 11.2.1输入框被键盘覆盖问题
             if (flag) {
                 this.container.scrollTop = this.container.scrollHeight;
             } else {
                 window.scrollTo(0, 100000);
             }
-        }, 1300);
+        }, 300);
     }
 
     /**
