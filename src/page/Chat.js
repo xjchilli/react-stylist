@@ -384,6 +384,9 @@ class Chat extends IM {
                 case webim.MSG_ELEMENT_TYPE.SOUND:
                     html += this.convertSoundMsgToHtml(content);
                     break;
+                case webim.MSG_ELEMENT_TYPE.CUSTOM:
+                    html += this.convertCustomMsgToHtml(content);
+                    break;
                 default:
                     webim.Log.error('未知消息元素类型: elemType=' + type);
                     break;
@@ -433,7 +436,6 @@ class Chat extends IM {
     }
 
 
-
     /**
      * 解析图片消息元素
      * @param content
@@ -451,6 +453,19 @@ class Chat extends IM {
         //     oriImage = smallImage;
         // }
         return "<img class='previewBigImg' src=" + smallImage.getUrl() + "  id=" + content.getImageId() + " bigImgUrl=" + bigImage.getUrl() + " />";
+    }
+
+    /**
+     * TODO
+     * 
+     * 解析自定义消息
+     * @param {*} content 
+     */
+    convertCustomMsgToHtml(content) {
+        var data = content.getData();
+        var desc = content.getDesc();
+        var ext = content.getExt();
+        return "data=" + data + ", desc=" + desc + ", ext=" + ext;
     }
 
     /**

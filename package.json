@@ -7,12 +7,14 @@
   "scripts": {
     "build": "webpack --config webpack.config.pro.js --progress --colors -p",
     "analyze": "webpack --config webpack.config.pro.js --progress --colors -p --json --profile > stats.json",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "jest --updateSnapshot"
   },
   "author": "potato",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.24.1",
+    "babel-jest": "^22.0.4",
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
@@ -21,11 +23,14 @@
     "compression": "^1.7.0",
     "css-loader": "^0.28.1",
     "draft-js": "^0.10.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^3.0.1",
     "happypack": "^3.1.0",
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.4",
+    "jest": "^22.0.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "mockjs": "^1.0.1-beta3",
@@ -34,6 +39,7 @@
     "postcss-loader": "^2.0.5",
     "react-addons-test-utils": "^15.5.1",
     "react-hot-loader": "^3.0.0-beta.7",
+    "react-test-renderer": "^16.2.0",
     "redux-logger": "^3.0.6",
     "style-loader": "^0.17.0",
     "vconsole-webpack-plugin": "^1.1.2",
@@ -46,8 +52,6 @@
   },
   "dependencies": {
     "autosize": "^4.0.0",
-    "babel-polyfill": "^6.23.0",
-    "better-scroll": "^1.2.6",
     "bundle-loader": "^0.5.5",
     "classnames": "^2.2.5",
     "fastclick": "^1.0.6",
