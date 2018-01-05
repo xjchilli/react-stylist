@@ -52,58 +52,6 @@ class Main extends React.Component {
 
 
 
-
-// class Main extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             loadAnimation: true,
-//             loadMsg: '加载中...',
-//             isQueryCoupons: false, //订单查询是否成功
-//             data: null,
-//             jsapiSigna: false //js签名是否成功
-//         }
-
-//     }
-//     componentDidMount() {
-//         let { orderId } = qs.parse(this.props.location.search);
-
-//         //订单查询
-//         ToolDps.get('/wx/order/queryCoupons', {
-//             orderId: orderId
-//         }).then((res) => {
-//             if (res.succ) {
-//                 this.setState({
-//                     loadAnimation: true,
-//                     loadMsg: '查询成功',
-//                     isQueryCoupons: res.succ,
-//                     data: res.data
-//                 });
-//             } else {
-//                 this.setState({
-//                     loadAnimation: false,
-//                     loadMsg: '查询失败',
-//                     isQueryCoupons: res.succ
-//                 });
-//             }
-
-//         });
-
-//         //jsapi签名
-//         WxAuth().then(() => {
-//             this.setState({
-//                 jsapiSigna: true
-//             });
-//         });
-//     }
-
-
-//     render() {
-//         let main = this.state.isQueryCoupons && this.state.jsapiSigna ? <Pay data={this.state.data} /> : <DataLoad loadAnimation={this.state.loadAnimation} loadMsg={this.state.loadMsg} />;
-//         return main;
-//     }
-// }
-
 class Pay extends React.Component {
     constructor(props) {
         super(props);
