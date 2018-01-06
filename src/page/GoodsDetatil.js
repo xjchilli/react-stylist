@@ -6,6 +6,14 @@ import React from 'react';
 import SkuSelect from './component/SkuSelect';
 
 class GoodsDetail extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isShowSku: true
+        }
+    }
+
     componentDidMount() {
         document.title = '商品详情';
         let swiper = new Swiper(this.banner, {
@@ -66,7 +74,10 @@ class GoodsDetail extends React.Component {
                         </li>
                     </ul>
                 </footer>
-                <SkuSelect></SkuSelect>
+                {
+                    this.state.isShowSku ? <SkuSelect close={() => { this.setState({ isShowSku: false }) }} /> : null
+                }
+
             </section>
         )
     }
