@@ -1,5 +1,5 @@
 .goods-detail-page {
-    padding-bottom: 200px;
+    padding-bottom: 45px;
     .swiper-container {
         height: 320px;
     }
@@ -149,12 +149,12 @@
             font-weight: 500;
         }
         .add-shop-cart-btn {
-            background: @white;
-            border-top: 1px solid #e6e6e6;
-            color: #1a1a1a;
+            background: #1a1a1a;
+            color: #ffffff;
         }
         .immediately-buy-btn {
             background: #ff4c35;
+            color: #fffefe;
         }
     }
     // 选择规格
@@ -231,6 +231,10 @@
                     text-align: center;
                     color: #000000;
                     font-size: 12px;
+                    &.active {
+                        background: #1a1a1a;
+                        color: @white;
+                    }
                 }
             }
             .num-area {
@@ -256,6 +260,8 @@
                     }
                     .text {
                         vertical-align: top;
+                        min-width: 34px;
+                        width: auto;
                         height: 27px;
                         line-height: 27px;
                         text-align: center;
@@ -314,13 +320,29 @@
                 font-weight: 500;
             }
             .add-shop-cart-btn {
-                background: @white;
-                border-top: 1px solid #e6e6e6;
-                color: #1a1a1a;
+                background: #1a1a1a;
+                color: #ffffff;
+                &.disable{
+                    border-top: 1px solid #999999;    
+                    color: #333333;   
+                    background: @white; 
+                }
             }
             .immediately-buy-btn {
                 background: #ff4c35;
+                color: #fffefe;
+                &.disable{
+                    color: @white;   
+                    background: #999999; 
+                }
             }
         }
+    }
+    //富文本样式handle
+    .ql-container.ql-snow {
+        border-width: 0;
+    }
+    .ql-editor {
+        padding: 0;
     }
 }

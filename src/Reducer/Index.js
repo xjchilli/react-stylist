@@ -108,6 +108,7 @@ const DB = (_ID = '', seting = {}) => {
 const Home = DB('Home', {
   data: null
 }); //首页
+const GoodsDetail = DB('GoodsDetail'); //商品详情
 const NeedMatch = DB('NeedMatch', {
   data: null
 }); //我要搭配
@@ -157,6 +158,7 @@ const reducers = combineReducers({
   User,
   MyNews,
   Home,
+  GoodsDetail,
   NeedMatch,
   PayOrder,
   MyWatch,

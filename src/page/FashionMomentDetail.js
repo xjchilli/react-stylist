@@ -620,7 +620,6 @@ export default GetData({
     component: Main, //接收数据的组件入口
     url: '/wx/fashion/detail',
     data: (props, state) => { //发送给服务器的数据
-        // ToolDps.reloadUrl();
         let { planId } = qs.parse(props.location.search);
         return {
             planId: planId
