@@ -1,5 +1,5 @@
 .goods-detail-page {
-    padding-bottom: 45px;
+    padding-bottom: 55px;
     .swiper-container {
         height: 320px;
     }
@@ -140,6 +140,39 @@
         background: @white;
         ul {
             height: 100%;
+            display: flex;
+            li {
+                flex: 1 0 auto;
+                &:nth-of-type(1) {
+                    flex: 0 0 75px;
+                    text-align: center;
+                    padding-top: 7px;
+                    .cart-area {
+                        position: relative;
+                        .icon-shop-cart {
+                            font-size: 19px;
+                        }
+                        .buy-num {
+                            position: absolute;
+                            right: -7px;
+                            top: -12px;
+                            min-width: 13px;
+                            height: 13px;
+                            padding: 0 2px;
+                            line-height: 13px;
+                            border-radius: 50%;
+                            background: #ff4c35;
+                            color: @white;
+                            font-size: 9px;
+                        }
+                    }
+                    >p {
+                        color: #666666;
+                        font-size: 10px;
+                        font-weight: 500;
+                    }
+                }
+            }
         }
         .btn {
             height: 100%;
@@ -322,19 +355,22 @@
             .add-shop-cart-btn {
                 background: #1a1a1a;
                 color: #ffffff;
-                &.disable{
-                    border-top: 1px solid #999999;    
-                    color: #333333;   
-                    background: @white; 
+                &.disable {
+                    border-top: 1px solid #999999;
+                    color: #333333;
+                    background: @white;
                 }
             }
             .immediately-buy-btn {
                 background: #ff4c35;
                 color: #fffefe;
-                &.disable{
-                    color: @white;   
-                    background: #999999; 
+                &.disable {
+                    color: @white;
+                    background: #999999;
                 }
+            }
+            .true-btn-area{
+                width: 100%;
             }
         }
     }

@@ -7,6 +7,7 @@ import Bundle from './bundle.js';
 
 import HomeContainer from 'bundle-loader?lazy&name=[name]!../page/Home';
 import GoodsDetatilContainer from 'bundle-loader?lazy&name=[name]!../page/GoodsDetatil';
+import OrderConfirmContainer from 'bundle-loader?lazy&name=[name]!../page/OrderConfirm';
 import GratefulParentActivity from 'bundle-loader?lazy&name=[name]!../page/GratefulParentActivity';
 import PlainPeopleChangeContainer from 'bundle-loader?lazy&name=[name]!../page/PlainPeopleChange';
 import MyWatchContainer from 'bundle-loader?lazy&name=[name]!../page/MyWatch';
@@ -62,6 +63,11 @@ let routers = [
         path: '/goodsDetail',
         exact: false,
         component: (props) => getComponent(props, GoodsDetatilContainer)
+    },
+    {//订单确认
+        path: '/orderConfirm',
+        exact: false,
+        component: (props) => getComponent(props, OrderConfirmContainer)
     },
     {//感恩活动
         path: '/gratefulParentActivity',

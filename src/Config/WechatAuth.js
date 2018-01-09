@@ -50,7 +50,7 @@ async function getUserInfo(code, setAuth) {
 function wechatAuth(props, setAuth) {
     //localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
     // if (!JSON.parse(ToolDps.localItem('User'))) {
-    //     localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oGHrAvwpDzGjKnPRxHIiCamlAR2o  oGHrAv2QLJaScmtYKnK-oVvF81S8
+    //     localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oUNrywMuKfqK6NIh4a2M1SfwZOB0  oGHrAv2QLJaScmtYKnK-oVvF81S8
     // }
 
     // if (!ToolDps.sessionItem('redirectUrl')) {

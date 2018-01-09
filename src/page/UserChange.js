@@ -16,7 +16,8 @@ class UserChange extends React.Component {
         let User = JSON.parse(ToolDps.localItem('User'));
         User.openId = val;
         ToolDps.localItem('User', JSON.stringify(User));
-        window.location.href = ToolDps.getHost + "/my";
+        this.context.router.history.push('/my');
+        // window.location.href = ToolDps.getHost + "/my";
     }
 
     render() {
@@ -30,12 +31,15 @@ class UserChange extends React.Component {
                     <li onClick={this.changeAccount.bind(this, 'oGHrAv3Q8GjPTnotMSkdvulza2oM')}>金理宠@Ms搭配师</li>
                     <li onClick={this.changeAccount.bind(this, 'oGHrAv_dxbFLIsc1JeuiwuDoLeZg')}>star</li>
                     <li onClick={this.changeAccount.bind(this, 'oGHrAv8iz0Y1BUl3lqycWGgPd3I4')}>A-Rachel</li>
-                    <li onClick={this.changeAccount.bind(this, 'oGHrAv55dlS3cYg05eqCNIoSCaks')}>小饭桶💭</li>
-                    <li onClick={this.changeAccount.bind(this, 'oGHrAv4TpsohDg8fsUTzVpVYY3RQ')}>ycm</li>
+                    <li onClick={this.changeAccount.bind(this, 'oGHrAv-r2NOzGGrdNvz2LBI2YcUk')}>宇玄丶正式</li>
                 </ul>
             </section>
         )
     }
+}
+
+UserChange.contextTypes = {
+    router: PropTypes.object.isRequired
 }
 
 export default UserChange;

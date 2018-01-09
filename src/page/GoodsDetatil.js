@@ -30,7 +30,18 @@ class GoodsDetail extends React.Component {
         super(props);
         this.state = {
             data: props.data,
-            isShowSku: true
+            selectSkuData: {
+                selectSkuText: '请选择 颜色 尺码',//选择的sku
+                colorActiveId: '',//选择的颜色id
+                colorActiveName: '',//选择的颜色名称
+                sizeActiveId: '',//选择的尺码id
+                sizeActiveName: '',//选择的尺码名称
+                num: 1,//默认购买数量1
+                goodsImg: '',//商品图片
+                salePrice: ''//售价
+            },//选择的sku
+            isShowSku: false,
+            isTrue: true,//选择sku true:2个按钮 false:一个按钮
         }
     }
 
@@ -41,6 +52,16 @@ class GoodsDetail extends React.Component {
             paginationType: 'fraction'
         });
     }
+
+    /**
+     * 获取sku数据
+     */
+    getSkuData(skuData) {
+        this.setState({
+            selectSkuData: skuData
+        });
+    }
+
     render() {
         let { images, name, price, brand, rootCategoryName, secondCategoryName, attribute, detail } = this.state.data;
         return (
@@ -60,7 +81,7 @@ class GoodsDetail extends React.Component {
                     </p>
                 </section>
                 <section className='box'>
-                    <div className='select-sku' onClick={() => this.setState({ isShowSku: true })}>请选择 颜色 尺码</div>
+                    <div className='select-sku' onClick={() => this.setState({ isShowSku: true, isTrue: true })}>{this.state.selectSkuData.selectSkuText}</div>
                     <div className='after-sale'><span className="icon icon-gou3"></span>店铺发货&售后</div>
                 </section>
                 <section className='box goods-detail-area'>
@@ -92,17 +113,24 @@ class GoodsDetail extends React.Component {
                     </section>
                 </section>
                 <footer>
-                    <ul className='flex-box'>
-                        <li className='item-2'>
-                            <button className='btn add-shop-cart-btn'>加入购物车</button>
+                    <ul>
+                        <li>
+                            <span className='cart-area'>
+                                <span className="icon icon-shop-cart"></span>
+                                <span className='buy-num'>1</span>
+                            </span>
+                            <p className='text-center'>购物车</p>
                         </li>
-                        <li className='item-2'>
-                            <button className='btn immediately-buy-btn'>立即购买</button>
+                        <li>
+                            <button className='btn add-shop-cart-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false}) }}>加入购物车</button>
+                        </li>
+                        <li>
+                            <button className='btn immediately-buy-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false}) }}>立即购买</button>
                         </li>
                     </ul>
                 </footer>
                 {
-                    this.state.isShowSku ? <SkuSelect data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
+                    this.state.isShowSku ? <SkuSelect isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
                 }
 
             </section>
