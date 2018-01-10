@@ -1,10 +1,25 @@
-//箭头
+//箭头 边框画出的箭头实心箭头
 .borrow {
     width: 0;
     height: 0;
     border-top: 9px solid transparent;
     border-bottom: 9px solid transparent;
     border-right: 15px solid #ffffff;
+}
+
+//箭头2 note：正方形画出的箭头
+.borrow2(@w: 10px, @borderW: 2px, @borderColor: #b3b3b3) {
+    &:after {
+        content: '';
+        position: absolute;
+        right: 13px;
+        top: 50%;
+        transform: translate(0, -50%) rotate(45deg);
+        width: @w;
+        height: @w;
+        border: @borderW solid @borderColor;
+        border-width: @borderW @borderW 0 0;
+    }
 }
 
 //打勾
@@ -18,12 +33,12 @@
         content: '';
         position: absolute;
         left: 50%;
-        top: 50%; 
+        top: 50%;
         width: 10px;
         height: 5px;
         border: 3px solid @white;
         border-width: 0 0 3px 3px;
-        transform:translate(-50%,-60%) rotate(-45deg);
+        transform: translate(-50%, -60%) rotate(-45deg);
     }
 }
 
