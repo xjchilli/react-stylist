@@ -1,4 +1,5 @@
 .order-confirm-page {
+    padding-bottom: 54px;
     >address {
         min-height: 63px;
         position: relative;
@@ -87,6 +88,7 @@
                     width: 70px;
                     height: 70px;
                     background-size: cover;
+                    border-radius: 2px;
                 }
                 >h4 {
                     padding-right: 65px;
@@ -137,6 +139,40 @@
                 transform: translate(0, -50%);
                 .num {
                     color: #ff4c35;
+                }
+            }
+        }
+    }
+    .order-confirm-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 44px;
+        background: @white;
+        li {
+            flex: 1 0 auto;
+            &:nth-of-type(1) {
+                font-weight: bolder;
+                font-size: 13px;
+                color: #ff4c35;
+                line-height: 44px;
+                text-align: center;
+                >b {
+                    color: #030000;
+                }
+            }
+            &:nth-of-type(2) {
+                flex: 0 0 148px;
+                .to-pay-btn {
+                    line-height: 44px;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0;
+                    background: #ff4c35;
+                    color: @white;
+                    font-size: 16px;
+                    font-weight: 500;
                 }
             }
         }

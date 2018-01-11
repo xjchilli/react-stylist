@@ -253,6 +253,9 @@ class MyDps extends IM {
                 case webim.MSG_ELEMENT_TYPE.SOUND:
                     html += "[语音]";
                     break;
+                case webim.MSG_ELEMENT_TYPE.CUSTOM:
+                    html += "[搭配方案]";
+                    break;
                 default:
                     webim.Log.error('未知消息元素类型: elemType=' + type);
                     break;

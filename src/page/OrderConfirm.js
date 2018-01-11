@@ -6,6 +6,7 @@ import WxAuth from './component/WxAuth';
 
 class OrderConfirm extends React.Component {
     componentDidMount() {
+        document.title = '确认订单';
         WxAuth();
     }
 
@@ -82,6 +83,12 @@ class OrderConfirm extends React.Component {
                         <span className='price'>共3件商品，小计：<span className='num'>2397元</span></span>
                     </div>
                 </section>
+                <ul className='flex-box order-confirm-footer'>
+                    <li><b>合计：</b>¥2397.00</li>
+                    <li>
+                        <button className='btn text-center to-pay-btn'>去支付</button>
+                    </li>
+                </ul>
             </section>
         )
     }

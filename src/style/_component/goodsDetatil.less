@@ -182,10 +182,12 @@
             font-weight: 500;
         }
         .add-shop-cart-btn {
+            line-height: 45px;
             background: #1a1a1a;
             color: #ffffff;
         }
         .immediately-buy-btn {
+            line-height: 45px;
             background: #ff4c35;
             color: #fffefe;
         }
@@ -279,64 +281,7 @@
                     color: #000000;
                     font-weight: 500;
                 }
-                .num-btn-area {
-                    position: absolute;
-                    right: 0;
-                    bottom: 0;
-                    height: 27px;
-                    .minus, .add, .text {
-                        position: relative;
-                        display: inline-block;
-                        width: 30px;
-                        height: 27px;
-                        background: #f5f5f5;
-                    }
-                    .text {
-                        vertical-align: top;
-                        min-width: 34px;
-                        width: auto;
-                        height: 27px;
-                        line-height: 27px;
-                        text-align: center;
-                        margin: 0 1px;
-                        color: #000000;
-                        font-weight: 700;
-                    }
-                    .minus {
-                        &::after {
-                            content: '';
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            width: 11px;
-                            height: 3px;
-                            background: #b3b3b3;
-                        }
-                    }
-                    .add {
-                        &::after {
-                            content: '';
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            width: 11px;
-                            height: 3px;
-                            background: #b3b3b3;
-                        }
-                        &::before {
-                            content: '';
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%) rotate(90deg);
-                            width: 11px;
-                            height: 3px;
-                            background: #b3b3b3;
-                        }
-                    }
-                }
+                .addOrMinus();
             }
         }
         .sku-action-area {
@@ -355,6 +300,7 @@
             .add-shop-cart-btn {
                 background: #1a1a1a;
                 color: #ffffff;
+                line-height: 45px;
                 &.disable {
                     border-top: 1px solid #999999;
                     color: #333333;
@@ -364,6 +310,7 @@
             .immediately-buy-btn {
                 background: #ff4c35;
                 color: #fffefe;
+                line-height: 45px;
                 &.disable {
                     color: @white;
                     background: #999999;

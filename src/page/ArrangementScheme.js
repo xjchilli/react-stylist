@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
-import { DataLoad, GetData, PreviewImg } from '../Component/index';
+import { DataLoad, GetData } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 
@@ -50,6 +50,7 @@ class ArrangementScheme extends Component {
         return (
             <div className="full-page scheme-area">
                 <img src={scenario.masterImg} alt="" />
+                <p className='goods-desc'>{scenario.content}</p>
                 <Link to={"/dpsProfile?collocationId=" + collocation.id}>
                     <div className="dps-info">
                         <img src={collocation.headImg} alt="" />
@@ -57,28 +58,26 @@ class ArrangementScheme extends Component {
                         <p className="time">{scenario.time}</p>
                     </div>
                 </Link>
-
-                <div className="relate-info">
-                    <h3 className="title">{scenario.title}</h3>
-                    <p className="desc">{scenario.content}</p>
-                </div>
                 <div className="relate-goods">
-                    <h3>相关单品</h3>
-                    <ul>
+                    <h3>相关商品</h3>
+                    <ul className='flex-box'>
                         {
-                            scenario.thumbailsImg.map((url, index) => {
+                            scenario.goods.map((item, index) => {
                                 return (
-                                    <li key={index}>
-                                        <a href="#">
-                                            <img src={url} alt="" onClick={() => { this.setState({ previewBigImg: true, bigImgUrl: url }) }} />
-                                        </a>
+                                    <li key={index} className='item-2'>
+                                        <Link to={'/goodsDetail?id=' + item.goodsId}>
+                                            <section className='box'>
+                                                <div className='single-goods-img' style={{ backgroundImage: `url(${item.images})` }}></div>
+                                                <h6>{item.goodsName}</h6>
+                                                <p className='price'>&yen;{item.price}</p>
+                                            </section>
+                                        </Link>
                                     </li>
                                 )
                             })
                         }
                     </ul>
                 </div>
-                {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </div>
         )
     }

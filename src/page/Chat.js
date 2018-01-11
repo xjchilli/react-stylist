@@ -456,16 +456,26 @@ class Chat extends IM {
     }
 
     /**
-     * TODO
      * 
-     * 解析自定义消息
+     * 
+     * 解析自定义消息 搭配方案
      * @param {*} content 
      */
     convertCustomMsgToHtml(content) {
         var data = content.getData();
         var desc = content.getDesc();
         var ext = content.getExt();
-        return "data=" + data + ", desc=" + desc + ", ext=" + ext;
+        console.log(data);
+        // return "data=" + data + ", desc=" + desc + ", ext=" + ext;
+        return `
+            <a href='/' class='dapei-plan'>
+                <img src='/assets/img/girl.jpg'/>
+                <p class='dapei-plan-desc'>
+                    <span class="icon icon-flex"><span class="path1"></span><span class="path2"></span></span>
+                    黑白搭，夏装，聚会，出游。
+                </p>
+            </a>
+        `
     }
 
     /**
