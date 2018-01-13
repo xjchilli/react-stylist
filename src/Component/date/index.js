@@ -17,6 +17,9 @@ class MyDate extends React.Component {
             defaultDate, //默认日期
             startDate //开始日期
         } = props.option;
+        if (typeof defaultDate === 'string') {//2015-02-31为非标准时间 兼容ios
+            defaultDate = defaultDate.replace(/-/g, '/');
+        }
         let initDate = defaultDate ? new Date(defaultDate) : new Date();//初始化时间
         let startD = startDate ? new Date(startDate) : null;//开始时间
         if (startD && startD.getTime() > initDate.getTime()) {//开始日期在初始化日期后面则（初始化时间=开始时间）

@@ -1,5 +1,5 @@
 /**
- * 订单列表
+ * 服务订单列表
  *
  * Created by potato on 2017/5/9 0009.
  */
@@ -61,9 +61,10 @@ class Nav extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
-        let status = ToolDps.sessionItem('orderStatus');
+        // let status = ToolDps.sessionItem('orderStatus');
         this.state = {
-            status: status || '',
+            // status: status || '',
+            status:'',
             data: [],
             loadAnimation: true,
             loadMsg: '正在加载中'
@@ -74,13 +75,6 @@ class Main extends Component {
         document.title = "订单列表";
         this.getData(this.state.status);
     }
-
-
-    // componentWillUnmount() {
-    //     ToolDps.removeSessionItem('orderStatus');
-    // }
-
-
 
     getData(status) {
         this.setState({
@@ -120,7 +114,7 @@ class Main extends Component {
             status: status || '',
             data: []
         });
-        ToolDps.sessionItem('orderStatus', status);
+        // ToolDps.sessionItem('orderStatus', status);
         this.getData(status);
     }
 

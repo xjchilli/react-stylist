@@ -34,7 +34,9 @@ import ArrangementSchemeContainer from 'bundle-loader?lazy&name=[name]!../page/A
 import ChatContainer from 'bundle-loader?lazy&name=[name]!../page/Chat';
 import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeList';
 import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList';
+import OrderListGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderListGoods';
 import OrderDetailContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetail';
+import OrderDetailGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetailGoods';
 import PromotionCodeContainer from 'bundle-loader?lazy&name=[name]!../page/PromotionCode';
 import GetPromotionContainer from 'bundle-loader?lazy&name=[name]!../page/GetPromotion';
 import ShareContainer from 'bundle-loader?lazy&name=[name]!../page/Share';
@@ -195,15 +197,25 @@ let routers = [
         exact: false,
         component: (props) => getComponent(props, WardrobeListContainer)
     },
-    {//我的订单
+    {//服务订单列表
         path: '/orderList',
         exact: false,
         component: (props) => getComponent(props, OrderListContainer)
     },
-    {//订单详情
+    {//服务订单详情
         path: '/orderDetail',
         exact: false,
         component: (props) => getComponent(props, OrderDetailContainer)
+    },
+    {//商品订单列表
+        path: '/orderListGoods',
+        exact: false,
+        component: (props) => getComponent(props, OrderListGoodsContainer)
+    },
+    {//商品订单详情
+        path: '/orderDetailGoods',
+        exact: false,
+        component: (props) => getComponent(props, OrderDetailGoodsContainer)
     },
     {//优惠码
         path: '/promotionCode',

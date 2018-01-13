@@ -50,54 +50,32 @@ class My extends Component {
         document.title = "我的";
     }
 
-    redirect(status) {
-        ToolDps.sessionItem('orderStatus', status);
-        this.context.router.history.push('/orderList');
-    }
-
 
     render() {
         let { data, orderData } = this.props;
         return (
             <section className="my-page">
-                <header style={{ borderBottomWidth: ToolDps.iphone ? '0.3px' : '1px' }}>
+                <header>
                     <img src={data.headImg} />
                     <p className="text-center nickname">{data.nickName}</p>
                 </header>
-                <section className="order-area">
-                    <div className="all" onClick={this.redirect.bind(this, '')}>全部订单</div>
-                    <ul className="flex-box">
-                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '0')}>
-                            <span className="icon icon-wait-pay">
-                                {orderData.orderWaitPayTotal === 0 ? null : <i className="num">{orderData.orderWaitPayTotal}</i>}
-                            </span>
-                            <p className="text-center">待付款</p>
-                        </li>
-                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '1')}>
-                            <span className="icon icon-publish">
-                                {orderData.orderReleaseTotal === 0 ? null : <i className="num">{orderData.orderReleaseTotal}</i>}
-                            </span>
-                            <p className="text-center">发布中</p>
-                        </li>
-                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '2')}>
-                            <span className="icon icon-serving">
-                                {orderData.orderServiceTotal === 0 ? null : <i className="num">{orderData.orderServiceTotal}</i>}
-                            </span>
-                            <p className="text-center">服务中</p>
-                        </li>
-                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '3')}>
-                            <span className="icon icon-wait-comment">
-                                {orderData.orderWaitCommentTotal === 0 ? null : <i className="num">{orderData.orderWaitCommentTotal}</i>}
-                            </span>
-                            <p className="text-center">待评价</p>
-                        </li>
-                        <li className="item-5 text-center" onClick={this.redirect.bind(this, '10')}>
-                            <span className="icon icon-finish"></span>
-                            <p className="text-center">已完成</p>
-                        </li>
-                    </ul>
-                </section>
                 <ul className="flex-box base-info-area">
+                    <li className="item-2">
+                        <Link to="/orderList">
+                            <div className="box text-center">
+                                <span className="icon icon-service-order"></span>
+                                <p>服务订单</p>
+                            </div>
+                        </Link>
+                    </li>
+                    <li className="item-2">
+                        <Link to="/orderListGoods">
+                            <div className="box text-center">
+                                <span className="icon icon-goods-order"></span>
+                                <p>商品订单</p>
+                            </div>
+                        </Link>
+                    </li>
                     <li className="item-2">
                         <Link to="/wardrobeList">
                             <div className="box text-center">
@@ -131,7 +109,7 @@ class My extends Component {
                         </Link>
                     </li>
                 </ul>
-                <Link to="/myAsset" className="myAsset" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>我的资产</Link>
+                <Link to="/myAsset" className="myAsset" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>我的账户</Link>
                 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>联系客服</a>
                 <Link to="/feedback" className="feedback">我要反馈</Link>
                 <News />
