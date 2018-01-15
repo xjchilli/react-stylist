@@ -37,6 +37,9 @@ import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList
 import OrderListGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderListGoods';
 import OrderDetailContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetail';
 import OrderDetailGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetailGoods';
+import ApplyReturnsAndRefundsContainer from 'bundle-loader?lazy&name=[name]!../page/ApplyReturnsAndRefunds';
+import ApplyChangeGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/ApplyChangeGoods';
+import TransportSearchContainer from 'bundle-loader?lazy&name=[name]!../page/TransportSearch';
 import PromotionCodeContainer from 'bundle-loader?lazy&name=[name]!../page/PromotionCode';
 import GetPromotionContainer from 'bundle-loader?lazy&name=[name]!../page/GetPromotion';
 import ShareContainer from 'bundle-loader?lazy&name=[name]!../page/Share';
@@ -216,6 +219,21 @@ let routers = [
         path: '/orderDetailGoods',
         exact: false,
         component: (props) => getComponent(props, OrderDetailGoodsContainer)
+    },
+    {//申请退货退款
+        path: '/applyReturnsAndRefunds',
+        exact: false,
+        component: (props) => getComponent(props, ApplyReturnsAndRefundsContainer)
+    },
+    {//申请换货
+        path: '/applyChangeGoods',
+        exact: false,
+        component: (props) => getComponent(props, ApplyChangeGoodsContainer)
+    },
+    {//物流查询
+        path: '/transportSearch',
+        exact: false,
+        component: (props) => getComponent(props, TransportSearchContainer)
     },
     {//优惠码
         path: '/promotionCode',

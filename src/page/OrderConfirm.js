@@ -42,7 +42,8 @@ class OrderConfirm extends React.Component {
                     </ul>
                 </address>
                 <section className='pay-type-area'>
-                    <img src='/assets/img/icon/gou.jpg' className='wechat-img' />微信支付
+                    <span className="icon icon-wechat"></span>
+                    微信支付
                     <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
                 </section>
                 <ul className='goods-list-area'>

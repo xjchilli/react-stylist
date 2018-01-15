@@ -2,13 +2,17 @@
  * 规格选择
  */
 import React from 'react';
+import { ToolDps } from '../../ToolDps';
+import { Msg } from '../../Component/index';
 
 class SkuSelect extends React.Component {
     constructor(props) {
         super(props);
-        let { images, price, stockNum, colors, measurements, sku } = props.data;
+        let { id, images, price, stockNum, colors, measurements, sku, supplierId } = props.data;
         let { selectSkuText, colorActiveId, colorActiveName, sizeActiveId, sizeActiveName, num, goodsImg, salePrice } = props.selectSkuData;
         this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
             selectAreaH: window.innerHeight - 28,//sku容器高度
             skuLayoutH: window.innerHeight - 28 - 92,//sku选择区高度
             images: images,
@@ -17,6 +21,9 @@ class SkuSelect extends React.Component {
             colors: colors,
             measurements: measurements,
             sku: sku,
+            skuId: '',//规格id
+            goodsId: id,//商品id
+            supplierId: supplierId,//供应商id
             selectSkuText: selectSkuText || '请选择 颜色 尺码',//选择的sku
             colorActiveId: colorActiveId || '',//选择的颜色id
             colorActiveName: colorActiveName || '',//选择的颜色名称
@@ -25,6 +32,40 @@ class SkuSelect extends React.Component {
             num: num || 1,//默认购买数量1
             goodsImg: goodsImg || images[0].url,//商品图片
         }
+    }
+
+    /**
+     * 创建订单
+     */
+    createOrder() {
+        if (!this.state.colorActiveId) {
+            this.setState({
+                msgShow: true,
+                msgText: '请选择颜色', //提示内容
+            });
+            return;
+        }
+        if (!this.state.sizeActiveId) {
+            this.setState({
+                msgShow: true,
+                msgText: '请选择尺码', //提示内容
+            });
+            return;
+        }
+        let data = [{
+            goodsId: this.state.goodsId,//商品id
+            num: this.state.num,//购物数量
+            skuId: this.state.skuId,//规格ID
+            supplierId: this.state.supplierId//供应商ID
+        }]
+        ToolDps.post('/wx/goods/order/createOrder', data, {
+            'Content-Type': 'application/json'
+        }).then((res) => {
+            console.log(res);
+            if (res.succ) {
+
+            }
+        });
     }
 
     /**
@@ -37,9 +78,11 @@ class SkuSelect extends React.Component {
         let selectSkuText = '';
         let num = 0;
         let salePrice = '';
+        let skuId = '';//规格id
         for (let i = 0; i < skuArr.length; i++) {
             if (this.state.sizeActiveId) {
                 if (skuArr[i].colorId === id && skuArr[i].measurementId === this.state.sizeActiveId) {
+                    skuId = skuArr[i].id;
                     goodsImg = skuArr[i].goodsImg.url;
                     stockNum += skuArr[i].num;
                     salePrice = skuArr[i].salePrice;
@@ -71,6 +114,7 @@ class SkuSelect extends React.Component {
         );
 
         this.setState({
+            skuId: skuId,//规格id
             colorActiveId: id,
             colorActiveName: name,
             selectSkuText: selectSkuText,
@@ -90,9 +134,11 @@ class SkuSelect extends React.Component {
         let selectSkuText = '';
         let num = 0;
         let salePrice = '';
+        let skuId = '';//规格id
         for (let i = 0; i < skuArr.length; i++) {
             if (this.state.colorActiveId) {
                 if (skuArr[i].colorId === this.state.colorActiveId && skuArr[i].measurementId === id) {
+                    skuId = skuArr[i].id;
                     stockNum += skuArr[i].num;
                     salePrice = skuArr[i].salePrice;
                     continue;
@@ -122,6 +168,7 @@ class SkuSelect extends React.Component {
         );
 
         this.setState({
+            skuId: skuId,//规格id
             sizeActiveId: id,
             sizeActiveName: name,
             selectSkuText: selectSkuText,
@@ -237,13 +284,13 @@ class SkuSelect extends React.Component {
                     ) : (
                             <ul className='flex-box sku-action-area'>
                                 <li className='true-btn-area'>
-                                    <button className={this.state.stockNum === 0 ? 'btn immediately-buy-btn disable' : 'btn immediately-buy-btn'}>确定</button>
+                                    <button className={this.state.stockNum === 0 ? 'btn immediately-buy-btn disable' : 'btn immediately-buy-btn'} onClick={this.createOrder.bind(this)}>确定</button>
                                 </li>
                             </ul>
                         )
                 }
 
-
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }

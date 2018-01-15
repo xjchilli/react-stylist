@@ -122,17 +122,16 @@ class GoodsDetail extends React.Component {
                             <p className='text-center'>购物车</p>
                         </li>
                         <li>
-                            <button className='btn add-shop-cart-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false}) }}>加入购物车</button>
+                            <button className='btn add-shop-cart-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false }) }}>加入购物车</button>
                         </li>
                         <li>
-                            <button className='btn immediately-buy-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false}) }}>立即购买</button>
+                            <button className='btn immediately-buy-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false }) }}>立即购买</button>
                         </li>
                     </ul>
                 </footer>
                 {
                     this.state.isShowSku ? <SkuSelect isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
                 }
-
             </section>
         )
     }
