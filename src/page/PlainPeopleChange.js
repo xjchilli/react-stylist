@@ -465,7 +465,7 @@ class Style extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            girlStyle: [{ url: '/assets/img/suit/style-p-2-1.jpg', name: '中性运动风' }, { url: '/assets/img/suit/style-p-2-2.jpg', name: '文艺复古风' }, { url: '/assets/img/suit/style-p-2-3.jpg', name: '韩剧女主角' }, { url: '/assets/img/suit/style-p-2-4.jpg', name: '日系小清新' }, { url: '/assets/img/suit/style-p-2-5.jpg', name: '轻熟OL系' }, { url: '/assets/img/suit/style-p-2-6.jpg', name: '欧美出街范' }],
+            girlStyle: [{ url: '/assets/img/suit/style-p-2-1.jpg', name: '韩剧女主角' }, { url: '/assets/img/suit/style-p-2-2.jpg', name: '日系小清新' }, { url: '/assets/img/suit/style-p-2-3.jpg', name: '轻熟OL系' }, { url: '/assets/img/suit/style-p-2-4.jpg', name: '欧美出街范' }, { url: '/assets/img/suit/style-p-2-5.jpg', name: '中性运动风' }, { url: '/assets/img/suit/style-p-2-6.jpg', name: '文艺复古情怀' }],
             boyStyle: [{ url: '/assets/img/suit/style-p-1-1.jpg', name: '街头潮男风' }, { url: '/assets/img/suit/style-p-1-2.jpg', name: '绅士熟男系' }, { url: '/assets/img/suit/style-p-1-3.jpg', name: '纹身硬汉系' }, { url: '/assets/img/suit/style-p-1-4.jpg', name: '清新治愈系' }, { url: '/assets/img/suit/style-p-1-5.jpg', name: '暗黑禁欲系' }],
             data: props.data
         }

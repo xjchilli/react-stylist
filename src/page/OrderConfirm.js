@@ -2,97 +2,235 @@
  * 确认订单
  */
 import React from 'react';
+import { DataLoad, GetData } from '../Component/index';
+import { getGoodsInfo } from '../Config/ToolStore';
+import { ToolDps } from '../ToolDps';
 import WxAuth from './component/WxAuth';
+import { Msg } from '../Component/index';
 
-class OrderConfirm extends React.Component {
+class Main extends React.Component {
     componentDidMount() {
         document.title = '确认订单';
         WxAuth();
     }
 
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
+        let main = data && data.succ ? <OrderConfirm data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+
+        return main;
+    }
+}
+
+
+class OrderConfirm extends React.Component {
+    constructor(props) {
+        super(props);
+        let goodsInfos = getGoodsInfo();
+        let totalNum = 0;
+        let totalPrice = 0;
+        for (let i = 0; i < goodsInfos.length; i++) {
+            totalNum += goodsInfos[i].num;
+            totalPrice += Number(goodsInfos[i].salePrice) * goodsInfos[i].num;
+        }
+        this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
+            address: props.data.address,
+            goodsInfos: goodsInfos,
+            totalNum: totalNum,//总数
+            totalPrice: totalPrice.toFixed(2),//总价
+        }
+    }
+
+    componentDidMount() {
+    }
+
+    /**
+     * 修改收货地址
+     */
+    modifyAddress(data) {
+        ToolDps.post('/wx/shipping/address/wechat', data).then((res) => {
+            if (!res.succ) {
+                this.setState({
+                    msgShow: true,
+                    msgText: '地址修改失败', //提示内容
+                });
+            }
+            console.log(res);
+        });
+    }
+
     getAddress() {
         wx.openAddress({
-            success: function (res) {
+            success: (res) => {
                 var userName = res.userName; // 收货人姓名
-                var postalCode = res.postalCode; // 邮编
                 var provinceName = res.provinceName; // 国标收货地址第一级地址（省）
                 var cityName = res.cityName; // 国标收货地址第二级地址（市）
                 var countryName = res.countryName; // 国标收货地址第三级地址（国家）
                 var detailInfo = res.detailInfo; // 详细收货地址信息
-                var nationalCode = res.nationalCode; // 收货地址国家码
                 var telNumber = res.telNumber; // 收货人手机号码
+                let address = {
+                    address: detailInfo,//门牌地址
+                    city: cityName,//城市
+                    contact: telNumber,//电话
+                    county: countryName,//县区
+                    name: userName,//收件人姓名
+                    province: provinceName//省份
+                }
+                console.log(res);
+                this.setState({
+                    address: address
+                });
+                this.modifyAddress(address);
 
             }
         });
     }
 
+    /**
+     * 创建订单
+     */
+    createOrder() {
+        let data = [];
+        let goodsInfos = this.state.goodsInfos;
+        for (let i = 0; i < goodsInfos.length; i++) {
+            let obj = {
+                goodsId: goodsInfos[i].goodsId,//商品ID
+                num: goodsInfos[i].num,//购买数量
+                skuId: goodsInfos[i].skuId,//规格ID
+                supplierId: goodsInfos[i].supplierId//供应商ID
+            }
+            data.push(obj);
+        }
+        ToolDps.post('/wx/goods/order/createOrder', data, {
+            'Content-Type': 'application/json'
+        }).then((res) => {
+            console.log(res);
+            if (res.succ) {
+                if (typeof WeixinJSBridge == "undefined") {
+                    if (document.addEventListener) {
+                        document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
+                    } else if (document.attachEvent) {
+                        document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                        document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                    }
+                } else {
+                    this.onBridgeReady(res.payInfo);
+                }
+            }
+        });
+    }
+
+    onBridgeReady(signatureInfo) {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId": signatureInfo.appId, //公众号名称，由商户传入
+                "timeStamp": signatureInfo.timeStamp, //时间戳，自1970年以来的秒数
+                "nonceStr": signatureInfo.nonceStr, //随机串
+                "package": signatureInfo.package,
+                "signType": signatureInfo.signType, //微信签名方式：
+                "paySign": signatureInfo.paySign //微信签名
+            },
+            (res) => {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
+                    this._time = setTimeout(function () {
+                        this.context.router.history.push('/orderDetailGoods');
+                    }.bind(this), 1500);
+                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
+
+                }
+                else if (res.err_msg == "get_brand_wcpay_request:fail") {//支付失败
+                    this.setState({
+                        msgShow: true,
+                        msgText: '支付失败', //提示内容
+                    });
+                }
+            }
+        );
+    }
+
     render() {
+        let address = this.state.address;
         return (
             <section className='full-page order-confirm-page'>
-                {/* <address onClick={this.getAddress.bind(this)}>
-                    <p className='no-address-tip'>没有地址信息，请点击后添加地址</p>
-                </address> */}
-                <address onClick={this.getAddress.bind(this)}>
-                    <p className='contact-tel'>
-                        <span className='name'>叶周正</span><span>135****6559</span>
-                    </p>
-                    <ul className='contact-address'>
-                        <li><label className='tag'>默认</label></li>
-                        <li><span className='address'>浙江省杭州市西湖区三墩镇华彩国际3幢8楼802</span></li>
-                    </ul>
-                </address>
+                {
+                    address ? (
+                        <address onClick={this.getAddress.bind(this)}>
+                            <p className='contact-tel'>
+                                <span className='name'>{address.name}</span><span>{address.contact}</span>
+                            </p>
+                            <ul className='contact-address'>
+                                <li><label className='tag'>默认</label></li>
+                                <li><span className='address'>{address.province + address.city + address.county + address.address}</span></li>
+                            </ul>
+                        </address>
+                    ) : (
+                            <address onClick={this.getAddress.bind(this)}>
+                                <p className='no-address-tip'>没有地址信息，请点击后添加地址</p>
+                            </address>
+                        )
+                }
                 <section className='pay-type-area'>
                     <span className="icon icon-wechat"></span>
                     微信支付
                     <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
                 </section>
                 <ul className='goods-list-area'>
-                    <li>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <p className='price-area'>
-                                    &yen;799.00
-                                    <span className='num'>X 2</span>
-                                </p>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <p className='price-area'>
-                                    &yen;799.00
-                                    <span className='num'>X 2</span>
-                                </p>
-                            </li>
-                        </ul>
-                    </li>
+                    {
+                        this.state.goodsInfos.map((item, index) => {
+                            return (
+                                <li key={index}>
+                                    <ul className='flex-box'>
+                                        <li>
+                                            <div className='goods-img' style={{ backgroundImage: `url(${item.goodsImg})` }}></div>
+                                        </li>
+                                        <li>
+                                            <h4>{item.goodsName}</h4>
+                                            <p className='sku'>{item.colorActiveName}，{item.sizeActiveName}</p>
+                                            <p className='price-area'>
+                                                &yen;{item.salePrice}
+                                                <span className='num'>X {item.num}</span>
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
                 <section className='total-price-area'>
                     <div className='box'>
                         邮费：0.00元
-                        <span className='price'>共3件商品，小计：<span className='num'>2397元</span></span>
+                        <span className='price'>共3件商品，小计：<span className='num'>{this.state.totalPrice}元</span></span>
                     </div>
                 </section>
                 <ul className='flex-box order-confirm-footer'>
-                    <li><b>合计：</b>¥2397.00</li>
+                    <li><b>合计：</b>&yen;{this.state.totalPrice}</li>
                     <li>
-                        <button className='btn text-center to-pay-btn'>去支付</button>
+                        <button className='btn text-center to-pay-btn' onClick={this.createOrder.bind(this)}>去支付</button>
                     </li>
                 </ul>
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
 }
 
-export default OrderConfirm;
+
+export default GetData({
+    id: 'Profile', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/user/info',
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

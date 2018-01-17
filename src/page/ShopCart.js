@@ -2,10 +2,32 @@
  * 购物车
  */
 import React from 'react';
+import { DataLoad, GetData } from '../Component/index';
+
+class Main extends React.Component {
+    componentDidMount() {
+        document.title = '购物车';
+    }
+
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
+        let main = data && data.succ ? <ShopCart data={data.data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+
+        return main;
+    }
+}
+
 
 class ShopCart extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            list: props.data
+        }
         this.move = this.move.bind(this);
         this.end = this.end.bind(this);
         this.el = null;//移动元素
@@ -18,7 +40,7 @@ class ShopCart extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '购物车';
+
     }
 
     start(e) {
@@ -79,7 +101,7 @@ class ShopCart extends React.Component {
                         <span className="icon icon-not-selected"><span className="path1"></span><span className="path2"></span></span>
                         <ul className='flex-box'>
                             <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+                                <div className='goods-img sell-out' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
                             </li>
                             <li>
                                 <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
@@ -96,153 +118,33 @@ class ShopCart extends React.Component {
                         </ul>
                         <button className='btn delete-btn'>删除</button>
                     </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-not-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-not-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-not-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
-                    <li onTouchStart={this.start.bind(this)}>
-                        <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
-                        <ul className='flex-box'>
-                            <li>
-                                <div className='goods-img' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-                            </li>
-                            <li>
-                                <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                <p className='sku'>炫黑，170/85A</p>
-                                <div className='price-area'>
-                                    &yen;799.00
-                                    <div className='num-btn-area'>
-                                        <label className='minus' ></label>
-                                        <label className='text'>1</label>
-                                        <label className='add'></label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <button className='btn delete-btn'>删除</button>
-                    </li>
+                    {
+                        this.state.list.map((item, index) => {
+                            return (
+                                <li key={index} onTouchStart={this.start.bind(this)}>
+                                    <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
+                                    <ul className='flex-box'>
+                                        <li>
+                                            <div className='goods-img' style={{ backgroundImage: `url(${item.sku.goodsImg.url})` }}></div>
+                                        </li>
+                                        <li>
+                                            <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
+                                            <p className='sku'>{item.sku.colorName}，{item.sku.measurementName}</p>
+                                            <div className='price-area'>
+                                                &yen;{item.sku.salePrice}
+                                                <div className='num-btn-area'>
+                                                    <label className='minus' ></label>
+                                                    <label className='text'>{item.num}</label>
+                                                    <label className='add'></label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <button className='btn delete-btn'>删除</button>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
                 <ul className='flex-box shop-cart-footer'>
                     <li>
@@ -259,4 +161,18 @@ class ShopCart extends React.Component {
     }
 }
 
-export default ShopCart;
+// export default ShopCart;
+
+
+export default GetData({
+    id: 'ShopCart', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/cart/my',
+    data: '', //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

@@ -38,31 +38,31 @@ const MyNews = (state = { newMsg: false }, action) => {
 
 let plain = {
   sex: 2, //性别
-  age:'',//年龄
+  age: '',//年龄
   heigh: '', //身高
   weight: '', //体重
-  chest:'',//胸围
-  waist:'',//腰围
-  hip:'',
+  chest: '',//胸围
+  waist: '',//腰围
+  hip: '',
   colorofskin: '', //肤色
   bodySize: '', //体型
   style: [], //风格
-  faceLifeImg:'',//正脸照
-  faceLifeImgPara:'',//正脸照上传参数
-  bodyLifeImg:'',//全身照
-  bodyLifeImgPara:'',//全身照上传参数
-  costCode:'',//预期花费
-  time:'',//预约时间，格式 yyyy-mm-dd HH:mm
-  mendian:'',//门店
+  faceLifeImg: '',//正脸照
+  faceLifeImgPara: '',//正脸照上传参数
+  bodyLifeImg: '',//全身照
+  bodyLifeImgPara: '',//全身照上传参数
+  costCode: '',//预期花费
+  time: '',//预约时间，格式 yyyy-mm-dd HH:mm
+  mendian: '',//门店
   professional: '', //职业
-  remarks:'',//改造需求
+  remarks: '',//改造需求
   loadAnimation: true,
   loadMsg: '加载中...',
 }
 //素人改造
 const PlainChange = (state = plain, action) => {
   switch (action.type) {
-    case 'setPlainChange': 
+    case 'setPlainChange':
       return action.target;
     default:
       return state;
@@ -114,9 +114,9 @@ const NeedMatch = DB('NeedMatch', {
 }); //我要搭配
 const MyWatch = DB('MyWatch', {
   data: null
-}); 
+});
 //支付订单
-const PayOrder = DB('PayOrder'); 
+const PayOrder = DB('PayOrder');
 
 //我的资产
 const MyAsset = DB('MyAsset', {
@@ -149,6 +149,8 @@ const OrderList = DB('OrderList', {
 const OrderDetail = DB('OrderDetail', {
   data: []
 }); //订单详情
+const ShopCart = DB('ShopCart'); //购物车
+
 const PromotionCodeList = DB('PromotionCodeList', {
   data: []
 }); //优惠码列表
@@ -170,6 +172,7 @@ const reducers = combineReducers({
   DpsServerDetail,
   OrderList,
   OrderDetail,
+  ShopCart,
   FashionMomentDetail,
   PromotionCodeList,
   PlainChange

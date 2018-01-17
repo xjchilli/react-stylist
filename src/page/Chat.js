@@ -461,18 +461,29 @@ class Chat extends IM {
      * 解析自定义消息 搭配方案
      * @param {*} content 
      */
-    convertCustomMsgToHtml(content) {
-        var data = content.getData();
-        var desc = content.getDesc();
-        var ext = content.getExt();
+    convertCustomMsgToHtml(myContent) {
+        let data = myContent.getData();
+        let desc = myContent.getDesc();
+        let ext = myContent.getExt();
+        try {
+            data = JSON.parse(data);
+        } catch (error) {
+            data = null;
+            console.log(error);
+            return;
+        }
+        let { actionParam: { content, masterImg, projectId, goodsId } } = data;
         console.log(data);
-        // return "data=" + data + ", desc=" + desc + ", ext=" + ext;
         return `
-            <a href='/' class='dapei-plan'>
-                <img src='/assets/img/girl.jpg'/>
+            <a href='${projectId ? `/arrangementScheme?id=${projectId}` : `/goodsDetail?id=${goodsId}`}' class='dapei-plan'>
+                <img src='${masterImg}'/>
                 <p class='dapei-plan-desc'>
-                    <span class="icon icon-flex"><span class="path1"></span><span class="path2"></span></span>
-                    黑白搭，夏装，聚会，出游。
+                    
+        ${ projectId ? '<span class="icon icon-flex"><span class="path1"></span><span class="path2"></span></span>' : '<i class="iconfont icon-goods-panel"></i>'}
+        
+                   
+                    
+                   ${content}
                 </p>
             </a>
         `

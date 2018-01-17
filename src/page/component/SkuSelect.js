@@ -2,14 +2,16 @@
  * 规格选择
  */
 import React from 'react';
-import { ToolDps } from '../../ToolDps';
+import PropTypes from 'prop-types';
+import { setGoodsInfo } from '../../Config/ToolStore';
 import { Msg } from '../../Component/index';
+import { ToolDps } from '../../ToolDps';
 
 class SkuSelect extends React.Component {
     constructor(props) {
         super(props);
         let { id, images, price, stockNum, colors, measurements, sku, supplierId } = props.data;
-        let { selectSkuText, colorActiveId, colorActiveName, sizeActiveId, sizeActiveName, num, goodsImg, salePrice } = props.selectSkuData;
+        let { skuId, selectSkuText, colorActiveId, colorActiveName, sizeActiveId, sizeActiveName, num, goodsImg, salePrice } = props.selectSkuData;
         this.state = {
             msgShow: false,
             msgText: '', //提示内容
@@ -21,7 +23,7 @@ class SkuSelect extends React.Component {
             colors: colors,
             measurements: measurements,
             sku: sku,
-            skuId: '',//规格id
+            skuId: skuId || '',//规格id
             goodsId: id,//商品id
             supplierId: supplierId,//供应商id
             selectSkuText: selectSkuText || '请选择 颜色 尺码',//选择的sku
@@ -35,38 +37,73 @@ class SkuSelect extends React.Component {
     }
 
     /**
-     * 创建订单
+     * 立即购买
      */
-    createOrder() {
+    shopNow() {
+        let flag = this.validForm();
+        if (!flag) return;
+        let data = [{
+            goodsName: this.props.goodsName,//商品名称
+            goodsId: this.state.goodsId,//商品id
+            num: this.state.num,//购物数量
+            skuId: this.state.skuId,//规格ID
+            colorActiveName: this.state.colorActiveName,//颜色名称
+            sizeActiveName: this.state.sizeActiveName,//尺码名称
+            supplierId: this.state.supplierId,//供应商ID
+            goodsImg: this.state.goodsImg,//商品图片
+            salePrice: this.state.salePrice,//售价
+        }];
+        setGoodsInfo(data);
+        this.context.router.history.push('/orderConfirm');
+    }
+
+    /**
+     * 加入购物车
+     */
+    addShopCart() {
+        let flag = this.validForm();
+        if (!flag) return;
+        let data = {
+            num: this.state.num,
+            skuId: this.state.skuId
+        };
+        ToolDps.post('/wx/cart/add', data).then((res) => {
+            if (res.succ) {
+                this.setState({
+                    msgShow: true,
+                    msgText: '添加成功', //提示内容
+                });
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: res.msg, //提示内容
+                });
+            }
+        });
+    }
+
+    /**
+     * 验证表单
+     */
+    validForm() {
         if (!this.state.colorActiveId) {
             this.setState({
                 msgShow: true,
                 msgText: '请选择颜色', //提示内容
             });
-            return;
+            return false;
         }
         if (!this.state.sizeActiveId) {
             this.setState({
                 msgShow: true,
                 msgText: '请选择尺码', //提示内容
             });
-            return;
+            return false;
         }
-        let data = [{
-            goodsId: this.state.goodsId,//商品id
-            num: this.state.num,//购物数量
-            skuId: this.state.skuId,//规格ID
-            supplierId: this.state.supplierId//供应商ID
-        }]
-        ToolDps.post('/wx/goods/order/createOrder', data, {
-            'Content-Type': 'application/json'
-        }).then((res) => {
-            console.log(res);
-            if (res.succ) {
 
-            }
-        });
+        return true;
     }
+
 
     /**
      * 获取颜色数据
@@ -102,6 +139,7 @@ class SkuSelect extends React.Component {
 
         this.props.getSkuData(
             {
+                skuId: skuId,//规格id
                 selectSkuText: selectSkuText,//选择的sku
                 colorActiveId: id,//选择的颜色id
                 colorActiveName: name,//选择的颜色名称
@@ -156,6 +194,7 @@ class SkuSelect extends React.Component {
 
         this.props.getSkuData(
             {
+                skuId: skuId,//规格id
                 selectSkuText: selectSkuText,//选择的sku
                 colorActiveId: this.state.colorActiveId,//选择的颜色id
                 colorActiveName: this.state.colorActiveName,//选择的颜色名称
@@ -275,16 +314,16 @@ class SkuSelect extends React.Component {
                     this.props.isTrue ? (
                         <ul className='flex-box sku-action-area'>
                             <li className='item-2'>
-                                <button className={this.state.stockNum === 0 ? 'btn add-shop-cart-btn disable' : 'btn add-shop-cart-btn'}>加入购物车</button>
+                                <button className={this.state.stockNum === 0 ? 'btn add-shop-cart-btn disable' : 'btn add-shop-cart-btn'} onClick={this.addShopCart.bind(this)}>加入购物车</button>
                             </li>
                             <li className='item-2'>
-                                <button className={this.state.stockNum === 0 ? 'btn immediately-buy-btn disable' : 'btn immediately-buy-btn'}>立即购买</button>
+                                <button className={this.state.stockNum === 0 ? 'btn immediately-buy-btn disable' : 'btn immediately-buy-btn'} onClick={this.shopNow.bind(this)}>立即购买</button>
                             </li>
                         </ul>
                     ) : (
                             <ul className='flex-box sku-action-area'>
                                 <li className='true-btn-area'>
-                                    <button className={this.state.stockNum === 0 ? 'btn immediately-buy-btn disable' : 'btn immediately-buy-btn'} onClick={this.createOrder.bind(this)}>确定</button>
+                                    <button className={this.state.stockNum === 0 ? 'btn immediately-buy-btn disable' : 'btn immediately-buy-btn'} onClick={this.props.buyType === 0 ? this.shopNow.bind(this) : this.addShopCart.bind(this)}>确定</button>
                                 </li>
                             </ul>
                         )
@@ -294,6 +333,10 @@ class SkuSelect extends React.Component {
             </section>
         )
     }
+}
+
+SkuSelect.contextTypes = {
+    router: PropTypes.object.isRequired
 }
 
 export default SkuSelect;

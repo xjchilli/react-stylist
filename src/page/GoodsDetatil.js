@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { DataLoad, GetData } from "../Component/index";
 import SkuSelect from './component/SkuSelect';
@@ -31,6 +32,7 @@ class GoodsDetail extends React.Component {
         this.state = {
             data: props.data,
             selectSkuData: {
+                skuId: '',//规格id
                 selectSkuText: '请选择 颜色 尺码',//选择的sku
                 colorActiveId: '',//选择的颜色id
                 colorActiveName: '',//选择的颜色名称
@@ -42,6 +44,7 @@ class GoodsDetail extends React.Component {
             },//选择的sku
             isShowSku: false,
             isTrue: true,//选择sku true:2个按钮 false:一个按钮
+            buyType: 0,//0:立即购买  1:加入购物车
         }
     }
 
@@ -115,22 +118,24 @@ class GoodsDetail extends React.Component {
                 <footer>
                     <ul>
                         <li>
-                            <span className='cart-area'>
-                                <span className="icon icon-shop-cart"></span>
-                                <span className='buy-num'>1</span>
-                            </span>
-                            <p className='text-center'>购物车</p>
+                            <Link to='/shopCart'>
+                                <span className='cart-area'>
+                                    <span className="icon icon-shop-cart"></span>
+                                    <span className='buy-num'>1</span>
+                                </span>
+                                <p className='text-center'>购物车</p>
+                            </Link>
                         </li>
                         <li>
-                            <button className='btn add-shop-cart-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false }) }}>加入购物车</button>
+                            <button className='btn add-shop-cart-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false, buyType: 1 }) }}>加入购物车</button>
                         </li>
                         <li>
-                            <button className='btn immediately-buy-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false }) }}>立即购买</button>
+                            <button className='btn immediately-buy-btn' onClick={() => { this.setState({ isShowSku: true, isTrue: false, buyType: 0 }) }}>立即购买</button>
                         </li>
                     </ul>
                 </footer>
                 {
-                    this.state.isShowSku ? <SkuSelect isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
+                    this.state.isShowSku ? <SkuSelect goodsName={name} buyType={this.state.buyType} isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
                 }
             </section>
         )
