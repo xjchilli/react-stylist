@@ -2,6 +2,7 @@
  * 确认订单
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DataLoad, GetData } from '../Component/index';
 import { getGoodsInfo } from '../Config/ToolStore';
 import { ToolDps } from '../ToolDps';
@@ -30,20 +31,21 @@ class Main extends React.Component {
 class OrderConfirm extends React.Component {
     constructor(props) {
         super(props);
-        let goodsInfos = getGoodsInfo();
+        let goodsInfos = getGoodsInfo() || [];
         let totalNum = 0;
         let totalPrice = 0;
-        for (let i = 0; i < goodsInfos.length; i++) {
-            totalNum += goodsInfos[i].num;
-            totalPrice += Number(goodsInfos[i].salePrice) * goodsInfos[i].num;
+        for (let i = 0; i < goodsInfos.list.length; i++) {
+            totalNum += goodsInfos.list[i].num;
+            totalPrice += Number(goodsInfos.list[i].salePrice) * goodsInfos.list[i].num;
         }
         this.state = {
             msgShow: false,
             msgText: '', //提示内容
             address: props.data.address,
-            goodsInfos: goodsInfos,
+            type: goodsInfos.type,
+            goodsInfos: goodsInfos.list,
             totalNum: totalNum,//总数
-            totalPrice: totalPrice.toFixed(2),//总价
+            totalPrice: totalPrice,//总价
         }
     }
 
@@ -138,6 +140,11 @@ class OrderConfirm extends React.Component {
             },
             (res) => {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
+                    this.setState({
+                        msgShow: true,
+                        msgText: '支付成功'//提示内容
+                    });
+
                     this._time = setTimeout(function () {
                         this.context.router.history.push('/orderDetailGoods');
                     }.bind(this), 1500);
@@ -206,7 +213,7 @@ class OrderConfirm extends React.Component {
                 <section className='total-price-area'>
                     <div className='box'>
                         邮费：0.00元
-                        <span className='price'>共3件商品，小计：<span className='num'>{this.state.totalPrice}元</span></span>
+                        <span className='price'>共{this.state.totalNum}件商品，小计：<span className='num'>{this.state.totalPrice}元</span></span>
                     </div>
                 </section>
                 <ul className='flex-box order-confirm-footer'>
@@ -220,6 +227,11 @@ class OrderConfirm extends React.Component {
         )
     }
 }
+
+OrderConfirm.contextTypes = {
+    router: PropTypes.object.isRequired
+}
+
 
 
 export default GetData({

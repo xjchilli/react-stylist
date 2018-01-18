@@ -10,7 +10,7 @@ class Nav extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: props.status || ''//-1:全部 0 : 待付款  1:发布中  2 :服务中 3:待评价 10 :已完成 
+            status: props.status || ''//-1:全部 1:待付款，2:待发货(付款成功) ，3:待收货(已发货)，4:待评价(已确认收货),10:已完成(已评价)
         }
     }
 
@@ -34,16 +34,16 @@ class Nav extends React.Component {
                     <div className={!this.state.status ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '')}>
                         <span>全部</span>
                     </div>
-                    <div className={this.state.status === "0" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '0')}>
+                    <div className={this.state.status === 1 ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, 1)}>
                         <span>待付款</span>
                     </div>
-                    <div className={this.state.status === "1" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '1')}>
+                    <div className={this.state.status === 2 ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, 2)}>
                         <span>待发货</span>
                     </div>
-                    <div className={this.state.status === "2" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '2')}>
+                    <div className={this.state.status === 3 ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, 3)}>
                         <span>待收货</span>
                     </div>
-                    <div className={this.state.status === "3" ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, '3')}>
+                    <div className={this.state.status === 4 ? 'swiper-slide active' : 'swiper-slide'} onClick={this.props.statusChange.bind(this, 4)}>
                         <span>待评价</span>
                     </div>
                 </div>
@@ -58,20 +58,59 @@ class Main extends React.Component {
         super(props);
         this.state = {
             status: '',
-            data: [{}],
+            data: [],
             loadAnimation: true,
             loadMsg: '正在加载中'
         }
+    }
+
+    componentDidMount() {
+        document.title = "订单列表";
+        this.getData(this.state.status);
+    }
+
+    getData(status) {
+        this.setState({
+            data: [],
+            loadAnimation: true,
+            loadMsg: '正在加载中'
+        });
+        ToolDps.get('/wx/goods/order/my', {
+            status: status ? status : ''
+        }).then((res) => {
+            console.log(res);
+            if (res.succ) {
+                let msg = '加载完成';
+                if (res.data.length === 0) {
+                    msg = "暂时没有您的订单";
+                }
+                this.setState({
+                    data: res.data,
+                    loadAnimation: false,
+                    loadMsg: msg
+                });
+            } else {
+                this.setState({
+                    loadAnimation: false,
+                    loadMsg: '加载失败'
+                });
+            }
+        }).catch(() => {
+            this.setState({
+                loadAnimation: false,
+                loadMsg: '加载失败'
+            });
+        });
     }
 
 
     statusChange(status) {
         this.setState({
             status: status || '',
-            data: [{}]
+            data: []
         });
 
-        // this.getData(status);
+        this.getData(status);
     }
 
     render() {

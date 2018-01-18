@@ -2,7 +2,13 @@
  * 购物车
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
+import merged from 'obj-merged';
+import { setGoodsInfo } from '../Config/ToolStore';
+import { ToolDps } from '../ToolDps';
+import { Msg } from '../Component/index';
 
 class Main extends React.Component {
     componentDidMount() {
@@ -15,7 +21,7 @@ class Main extends React.Component {
             loadAnimation,
             loadMsg
         } = this.props.state;
-        let main = data && data.succ ? <ShopCart data={data.data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = data && data.succ ? <ShopCart data={data.data} {...this.props} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
 
         return main;
     }
@@ -25,8 +31,14 @@ class Main extends React.Component {
 class ShopCart extends React.Component {
     constructor(props) {
         super(props);
+        let list = props.data;
+        for (let i = 0; i < list.length; i++) {
+            list[i].checked = false;
+        }
         this.state = {
-            list: props.data
+            list: list,
+            msgShow: false,
+            msgText: '', //提示内容
         }
         this.move = this.move.bind(this);
         this.end = this.end.bind(this);
@@ -37,10 +49,25 @@ class ShopCart extends React.Component {
         this.moveY = 0;//移动坐标y
         this.moveDis = 0;//移动距离
         this.moveDisLeft = 0;//左滑动距离
+
+        this.init(list);
     }
 
     componentDidMount() {
 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // this.setState({
+        //     list: nextProps.data
+        // });
+    }
+
+    init(list) {
+        let copyData = merged(this.props.state);
+        copyData.data.data = list;
+        copyData.path = '/shopCart';
+        this.props.setState(copyData);
     }
 
     start(e) {
@@ -93,11 +120,188 @@ class ShopCart extends React.Component {
         this.el.removeEventListener('touchmove', this.move);
     }
 
+    /**
+     * 计算总价
+     */
+    calculateTotalPrice() {
+        let totalPrice = 0.00;
+        let list = this.state.list;
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].checked) {
+                totalPrice += list[i].num * Number(list[i].sku.salePrice);
+            }
+        }
+        return totalPrice;
+    }
+
+    /**
+     * 选择商品
+     */
+    selectGoods(skuId) {
+        let list = Array.prototype.slice.apply(this.state.list);
+        for (let i = 0; i < list.length; i++) {
+            if (skuId === list[i].skuId) {
+                list[i].checked = !list[i].checked;
+                break;
+            }
+        }
+        this.setState({
+            list
+        });
+        this.init(list);
+    }
+
+    /**
+     * 是否全选
+     */
+    isAllSelect() {
+        let flag = true;
+        let list = this.state.list;
+        for (let i = 0; i < list.length; i++) {
+            if (!list[i].checked) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    /**
+     * 全选
+     */
+    selectAll() {
+        let list = Array.prototype.slice.apply(this.state.list);
+        for (let i = 0; i < list.length; i++) {
+            list[i].checked = true;
+        }
+        this.setState({
+            list
+        });
+        this.init(list);
+    }
+
+    /**
+     * 全不选
+     */
+    notSelectAll() {
+        let list = Array.prototype.slice.apply(this.state.list);
+        for (let i = 0; i < list.length; i++) {
+            list[i].checked = false;
+        }
+        this.setState({
+            list
+        });
+        this.init(list);
+    }
+
+    /**
+     * 添加商品数量
+     * @skuId 规格id
+     * @goodsNum 选择的商品数量
+     * @goodsStore 商品库存
+     */
+    addGoods(skuId, goodsNum, goodsStore) {
+        let list = Array.prototype.slice.apply(this.state.list);
+        if (goodsNum < goodsStore) {
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].skuId === skuId) {
+                    list[i].num = ++goodsNum;
+                }
+            }
+        }
+        this.setState({
+            list
+        });
+        this.init(list);
+    }
+
+    minusGoods(skuId, goodsNum) {
+        let num = --goodsNum;
+        let list = Array.prototype.slice.apply(this.state.list);
+        if (num > 0) {
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].skuId === skuId) {
+                    list[i].num = num;
+                }
+            }
+        }
+        this.setState({
+            list
+        });
+        this.init(list);
+    }
+
+    /**
+     * 购物车删除
+     * @cartId 购物车id
+     */
+    shopCartDelete(cartId) {
+        let data = [cartId];
+        ToolDps.post('/wx/cart/delete', { cartId: data }).then((res) => {
+            if (res.succ) {
+                let list = Array.prototype.slice.apply(this.state.list);
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].id === cartId) {
+                        list.splice(i, 1);
+                        this.setState({
+                            list
+                        });
+                        this.init(list);
+                    }
+                }
+
+            }
+            // console.log(res);
+        });
+    }
+
+    /**
+     * 立即结算
+     */
+    send() {
+        let list = Array.prototype.slice.apply(this.state.list);
+        let data = {
+            type: '1',//0:立即购买  1:购物车
+            list: []
+        };
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].checked) {
+                let obj = {
+                    goodsName: list[i].goodsName,//商品名称
+                    goodsId: list[i].goodsId,//商品id
+                    num: list[i].num,//购物数量
+                    skuId: list[i].skuId,//规格ID
+                    colorActiveName: list[i].sku.colorName,//颜色名称
+                    sizeActiveName: list[i].sku.measurementName,//尺码名称
+                    supplierId: list[i].supplierId,//供应商ID
+                    goodsImg: list[i].sku.goodsImg.url,//商品图片
+                    salePrice: list[i].sku.salePrice,//售价
+                };
+                data.list.push(obj);
+            }
+
+        }
+        if (data.list.length === 0) {
+            this.setState({
+                msgShow: true,
+                msgText: '您还没有选择宝贝哦', //提示内容
+            });
+            return;
+        }
+        setGoodsInfo(data);
+        // console.log(data);
+        this.context.router.history.push('/orderConfirm');
+    }
+
     render() {
+        let totalPrice = this.calculateTotalPrice();
+        let isAll = this.isAllSelect();
         return (
             <section className='full-page shop-cart-page'>
-                <ul className='goods-list-area'>
-                    <li onTouchStart={this.start.bind(this)}>
+                {
+                    this.state.list.length > 0 ? (
+                        <ul className='goods-list-area'>
+                            {/* <li onTouchStart={this.start.bind(this)}>
                         <span className="icon icon-not-selected"><span className="path1"></span><span className="path2"></span></span>
                         <ul className='flex-box'>
                             <li>
@@ -117,49 +321,66 @@ class ShopCart extends React.Component {
                             </li>
                         </ul>
                         <button className='btn delete-btn'>删除</button>
-                    </li>
-                    {
-                        this.state.list.map((item, index) => {
-                            return (
-                                <li key={index} onTouchStart={this.start.bind(this)}>
-                                    <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
-                                    <ul className='flex-box'>
-                                        <li>
-                                            <div className='goods-img' style={{ backgroundImage: `url(${item.sku.goodsImg.url})` }}></div>
+                    </li> */}
+                            {
+                                this.state.list.map((item, index) => {
+                                    return (
+                                        <li key={index} onTouchStart={this.start.bind(this)}>
+                                            {
+                                                item.checked ? <span className="icon icon-selected" onClick={this.selectGoods.bind(this, item.skuId)}><span className="path1"></span><span className="path2"></span></span> : <span className="icon icon-not-selected" onClick={this.selectGoods.bind(this, item.skuId)}><span className="path1"></span><span className="path2"></span></span>
+                                            }
+                                            <ul className='flex-box'>
+                                                <li>
+                                                    <Link to={'/goodsDetail?id=' + item.goodsId}>
+                                                        <div className='goods-img' style={{ backgroundImage: `url(${item.sku.goodsImg.url})` }}></div>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <h4>{item.goodsName}</h4>
+                                                    <p className='sku'>{item.sku.colorName}，{item.sku.measurementName}</p>
+                                                    <div className='price-area'>
+                                                        &yen;{item.sku.salePrice}
+                                                        <div className='num-btn-area'>
+                                                            <label className='minus' onClick={this.minusGoods.bind(this, item.skuId, item.num)}></label>
+                                                            <label className='text'>{item.num}</label>
+                                                            <label className='add' onClick={this.addGoods.bind(this, item.skuId, item.num, item.sku.num)}></label>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <button className='btn delete-btn' onClick={this.shopCartDelete.bind(this, item.id)}>删除</button>
                                         </li>
-                                        <li>
-                                            <h4>Nike耐克官方NIKE AIR HUARACHE RUNULTRA GS大童运动鞋847568HUARACHEHUARACHEHUARACHE</h4>
-                                            <p className='sku'>{item.sku.colorName}，{item.sku.measurementName}</p>
-                                            <div className='price-area'>
-                                                &yen;{item.sku.salePrice}
-                                                <div className='num-btn-area'>
-                                                    <label className='minus' ></label>
-                                                    <label className='text'>{item.num}</label>
-                                                    <label className='add'></label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <button className='btn delete-btn'>删除</button>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                                    )
+                                })
+                            }
+                        </ul>
+                    ) : (
+                            <p className='text-center empty-shop-cart'>您的购物车是空的</p>
+                        )
+                }
+
                 <ul className='flex-box shop-cart-footer'>
                     <li>
-                        <span className="icon icon-selected"><span className="path1"></span><span className="path2"></span></span>
+                        {
+                            isAll ? <span className="icon icon-selected" onClick={this.notSelectAll.bind(this)}><span className="path1"></span><span className="path2"></span></span> : <span className="icon icon-not-selected" onClick={this.selectAll.bind(this)}><span className="path1"></span><span className="path2"></span></span>
+                        }
                         &nbsp;全选
-                        <label>合计：<span className='price'>&yen;36895.00</span></label>
+                        <label>合计：<span className='price'>&yen;{totalPrice}</span></label>
                     </li>
                     <li>
-                        <button className='btn'>立即结算</button>
+                        <button className='btn' onClick={this.send.bind(this)}>立即结算</button>
                     </li>
                 </ul>
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
 }
+
+ShopCart.contextTypes = {
+    router: PropTypes.object.isRequired
+}
+
 
 // export default ShopCart;
 

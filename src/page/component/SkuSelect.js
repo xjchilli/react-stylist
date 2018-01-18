@@ -42,17 +42,20 @@ class SkuSelect extends React.Component {
     shopNow() {
         let flag = this.validForm();
         if (!flag) return;
-        let data = [{
-            goodsName: this.props.goodsName,//商品名称
-            goodsId: this.state.goodsId,//商品id
-            num: this.state.num,//购物数量
-            skuId: this.state.skuId,//规格ID
-            colorActiveName: this.state.colorActiveName,//颜色名称
-            sizeActiveName: this.state.sizeActiveName,//尺码名称
-            supplierId: this.state.supplierId,//供应商ID
-            goodsImg: this.state.goodsImg,//商品图片
-            salePrice: this.state.salePrice,//售价
-        }];
+        let data = {
+            type: '0',//0:立即购买  1:购物车
+            list: [{
+                goodsName: this.props.goodsName,//商品名称
+                goodsId: this.state.goodsId,//商品id
+                num: this.state.num,//购物数量
+                skuId: this.state.skuId,//规格ID
+                colorActiveName: this.state.colorActiveName,//颜色名称
+                sizeActiveName: this.state.sizeActiveName,//尺码名称
+                supplierId: this.state.supplierId,//供应商ID
+                goodsImg: this.state.goodsImg,//商品图片
+                salePrice: this.state.salePrice,//售价
+            }]
+        }
         setGoodsInfo(data);
         this.context.router.history.push('/orderConfirm');
     }
