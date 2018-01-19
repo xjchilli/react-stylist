@@ -267,6 +267,7 @@ class ShopCart extends React.Component {
         for (let i = 0; i < list.length; i++) {
             if (list[i].checked) {
                 let obj = {
+                    cartId: list[i].id,//购物车id
                     goodsName: list[i].goodsName,//商品名称
                     goodsId: list[i].goodsId,//商品id
                     num: list[i].num,//购物数量
@@ -358,11 +359,10 @@ class ShopCart extends React.Component {
                             <p className='text-center empty-shop-cart'>您的购物车是空的</p>
                         )
                 }
-
                 <ul className='flex-box shop-cart-footer'>
                     <li>
                         {
-                            isAll ? <span className="icon icon-selected" onClick={this.notSelectAll.bind(this)}><span className="path1"></span><span className="path2"></span></span> : <span className="icon icon-not-selected" onClick={this.selectAll.bind(this)}><span className="path1"></span><span className="path2"></span></span>
+                            this.state.list.length > 0 && isAll ? <span className="icon icon-selected" onClick={this.notSelectAll.bind(this)}><span className="path1"></span><span className="path2"></span></span> : <span className="icon icon-not-selected" onClick={this.selectAll.bind(this)}><span className="path1"></span><span className="path2"></span></span>
                         }
                         &nbsp;全选
                         <label>合计：<span className='price'>&yen;{totalPrice}</span></label>

@@ -34,6 +34,11 @@ class SkuSelect extends React.Component {
             num: num || 1,//默认购买数量1
             goodsImg: goodsImg || images[0].url,//商品图片
         }
+        this._time = 0;
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this._time);
     }
 
     /**
@@ -72,10 +77,15 @@ class SkuSelect extends React.Component {
         };
         ToolDps.post('/wx/cart/add', data).then((res) => {
             if (res.succ) {
+                this.props.getShopCartGoodsNum();
                 this.setState({
                     msgShow: true,
                     msgText: '添加成功', //提示内容
                 });
+                this._time = setTimeout(() => {
+                    this.props.close();
+                }, 1000);
+
             } else {
                 this.setState({
                     msgShow: true,

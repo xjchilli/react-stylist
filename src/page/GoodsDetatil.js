@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { DataLoad, GetData } from "../Component/index";
 import SkuSelect from './component/SkuSelect';
+import { ToolDps } from '../ToolDps';
 
 
 class Main extends React.Component {
@@ -45,7 +46,22 @@ class GoodsDetail extends React.Component {
             isShowSku: false,
             isTrue: true,//选择sku true:2个按钮 false:一个按钮
             buyType: 0,//0:立即购买  1:加入购物车
+            shopCartGoodsNum: 0,//购物车商品个数
         }
+        this.getShopCartGoodsNum();
+    }
+
+    /**
+     * 获取购物车商品个数
+     */
+    getShopCartGoodsNum() {
+        ToolDps.get('/wx/cart/my').then((res) => {
+            if (res.succ) {
+                this.setState({
+                    shopCartGoodsNum: res.data.length
+                });
+            }
+        });
     }
 
     componentDidMount() {
@@ -121,7 +137,9 @@ class GoodsDetail extends React.Component {
                             <Link to='/shopCart'>
                                 <span className='cart-area'>
                                     <span className="icon icon-shop-cart"></span>
-                                    <span className='buy-num'>1</span>
+                                    {
+                                        this.state.shopCartGoodsNum > 0 ? <span className='buy-num'>{this.state.shopCartGoodsNum}</span> : null
+                                    }
                                 </span>
                                 <p className='text-center'>购物车</p>
                             </Link>
@@ -135,15 +153,13 @@ class GoodsDetail extends React.Component {
                     </ul>
                 </footer>
                 {
-                    this.state.isShowSku ? <SkuSelect goodsName={name} buyType={this.state.buyType} isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
+                    this.state.isShowSku ? <SkuSelect getShopCartGoodsNum={this.getShopCartGoodsNum.bind(this)}  goodsName={name} buyType={this.state.buyType} isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
                 }
             </section>
         )
     }
 }
 
-
-// export default GoodsDetail;
 
 
 export default GetData({

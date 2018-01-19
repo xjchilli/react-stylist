@@ -114,6 +114,13 @@ class OrderConfirm extends React.Component {
         }).then((res) => {
             console.log(res);
             if (res.succ) {
+                if (this.state.type === '1') {//购物车删除
+                    let cartIdArr = [];
+                    for (let i = 0; i < this.state.goodsInfos.length; i++) {
+                        cartIdArr.push(this.state.goodsInfos[i].cartId);
+                    }
+                    ToolDps.post('/wx/cart/delete', { cartId: cartIdArr });
+                }
                 if (typeof WeixinJSBridge == "undefined") {
                     if (document.addEventListener) {
                         document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
@@ -124,6 +131,11 @@ class OrderConfirm extends React.Component {
                 } else {
                     this.onBridgeReady(res.payInfo);
                 }
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: res.msg, //提示内容
+                });
             }
         });
     }

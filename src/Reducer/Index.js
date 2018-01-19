@@ -148,7 +148,8 @@ const OrderList = DB('OrderList', {
 }); //我的订单
 const OrderDetail = DB('OrderDetail', {
   data: []
-}); //订单详情
+}); //订单商品详情
+const OrderDetailGoods = DB('OrderDetailGoods'); //订单详情
 const ShopCart = DB('ShopCart'); //购物车
 
 const PromotionCodeList = DB('PromotionCodeList', {
@@ -172,6 +173,7 @@ const reducers = combineReducers({
   DpsServerDetail,
   OrderList,
   OrderDetail,
+  OrderDetailGoods,
   ShopCart,
   FashionMomentDetail,
   PromotionCodeList,

@@ -37,6 +37,8 @@ import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList
 import OrderListGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderListGoods';
 import OrderDetailContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetail';
 import OrderDetailGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetailGoods';
+import GoodsCommentContainer from 'bundle-loader?lazy&name=[name]!../page/GoodsComment';
+import saleAfterContainer from 'bundle-loader?lazy&name=[name]!../page/SaleAfter';
 import ApplyReturnsAndRefundsContainer from 'bundle-loader?lazy&name=[name]!../page/ApplyReturnsAndRefunds';
 import ApplyChangeGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/ApplyChangeGoods';
 import TransportSearchContainer from 'bundle-loader?lazy&name=[name]!../page/TransportSearch';
@@ -219,6 +221,16 @@ let routers = [
         path: '/orderDetailGoods',
         exact: false,
         component: (props) => getComponent(props, OrderDetailGoodsContainer)
+    },
+    {//商品评价
+        path: '/goodsComment',
+        exact: false,
+        component: (props) => getComponent(props, GoodsCommentContainer)
+    },
+    {//选择售后类型
+        path: '/saleAfter',
+        exact: false,
+        component: (props) => getComponent(props, saleAfterContainer)
     },
     {//申请退货退款
         path: '/applyReturnsAndRefunds',
