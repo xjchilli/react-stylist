@@ -12,16 +12,21 @@ var HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({
     size: os.cpus().length
 });
+var deleteFiles = require('./config/deleteFiles');
+
+
 
 // var liveUrl = "http://potato.ittun.com";
 var liveUrl = "";
 var publicPath = liveUrl + '/assets/'; //服务器路径
 var p = path.resolve(__dirname + '/assets');
 
+deleteFiles(path.resolve(p + '/js'));// /assets/js文件下的js文件
+
 //入口文件
 var entry = {
     app: './src/App.js',
-    vendors: ['react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper','fastclick']
+    vendors: ['react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper', 'fastclick']
 };
 
 module.exports = {
@@ -65,7 +70,7 @@ module.exports = {
             }
         }),
         new webpack.ProvidePlugin({
-           "React": "react"
+            "React": "react"
         }),
         //多线程处理文件
         new HappyPack({
@@ -115,6 +120,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.css', '.less', ".json"],
         modules: [path.resolve(__dirname, "src"), "node_modules"],
         alias: {
+            'ToolDps': path.resolve(__dirname + '/src/ToolDps'),
             'react': path.resolve(__dirname + '/node_modules/react'),
             'react-dom': path.resolve(__dirname + '/node_modules/react-dom'),
             'react-router': path.resolve(__dirname + '/node_modules/react-router'),

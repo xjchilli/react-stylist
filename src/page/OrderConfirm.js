@@ -31,7 +31,7 @@ class Main extends React.Component {
 class OrderConfirm extends React.Component {
     constructor(props) {
         super(props);
-        let goodsInfos = getGoodsInfo() || [];
+        let goodsInfos = getGoodsInfo() || { list: [] };
         let totalNum = 0;
         let totalPrice = 0;
         for (let i = 0; i < goodsInfos.list.length; i++) {
@@ -43,7 +43,7 @@ class OrderConfirm extends React.Component {
             msgText: '', //提示内容
             address: props.data.address,
             type: goodsInfos.type,
-            goodsInfos: goodsInfos.list,
+            goodsInfos: goodsInfos.list || [],
             totalNum: totalNum,//总数
             totalPrice: totalPrice,//总价
         }

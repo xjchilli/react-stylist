@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetData } from '../Component/index';
-import { ToolDps } from '../ToolDps';
+import { ToolDps } from 'ToolDps';
 import { Msg } from '../Component/index';
 import WxAuth from './component/WxAuth';
 

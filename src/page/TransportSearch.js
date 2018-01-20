@@ -3,32 +3,51 @@
  */
 
 import React from 'react';
+import { ToolDps } from '../ToolDps';
+import qs from 'query-string';
+import { DataLoad, GetData } from '../Component/index';
+
+
+class Main extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        document.title = '查看物流';
+    }
+
+    render() {
+        let {
+            data,
+            loadAnimation,
+            loadMsg
+        } = this.props.state;
+        let main = data && data.succ ? <TransportSearch data={data.data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        return main;
+    }
+}
 
 class TransportSearch extends React.Component {
     render() {
+        let { kdName, number, list } = this.props.data;
         return (
             <section className='full-page transport-search-page'>
                 <header>
-                    韵达快递：3813930400617
+                    {kdName}：{number}
                 </header>
                 <ul className='step-area'>
-                    <li className='end'>
-                        <span className='circle'></span>
-                        <p className='desc'>您已签收本次订单包裹，本次配送完成。感谢您在Ms搭配师平台购物，祝您生活愉快</p>
-                        <time>2018-1-30  14:53:00</time>
-                    </li>
-                    <li>
-                        <p className='desc'>派送中，您的订单正在派送途中，快递员叶豪正在为您派送。叶豪13588888888</p>
-                        <time>2018-1-30  14:53:00</time>
-                    </li>
-                    <li>
-                        <p className='desc'>您的快件已到达【杭州晴川站】</p>
-                        <time>2018-1-30  14:53:00</time>
-                    </li>
-                    <li>
-                        <p className='desc'>已取件。您的订单已经出库</p>
-                        <time>2018-1-30  14:53:00</time>
-                    </li>
+                    {
+                        list.map((item, index) => {
+                            return (
+                                <li key={index} className={index === 0 ? 'end' : ''}>
+                                    <span className='circle'></span>
+                                    <p className='desc'>{item.status}</p>
+                                    <time>{item.time}</time>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </section>
         )
@@ -36,4 +55,23 @@ class TransportSearch extends React.Component {
 }
 
 
-export default TransportSearch;
+
+
+
+export default GetData({
+    id: 'TransportSearch', //应用关联使用的redux
+    component: Main, //接收数据的组件入口
+    url: '/wx/goods/order/kd/query',
+    data: (props, state) => {
+        let { orderId } = qs.parse(props.location.search);
+        return {
+            orderId: orderId
+        }
+    }, //发送给服务器的数据
+    success: (state) => {
+        return state;
+    }, //请求成功后执行的方法
+    error: (state) => {
+        return state
+    } //请求失败后执行的方法
+});

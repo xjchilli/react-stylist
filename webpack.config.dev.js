@@ -9,7 +9,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打�
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');//自动打开浏览器
 var vConsolePlugin = require('vconsole-webpack-plugin'); //手机网页调试面板
-var NpmInstallPlugin=require('npm-install-webpack-plugin');//自动安装依赖
+var NpmInstallPlugin = require('npm-install-webpack-plugin');//自动安装依赖
 var HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
@@ -23,7 +23,7 @@ var p = path.resolve(__dirname + '/assets');
 var entry = {
   app: './src/App.js',
   vendors: [
-    'react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper','fastclick',
+    'react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper', 'fastclick',
     'webpack-dev-server/client?http://0.0.0.0:8000', 'webpack/hot/only-dev-server'
   ]
 };
@@ -116,6 +116,7 @@ module.exports = {
     extensions: ['.js', '.jsx', '.css', '.less', ".json"],
     modules: [path.resolve(__dirname, "src"), "node_modules"],
     alias: {
+      'ToolDps': path.resolve(__dirname + '/src/ToolDps'),
       'react': path.resolve(__dirname + '/node_modules/react'),
       'react-dom': path.resolve(__dirname + '/node_modules/react-dom'),
       'react-router': path.resolve(__dirname + '/node_modules/react-router'),

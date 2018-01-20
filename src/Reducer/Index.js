@@ -151,7 +151,7 @@ const OrderDetail = DB('OrderDetail', {
 }); //订单商品详情
 const OrderDetailGoods = DB('OrderDetailGoods'); //订单详情
 const ShopCart = DB('ShopCart'); //购物车
-
+const TransportSearch = DB('TransportSearch'); //查询物流
 const PromotionCodeList = DB('PromotionCodeList', {
   data: []
 }); //优惠码列表
@@ -175,6 +175,7 @@ const reducers = combineReducers({
   OrderDetail,
   OrderDetailGoods,
   ShopCart,
+  TransportSearch,
   FashionMomentDetail,
   PromotionCodeList,
   PlainChange

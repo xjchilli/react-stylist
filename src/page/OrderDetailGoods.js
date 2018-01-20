@@ -18,7 +18,7 @@ class OrderStatus extends React.Component {
             <section className='status-area'>
                 <div className='content'>
                     <p className='status'>{statusVal}</p>
-                    <time>剩余14天5小时自动确认收货</time>
+                    {/* <time>剩余14天5小时自动确认收货</time> */}
                 </div>
             </section>
         )
@@ -57,7 +57,7 @@ class GoodsList extends React.Component {
                         details.map((item, index) => {
                             return (
                                 <li key={index}>
-                                    <Link to={'/goodsDetail?id=' + item.goodId}>
+                                    <Link to={'/goodsDetail?id=' + item.goodsId}>
                                         <ul className='flex-box'>
                                             <li>
                                                 <div className='goods-img' style={{ backgroundImage: `url(${item.images})` }}></div>
@@ -117,6 +117,22 @@ class OtherInfo extends React.Component {
  * 按钮区域
  */
 class Footer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
+        }
+        this._time = 0;
+        this._time2 = 0;
+        this._time3 = 0;
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this._time);
+        clearTimeout(this._time2);
+        clearTimeout(this._time3);
+    }
 
     /**
     * 取消订单
@@ -125,7 +141,13 @@ class Footer extends React.Component {
     orderCancel(orderId) {
         ToolDps.post('/wx/goods/order/close', { orderId: orderId }).then((res) => {
             if (res.succ) {
-                window.location.reload();
+                this.setState({
+                    msgShow: true,
+                    msgText: '提交成功', //提示内容
+                });
+                this._time2 = setTimeout(function () {
+                    window.location.reload();
+                }.bind(this), 1500);
             } else {
                 this.setState({
                     msgShow: true,
@@ -145,7 +167,7 @@ class Footer extends React.Component {
     mergePay(orderId) {
         let orderIdArr = [orderId];
         ToolDps.post('/wx/goods/order/getMergeUnifeid', { orderId: orderIdArr }).then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.succ) {
                 if (typeof WeixinJSBridge == "undefined") {
                     if (document.addEventListener) {
@@ -199,6 +221,29 @@ class Footer extends React.Component {
         );
     }
 
+    /**
+     * 确认收货
+     * @orderId 订单id
+     */
+    receiveGoods(orderId) {
+        ToolDps.post('/wx/goods/order/receiving', { orderId: orderId }).then((res) => {
+            if (res.succ) {
+                this.setState({
+                    msgShow: true,
+                    msgText: '提交成功', //提示内容
+                });
+                this._time3 = setTimeout(function () {
+                    window.location.reload();
+                }.bind(this), 1500);
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: res.msg, //提示内容
+                });
+            }
+        });
+    }
+
 
     render() {
         let { status, orderId } = this.props.data;
@@ -217,10 +262,10 @@ class Footer extends React.Component {
                 {
                     status === 3 ? (
                         <div className='order-action-area'>
-                            <Link to='/transportSearch'>
+                            <Link to={'/transportSearch?orderId=' + orderId} className='search-transport-btn'>
                                 <button className='btn'>查看物流</button>
                             </Link>
-                            <button className='btn red'>确认收货</button>
+                            <button className='btn red' onClick={this.receiveGoods.bind(this, orderId)}>确认收货</button>
                         </div>
                     ) : null
                 }
@@ -228,18 +273,51 @@ class Footer extends React.Component {
                 {
                     status === 4 ? (
                         <div className='order-action-area'>
-                            <Link to='/goodsComment'>
+                            <Link to={'/goodsComment?orderId=' + orderId}>
                                 <button className='btn red'>去评价</button>
                             </Link>
                         </div>
                     ) : null
                 }
-
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
 }
 
+/**
+ * 用户评论
+ */
+// class UserComment extends React.Component {
+//     render() {
+//         return (
+//             <section className='user-comment-area'>
+//                 <h5>我的评价</h5>
+//                 <p className='note'>衣服很不错，全部都是搭配师给我精心挑选和搭配的，我每件都试穿了，上身效果很赞，版型面料我都很喜欢，颜色也很正。</p>
+//                 <ul className='flex-box'>
+//                     <li className='item-3'>
+//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+//                     </li>
+//                     <li className='item-3'>
+//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+//                     </li>
+//                     <li className='item-3'>
+//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+//                     </li>
+//                     <li className='item-3'>
+//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+//                     </li>
+//                     <li className='item-3'>
+//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+//                     </li>
+//                     <li className='item-3'>
+//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
+//                     </li>
+//                 </ul>
+//             </section>
+//         )
+//     }
+// }
 
 
 class OrderDetailGoods extends React.Component {
@@ -264,6 +342,8 @@ class OrderDetailGoods extends React.Component {
                 <GoodsList data={this.state.data} />
                 {/* 其他信息 */}
                 <OtherInfo data={this.state.data} />
+                {/* 用户评论 */}
+                {/* {this.state.data.status === 4 ? <UserComment /> : null} */}
                 {/* 按钮区域 */}
                 <Footer data={this.state.data} />
             </section>
@@ -293,7 +373,6 @@ class Main extends React.Component {
     }
 }
 
-// export default OrderDetailGoods;
 
 export default GetData({
     id: 'OrderDetailGoods', //应用关联使用的redux

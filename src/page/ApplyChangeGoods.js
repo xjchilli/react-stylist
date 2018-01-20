@@ -4,10 +4,26 @@
 import React from 'react';
 import { Msg } from '../Component/index';
 
+/**
+ * 提交成功
+ */
+class Success extends React.Component {
+    render() {
+        return (
+            <section className='success-area'>
+                <span className="icon icon-success"></span>
+                <p>提交成功</p>
+                <div className='note'>客服人员会及时与您联系～</div>
+            </section>
+        )
+    }
+}
+
 class ApplyChangeGoods extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isSucess: false,//是否提交成功
             msgShow: false,
             msgText: '', //提示内容
             files: []
@@ -118,6 +134,9 @@ class ApplyChangeGoods extends React.Component {
                 <section className='action-area'>
                     <button className='btn send-btn'>提交</button>
                 </section>
+                {
+                    this.state.isSucess ? <Success /> : null
+                }
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
