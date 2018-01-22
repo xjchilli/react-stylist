@@ -120,6 +120,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.css', '.less', ".json"],
         modules: [path.resolve(__dirname, "src"), "node_modules"],
         alias: {
+            'ToolAjax': path.resolve(__dirname + '/src/Config/ToolAjax'),
             'ToolDps': path.resolve(__dirname + '/src/ToolDps'),
             'react': path.resolve(__dirname + '/node_modules/react'),
             'react-dom': path.resolve(__dirname + '/node_modules/react-dom'),

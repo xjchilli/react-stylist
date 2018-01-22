@@ -134,7 +134,7 @@ class GoodsDetail extends React.Component {
                 <footer>
                     <ul>
                         <li>
-                            <Link to='/shopCart'>
+                            <Link to={'/shopCart?'+new Date().getTime()}>
                                 <span className='cart-area'>
                                     <span className="icon icon-shop-cart"></span>
                                     {

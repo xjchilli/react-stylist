@@ -6,12 +6,98 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { GetNextPage } from '../Component/index';
 import { ToolDps } from '../ToolDps';
+import { FashionType } from 'ToolAjax';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import { News } from '../Component/index';
-// var FastClick = require('fastclick');
+import qs from 'query-string';
 
 
+/**
+ * (导航分类)
+ * 
+ * @class Nav
+ * @extends {Component} 
+ */
+class Nav extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tabs: []
+        }
+    }
+    componentDidMount() {
+        FashionType().then((res) => {
+            if (res.succ) {
+                this.setState({
+                    tabs: res.data
+                });
+                this.tabSwiper = new Swiper(this.Jtab, {
+                    freeMode: true,
+                    slidesPerView: 4,
+                    spaceBetween: 15,
+                    slidesOffsetBefore: 15,
+                    slidesOffsetAfter: 15,
+                    observer: true,
+                })
+            }
+        });
+
+    }
+
+
+
+    render() {
+        // var setCur = {};
+        // setCur[this.props.tab] = 'on';
+
+        return (
+            <nav className="index-nav">
+                <div className="swiper-container J-tab" ref={(el) => this.Jtab = el}>
+                    <div className="swiper-wrapper">
+                        {
+                            this.state.tabs.map((item, index) => {
+                                return (
+                                    <div key={index} className={Number(this.props.tab) === item.id ? "swiper-slide on" : "swiper-slide"}>
+                                        <Link to={"/fashionMoment?tab=" + item.id} className='tab'>{item.name}</Link>
+                                    </div>
+                                )
+                            })
+                        }
+                        {/* <div className={"swiper-slide " + setCur.all}>
+                            <Link to="/fashionMoment" className='tab'>全部</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.good}>
+                            <Link to="/fashionMoment?tab=good" className='tab'>搭配技巧</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.share}>
+                            <Link to="/fashionMoment?tab=share" className='tab'>用户案例</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.ask}>
+                            <Link to="/fashionMoment?tab=ask" className='tab'>场景搭配</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.job}>
+                            <Link to="/fashionMoment?tab=job" className='tab'>素人改造</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.good}>
+                            <Link to="/fashionMoment?tab=good" className='tab'>搭配技巧</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.share}>
+                            <Link to="/fashionMoment?tab=share" className='tab'>用户案例</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.ask}>
+                            <Link to="/fashionMoment?tab=ask" className='tab'>场景搭配</Link>
+                        </div>
+                        <div className={"swiper-slide " + setCur.job}>
+                            <Link to="/fashionMoment?tab=job" className='tab'>素人改造</Link>
+                        </div> */}
+                    </div>
+                </div>
+            </nav>
+        );
+    }
+
+}
 
 class FashionMoment extends Component {
     constructor(props) {
@@ -67,12 +153,12 @@ class FashionMoment extends Component {
             col2Imgs = fashion.col2Imgs;
         }
 
-
+        let tab = qs.parse(this.props.location.search).tab || -1;
 
         return (
-            //  ref={(el) => this.page = el}
             <div className="fashion-moment-area">
-                {/* <Footer tab="4" /> */}
+                <Nav tab={tab} />
+
                 <div className="fashion-list clear">
                     <ul>
                         {
@@ -134,7 +220,6 @@ class FashionMoment extends Component {
                         {this.props.children}
                     </div>
                 </div>
-
                 <News />
             </div>
         )
@@ -148,11 +233,10 @@ export default GetNextPage({
     component: FashionMoment, //接收数据的组件入口
     url: '/wx/fashion/list',
     data: (props, state) => { //发送给服务器的数据
-        let {
-            currentPager
-        } = state;
+        let { currentPager } = state;
         return {
-            currentPager
+            currentPager: currentPager,
+            typeId: qs.parse(props.location.search).tab || -1,
         }
     },
     success: (state) => {

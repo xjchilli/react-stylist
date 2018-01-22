@@ -1,6 +1,40 @@
 .fashion-moment-area {
-    padding-top: 10px;
+    padding-top: 54px;
     padding-bottom: 50px;
+    .new-info-area{
+        top: 54px;
+    }
+    .index-nav{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 54px;
+        z-index: 9;
+        background: #f3f4f6;
+        .swiper-container{
+            height: 100%;
+            .swiper-slide{
+                padding-top: 13px;
+                .tab{
+                    line-height: 25px;
+                    display: block;
+                    border: 1px solid #cccccc;
+                    text-align: center;
+                    border-radius: 12px;
+                    font-size: 12px;
+                    color: #999999;
+                    font-weight: 500;
+                    overflow: hidden;
+                }
+                &.on{
+                    .tab{
+                        color: #1a1a1a;
+                    }
+                }
+            }
+        }
+    }
     .fashion-list>ul {
         float: left;
         width: 50%;

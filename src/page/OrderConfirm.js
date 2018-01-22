@@ -158,7 +158,7 @@ class OrderConfirm extends React.Component {
                     });
 
                     this._time = setTimeout(function () {
-                        this.context.router.history.push('/orderDetailGoods');
+                        this.context.router.history.push('/orderDetailGoods?id=1801221453350246999');
                     }.bind(this), 1500);
                 } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
 
