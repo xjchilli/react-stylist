@@ -7,6 +7,7 @@ import { DataLoad, GetData } from '../Component/index';
 import { getGoodsInfo } from '../Config/ToolStore';
 import { ToolDps } from '../ToolDps';
 import WxAuth from './component/WxAuth';
+import WxPayCall from './component/WxPayCall';
 import { Msg } from '../Component/index';
 
 class Main extends React.Component {
@@ -121,16 +122,24 @@ class OrderConfirm extends React.Component {
                     }
                     ToolDps.post('/wx/cart/delete', { cartId: cartIdArr });
                 }
-                if (typeof WeixinJSBridge == "undefined") {
-                    if (document.addEventListener) {
-                        document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
-                    } else if (document.attachEvent) {
-                        document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
-                        document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                WxPayCall(res.payInfo, (res) => {
+                    if (res.type === 1) {//成功
+                        this.setState({
+                            msgShow: true,
+                            msgText: '支付成功'//提示内容
+                        });
+                        this._time = setTimeout(function () {
+                            this.context.router.history.push('/orderDetailGoods?id=1801221453350246999');
+                        }.bind(this), 1500);
+                    } else if (res.type === 2) {
+                        this.context.router.history.push('/orderDetailGoods?id=1801221453350246999');
+                    } else if (res.type === 3) {
+                        this.setState({
+                            msgShow: true,
+                            msgText: '支付失败', //提示内容
+                        });
                     }
-                } else {
-                    this.onBridgeReady(res.payInfo);
-                }
+                });
             } else {
                 this.setState({
                     msgShow: true,
@@ -139,39 +148,7 @@ class OrderConfirm extends React.Component {
             }
         });
     }
-
-    onBridgeReady(signatureInfo) {
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-                "appId": signatureInfo.appId, //公众号名称，由商户传入
-                "timeStamp": signatureInfo.timeStamp, //时间戳，自1970年以来的秒数
-                "nonceStr": signatureInfo.nonceStr, //随机串
-                "package": signatureInfo.package,
-                "signType": signatureInfo.signType, //微信签名方式：
-                "paySign": signatureInfo.paySign //微信签名
-            },
-            (res) => {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
-                    this.setState({
-                        msgShow: true,
-                        msgText: '支付成功'//提示内容
-                    });
-
-                    this._time = setTimeout(function () {
-                        this.context.router.history.push('/orderDetailGoods?id=1801221453350246999');
-                    }.bind(this), 1500);
-                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
-
-                }
-                else if (res.err_msg == "get_brand_wcpay_request:fail") {//支付失败
-                    this.setState({
-                        msgShow: true,
-                        msgText: '支付失败', //提示内容
-                    });
-                }
-            }
-        );
-    }
+ 
 
     render() {
         let address = this.state.address;

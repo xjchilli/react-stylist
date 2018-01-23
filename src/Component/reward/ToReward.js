@@ -6,12 +6,12 @@
 import React, { Component } from 'react';
 import { ToolDps } from '../../ToolDps';
 import { Msg } from "../index";
-
+import WxAuth from '../../page/component/WxAuth';
+import WxPayCall from '../../page/component/WxPayCall';
 
 
 
 class ToReward extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -33,29 +33,11 @@ class ToReward extends Component {
     }
 
     componentDidMount() {
-        ToolDps.get('/wx/user/getJsapiSigna', {
-            url: encodeURIComponent(window.location.href.split('#')[0])
-        }).then((res) => {
-            if (res.succ) {
-                let {
-                    jsapiSignature
-                } = res;
-                wx.config({
-                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                    appId: jsapiSignature.appid, // 必填，公众号的唯一标识
-                    timestamp: jsapiSignature.timestamp, // 必填，生成签名的时间戳
-                    nonceStr: jsapiSignature.noncestr, // 必填，生成签名的随机串
-                    signature: jsapiSignature.signature, // 必填，签名，见附录1
-                    jsApiList: [
-                        'checkJsApi',
-                        'chooseWXPay'
-                    ] // 必填
-                });
-
-                this.setState({
-                    jsapiSigna: true
-                });
-            }
+          //jsapi签名
+          WxAuth().then(() => {
+            this.setState({
+                jsapiSigna: true
+            });
         });
 
         //查询个人信息
@@ -70,9 +52,7 @@ class ToReward extends Component {
                 });
             }
         });
-
         this.randomMoney();
-
     }
 
     /**
@@ -133,52 +113,20 @@ class ToReward extends Component {
         ToolDps.post(this.state.url, data).then((res) => {
             // console.log(res)
             if (res.succ) {
-                this.pay(res.payInfo);
+                WxPayCall(res.payInfo, (res) => {
+                    if (res.type === 1) {//成功
+                        this.props.rewardCallback();
+                    } else if (res.type === 3) {
+                        this.setState({
+                            msgShow: true,
+                            msgText: '支付失败', //提示内容
+                        });
+                    }
+                });
             }
 
         });
 
-    }
-
-    /**
-     * 支付
-     */
-    pay(payInfo) {
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, payInfo), false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, payInfo));
-                document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, payInfo));
-            }
-        } else {
-            this.onBridgeReady(payInfo);
-        }
-
-
-    }
-
-    onBridgeReady(payInfo) {
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-                "appId": payInfo.appId, //公众号名称，由商户传入
-                "timeStamp": payInfo.timeStamp, //时间戳，自1970年以来的秒数
-                "nonceStr": payInfo.nonceStr, //随机串
-                "package": payInfo.package,
-                "signType": payInfo.signType, //微信签名方式：
-                "paySign": payInfo.paySign //微信签名
-            },
-            (res) => {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    this.props.rewardCallback();
-                } else if (res.err_msg == "get_brand_wcpay_request:fail") {
-                    this.setState({
-                        msgShow: true,
-                        msgText: '支付失败', //提示内容
-                    });
-                }
-            }
-        );
     }
 
     /**

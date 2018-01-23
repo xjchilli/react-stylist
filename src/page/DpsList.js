@@ -25,6 +25,12 @@ class DpsList extends Component {
         document.title = "搭配师列表";
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            list: nextProps.state.data
+        })
+    }
+
 
     //取消关注
     cancelWatch(collocationId) {

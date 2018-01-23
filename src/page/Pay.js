@@ -11,6 +11,7 @@ import classNames from "classnames";
 import { CSSTransitionGroup } from 'react-transition-group';
 import UseFulPromotionCode from './component/UseFulPromotionCode';
 import WxAuth from './component/WxAuth';
+import WxPayCall from './component/WxPayCall';
 import BindTel from "./component/BindTel";
 
 
@@ -104,16 +105,22 @@ class Pay extends React.Component {
             });
             if (res.succ) {
                 if (res.goPay === "1") {
-                    if (typeof WeixinJSBridge == "undefined") {
-                        if (document.addEventListener) {
-                            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
-                        } else if (document.attachEvent) {
-                            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
-                            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                    WxPayCall(res.payInfo, (res) => {
+                        if (res.type === 1) {//成功
+                            this._time = setTimeout(function () {
+                                this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
+                            }.bind(this), 1500);
+                        } else if (res.type === 2) {
+                            this.setState({
+                                isHidePromotionCode: false
+                            });
+                        } else if (res.type === 3) {
+                            this.setState({
+                                msgShow: true,
+                                msgText: '支付失败', //提示内容
+                            });
                         }
-                    } else {
-                        this.onBridgeReady(res.payInfo);
-                    }
+                    });
                 } else {
                     this.setState({
                         msgShow: true,
@@ -130,42 +137,9 @@ class Pay extends React.Component {
                     msgText: '获取支付签名失败', //提示内容
                 });
             }
-
         });
-
-
-
     }
 
-    onBridgeReady(signatureInfo) {
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-                "appId": signatureInfo.appId, //公众号名称，由商户传入
-                "timeStamp": signatureInfo.timeStamp, //时间戳，自1970年以来的秒数
-                "nonceStr": signatureInfo.nonceStr, //随机串
-                "package": signatureInfo.package,
-                "signType": signatureInfo.signType, //微信签名方式：
-                "paySign": signatureInfo.paySign //微信签名
-            },
-            (res) => {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
-                    this._time = setTimeout(function () {
-                        this.context.router.history.push('/orderDetail?orderId=' + this.props.data.orderId);
-                    }.bind(this), 1500);
-                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
-                    this.setState({
-                        isHidePromotionCode: false
-                    });
-                }
-                else if (res.err_msg == "get_brand_wcpay_request:fail") {//支付失败
-                    this.setState({
-                        msgShow: true,
-                        msgText: '支付失败', //提示内容
-                    });
-                }
-            }
-        );
-    }
 
 
     /**

@@ -2,11 +2,13 @@
  * 商品订单详情
  */
 import React from 'react';
-import { ToolDps } from '../ToolDps';
+import PropTypes from 'prop-types';
+import { orderCancel, mergePay, receiveGoods, deleteOrder } from 'ToolAjax';
 import qs from 'query-string';
 import { DataLoad, GetData, Msg } from '../Component/index';
 import { Link } from 'react-router-dom';
 import WxAuth from './component/WxAuth';
+import WxPayCall from './component/WxPayCall';
 
 /**
  * 订单状态
@@ -139,7 +141,7 @@ class Footer extends React.Component {
     * @orderId 订单id
     */
     orderCancel(orderId) {
-        ToolDps.post('/wx/goods/order/close', { orderId: orderId }).then((res) => {
+        orderCancel(orderId).then((res) => {
             if (res.succ) {
                 this.setState({
                     msgShow: true,
@@ -166,19 +168,25 @@ class Footer extends React.Component {
     */
     mergePay(orderId) {
         let orderIdArr = [orderId];
-        ToolDps.post('/wx/goods/order/getMergeUnifeid', { orderId: orderIdArr }).then((res) => {
+        mergePay(orderIdArr).then((res) => {
             // console.log(res);
             if (res.succ) {
-                if (typeof WeixinJSBridge == "undefined") {
-                    if (document.addEventListener) {
-                        document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo), false);
-                    } else if (document.attachEvent) {
-                        document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
-                        document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady.bind(this, res.payInfo));
+                WxPayCall(res.payInfo, (res) => {
+                    if (res.type === 1) {//成功
+                        this.setState({
+                            msgShow: true,
+                            msgText: '支付成功'//提示内容
+                        });
+                        this._time = setTimeout(function () {
+                            window.location.reload();
+                        }.bind(this), 1500);
+                    } else if (res.type === 3) {
+                        this.setState({
+                            msgShow: true,
+                            msgText: '支付失败', //提示内容
+                        });
                     }
-                } else {
-                    this.onBridgeReady(res.payInfo);
-                }
+                });
             } else {
                 this.setState({
                     msgShow: true,
@@ -189,44 +197,12 @@ class Footer extends React.Component {
 
     }
 
-
-    onBridgeReady(signatureInfo) {
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-                "appId": signatureInfo.appId, //公众号名称，由商户传入
-                "timeStamp": signatureInfo.timeStamp, //时间戳，自1970年以来的秒数
-                "nonceStr": signatureInfo.nonceStr, //随机串
-                "package": signatureInfo.package,
-                "signType": signatureInfo.signType, //微信签名方式：
-                "paySign": signatureInfo.paySign //微信签名
-            },
-            (res) => {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {//支付成功
-                    this.setState({
-                        msgShow: true,
-                        msgText: '支付成功'//提示内容
-                    });
-                    this._time = setTimeout(function () {
-                        window.location.reload();
-                    }.bind(this), 1500);
-                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//支付取消
-                }
-                else if (res.err_msg == "get_brand_wcpay_request:fail") {//支付失败
-                    this.setState({
-                        msgShow: true,
-                        msgText: '支付失败', //提示内容
-                    });
-                }
-            }
-        );
-    }
-
     /**
      * 确认收货
      * @orderId 订单id
      */
     receiveGoods(orderId) {
-        ToolDps.post('/wx/goods/order/receiving', { orderId: orderId }).then((res) => {
+        receiveGoods(orderId).then((res) => {
             if (res.succ) {
                 this.setState({
                     msgShow: true,
@@ -244,80 +220,70 @@ class Footer extends React.Component {
         });
     }
 
+    /**
+   * 删除订单
+   */
+    deleteOrder(orderId) {
+        deleteOrder(orderId).then((res) => {
+            if (res.succ) {
+                this.setState({
+                    msgShow: true,
+                    msgText: '删除成功', //提示内容
+                });
+                this._time = setTimeout(function () {
+                    this.context.router.history.push('/orderListGoods');
+                }.bind(this), 1500);
+            } else {
+                this.setState({
+                    msgShow: true,
+                    msgText: res.msg, //提示内容
+                });
+            }
+        });
+    }
+
+    /**
+     * 订单状态对应按钮
+     */
+    statusHtml() {
+        let { status, orderId } = this.props.data;
+        let html = [<Link key='sale-after' to={'/chat?selToID=dps1&headUrl=https://img.dapeis.net/resources/head/20180120001520437148.jpg&nickname=杨春淼eeq'} className='btn'>售后客服</Link>];
+        switch (status) {
+            case 1://待付款
+                html.push(<button key={1} className='btn' onClick={this.orderCancel.bind(this, orderId)}>取消订单</button>);
+                html.push(<button key={2} className='btn red' onClick={this.mergePay.bind(this, orderId)}>去付款</button>);
+                break;
+            case 3://待收货
+                html.push(<Link to={'/transportSearch?orderId=' + orderId} className='btn'>查看物流</Link>);
+                html.push(<button className='btn red' onClick={this.receiveGoods.bind(this, orderId)}>确认收货</button>);
+                break;
+            case 4://待评价
+                html.push(<Link to={'/goodsComment?orderId=' + orderId} className='btn red'>去评价</Link>);
+                break;
+            case -1://交易取消
+                html.push(<button key={1} className='btn' onClick={this.deleteOrder.bind(this, orderId)}>删除订单</button>);
+                break;
+            case 10://已完成
+                html.push(<button key={1} className='btn' onClick={this.deleteOrder.bind(this, orderId)}>删除订单</button>);
+                break;
+        }
+        return html;
+    }
 
     render() {
-        let { status, orderId } = this.props.data;
         return (
-            <section>
-                {/* 代付款 */}
-                {
-                    status === 1 ? (
-                        <div className='order-action-area'>
-                            <button className='btn' onClick={this.orderCancel.bind(this, orderId)}>取消订单</button>
-                            <button className='btn red' onClick={this.mergePay.bind(this, orderId)}>去付款</button>
-                        </div>
-                    ) : null
-                }
-                {/* 待收货 */}
-                {
-                    status === 3 ? (
-                        <div className='order-action-area'>
-                            <Link to={'/transportSearch?orderId=' + orderId} className='search-transport-btn'>
-                                <button className='btn'>查看物流</button>
-                            </Link>
-                            <button className='btn red' onClick={this.receiveGoods.bind(this, orderId)}>确认收货</button>
-                        </div>
-                    ) : null
-                }
-                {/* 待评价 */}
-                {
-                    status === 4 ? (
-                        <div className='order-action-area'>
-                            <Link to={'/goodsComment?orderId=' + orderId}>
-                                <button className='btn red'>去评价</button>
-                            </Link>
-                        </div>
-                    ) : null
-                }
+            <section className='order-action-area'>
+                {this.statusHtml()}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }
 }
 
-/**
- * 用户评论
- */
-// class UserComment extends React.Component {
-//     render() {
-//         return (
-//             <section className='user-comment-area'>
-//                 <h5>我的评价</h5>
-//                 <p className='note'>衣服很不错，全部都是搭配师给我精心挑选和搭配的，我每件都试穿了，上身效果很赞，版型面料我都很喜欢，颜色也很正。</p>
-//                 <ul className='flex-box'>
-//                     <li className='item-3'>
-//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-//                     </li>
-//                     <li className='item-3'>
-//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-//                     </li>
-//                     <li className='item-3'>
-//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-//                     </li>
-//                     <li className='item-3'>
-//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-//                     </li>
-//                     <li className='item-3'>
-//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-//                     </li>
-//                     <li className='item-3'>
-//                         <div className='box' style={{ backgroundImage: 'url(/assets/img/girl.jpg)' }}></div>
-//                     </li>
-//                 </ul>
-//             </section>
-//         )
-//     }
-// }
+
+Footer.contextTypes = {
+    router: PropTypes.object.isRequired
+}
 
 
 class OrderDetailGoods extends React.Component {
@@ -342,8 +308,6 @@ class OrderDetailGoods extends React.Component {
                 <GoodsList data={this.state.data} />
                 {/* 其他信息 */}
                 <OtherInfo data={this.state.data} />
-                {/* 用户评论 */}
-                {/* {this.state.data.status === 4 ? <UserComment /> : null} */}
                 {/* 按钮区域 */}
                 <Footer data={this.state.data} />
             </section>

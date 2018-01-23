@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { GetNextPage } from '../Component/index';
-import { ToolDps } from '../ToolDps';
+import { ToolDps } from 'ToolDps';
 import { FashionType } from 'ToolAjax';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
@@ -48,9 +48,6 @@ class Nav extends Component {
 
 
     render() {
-        // var setCur = {};
-        // setCur[this.props.tab] = 'on';
-
         return (
             <nav className="index-nav">
                 <div className="swiper-container J-tab" ref={(el) => this.Jtab = el}>
@@ -64,33 +61,6 @@ class Nav extends Component {
                                 )
                             })
                         }
-                        {/* <div className={"swiper-slide " + setCur.all}>
-                            <Link to="/fashionMoment" className='tab'>全部</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.good}>
-                            <Link to="/fashionMoment?tab=good" className='tab'>搭配技巧</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.share}>
-                            <Link to="/fashionMoment?tab=share" className='tab'>用户案例</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.ask}>
-                            <Link to="/fashionMoment?tab=ask" className='tab'>场景搭配</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.job}>
-                            <Link to="/fashionMoment?tab=job" className='tab'>素人改造</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.good}>
-                            <Link to="/fashionMoment?tab=good" className='tab'>搭配技巧</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.share}>
-                            <Link to="/fashionMoment?tab=share" className='tab'>用户案例</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.ask}>
-                            <Link to="/fashionMoment?tab=ask" className='tab'>场景搭配</Link>
-                        </div>
-                        <div className={"swiper-slide " + setCur.job}>
-                            <Link to="/fashionMoment?tab=job" className='tab'>素人改造</Link>
-                        </div> */}
                     </div>
                 </div>
             </nav>
@@ -109,7 +79,6 @@ class FashionMoment extends Component {
     }
     componentDidMount() {
         document.title = "发现";
-        // FastClick.attach(this.page);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -220,7 +189,7 @@ class FashionMoment extends Component {
                         {this.props.children}
                     </div>
                 </div>
-                <News />
+                {/* <News /> */}
             </div>
         )
     }

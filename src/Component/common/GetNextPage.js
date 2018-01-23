@@ -60,10 +60,10 @@ const Main = (mySetting) => {
                 }
 
                 if (typeof state.path[this.path] === 'object' && state.path[this.path].path === this.path && this.action) {
-                    this.state = state.path[this.path];
+                    this.myState = state.path[this.path];
                 } else {
-                    this.state = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
-                    this.state.path = this.path;
+                    this.myState = merged(state.defaults); //数据库不存在当前的path数据，则从默认对象中复制，注意：要复制对象，而不是引用
+                    this.myState.path = this.path;
                     this.action = false;
                 }
 
@@ -71,8 +71,8 @@ const Main = (mySetting) => {
             /**
              * DOM初始化完成后执行回调
              */
-            this.redayDOM = () => {
-                var { scrollX, scrollY } = this.state;
+            this.readyDOM = () => {
+                var { scrollX, scrollY } = this.myState;
                 if (this.get) return false; //已经加载过
                 window.scrollTo(scrollX, scrollY);
                 this.get = new GetNextPage(this.dataload, {
@@ -88,13 +88,13 @@ const Main = (mySetting) => {
             * url更改时
             */
             this.unmount = () => {
-                this.get.end();
+                this.get ? this.get.end() : null;
                 delete this.get;
                 delete this.action;
-                this.state.scrollX = window.scrollX; //记录滚动条位置
-                this.state.scrollY = window.scrollY; 
-        
-                this.props.setState(this.state);
+                this.myState.scrollX = window.scrollX; //记录滚动条位置
+                this.myState.scrollY = window.scrollY;
+
+                this.props.setState(this.myState);
             }
 
             /**
@@ -113,18 +113,18 @@ const Main = (mySetting) => {
              * 请求开始
              */
             this.start = () => {
-                this.state.loadAnimation = true;
-                this.state.loadMsg = '正在加载中...';
-                this.props.setState(this.state);
+                this.myState.loadAnimation = true;
+                this.myState.loadMsg = '正在加载中...';
+                this.props.setState(this.myState);
             }
 
             /**
              * 请求失败时
              */
             this.error = () => {
-                this.state.loadAnimation = false;
-                this.state.loadMsg = '加载失败';
-                this.props.setState(this.state);
+                this.myState.loadAnimation = false;
+                this.myState.loadMsg = '加载失败';
+                this.props.setState(this.myState);
             }
 
             /**
@@ -137,7 +137,7 @@ const Main = (mySetting) => {
                     data
                 } = this.props.setting;
                 if (typeof data === 'function') {
-                    return data(this.props, this.state);
+                    return data(this.props, this.myState);
                 } else if (data && typeof data === 'string') {
                     return data;
                 } else {
@@ -152,24 +152,24 @@ const Main = (mySetting) => {
              */
             this.load = (res) => {
                 let {
-                    state
+                    myState
                 } = this;
-                // console.log(this.state);
+                // console.log(this.myState);
                 let {
                     pager
                 } = res;
                 if (!pager.arrays.length && pager.arrays.length < 15) {
-                    state.nextBtn = false;
-                    state.loadMsg = '- end -';
-                    this.get.end();
+                    myState.nextBtn = false;
+                    myState.loadMsg = '- end -';
+                    this.get ? this.get.end() : null;
                 } else {
-                    state.nextBtn = true;
-                    state.loadMsg = '上拉加载更多';
-                    state.currentPager = ++state.currentPager;
+                    myState.nextBtn = true;
+                    myState.loadMsg = '上拉加载更多';
+                    myState.currentPager = ++myState.currentPager;
                 }
-                Array.prototype.push.apply(state.data, pager.arrays);
-                state.loadAnimation = false;
-                this.props.setState(state);
+                Array.prototype.push.apply(myState.data, pager.arrays);
+                myState.loadAnimation = false;
+                this.props.setState(myState);
 
             }
 
@@ -182,20 +182,42 @@ const Main = (mySetting) => {
          * 你可以通过 this.getDOMNode() 来获取相应 DOM 节点。
          */
         componentDidMount() {
-            this.redayDOM();
+            this.readyDOM();
+        }
+
+        /**
+          * 在组件接收到新的 props 的时候调用。在初始化渲染的时候，该方法不会调用
+          */
+        componentWillReceiveProps(np) {
+            var { location } = np;
+            var { pathname, search } = location;
+            let path = pathname + search;
+            if (this.path !== path) {
+                this.unmount(); //地址栏已经发生改变，做一些卸载前的处理
+            }
+            this.initState(np);
+        }
+
+        /**
+         * 在组件的更新已经同步到 DOM 中之后立刻被调用。该方法不会在初始化渲染的时候调用。
+         * 使用该方法可以在组件更新之后操作 DOM 元素。
+         */
+        componentDidUpdate() {
+            this.readyDOM();
         }
 
         componentWillUnmount() {
             this.unmount();
         }
+        
 
         render() {
             var {
                 loadAnimation,
                 loadMsg
-            } = this.state;
+            } = this.myState;
             return (
-                <this.props.setting.component {...this.props} state={this.state}>
+                <this.props.setting.component {...this.props} state={this.myState}>
                     <div ref={el => this.dataload = el}>
                         <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />
                     </div>
