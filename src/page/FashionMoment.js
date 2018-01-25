@@ -189,7 +189,7 @@ class FashionMoment extends Component {
                         {this.props.children}
                     </div>
                 </div>
-                {/* <News /> */}
+                <News />
             </div>
         )
     }

@@ -246,8 +246,8 @@ class Footer extends React.Component {
      * 订单状态对应按钮
      */
     statusHtml() {
-        let { status, orderId } = this.props.data;
-        let html = [<Link key='sale-after' to={'/chat?selToID=dps1&headUrl=https://img.dapeis.net/resources/head/20180120001520437148.jpg&nickname=杨春淼eeq'} className='btn'>售后客服</Link>];
+        let { status, orderId, service } = this.props.data;
+        let html = [<Link key='sale-after' to={`/chat?selToID=${service.timId}&headUrl=${service.headImg}&nickname=${service.nickName}`} className='btn'>售后客服</Link>];
         switch (status) {
             case 1://待付款
                 html.push(<button key={1} className='btn' onClick={this.orderCancel.bind(this, orderId)}>取消订单</button>);

@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DataLoad, GetData } from '../Component/index';
 import { getGoodsInfo } from '../Config/ToolStore';
-import { ToolDps } from '../ToolDps';
+import { modifyReceiveAddress, createOrder, deleteShopCart } from 'ToolAjax';
 import WxAuth from './component/WxAuth';
 import WxPayCall from './component/WxPayCall';
 import { Msg } from '../Component/index';
@@ -57,7 +57,7 @@ class OrderConfirm extends React.Component {
      * 修改收货地址
      */
     modifyAddress(data) {
-        ToolDps.post('/wx/shipping/address/wechat', data).then((res) => {
+        modifyReceiveAddress(data).then((res) => {
             if (!res.succ) {
                 this.setState({
                     msgShow: true,
@@ -77,7 +77,7 @@ class OrderConfirm extends React.Component {
                 var countryName = res.countryName; // 国标收货地址第三级地址（国家）
                 var detailInfo = res.detailInfo; // 详细收货地址信息
                 var telNumber = res.telNumber; // 收货人手机号码
-                let address = {
+                let newAddress = {
                     address: detailInfo,//门牌地址
                     city: cityName,//城市
                     contact: telNumber,//电话
@@ -85,11 +85,11 @@ class OrderConfirm extends React.Component {
                     name: userName,//收件人姓名
                     province: provinceName//省份
                 }
-                console.log(res);
+                // console.log(res);
                 this.setState({
-                    address: address
+                    address: newAddress
                 });
-                this.modifyAddress(address);
+                this.modifyAddress(newAddress);
 
             }
         });
@@ -110,9 +110,7 @@ class OrderConfirm extends React.Component {
             }
             data.push(obj);
         }
-        ToolDps.post('/wx/goods/order/createOrder', data, {
-            'Content-Type': 'application/json'
-        }).then((res) => {
+        createOrder(data).then((res) => {
             console.log(res);
             if (res.succ) {
                 if (this.state.type === '1') {//购物车删除
@@ -120,7 +118,8 @@ class OrderConfirm extends React.Component {
                     for (let i = 0; i < this.state.goodsInfos.length; i++) {
                         cartIdArr.push(this.state.goodsInfos[i].cartId);
                     }
-                    ToolDps.post('/wx/cart/delete', { cartId: cartIdArr });
+                    //删除购物车数据
+                    deleteShopCart(cartIdArr);
                 }
                 WxPayCall(res.payInfo, (res) => {
                     if (res.type === 1) {//成功
@@ -129,10 +128,10 @@ class OrderConfirm extends React.Component {
                             msgText: '支付成功'//提示内容
                         });
                         this._time = setTimeout(function () {
-                            this.context.router.history.push('/orderDetailGoods?id=1801221453350246999');
+                            this.context.router.history.push('/orderListGoods');
                         }.bind(this), 1500);
                     } else if (res.type === 2) {
-                        this.context.router.history.push('/orderDetailGoods?id=1801221453350246999');
+                        this.context.router.history.push('/orderListGoods');
                     } else if (res.type === 3) {
                         this.setState({
                             msgShow: true,
@@ -148,7 +147,7 @@ class OrderConfirm extends React.Component {
             }
         });
     }
- 
+
 
     render() {
         let address = this.state.address;

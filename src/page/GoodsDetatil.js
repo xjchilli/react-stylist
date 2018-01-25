@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { DataLoad, GetData } from "../Component/index";
 import SkuSelect from './component/SkuSelect';
-import { ToolDps } from '../ToolDps';
+import { myShopCart } from 'ToolAjax';
 
 
 class Main extends React.Component {
@@ -55,7 +55,7 @@ class GoodsDetail extends React.Component {
      * 获取购物车商品个数
      */
     getShopCartGoodsNum() {
-        ToolDps.get('/wx/cart/my').then((res) => {
+        myShopCart().then((res) => {
             if (res.succ) {
                 this.setState({
                     shopCartGoodsNum: res.data.length
@@ -134,7 +134,7 @@ class GoodsDetail extends React.Component {
                 <footer>
                     <ul>
                         <li>
-                            <Link to={'/shopCart?'+new Date().getTime()}>
+                            <Link to={'/shopCart?' + new Date().getTime()}>
                                 <span className='cart-area'>
                                     <span className="icon icon-shop-cart"></span>
                                     {
@@ -153,7 +153,7 @@ class GoodsDetail extends React.Component {
                     </ul>
                 </footer>
                 {
-                    this.state.isShowSku ? <SkuSelect getShopCartGoodsNum={this.getShopCartGoodsNum.bind(this)}  goodsName={name} buyType={this.state.buyType} isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
+                    this.state.isShowSku ? <SkuSelect getShopCartGoodsNum={this.getShopCartGoodsNum.bind(this)} goodsName={name} buyType={this.state.buyType} isTrue={this.state.isTrue} selectSkuData={this.state.selectSkuData} getSkuData={this.getSkuData.bind(this)} data={this.state.data} close={() => { this.setState({ isShowSku: false }) }} /> : null
                 }
             </section>
         )
