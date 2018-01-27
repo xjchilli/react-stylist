@@ -74,7 +74,7 @@ class GoodsList extends React.Component {
                                             </li>
                                         </ul>
                                     </Link>
-                                    {
+                                    {/* {
                                         status === 2 || status === 3 || status == 4 || status === 10 ? (
                                             <div className='goods-action-area'>
                                                 <Link to='/saleAfter'>
@@ -82,7 +82,7 @@ class GoodsList extends React.Component {
                                                 </Link>
                                             </div>
                                         ) : null
-                                    }
+                                    } */}
                                 </li>
                             )
                         })
