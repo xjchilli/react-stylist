@@ -92,7 +92,7 @@ module.exports = {
       enable: true // 页面显示控制台
     }),
     new OpenBrowserPlugin({//自动打开浏览器
-      url: IPv4 + ':8000',
+      url: IPv4 + ':8002',
       browser: 'chrome'
     }),
     new NpmInstallPlugin({
