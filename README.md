@@ -1,51 +1,20 @@
-# 公众号开发
+# react-stylist 此项目Ms搭配师（仅微信上能预览）
+基于webpack + react + react-router + redux + less + ES6 
 
+### 预览(微信扫一扫)
+ [![demo](https://github.com/lzxb/react-cnode/raw/master/shot/QR-code.png)](https://wx.dapeis.com)
 
-##### 使用es6（7）需要babel转换器
-
+### 下载
 ```
-npm install webpack --save-dev
-npm install babel-preset-es2015 --save-dev //转换至es5
-npm install babel-preset-react --save-dev //转换jsx至es5
-npm install babel-preset-stage-0 --save-dev //支持es7
-npm install babel-loader --save-dev //webpack的babel加载器
-
+  git clone git@github.com:xiaowang1314/react-stylist.git
+  cd react-stylist
+  npm install (安装依赖模块)
+  npm install webpack -g (没有安装webpack的需要安装)
 ```
-
-##### yarn常用命令
 
 
 ~~~
-1. Starting a new project
 
-yarn init
-Adding a dependency
-
-2. yarn add [package]
-yarn add [package]@[version]
-yarn add [package]@[tag]
-Adding a dependency to different categories of dependencies
-
-3. Add to devDependencies, peerDependencies, and optionalDependencies respectively:
-
-yarn add [package] --dev
-yarn add [package] --peer 
-yarn add [package] --optional
-
-4. Upgrading a dependency
-
-yarn upgrade [package]
-yarn upgrade [package]@[version]
-yarn upgrade [package]@[tag]
-Removing a dependency
-
-5. yarn remove [package]
-Installing all the dependencies of project
-
-yarn
-or
-
-yarn install
 
 ~~~
 
