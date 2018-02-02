@@ -2,7 +2,7 @@
 基于webpack + react + react-router + redux + less + ES6 
 
 ### 预览(微信扫一扫-也可以关注公众号Ms搭配师)
- [![demo](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/preview.png)](https://wx.dapeis.com)
+ [![demo](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/readme/preview.png)](https://wx.dapeis.com)
 
 ### 下载
 ```
@@ -36,4 +36,16 @@
   14.即时通讯
   15.搭配师个人主页
 ```
+
+### 截图
+
+![截图](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/readme/index.jpg)
+
+![截图](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/readme/dapeis.jpg)
+
+![截图](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/readme/da.jpg)
+
+![截图](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/readme/discover.jpg)
+
+![截图](https://raw.githubusercontent.com/xiaowang1314/react-stylist/master/assets/img/readme/my.jpg)
 
