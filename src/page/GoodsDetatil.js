@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { DataLoad, GetData } from "../Component/index";
 import SkuSelect from './component/SkuSelect';
+import ShareConfig from './component/ShareConfig';
 import { myShopCart } from 'ToolAjax';
 
 
@@ -30,6 +31,7 @@ class Main extends React.Component {
 class GoodsDetail extends React.Component {
     constructor(props) {
         super(props);
+        let { images, name } = props.data;
         this.state = {
             data: props.data,
             selectSkuData: {
@@ -48,6 +50,13 @@ class GoodsDetail extends React.Component {
             buyType: 0,//0:立即购买  1:加入购物车
             shopCartGoodsNum: 0,//购物车商品个数
         }
+        //分享配置
+        ShareConfig({
+            title: name, // 分享标题
+            desc: '', // 分享描述
+            link: window.location.href.split('#')[0], // 分享链接 
+            imgUrl: images[0].url, // 分享图标
+        });
         this.getShopCartGoodsNum();
     }
 

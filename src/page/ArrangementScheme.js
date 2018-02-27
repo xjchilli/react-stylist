@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { DataLoad, GetData } from '../Component/index';
+import ShareConfig from './component/ShareConfig';
 import { ToolDps } from '../ToolDps';
 
 
@@ -39,10 +40,18 @@ class Main extends Component {
 class ArrangementScheme extends Component {
     constructor(props) {
         super(props);
+        let { scenario } = props.data;
         this.state = {
             previewBigImg: false,//是否预览大图
             bigImgUrl: ''//大图url
         }
+        //分享配置
+        ShareConfig({
+            title: scenario.content, // 分享标题
+            desc: '', // 分享描述
+            link: window.location.href.split('#')[0], // 分享链接 
+            imgUrl: scenario.masterImg, // 分享图标
+        });
     }
 
     render() {

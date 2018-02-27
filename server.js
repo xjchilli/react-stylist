@@ -24,4 +24,4 @@ server.app.get('*', function (req, res) {
     // res.sendFile(__dirname + '/assets/index.html');//live version
 });
 
-server.listen(8002);
+server.listen(8000);

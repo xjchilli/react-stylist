@@ -24,7 +24,7 @@ var entry = {
   app: './src/App.js',
   vendors: [
     'react', 'react-dom', 'react-router', 'react-redux', 'redux', 'redux-thunk', 'react-transition-group', 'prop-types', 'swiper', 'fastclick',
-    'webpack-dev-server/client?http://0.0.0.0:8002', 'webpack/hot/only-dev-server'
+    'webpack-dev-server/client?http://0.0.0.0:8000', 'webpack/hot/only-dev-server'
   ]
 };
 
@@ -89,10 +89,10 @@ module.exports = {
       filename: 'js/vendors.js'
     }), //所有公用js文件打包到vendors.js
     new vConsolePlugin({
-      enable: true // 页面显示控制台
+      enable: false // 页面显示控制台
     }),
     new OpenBrowserPlugin({//自动打开浏览器
-      url: IPv4 + ':8002',
+      url: IPv4 + ':8000',
       browser: 'chrome'
     }),
     new NpmInstallPlugin({
