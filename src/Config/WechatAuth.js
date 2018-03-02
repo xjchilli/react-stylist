@@ -48,14 +48,8 @@ async function getUserInfo(code, setAuth) {
  * @param setAuth 设置授权
  */
 function wechatAuth(props, setAuth) {
-    localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));
-    // if (!JSON.parse(ToolDps.localItem('User'))) {
-    //     localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oUNrywMuKfqK6NIh4a2M1SfwZOB0  oGHrAv2QLJaScmtYKnK-oVvF81S8
-    // }
+    // localStorage.setItem('User', JSON.stringify({ openId: 'oGHrAv2QLJaScmtYKnK-oVvF81S8' }));//oUNrywMuKfqK6NIh4a2M1SfwZOB0
 
-    // if (!ToolDps.sessionItem('redirectUrl')) {
-    //     ToolDps.removeLocalItem('User');
-    // }
     if (ToolDps.isWKWebview) {//保存第一次加载url 分享时用于配置信息
         ToolDps.sessionItem('authUrl', document.location.href.split('#')[0]);
     }
@@ -68,7 +62,6 @@ function wechatAuth(props, setAuth) {
     if (code) {
         getUserInfo(code, setAuth);
     } else {
-        // ToolDps.sessionItem('redirectUrl', document.location.href);
         let url = document.location.href.split('#')[0];
         document.location = generateGetCodeUrl(url);
     }
