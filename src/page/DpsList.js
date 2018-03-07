@@ -23,6 +23,13 @@ class DpsList extends Component {
 
     componentDidMount() {
         document.title = "搭配师列表";
+        new Swiper('.my-watch', {
+            slidesPerView: 'auto',
+            observer:true,
+            spaceBetween: 20
+        });
+        this.swiperInit();
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -56,49 +63,104 @@ class DpsList extends Component {
         });
     }
 
+
+    componentDidUpdate() {
+        this.swiperInit();
+    }
+
+    swiperInit() {
+        let list = this.state.list;
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].plans.length > 0) {
+                new Swiper('.swiper-' + i, {
+                    slidesPerView: 'auto',
+                    spaceBetween: 5
+                });
+            }
+        }
+    }
+
     render() {
         return (
             <section className="dps-list-page">
-                {/* <Footer tab="2" /> */}
+                <h5 className="title" >我关注的搭配师</h5>
+                <section className='my-watch-area'>
+                    <div className='swiper-container my-watch'>
+                        <div className='swiper-wrapper'>
+                            <div className='swiper-slide text-center'>
+                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
+                                <p className='nickname'>111</p>
+                            </div>
+                            <div className='swiper-slide text-center'>
+                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
+                                <p className='nickname'>111</p>
+                            </div>
+                            <div className='swiper-slide text-center'>
+                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
+                                <p className='nickname'>111</p>
+                            </div>
+                            <div className='swiper-slide text-center'>
+                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
+                                <p className='nickname'>111</p>
+                            </div>
+                            <div className='swiper-slide text-center'>
+                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
+                                <p className='nickname'>111</p>
+                            </div>
+                            <div className='swiper-slide text-center'>
+                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
+                                <p className='nickname'>111</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <h5 className="title" >热门搭配师</h5>
                 <section className="list-area">
-                    <h5 className="title" style={{borderBottomWidth:ToolDps.iphone ? '0.5px' : '1px'}}>热门搭配师</h5>
                     <ul>
                         {
                             this.state.list.map((item, index) => {
                                 return (
                                     <li key={index}>
-                                        <section className="dps-info">
-                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                                <img src={item.headImg} />
-                                                <span className="nickname">{item.nickName}</span>
-                                            </Link>
-                                            <div className="btn-area">
-                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>
-                                                <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
-                                            </div>
-                                        </section>
-                                        <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                            <section className="main-img-area" style={{ backgroundImage: 'url(' + item.backgroundImg + ')' }}>
-                                                <p className="describe">
-                                                    <span>
-                                                        {item.honor}
-                                                    </span>
-                                                </p>
+                                        <div className='lside'>
+                                            <section className="dps-info">
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                    <img src={item.headImg} />
+                                                </Link>
+                                                <div className="btn-area">
+                                                    <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "取注" : "+关注"}</button>
+                                                </div>
                                             </section>
-                                        </Link>
-                                        <ul className="flex-box small-img-area">
-                                            {
-                                                item.plans.map((plan, i) => {
-                                                    return (
-                                                        <li className="item-3" key={i}>
-                                                            <Link to={"/fashionMomentDetail?planId=" + plan.planId}>
-                                                                <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
-                                                            </Link>
-                                                        </li>
-                                                    )
-                                                })
-                                            }
-                                        </ul>
+                                        </div>
+                                        <div className='rside'>
+                                            <div className={'swiper-container swiper-' + index}>
+                                                <div className='swiper-wrapper'>
+                                                    <div className='swiper-slide'>
+                                                        <h5 className='text-center nickname'>{item.nickName}</h5>
+                                                        <p className="describe">{item.honor}</p>
+                                                    </div>
+                                                    {
+                                                        item.plans.map((plan, i) => {
+                                                            return (
+                                                                <div className='swiper-slide' key={i} style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}>
+                                                                    <Link to={"/fashionMomentDetail?planId=" + plan.planId}></Link>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        )
+                                                    }
+                                                    {
+                                                        item.plans.length > 3 ? (
+                                                            <div className='swiper-slide'>
+                                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                                    <div className='more'></div>
+                                                                </Link>
+                                                            </div>
+                                                        ) : null
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                 )
                             })
@@ -107,7 +169,7 @@ class DpsList extends Component {
                     </ul>
                 </section>
                 {this.props.children}
-                <News />
+                {/* <News /> */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )

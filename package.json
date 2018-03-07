@@ -72,6 +72,6 @@
     "redux": "^3.7.2",
     "redux-immutablejs": "^0.0.8",
     "redux-thunk": "^2.2.0",
-    "swiper": "^3.4.2"
+    "swiper": "^4.1.6"
   }
 }

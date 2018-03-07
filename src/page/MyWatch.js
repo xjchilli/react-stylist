@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {Msg, DataLoad, GetData } from '../Component/index';
+import { Msg, DataLoad, GetData } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 
@@ -32,6 +32,7 @@ class MyWatch extends Component {
 
     componentDidMount() {
         document.title = "我的关注";
+        this.swiperInit();
     }
 
 
@@ -66,6 +67,23 @@ class MyWatch extends Component {
         });
     }
 
+    // 做分页效果需要开启
+    // componentDidUpdate() {
+    //     this.swiperInit();
+    // }
+
+    swiperInit() {
+        let list = this.state.data;
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].plans.length > 0) {
+                new Swiper('.swiper-' + i, {
+                    slidesPerView: 'auto',
+                    spaceBetween: 5
+                });
+            }
+        }
+    }
+
     render() {
         return (
             <section className="dps-list-page my-watch-page">
@@ -75,30 +93,71 @@ class MyWatch extends Component {
                             this.state.data.map((item, index) => {
                                 return (
                                     <li key={index}>
-                                        <section className="dps-info" >
-                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                                <img src={item.headImg} />
-                                                <span className="nickname">{item.nickName}</span>
-                                            </Link>
-                                            <div className="btn-area">
-                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId + "&tab=2"} className="btn question-btn">咨询</Link>
-                                                <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                        <div className='lside'>
+                                            <section className="dps-info">
+                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                    <img src={item.headImg} />
+                                                </Link>
+                                                <div className="btn-area">
+                                                    <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "取注" : "+关注"}</button>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <div className='rside'>
+                                            <div className={'swiper-container swiper-' + index}>
+                                                <div className='swiper-wrapper'>
+                                                    <div className='swiper-slide'>
+                                                        <h5 className='text-center nickname'>{item.nickName}</h5>
+                                                        <p className="describe">{item.honor}</p>
+                                                    </div>
+                                                    {
+                                                        item.plans.map((plan, i) => {
+                                                            return (
+                                                                <div className='swiper-slide' key={i} style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}>
+                                                                    <Link to={"/fashionMomentDetail?planId=" + plan.planId}></Link>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        )
+                                                    }
+                                                    {
+                                                        item.plans.length > 3 ? (
+                                                            <div className='swiper-slide'>
+                                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                                    <div className='more'></div>
+                                                                </Link>
+                                                            </div>
+                                                        ) : null
+                                                    }
+
+                                                </div>
                                             </div>
-                                        </section>
-                                        <ul className="plan-area">
-                                            {
-                                                item.plans.map((plan, i) => {
-                                                    return (
-                                                        <li key={i}>
-                                                            <Link to={"/fashionMomentDetail?planId=" + plan.planId}>
-                                                                <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
-                                                            </Link>
-                                                        </li>
-                                                    )
-                                                })
-                                            }
-                                        </ul>
+                                        </div>
                                     </li>
+                                    // <li key={index}>
+                                    //     <section className="dps-info" >
+                                    //         <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                    //             <img src={item.headImg} />
+                                    //             <span className="nickname">{item.nickName}</span>
+                                    //         </Link>
+                                    //         <div className="btn-area">
+                                    //             <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                    //         </div>
+                                    //     </section>
+                                    //     <ul className="plan-area">
+                                    //         {
+                                    //             item.plans.map((plan, i) => {
+                                    //                 return (
+                                    //                     <li key={i}>
+                                    //                         <Link to={"/fashionMomentDetail?planId=" + plan.planId}>
+                                    //                             <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
+                                    //                         </Link>
+                                    //                     </li>
+                                    //                 )
+                                    //             })
+                                    //         }
+                                    //     </ul>
+                                    // </li>
                                 )
                             })
                         }

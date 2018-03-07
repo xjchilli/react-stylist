@@ -16,14 +16,18 @@ class SwiperPreview extends React.Component {
             initialSlide: this.props.previemImgIndex || 0,
             observer: true,
             zoom: true,
-            pagination: '.swiper-pagination',
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'fraction'
+            },
             zoomMax: 5,
             zoomMin: 1,
-            paginationType: 'fraction',
-            onTap: (swiper, event) => {
-                event.preventDefault();
-                this.props.close();
+            on: {
+                tap: (event) => {
+                    this.props.close();
+                }
             }
+
         });
     }
 

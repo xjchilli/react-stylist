@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
-import { Msg, DataLoad,  News, GetData } from '../Component/index';
+import { Msg, DataLoad, News, GetData } from '../Component/index';
 
 
 
@@ -42,9 +42,13 @@ class Home extends Component {
     componentDidMount() {
         document.title = "Ms搭配师";
         let swiper1 = new Swiper('#banner', {
-            pagination: '.swiper-pagination',
+            pagination: {
+                el: '.swiper-pagination'
+            },
             loop: true,
-            autoplay: 4000
+            autoplay: {
+                delay: 4000
+            }
         });
     }
 
@@ -120,7 +124,6 @@ class Home extends Component {
         }
         return (
             <div className="home-page">
-                {/* <Footer tab="1" /> */}
                 <div id="banner" className="swiper-container">
                     <div className="swiper-wrapper">
                         {
@@ -141,40 +144,30 @@ class Home extends Component {
                 </div>
                 <div className='title'>
                     今日搭配师推荐
-                    <Link to="/dpsList">MORE</Link>
+                    <Link to="/dpsList">更多</Link>
                 </div>
                 <section className='today-recommend'>
-                    {
-                        this.state.recommand.map((item, index) => {
-                            return (
-                                <div className='box' key={index}>
-                                    <Link to={"/dpsProfile?collocationId=" + item.collocationId} >
-                                        <div className="lside" style={{ background: "url(" + item.masterImg + ")", backgroundSize: "cover" }}>
+                    <div className='swiper-container'>
+                        <div className='swiper-wrapper'>
+                            {
+                                this.state.recommand.map((item, index) => {
+                                    return (
+                                        <div className='swiper-slide box' key={index}>
+                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId} >
+                                                <div className="lside" style={{ background: "url(" + item.masterImg + ")", backgroundSize: "cover" }}>
+                                                </div>
+                                            </Link>
+                                            <div className="rside">
+                                                <span className="nickname">{item.nickName}</span>
+                                                <div className="introduce" >{item.title}</div>
+                                                <button className={item.concern ? "btn watch-dps watched" : "btn watch-dps"} onClick={this.watchDps.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
+                                            </div>
                                         </div>
-                                    </Link>
-                                    <div className="rside">
-                                        <Link to={"/fashionMomentDetail?planId=" + item.topPlanId}>
-                                            <div className="r-top" style={{ background: "url(" + item.topImg + ")", backgroundSize: "cover" }}></div>
-                                        </Link>
-                                        <Link to={"/fashionMomentDetail?planId=" + item.bottomPlanId}>
-                                            <div className="r-bottom" style={{ background: "url(" + item.buttomImg + ")", backgroundSize: "cover" }}></div>
-                                        </Link>
-                                    </div>
-                                    <div className="introduce-area">
-                                        <div className="introduce" >{item.title}</div>
-                                    </div>
-
-                                    <div className="dps-info">
-                                        <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                            <img src={item.headImg} className="head-img"></img>
-                                            <span className="nickname">{item.nickName}</span>
-                                        </Link>
-                                        <button className={item.concern ? "btn watch-dps watched" : "btn watch-dps"} onClick={this.watchDps.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
                 </section>
                 <div className='title'>
                     时尚圈精选
@@ -237,7 +230,7 @@ class Home extends Component {
                         }
                     </ul>
                 </div>
-                <News />
+                {/* <News /> */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </div>
         );
