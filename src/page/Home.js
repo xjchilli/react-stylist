@@ -3,8 +3,9 @@
  */
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ToolDps } from '../ToolDps';
+import { watchOrCancel } from 'ToolAjax';
 import { Msg, DataLoad, News, GetData } from '../Component/index';
+import HomeTab from './component/HomeTab';
 
 
 
@@ -41,7 +42,7 @@ class Home extends Component {
 
     componentDidMount() {
         document.title = "Ms搭配师";
-        let swiper1 = new Swiper('#banner', {
+        new Swiper('#banner', {
             pagination: {
                 el: '.swiper-pagination'
             },
@@ -49,6 +50,10 @@ class Home extends Component {
             autoplay: {
                 delay: 4000
             }
+        });
+        new Swiper('.recommend-dps', {
+            slidesPerView: 'auto',
+            spaceBetween: 5
         });
     }
 
@@ -91,7 +96,7 @@ class Home extends Component {
      * 关注搭配师
      */
     watchDps(collocationId) {
-        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
+        watchOrCancel(collocationId).then((res) => {
             if (res.succ) {
                 let copyRecommand = Array.prototype.slice.apply(this.state.recommand);
                 for (let i = 0; i < copyRecommand.length; i++) {
@@ -124,6 +129,7 @@ class Home extends Component {
         }
         return (
             <div className="home-page">
+                <HomeTab/>
                 <div id="banner" className="swiper-container">
                     <div className="swiper-wrapper">
                         {
@@ -147,7 +153,7 @@ class Home extends Component {
                     <Link to="/dpsList">更多</Link>
                 </div>
                 <section className='today-recommend'>
-                    <div className='swiper-container'>
+                    <div className='swiper-container recommend-dps'>
                         <div className='swiper-wrapper'>
                             {
                                 this.state.recommand.map((item, index) => {
@@ -157,7 +163,7 @@ class Home extends Component {
                                                 <div className="lside" style={{ background: "url(" + item.masterImg + ")", backgroundSize: "cover" }}>
                                                 </div>
                                             </Link>
-                                            <div className="rside">
+                                            <div className="rside text-center">
                                                 <span className="nickname">{item.nickName}</span>
                                                 <div className="introduce" >{item.title}</div>
                                                 <button className={item.concern ? "btn watch-dps watched" : "btn watch-dps"} onClick={this.watchDps.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>

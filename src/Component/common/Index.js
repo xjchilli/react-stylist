@@ -43,13 +43,13 @@ class PageFooter extends Component {
     render() {
         const { pathname } = this.props.location;
         let tab = '1';
-        if (/(^\/$)/.test(pathname)) {//首页
+        if (/(^\/$)/.test(pathname) || /(^\/dpsList$)/.test(pathname)) {//首页
             tab = '1';
-        } else if (/(^\/dpsList$)/.test(pathname)) {//热门搭配师
+        } else if (/(^\/fashionMoment$)/.test(pathname)) {//发现
             tab = '2';
         } else if (/(^\/needMatch)/.test(pathname)) {//我要搭配
             tab = '3';
-        } else if (/(^\/fashionMoment$)/.test(pathname)) {//发现
+        } else if (/(^\/myDps$)/.test(pathname)) {//
             tab = '4';
         } else if (/(^\/my$)/.test(pathname)) {//我的
             tab = '5';
@@ -64,18 +64,18 @@ class PageFooter extends Component {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dpsList" activeClassName={tab == 2 ? "active" : ""}>
-                        <span className={tab == 2 ? "icon icon-dps-selected" : "icon icon-dps-normal"}></span>
-                        <p>搭配师</p>
+                    <NavLink to="/fashionMoment" activeClassName={tab == 2 ? "active" : ""} >
+                        <span className={tab == 2 ? "icon icon-find-selected" : "icon icon-find-normal"}></span>
+                        <p>发现</p>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/needMatch" >
-                        <img className="da-img" src='/assets/img/icon/tab-3-1.png'  />
+                        <img className="da-img" src='/assets/img/icon/tab-3-1.png' />
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/fashionMoment" activeClassName={tab == 4 ? "active" : ""} >
+                    <NavLink to="/myDps" activeClassName={tab == 4 ? "active" : ""} >
                         <span className={tab == 4 ? "icon icon-find-selected" : "icon icon-find-normal"}></span>
                         <p>发现</p>
                     </NavLink>

@@ -27,3 +27,7 @@ export const modifyReceiveAddress = (data) => ToolDps.post('/wx/shipping/address
 export const myShopCart = () => ToolDps.get('/wx/cart/my');
 //删除购物车
 export const deleteShopCart = (cartIdArr) => ToolDps.post('/wx/cart/delete', { cartId: cartIdArr });
+//我关注的搭配师列表
+export const myWatchDpsList = () => ToolDps.get('/wx/concern/getMy');
+//关注或者取消关注
+export const watchOrCancel = (collocationId) => ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId })

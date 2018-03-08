@@ -73,7 +73,7 @@ class App extends React.Component {
      */
     filterRouter(props) {
         const { pathname } = props.location;
-        return /(^\/$|^\/dpsList$|^\/needMatch|^\/fashionMoment$|^\/my$)/.test(pathname);
+        return /(^\/$|^\/dpsList$|^\/needMatch|^\/fashionMoment$|^\/my|^\/myDps$)/.test(pathname);
     }
 
     render() {

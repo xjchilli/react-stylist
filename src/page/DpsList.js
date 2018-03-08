@@ -4,8 +4,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DataLoad, GetNextPage } from '../Component/index';
-import { Msg, News } from '../Component/index';
-import { ToolDps } from '../ToolDps';
+import { Msg } from '../Component/index';
+import { myWatchDpsList, watchOrCancel } from 'ToolAjax';
+import HomeTab from './component/HomeTab';
 
 
 
@@ -16,6 +17,7 @@ class DpsList extends Component {
         this.state = {
             msgShow: false,
             msgText: '', //提示内容
+            myWatchDps: [],//我关系的搭配师
             list: props.state.data || []
         }
     }
@@ -23,13 +25,8 @@ class DpsList extends Component {
 
     componentDidMount() {
         document.title = "搭配师列表";
-        new Swiper('.my-watch', {
-            slidesPerView: 'auto',
-            observer:true,
-            spaceBetween: 20
-        });
+        this.getWatchDpsList();
         this.swiperInit();
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -38,10 +35,34 @@ class DpsList extends Component {
         })
     }
 
+    /**
+     * 获取关注的搭配师列表
+     * */
+    getWatchDpsList() {
+        myWatchDpsList().then((res) => {
+            if (res.succ) {
+                if (res.data.length <= 6) {
+                    this.setState({
+                        myWatchDps: res.data
+                    });
+                } else {
+                    this.setState({
+                        myWatchDps: res.data.slice(0, 6)
+                    });
+                }
+                new Swiper('.my-watch', {
+                    slidesPerView: 'auto',
+                    observer: true,
+                    spaceBetween: 20
+                });
+            }
+        });
+    }
+
 
     //取消关注
     cancelWatch(collocationId) {
-        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId }).then((res) => {
+        watchOrCancel(collocationId).then((res) => {
             if (res.succ) {
                 let copyData = Array.prototype.slice.apply(this.state.list);
                 for (let i = 0; i < copyData.length; i++) {
@@ -50,6 +71,7 @@ class DpsList extends Component {
                         break;
                     }
                 }
+                this.getWatchDpsList();
                 this.setState({
                     data: copyData
                 });
@@ -83,34 +105,33 @@ class DpsList extends Component {
     render() {
         return (
             <section className="dps-list-page">
-                <h5 className="title" >我关注的搭配师</h5>
+                <HomeTab tab='2'/>
+                <h5 className="title" >
+                    我关注的搭配师
+                    <Link to="/myWatch">更多</Link>
+                </h5>
                 <section className='my-watch-area'>
                     <div className='swiper-container my-watch'>
                         <div className='swiper-wrapper'>
-                            <div className='swiper-slide text-center'>
-                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
-                                <p className='nickname'>111</p>
-                            </div>
-                            <div className='swiper-slide text-center'>
-                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
-                                <p className='nickname'>111</p>
-                            </div>
-                            <div className='swiper-slide text-center'>
-                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
-                                <p className='nickname'>111</p>
-                            </div>
-                            <div className='swiper-slide text-center'>
-                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
-                                <p className='nickname'>111</p>
-                            </div>
-                            <div className='swiper-slide text-center'>
-                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
-                                <p className='nickname'>111</p>
-                            </div>
-                            <div className='swiper-slide text-center'>
-                                <img src='https://img.dapeis.net/resources/head/20180226161145869689.jpg'/>
-                                <p className='nickname'>111</p>
-                            </div>
+                            {
+                                this.state.myWatchDps.map((item, index) => {
+                                    return (
+                                        <div className='swiper-slide text-center' key={index}>
+                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                <img src={item.headImg} />
+                                                <p className='nickname'>{item.nickName}</p>
+                                            </Link>
+                                        </div>
+                                    )
+                                })
+                            }
+                            {
+                                this.state.myWatchDps.length === 0 ? (
+                                    <p>
+                                        暂时没有您关注的搭配师
+                                    </p>
+                                ) : null
+                            }
                         </div>
                     </div>
                 </section>
@@ -169,7 +190,6 @@ class DpsList extends Component {
                     </ul>
                 </section>
                 {this.props.children}
-                {/* <News /> */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
