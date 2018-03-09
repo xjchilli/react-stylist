@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { DataLoad, GetData, News } from '../Component/index';
+import { DataLoad, GetData } from '../Component/index';
 import { ToolDps } from '../ToolDps';
 
 class Main extends Component {
@@ -112,7 +112,7 @@ class My extends Component {
                 <Link to="/myAsset" className="myAsset" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>我的账户</Link>
                 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>联系客服</a>
                 <Link to="/feedback" className="feedback">我要反馈</Link>
-                <News />
+                {/* <News /> */}
 
             </section>
         )

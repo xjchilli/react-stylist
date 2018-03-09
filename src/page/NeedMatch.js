@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { ToolDps } from '../ToolDps';
 import { DataLoad, GetData } from '../Component/index';
 import qs from 'query-string';
-import { News } from '../Component/index';
 
 
 class NeedMatch extends Component {
@@ -84,7 +83,7 @@ class NeedMatch extends Component {
                         })
                     }
                 </ul>
-                <News />
+                {/* <News /> */}
             </section>
         );
     }

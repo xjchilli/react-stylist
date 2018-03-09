@@ -32,19 +32,13 @@ class DapeisInfo extends Component {
                     <Link to={"/dpsProfile?collocationId=" + id}>
                         <img src={headImg} alt="" />
                     </Link>
-                    {/* {sex && sex === 2 ? (
-                            <span className="icon icon-girl"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                        ) : (
-                                <span className="icon icon-man"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                            )
-                        } */}
                 </div>
                 <div className="item">
                     <p className="nickname">{nickName}</p>
                 </div>
 
-                <div className="item">
-                    <Link to={"/dpsProfile?collocationId=" + id + "&tab=2"} className='btn question-btn'>咨询</Link>
+                <div className="item text-right">
+                    {/* <Link to={"/dpsProfile?collocationId=" + id + "&tab=2"} className='btn question-btn'>咨询</Link> */}
                     <button className={this.props.concern ? 'btn watch-btn active' : 'btn watch-btn'} onClick={this.props.watchOrCancel}>{this.props.concern ? "已关注" : "+关注"}</button>
                 </div>
             </header>

@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router'
 import GetNextPage from './GetNextPage';
 import GetData from './GetData';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
-import IM from '../../page/component/IM';
-// var FastClick = require('fastclick');
-// import PropTypes from 'prop-types';
+import MyNews from './MyNews';
 
 
 
@@ -18,7 +16,7 @@ import IM from '../../page/component/IM';
  * @class DataLoad
  * @extends {Component}
  */
-class DataLoad extends Component {
+class DataLoad extends React.Component {
     render() {
         let { loadAnimation, loadMsg } = this.props;
         return (
@@ -33,13 +31,42 @@ DataLoad.defaultProps = {
     loadMsg: '正在加载中'
 }
 
-//底部tab
-class PageFooter extends Component {
-    componentDidMount() {
-        // FastClick.attach(this.footer);
+/**
+ * 服务入口
+ */
+class Server extends React.Component{
+    render(){
+        return (
+            <section className='match-server-area'>
+                <div className='bg' onClick={this.props.close}></div>
+                <ul className='flex-box box'>
+                    <li className='item-2'>
+                        <Link className='entry' to='/consult'>
+                            <img src='/assets/img/needMatch/online-consut.jpg'/>
+                            <span>线上咨询</span>
+                        </Link>
+                    </li>
+                    <li className='item-2'>
+                        <Link className='entry' to='/plainPeopleChange?projectId=5'>
+                            <img src='/assets/img/needMatch/offline-experience.jpg'/>
+                            <span>线下体验</span>
+                        </Link>
+                    </li>
+                </ul>   
+            </section>
+        )
     }
+}
 
-
+//底部tab
+class PageFooter extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state={
+            isServer:false//是否显示服务入口
+        }  
+    }
+    
     render() {
         const { pathname } = this.props.location;
         let tab = '1';
@@ -47,9 +74,7 @@ class PageFooter extends Component {
             tab = '1';
         } else if (/(^\/fashionMoment$)/.test(pathname)) {//发现
             tab = '2';
-        } else if (/(^\/needMatch)/.test(pathname)) {//我要搭配
-            tab = '3';
-        } else if (/(^\/myDps$)/.test(pathname)) {//
+        }else if (/(^\/myDps$)/.test(pathname)) {//我的搭配师
             tab = '4';
         } else if (/(^\/my$)/.test(pathname)) {//我的
             tab = '5';
@@ -70,14 +95,20 @@ class PageFooter extends Component {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/needMatch" >
-                        <img className="da-img" src='/assets/img/icon/tab-3-1.png' />
-                    </NavLink>
+                    <img className="da-img" src='/assets/img/icon/tab-3-1.png' onClick={()=>{this.setState({isServer:true})}}/>
+                    {
+                        this.state.isServer ? <Server close={()=>{this.setState({isServer:false})}}/> : null
+                    }
+                    
                 </li>
                 <li>
                     <NavLink to="/myDps" activeClassName={tab == 4 ? "active" : ""} >
-                        <span className={tab == 4 ? "icon icon-find-selected" : "icon icon-find-normal"}></span>
-                        <p>发现</p>
+                        <span className={tab == 4 ? "icon icon-info-active" : "icon icon-info"} >
+                            {
+                                tab == 4 ? null : <MyNews />
+                            }
+                        </span>
+                        <p>消息</p>
                     </NavLink>
                 </li>
                 <li>
@@ -93,128 +124,4 @@ class PageFooter extends Component {
 
 let Footer = withRouter(PageFooter);
 
-
-
-class MyNews extends IM {
-    constructor(props) {
-        super(props);
-        this.state = {
-            newMsg: props.MyNews.newMsg || false
-        }
-        this.reqRecentSessCount = 50; //每次请求的最近会话条数，业务可以自定义
-    }
-
-    componentDidMount() {
-        this.signature((data) => {
-            this.login(data, () => {
-                this.getFriends();
-            });
-        });
-    }
-
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            newMsg: nextProps.MyNews.newMsg
-        });
-    }
-
-
-
-
-    onMsgNotify(newMsgList) {
-        if (newMsgList.length > 0) {
-            this.props.setNews({
-                newMsg: true
-            });
-        }
-
-    }
-
-
-    /**
-     * 获取好友列表
-     */
-    getFriends() {
-        let options = {
-            'From_Account': this.loginInfo.identifier,
-            'TimeStamp': 0,
-            'StartIndex': 0,
-            'GetCount': this.totalCount,
-            'LastStandardSequence': 0,
-            "TagList": [
-                "Tag_Profile_IM_Nick",
-                "Tag_Profile_IM_Image",
-                "Tag_Profile_IM_Gender"
-            ]
-        };
-
-        webim.getAllFriend(options,
-            (resp) => {
-                // console.log(resp);
-                if (resp.FriendNum > 0) {
-                    this.initRecentContactList(); //获取最近会话数据
-                }
-            },
-            (err) => {
-                console.log(err.ErrorInfo);
-            }
-        );
-    }
-
-    /**
-     * 初始化聊天界面最近会话列表
-     */
-    initRecentContactList() {
-        let options = {
-            'Count': this.reqRecentSessCount //要拉取的最近会话条数
-        };
-        webim.getRecentContactList(
-            options,
-            (resp) => {
-                if (resp.SessionItem && resp.SessionItem.length > 0) { //如果存在最近会话记录
-                    webim.syncMsgs(this.initUnreadMsgCount.bind(this)); //初始化最近会话的消息未读数
-
-                }
-
-            }
-        );
-    }
-
-    /**
-     * 初始化最近会话的消息未读数
-     */
-    initUnreadMsgCount() {
-        let sess;
-        let sessMap = webim.MsgStore.sessMap();
-        for (let i in sessMap) {
-            sess = sessMap[i];
-            // console.log(sess._impl.msgs)
-            if (sess.id() != "@TLS#144115198577104990" && sess.unread() > 0) {
-                this.props.setNews({
-                    newMsg: true
-                });
-            }
-        }
-    }
-
-
-    render() {
-        return (
-            <section className="new-info-area">
-                <Link to="/myDps">
-                    <div className="news">
-                        <img src="/assets/img/icon/news.png" />
-                        {
-                            this.state.newMsg ? <span className="cicle"></span> : null
-                        }
-                    </div>
-                </Link>
-            </section>
-        )
-    }
-}
-
-let News = connect((state) => { return { MyNews: state.MyNews }; }, action('setNews'))(MyNews);
-
-export { GetNextPage, GetData, DataLoad, Footer, News };
+export { GetNextPage, GetData, DataLoad, Footer };

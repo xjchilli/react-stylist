@@ -9,7 +9,7 @@ import { ToolDps } from 'ToolDps';
 import { FashionType } from 'ToolAjax';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import { News } from '../Component/index';
+// import { News } from '../Component/index';
 import qs from 'query-string';
 
 
@@ -189,7 +189,7 @@ class FashionMoment extends Component {
                         {this.props.children}
                     </div>
                 </div>
-                <News />
+                {/* <News /> */}
             </div>
         )
     }
