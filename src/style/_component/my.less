@@ -2,19 +2,33 @@
     font-family: 'Microsoft YaHei';
     padding-bottom: 60px;
     header {
+        padding: 0 15px 15px;
+        border-bottom: 5px solid #f3f7fa;
         img {
-            width: 80px;
-            height: 80px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            margin: 27px auto 20px;
+            margin: 23px auto 10px;
         }
         .nickname {
             font-size: 15px;
             color: #333333;
             font-weight: bold;
         }
+        .flex-box {
+            margin-top: 45px;
+            .icon {
+                display: inline-block;
+                font-size: 23px;
+                margin-bottom: 8px;
+            }
+            a {
+                display: block;
+                font-size: 13px;
+                color: #000000;
+            }
+        }
     }
-   
     .base-info-area {
         padding: 45px 15px 8px;
         li {
@@ -41,12 +55,35 @@
             margin-bottom: 15px;
         }
     }
-    .myAsset, .contact-us, .feedback {
+    .link {
         position: relative;
-        font-size: 14px;
-        color: #1a1a1a;
+        font-size: 13px;
+        color: #000000;
+        font-weight: 500;
         display: block;
-        padding: 20px 15px;
+        padding: 20px 15px 20px 47px;
+        .icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+        }
+        .icon-my-dps {
+            left: 17px;
+            font-size: 20px;
+        }
+        .icon-my-account,.icon-my-info, .icon-my-publish {
+            font-size: 16px;
+        }
+        .icon-my-promotion {
+            font-size: 19px;
+        }
+        .icon-my-wardrobe {
+            font-size: 18px;
+        }
+        .icon-feedback {
+            font-size: 17px;
+        }
         &:after {
             content: '';
             position: absolute;
@@ -58,8 +95,5 @@
             border-width: 1px 1px 0 0;
             transform: translateY(-50%) rotate(45deg);
         }
-    }
-    .myAsset,.contact-us {
-        border-bottom: 0.3px solid #f0f0f0;
     }
 }

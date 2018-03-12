@@ -33,6 +33,8 @@ import MyDpsContainer from 'bundle-loader?lazy&name=[name]!../page/MyDps';
 import ArrangementSchemeContainer from 'bundle-loader?lazy&name=[name]!../page/ArrangementScheme';
 import ChatContainer from 'bundle-loader?lazy&name=[name]!../page/Chat';
 import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeList';
+import VipMemberContainer from 'bundle-loader?lazy&name=[name]!../page/VipMember';
+import OrderTypeContainer from 'bundle-loader?lazy&name=[name]!../page/OrderType';
 import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList';
 import OrderListGoodsContainer from 'bundle-loader?lazy&name=[name]!../page/OrderListGoods';
 import OrderDetailContainer from 'bundle-loader?lazy&name=[name]!../page/OrderDetail';
@@ -201,6 +203,16 @@ let routers = [
         path: '/wardrobeList',
         exact: false,
         component: (props) => getComponent(props, WardrobeListContainer)
+    },
+    {//vip会员
+        path: '/vipMember',
+        exact: false,
+        component: (props) => getComponent(props, VipMemberContainer)
+    },
+    {//订单类型
+        path: '/orderType',
+        exact: false,
+        component: (props) => getComponent(props, OrderTypeContainer)
     },
     {//服务订单列表
         path: '/orderList',

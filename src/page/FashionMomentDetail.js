@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import { ToolDps } from '../ToolDps';
+import { watchOrCancel } from 'ToolAjax';
 import classNames from 'classnames';
 import { DataLoad, GetData, Msg, PreviewImg, SwiperPreview, ToReward } from "../Component/index";
 import ShareConfig from './component/ShareConfig';
@@ -353,9 +354,9 @@ class UserComment extends React.Component {
         }, 300)
     }
 
-       /**
-     * 初始化伪输入框高度
-     */
+    /**
+  * 初始化伪输入框高度
+  */
     initFakeTextareaH() {
         let W = this.textarea.offsetWidth;
         this.copyText.style.width = W + 'px';
@@ -528,7 +529,7 @@ class FashionMomentDetail extends Component {
      * 关注或者取关
      */
     watchOrCancel() {
-        ToolDps.post('/wx/concern/doAddOrDel', { collocationId: this.state.collocation.id }).then((res) => {
+        watchOrCancel(this.state.collocation.id).then((res) => {
             if (res.succ) {
                 this.setState({
                     concern: !this.state.concern

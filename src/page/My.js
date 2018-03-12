@@ -58,8 +58,31 @@ class My extends Component {
                 <header>
                     <img src={data.headImg} />
                     <p className="text-center nickname">{data.nickName}</p>
+                    <ul className='flex-box'>
+                        <li className="item-3 text-center">
+                            <Link to="/vipMember">
+                                <span className="icon icon-vip"></span>
+                                <br />
+                                会员中心
+                            </Link>
+                        </li>
+                        <li className="item-3 text-center">
+                            <Link to="/orderType">
+                                <span className="icon icon-my-order"></span>
+                                <br />
+                                我的订单
+                            </Link>
+                        </li>
+                        <li className="item-3 text-center">
+                            <Link to="/shopCart">
+                                <span className="icon icon-my-shop"></span>
+                                <br />
+                                购物车
+                            </Link>
+                        </li>
+                    </ul>
                 </header>
-                <ul className="flex-box base-info-area">
+                {/* <ul className="flex-box base-info-area">
                     <li className="item-2">
                         <Link to="/orderList">
                             <div className="box text-center">
@@ -108,10 +131,35 @@ class My extends Component {
                             </div>
                         </Link>
                     </li>
-                </ul>
-                <Link to="/myAsset" className="myAsset" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>我的账户</Link>
-                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=939796214&site=qq&menu=yes" className="contact-us" style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>联系客服</a>
-                <Link to="/feedback" className="feedback">我要反馈</Link>
+                </ul> */}
+                <Link to="/myAsset" className="link" >
+                    <span className="icon icon-my-account"></span>
+                    我的账户
+                </Link>
+                <Link to="/myAsset" className="link" >
+                    <span className="icon icon-my-dps"></span>
+                    我的搭配师
+                </Link>
+                <Link to="/profile" className="link" >
+                    <span className="icon icon-my-info"></span>
+                    我的信息
+                </Link>
+                <Link to="/myAsset" className="link" >
+                    <span className="icon icon-my-publish"></span>
+                    我的发布
+                </Link>
+                <Link to="/promotionCode" className="link" >
+                    <span className="icon icon-my-promotion"></span>
+                    我的优惠券
+                </Link>
+                <Link to="/wardrobeList" className="link" >
+                    <span className="icon icon-my-wardrobe"></span>
+                    我的衣橱
+                </Link>
+                <Link to="/feedback" className="link">
+                    <span className="icon icon-feedback"></span>
+                    我要反馈
+                </Link>
                 {/* <News /> */}
 
             </section>
