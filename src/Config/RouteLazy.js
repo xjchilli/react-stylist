@@ -33,6 +33,8 @@ import MyDpsContainer from 'bundle-loader?lazy&name=[name]!../page/MyDps';
 import ArrangementSchemeContainer from 'bundle-loader?lazy&name=[name]!../page/ArrangementScheme';
 import ChatContainer from 'bundle-loader?lazy&name=[name]!../page/Chat';
 import WardrobeListContainer from 'bundle-loader?lazy&name=[name]!../page/WardrobeList';
+import MyPublishContainer from 'bundle-loader?lazy&name=[name]!../page/MyPublish';
+import PublishArticleContainer from 'bundle-loader?lazy&name=[name]!../page/PublishArticle';
 import VipMemberContainer from 'bundle-loader?lazy&name=[name]!../page/VipMember';
 import OrderTypeContainer from 'bundle-loader?lazy&name=[name]!../page/OrderType';
 import OrderListContainer from 'bundle-loader?lazy&name=[name]!../page/OrderList';
@@ -203,6 +205,16 @@ let routers = [
         path: '/wardrobeList',
         exact: false,
         component: (props) => getComponent(props, WardrobeListContainer)
+    },
+    {//我的发布
+        path: '/myPublish',
+        exact: false,
+        component: (props) => getComponent(props, MyPublishContainer)
+    },
+    {//我的发布
+        path: '/publishArticle',
+        exact: false,
+        component: (props) => getComponent(props, PublishArticleContainer)
     },
     {//vip会员
         path: '/vipMember',
