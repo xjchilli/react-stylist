@@ -4,15 +4,25 @@
 import React from 'react';
 import Quill from 'quill';
 import { UploadImg } from 'ToolAjax';
-import { ToolDps } from '../ToolDps';
+import { ToolDps } from 'ToolDps';
+import { Msg } from "../Component/index";
 
 
 class PublishArticle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            msgShow: false,
+            msgText: '', //提示内容
+            toolbarShow: false,
+            editorH: window.innerHeight - 49,//编辑区高度
             text: '',//富文本内容
         }
+        this.editorEvent = this.editorEvent.bind(this);
+        this.toolbarEvent = this.toolbarEvent.bind(this);
+        this.toolbarShow = this.toolbarShow.bind(this);
+        this.toolbarHide = this.toolbarHide.bind(this);
+        this.editorBlur = this.editorBlur.bind(this);
     }
     componentDidMount() {
         let options = {
@@ -20,7 +30,7 @@ class PublishArticle extends React.Component {
             modules: {
                 toolbar: '#toolbar'
             },
-            placeholder: '请编辑商品内容...',
+            placeholder: '请输入正文',
             theme: 'snow'
         };
         this.quill = new Quill('.editor', options);
@@ -37,9 +47,65 @@ class PublishArticle extends React.Component {
         let toolbar = this.quill.getModule('toolbar');
         toolbar.addHandler('image', this.showImageUI);//自定义图片上传
         //去除FastClick阻止获取焦点问题
-        document.querySelector('.editor').addEventListener('touchstart',function(e){e.stopPropagation();});
-        document.querySelector('.ql-toolbar').addEventListener('touchstart',function(e){e.stopPropagation();});
+        let editorEle = document.querySelector('.editor');
+        let qlEditorEle = document.querySelector('.ql-editor');
+        editorEle.addEventListener('touchstart', this.editorEvent);
+        this.toolbar.addEventListener('touchstart', this.toolbarEvent);
+        qlEditorEle.addEventListener('focus', this.toolbarShow);
+        qlEditorEle.addEventListener('blur', this.editorBlur);
 
+    }
+
+    componentWillUnmount() {
+        let editorEle = document.querySelector('.editor');
+        let qlEditorEle = document.querySelector('.ql-editor');
+        editorEle.removeEventListener('touchstart', this.editorEvent);
+        this.toolbar.removeEventListener('touchstart', this.toolbarEvent);
+        qlEditorEle.removeEventListener('touchmove', this.toolbarHide);
+        qlEditorEle.removeEventListener('focus', this.toolbarShow);
+        qlEditorEle.removeEventListener('blur', this.editorBlur);
+    }
+
+    /**
+     * 
+     */
+    editorEvent(e) {
+        e.stopPropagation();
+    }
+
+    /**
+     * 工具栏阻止冒泡事件
+     */
+    toolbarEvent(e) {
+        e.stopPropagation();
+    }
+
+    /**
+     * 工具栏显示
+     */
+    toolbarShow() {
+        let qlEditorEle = document.querySelector('.ql-editor');
+        qlEditorEle.removeEventListener('touchmove', this.toolbarHide);
+        this.setState({
+            toolbarShow: true
+        });
+    }
+
+    /**
+     * 编辑器失去焦点
+     */
+    editorBlur() {
+        let qlEditorEle = document.querySelector('.ql-editor');
+        qlEditorEle.addEventListener('touchmove', this.toolbarHide);
+    }
+
+    /**
+     * 工具栏隐藏
+     */
+    toolbarHide() {
+        this.setState({
+            toolbarShow: false
+        });
     }
 
     //显示选择图片窗口
@@ -66,13 +132,28 @@ class PublishArticle extends React.Component {
         });
     }
 
+    /**
+     * 发布
+     */
+    publish() {
+        let imgArr = document.querySelectorAll('.editor img');
+        if (imgArr.length === 0) {
+            this.setState({
+                msgShow: true,
+                msgText: '请上传至少一张图片' //提示内容
+            });
+            return;
+        }
+
+    }
 
     render() {
         return (
             <section className='publish-article-page'>
+                <input className='title' placeholder='请输入标题' />
                 <section className='editor-area' ref={(el) => { this.editorBox = el }}>
-                    <input type='file' accept=".jpg,.jpeg,.bmp,.png" ref={(el) => { this.imgUpload = el }} multiple className='custom-img-upload' onChange={this.editorImgUpload.bind(this)} />
-                    <section ref={(el) => { this.toolbar = el }} id='toolbar' className='ql-toolbar ql-snow'>
+                    <input type='file' accept="image/*" ref={(el) => { this.imgUpload = el }} multiple className='custom-img-upload' onChange={this.editorImgUpload.bind(this)} />
+                    <section ref={(el) => { this.toolbar = el }} id='toolbar' className={this.state.toolbarShow ? 'ql-toolbar ql-snow active' : 'ql-toolbar ql-snow'}>
                         <span className="ql-formats">
                             <select className="ql-font"></select>
                             <select className="ql-size"></select>
@@ -95,8 +176,10 @@ class PublishArticle extends React.Component {
                             <button className="ql-image"></button>
                         </span>
                     </section>
-                    <section className='editor' style={{ height: '300px' }}></section>
+                    <section className='editor' style={{ height: this.state.editorH + 'px' }}></section>
                 </section>
+                <button className='btn to-publish-btn text-center' onClick={this.publish.bind(this)}>发布</button>
+                {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         )
     }

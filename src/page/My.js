@@ -82,56 +82,6 @@ class My extends Component {
                         </li>
                     </ul>
                 </header>
-                {/* <ul className="flex-box base-info-area">
-                    <li className="item-2">
-                        <Link to="/orderList">
-                            <div className="box text-center">
-                                <span className="icon icon-service-order"></span>
-                                <p>服务订单</p>
-                            </div>
-                        </Link>
-                    </li>
-                    <li className="item-2">
-                        <Link to="/orderListGoods">
-                            <div className="box text-center">
-                                <span className="icon icon-goods-order"></span>
-                                <p>商品订单</p>
-                            </div>
-                        </Link>
-                    </li>
-                    <li className="item-2">
-                        <Link to="/wardrobeList">
-                            <div className="box text-center">
-                                <span className="icon icon-my-wordrobe"></span>
-                                <p>我的衣橱</p>
-                            </div>
-                        </Link>
-                    </li>
-                    <li className="item-2">
-                        <Link to="/profile">
-                            <div className="box text-center">
-                                <span className="icon icon-my-info"></span>
-                                <p>我的信息</p>
-                            </div>
-                        </Link>
-                    </li>
-                    <li className="item-2">
-                        <Link to="/myWatch">
-                            <div className="box text-center">
-                                <span className="icon icon-my-watch"></span>
-                                <p>我的关注</p>
-                            </div>
-                        </Link>
-                    </li>
-                    <li className="item-2">
-                        <Link to="/promotionCode">
-                            <div className="box text-center">
-                                <span className="icon icon-my-promotion"></span>
-                                <p>我的优惠券</p>
-                            </div>
-                        </Link>
-                    </li>
-                </ul> */}
                 <Link to="/myAsset" className="link" >
                     <span className="icon icon-my-account"></span>
                     我的账户
@@ -144,7 +94,7 @@ class My extends Component {
                     <span className="icon icon-my-info"></span>
                     我的信息
                 </Link>
-                <Link to="/myAsset" className="link" >
+                <Link to="/myPublish" className="link" >
                     <span className="icon icon-my-publish"></span>
                     我的发布
                 </Link>

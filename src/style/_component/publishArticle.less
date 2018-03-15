@@ -1,5 +1,48 @@
-.publish-article-page{
-    .custom-img-upload{
+.publish-article-page {
+    padding: 0 13px;
+    .title {
+        height: 49px;
+        font-size: 21px;
+        font-weight: 500;
+        width: 100%;
+        border-width: 0;
+        border-bottom: 1px dashed #999999;
+        border-radius: 0;
+    }
+    .custom-img-upload {
         display: none;
+    }
+    .editor{
+        overflow-y: auto;
+    }
+    .ql-container.ql-snow{
+        border-width: 0;
+    }
+    .ql-toolbar {
+        position: fixed;
+        top: -100px;
+        left: 0;
+        width: 100%;
+        background: @white;
+        z-index: 9;
+        &.active{
+            top:0;
+        }
+    }
+    .ql-editor {
+        padding: 20px 0 25px;
+        &.ql-blank::before{
+            left: 0;
+        }
+    }
+    .to-publish-btn{
+        position: fixed;
+        left: 13px;
+        bottom: 25px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        line-height: 70px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 }

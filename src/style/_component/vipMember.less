@@ -1,0 +1,205 @@
+.vip-page {
+    height: 100vh;
+    // 开通会员start
+    .at-once-buy-area {
+        padding-bottom: 125px;
+        .grade-name {
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            font-size: 11px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        .price {
+            color: #e7c687;
+            font-size: 14px;
+            font-weight: bolder;
+            padding: 20px 0 0 35px;
+            .num {
+                font-size: 40px;
+            }
+        }
+        dl {
+            padding-top: 12px;
+            padding-left: 35px;
+            dd {
+                font-size: 13px;
+                color: @white;
+                font-weight: bolder;
+            }
+        }
+        .at-once-btn {
+            position: absolute;
+            right: 37px;
+            bottom: 45px;
+            width: 90px;
+            line-height: 30px;
+            background: #e7c687;
+            font-size: 13px;
+            color: #000000;
+            font-weight: 500;
+        }
+        @media screen and (max-width:320px) {
+            .at-once-btn {
+                right: 5px;
+            }
+        }
+    }
+    // 轮播start
+    .swiper-container {
+        position: absolute;
+        top: 22px;
+        left: 0;
+        width: 100%;
+        padding-bottom: 24px;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 165px;
+        background: red;
+        color: @white;
+        border-radius: 10px;
+        box-shadow: 0 0 27px rgba(76, 70, 66, 0.74);
+        background-size: cover;
+    }
+    .swiper-container-horizontal > .swiper-pagination-bullets {
+        bottom: 0;
+    }
+    .swiper-pagination-bullet {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.24);
+    }
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #2e3136;
+    }
+    //会员信息
+    .member-info-area {
+        position: relative;
+        height: 145px;
+        border-bottom: 5px solid #ececec;
+        margin-bottom: 37px;
+        .lside {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 82px;
+            .header-img {
+                margin: 33px 0 0 13px;
+                width: 55px;
+                height: 55px;
+                border-radius: 50%;
+            }
+        }
+        .rside {
+            position: relative;
+            padding-left: 82px;
+            padding-top: 42px;
+            .nickname {
+                font-size: 14px;
+                color: #000000;
+                font-weight: 500;
+            }
+            >time {
+                display: inline-block;
+                padding-top: 3px;
+                font-size: 12px;
+                color: #666666;
+                font-weight: 500;
+            }
+            .at-once-buy-btn {
+                margin-top: 13px;
+                font-size: 13px;
+                color: #fffefe;
+                font-weight: 500;
+                width: 76px;
+                height: 26px;
+                border-radius: 13px;
+                background: #e5b256;
+            }
+            .grade-name{
+              position: absolute;
+              top: 50%;
+              right: 38px;  
+              transform: translateY(-50%);
+              font-size: 13px;
+              color: #bb8b3c;
+              font-weight: 500;
+              &::before{
+                content: '';
+                position: absolute;
+                left: -30px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 52px;
+                background: #ededed;
+              }
+            }
+        }
+    }
+    // 轮播end
+    .title {
+        >span {
+            position: relative;
+            font-size: 16px;
+            color: #000000;
+            font-weight: 500;
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 35px;
+                height: 1px;
+                background: #fff5e2;
+            }
+            &::before {
+                left: -45px;
+            }
+            &::after {
+                right: -45px;
+            }
+        }
+    }
+    .vip-usage-range {
+        margin: 40px 13px 0;
+        li {
+            font-size: 0;
+            margin-bottom: 37px;
+            >img {
+                display: inline-block;
+                width: 43px;
+                height: 43px;
+                border-radius: 50%;
+            }
+            .name {
+                margin-top: 15px;
+                font-size: 12px;
+                color: #000000;
+                font-weight: 500;
+            }
+        }
+    }
+    .vip-discribe {
+        background: #fafafa;
+        height: 90px;
+        line-height: 90px;
+        font-size: 13px;
+        color: #333333;
+        font-weight: 500;
+        padding: 0 13px;
+        >img {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+    }
+}
