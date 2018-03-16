@@ -145,6 +145,9 @@ class VipMemberInfo extends React.Component {
                     <button className='btn at-once-buy-btn'>立即续费</button>
                     <span className='grade-name'>钻石会员</span>
                 </div>
+                <section className='vip-package-list'>
+                    <div className='bg'></div>
+                </section>
             </section>
         )
     }

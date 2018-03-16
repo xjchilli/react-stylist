@@ -7,7 +7,7 @@ const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
     proxy: { // proxy URLs to backend development server
         '/wx': {
-            target: 'http://devwx.dapeis.net',
+            target: 'http://pywx.dapeis.net',
             changeOrigin: true
         }
     },
