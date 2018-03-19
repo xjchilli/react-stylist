@@ -86,7 +86,7 @@ class My extends Component {
                     <span className="icon icon-my-account"></span>
                     我的账户
                 </Link>
-                <Link to="/myAsset" className="link" >
+                <Link to="/serveredToMe" className="link" >
                     <span className="icon icon-my-dps"></span>
                     我的搭配师
                 </Link>

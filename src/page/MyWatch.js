@@ -134,30 +134,6 @@ class MyWatch extends Component {
                                             </div>
                                         </div>
                                     </li>
-                                    // <li key={index}>
-                                    //     <section className="dps-info" >
-                                    //         <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                    //             <img src={item.headImg} />
-                                    //             <span className="nickname">{item.nickName}</span>
-                                    //         </Link>
-                                    //         <div className="btn-area">
-                                    //             <button className={item.concern ? "btn watch-btn watched" : "btn watch-btn"} onClick={this.cancelWatch.bind(this, item.collocationId)}>{item.concern ? "已关注" : "+关注"}</button>
-                                    //         </div>
-                                    //     </section>
-                                    //     <ul className="plan-area">
-                                    //         {
-                                    //             item.plans.map((plan, i) => {
-                                    //                 return (
-                                    //                     <li key={i}>
-                                    //                         <Link to={"/fashionMomentDetail?planId=" + plan.planId}>
-                                    //                             <div className="small-img" style={{ backgroundImage: 'url(' + plan.masterImgae + ')' }}></div>
-                                    //                         </Link>
-                                    //                     </li>
-                                    //                 )
-                                    //             })
-                                    //         }
-                                    //     </ul>
-                                    // </li>
                                 )
                             })
                         }

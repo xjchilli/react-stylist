@@ -95,19 +95,19 @@ class DpsProfile extends Component {
             col1Imgs = fashion.col1Imgs;
             col2Imgs = fashion.col2Imgs;
         }
-        shops.map((item, index) => {
-            if (item.type === 1) {
-                item['typeName'] = "咨询";
-            } else if (item.type === 2) {
-                item['typeName'] = "购物";
-            } else if (item.type === 3) {
-                item['typeName'] = "陪逛";
-            } else if (item.type === 4) {
-                item['typeName'] = "整理";
-            }
-            item['url'] = "/dpsServerDetail?shopId=" + item.id;
-            item['imgUrl'] = "/assets/img/server" + item.type + ".jpg";
-        });
+        // shops.map((item, index) => {
+        //     if (item.type === 1) {
+        //         item['typeName'] = "咨询";
+        //     } else if (item.type === 2) {
+        //         item['typeName'] = "购物";
+        //     } else if (item.type === 3) {
+        //         item['typeName'] = "陪逛";
+        //     } else if (item.type === 4) {
+        //         item['typeName'] = "整理";
+        //     }
+        //     item['url'] = "/dpsServerDetail?shopId=" + item.id;
+        //     item['imgUrl'] = "/assets/img/server" + item.type + ".jpg";
+        // });
         let sex = collocation.sex;
         return (
             <section className="dps-profile-page">
@@ -199,15 +199,15 @@ class DpsProfile extends Component {
                             }
                         </ul>
                     </div>
-    
+
                     <div className={this.state.tab === 2 ? "service-list active" : "service-list"}>
                         <ul className="flex-box">
                             {
                                 shops.map((item, index) => {
                                     return (
                                         <li className="item-2" key={index} onClick={() => { this.setState({ dpsServerDetail: true, shopId: item.id }) }} >
-                                            <div className='server-img' style={{ backgroundImage: 'url(' + item.imgUrl + ')' }}></div>
-                                            <p className="text-center">{item.typeName}</p>
+                                            <div className='server-img' style={{ backgroundImage: 'url(' + item.icon + ')' }}></div>
+                                            <p className="text-center">{item.name}</p>
                                         </li>
                                     )
                                 })
@@ -263,41 +263,24 @@ class DpsServerDetail extends Component {
 
 
     render() {
-        let { id, type, price, content } = this.props.data;//type 1:咨询,2:购物,3:逛街,4：衣橱整理
+        let { id, type, name, price, content } = this.props.data;//type 1:咨询,2:购物,3:逛街,4：衣橱整理
         let service = {
             url: '',
-            price: '',
-            typeName: '',
+            price: price,
+            typeName: name,
         }
-
-        if (type === 1) {//咨询
-            service.price = price + "/次";
-            service.typeName = "在线咨询";
+        if (type === 'online') {//在线咨询
             service.url = "/consult?serverId=" + id;
-            document.title = "在线咨询";
-        } else if (type === 2) {//购物
-            service.price = price + "/次";
-            service.typeName = "购物服务";
-            service.url = "/shopping?serverId=" + id;
-            document.title = "购物服务";
-        } else if (type === 3) {//逛街
-            service.price = price + "/2小时";
-            service.typeName = "线下陪购";
-            service.url = "/accompanyShopping?serverId=" + id;
-            document.title = "线下陪购";
-        } else if (type === 4) {//整理
-            service.price = price + "/2小时";
-            service.typeName = "整理衣橱";
-            service.url = "/neatenWardrobe?serverId=" + id;
-            document.title = "整理衣橱";
-        }
+        } else if (type === 'offline') {//线下体验
+            service.url = "/plainPeopleChange?serverId=" + id;
+        } 
 
         return (
             <section className="dpsServerDetail-area">
                 <section className="content-area">
                     <header>
                         <p>服务类别：{service.typeName}</p>
-                        <p className="price">服务价格：{service.price}</p>
+                        <p className="price">服务价格：{service.price}/次</p>
                     </header>
                     <section className="content">
                         {content}

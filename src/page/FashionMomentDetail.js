@@ -37,9 +37,7 @@ class DapeisInfo extends Component {
                 <div className="item">
                     <p className="nickname">{nickName}</p>
                 </div>
-
                 <div className="item text-right">
-                    {/* <Link to={"/dpsProfile?collocationId=" + id + "&tab=2"} className='btn question-btn'>咨询</Link> */}
                     <button className={this.props.concern ? 'btn watch-btn active' : 'btn watch-btn'} onClick={this.props.watchOrCancel}>{this.props.concern ? "已关注" : "+关注"}</button>
                 </div>
             </header>
@@ -47,6 +45,32 @@ class DapeisInfo extends Component {
         )
     }
 }
+
+
+/**
+ * 用户信息
+ */
+class UserInfo extends Component {
+    render() {
+        let {
+            headImg,
+            nickName,
+            sex,
+        } = this.props.plan;
+        return (
+            <header style={{ borderBottomWidth: ToolDps.iphone ? '0.5px' : '1px' }}>
+                <div className="item">
+                    <img src={headImg} alt="" />
+                </div>
+                <div className="item">
+                    <p className="nickname">{nickName}</p>
+                </div>
+            </header>
+
+        )
+    }
+}
+
 
 /**
  * 方案内容
@@ -399,12 +423,12 @@ class AuthorReply extends Component {
  * 方案底部内容
  */
 class Footer extends Component {
-
     constructor(props) {
         super(props);
-        let { id } = this.props.plan;
+        let { id, sourceType } = this.props.plan;
         this.state = {
             id: id, //方案id
+            sourceType: sourceType,
             toComment: false,//去评论
             newCommentContent: ''//评论内容
         }
@@ -436,16 +460,23 @@ class Footer extends Component {
                     写下你的评论...
                 </section>
                 <ul className="flex-box">
-                    <li className="item-2" onClick={this.props.plan.agreeValue === 0 ? this.zan.bind(this, this.state.id) : null}>
+                    <li className={this.state.sourceType === 'wechat' ? "item-2 item-3" : "item-2"} onClick={this.props.plan.agreeValue === 0 ? this.zan.bind(this, this.state.id) : null}>
                         {this.props.plan.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
                         <span className="num">{this.props.plan.agreeNum ? this.props.plan.agreeNum : 0}</span>
                     </li>
-                    <li className="item-2" >
+                    <li className={this.state.sourceType === 'wechat' ? "item-2 item-3" : "item-2"} >
                         <Lk activeClass="active" to="user-comment" spy={true} smooth={true} duration={500}>
                             <span className="icon icon-msg"></span>
                             <span className="num">{this.props.commentTotalNum}</span>
                         </Lk>
                     </li>
+                    {
+                        this.state.sourceType === 'wechat' ? (
+                            <li className="item-2 item-3" >
+                                <span className="icon icon-share"></span>
+                            </li>
+                        ) : null
+                    }
                 </ul>
                 {this.state.toComment ? <UserComment newCommentContent={this.state.newCommentContent} setNewCommentContent={(val) => { this.setState({ newCommentContent: val }) }} commentTotalNum={this.props.commentTotalNum} setCommentNum={this.props.setCommentNum} commentList={this.props.commentList} addComment={this.props.addComment} plan={this.props.plan} hide={() => { this.setState({ toComment: false }) }} /> : null}
             </footer>
@@ -549,19 +580,20 @@ class FashionMomentDetail extends Component {
         //分享用户id
         let sourceUserId = ToolDps.sessionItem('sourceUserId');
         return (
-            // ref={(el) => this.page = el}
             <section className="fashionMomentDetailArea" style={{ height: window.innerHeight + 'px' }}>
-                <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
+                {
+                    this.state.plan.sourceType === 'wechat' ? (this.props.isMe ? null : <UserInfo plan={this.state.plan} />) : <DapeisInfo collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
+                }
                 <Content plan={this.state.plan} />
                 <ReWard awardUserAvatar={this.state.awardUserAvatar} planId={this.state.planId} />
-                <WatchDps collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />
+                {this.state.plan.sourceType === 'wechat' ? null : <WatchDps collocation={this.state.collocation} concern={this.state.concern} watchOrCancel={this.watchOrCancel.bind(this)} />}
                 <Comment plan={this.state.plan} commentTotalNum={this.state.commentTotalNum} commentList={this.state.commentList} addComment={this.addComment.bind(this)} setCommentNum={this.setCommentNum.bind(this)} />
                 <Footer plan={this.state.plan} setZan={this.setZan.bind(this)} commentTotalNum={this.state.commentTotalNum} setCommentNum={this.setCommentNum.bind(this)} commentList={this.state.commentList} addComment={this.addComment.bind(this)} />
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {/* 用户分享来源才会出现这个按钮 */}
                 {
                     sourceUserId ? (
-                        <Link to={"/plainPeopleChange?projectId=5&sourceUserId=" + sourceUserId} className="join-link">
+                        <Link to={"/plainPeopleChange?sourceUserId=" + sourceUserId} className="join-link">
                             我也要体验
                     </Link>
                     ) : null
@@ -578,6 +610,11 @@ class FashionMomentDetail extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+        let { isMe } = qs.parse(props.location.search);
+        this.state = {
+            isMe: isMe || false
+        }
+        console.log(isMe);
     }
 
 
@@ -604,7 +641,7 @@ class Main extends Component {
             succ = data.succ;
             if (succ) this.saveSourceUserId(this.props);
         }
-        let main = succ ? <FashionMomentDetail data={data} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
+        let main = succ ? <FashionMomentDetail data={data} isMe={this.state.isMe} /> : <DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} />;
         return main;
     }
 }

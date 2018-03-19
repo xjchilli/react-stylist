@@ -129,25 +129,79 @@ class VipUsage extends React.Component {
 }
 
 /**
+ * vip等级
+ */
+class VipGrade extends React.Component {
+    render() {
+        return (
+            <section className='vip-package-list'>
+                <div className='bg' onClick={this.props.close}></div>
+                <dl className='list'>
+                    <dt>VIP套餐</dt>
+                    <dd>
+                        <div className='price-area'>
+                            <span className='num del'>298</span>
+                            <em>元一年</em>
+                            <span className='price-spread'>
+                                还需补差价<em>299元</em>
+                            </span>
+                        </div>
+                        <div className='describe'>尊享线上服务免费，享受一次免费线下服务</div>
+                        <button className='btn open-up-btn'>开通</button>
+                    </dd>
+                    <dd>
+                        <div className='price-area'>
+                            <span className='num del'>298</span>
+                            <em>元一年</em>
+                            <span className='price-spread'>
+                                还需补差价<em>299元</em>
+                            </span>
+                        </div>
+                        <div className='describe'>尊享线上服务免费，享受一次免费线下服务</div>
+                        <button className='btn open-up-btn'>开通</button>
+                    </dd>
+                    <dd>
+                        <div className='price-area'>
+                            <span className='num del'>298</span>
+                            <em>元一年</em>
+                            <span className='price-spread'>
+                                还需补差价<em>299元</em>
+                            </span>
+                        </div>
+                        <div className='describe'>尊享线上服务免费，享受一次免费线下服务</div>
+                        <button className='btn open-up-btn'>开通</button>
+                    </dd>
+                </dl>
+            </section>
+        )
+    }
+}
+
+/**
  * 会员信息
  */
 class VipMemberInfo extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            vipGradeShow: false//vip等级
+        }
+    }
     render() {
         return (
             <section className='member-info-area'>
                 <div className='lside'>
-                    <img src='/assets/img/girl.jpg' className='header-img'/>
+                    <img src='/assets/img/girl.jpg' className='header-img' />
                 </div>
                 <div className='rside'>
                     <span className='nickname'>哒啦哒啦</span>
-                    <br/>
+                    <br />
                     <time>2018-9-20日到期</time>
-                    <button className='btn at-once-buy-btn'>立即续费</button>
+                    <button className='btn at-once-buy-btn' onClick={() => { this.setState({ vipGradeShow: true }) }}>立即续费</button>
                     <span className='grade-name'>钻石会员</span>
                 </div>
-                <section className='vip-package-list'>
-                    <div className='bg'></div>
-                </section>
+                {this.state.vipGradeShow ? <VipGrade close={()=>{this.setState({vipGradeShow:false})}} /> : null}
+
             </section>
         )
     }
@@ -155,14 +209,18 @@ class VipMemberInfo extends React.Component {
 
 
 class VipMember extends React.Component {
-
-
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            vipMemberInfoShow: true,//vip信息
+            buyShow: false//开通会员
+        }
+    }
     render() {
         return (
             <section className='vip-page'>
-                <VipMemberInfo />
-                {/* <Buy /> */}
+                {this.state.vipMemberInfoShow ? <VipMemberInfo /> : null}
+                {this.state.buyShow ? <Buy /> : null}
                 <VipUsage />
             </section>
         )

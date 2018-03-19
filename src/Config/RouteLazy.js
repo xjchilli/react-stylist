@@ -13,6 +13,7 @@ import GratefulParentActivity from 'bundle-loader?lazy&name=[name]!../page/Grate
 import PlainPeopleChangeContainer from 'bundle-loader?lazy&name=[name]!../page/PlainPeopleChange';
 import MyWatchContainer from 'bundle-loader?lazy&name=[name]!../page/MyWatch';
 import MyContainer from 'bundle-loader?lazy&name=[name]!../page/My';
+import ServeredToMeContainer from 'bundle-loader?lazy&name=[name]!../page/ServeredToMe';
 import MyAssetContainer from 'bundle-loader?lazy&name=[name]!../page/MyAsset';
 import DpsListContainer from 'bundle-loader?lazy&name=[name]!../page/DpsList';
 import DpsProfileContainer from 'bundle-loader?lazy&name=[name]!../page/DpsProfile';
@@ -105,6 +106,12 @@ let routers = [
         path: '/my',
         exact: false,
         component: (props) => getComponent(props, MyContainer)
+    },
+
+    {//服务过我的搭配师
+        path: '/serveredToMe',
+        exact: false,
+        component: (props) => getComponent(props, ServeredToMeContainer)
     },
     {//我的资产
         path: '/myAsset',

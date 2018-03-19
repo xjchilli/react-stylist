@@ -142,10 +142,19 @@ class FashionMoment extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                                    <img src={item.collocationHeadImg} className="head-img" />
-                                                    <span className="nickname">{item.collocationNickName}</span>
-                                                </Link>
+                                                {
+                                                    item.sourceType === 'wechat' ? (
+                                                        <div>
+                                                            <img src={item.headImg} className="head-img" />
+                                                            <span className="nickname">{item.collocationNickName}</span>
+                                                        </div>
+                                                    ) : (
+                                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                                <img src={item.headImg} className="head-img" />
+                                                                <span className="nickname">{item.collocationNickName}</span>
+                                                            </Link>
+                                                        )
+                                                }
                                                 <div className="zan">
                                                     {item.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
                                                     {item.agreeNum}
@@ -170,10 +179,19 @@ class FashionMoment extends Component {
                                                 <div className="list-title">{item.planName}</div>
                                             </Link>
                                             <div className="dps-info">
-                                                <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                                    <img src={item.collocationHeadImg} className="head-img" />
-                                                    <span className="nickname">{item.collocationNickName}</span>
-                                                </Link>
+                                                {
+                                                    item.sourceType === 'wechat' ? (
+                                                        <div>
+                                                            <img src={item.headImg} className="head-img" />
+                                                            <span className="nickname">{item.collocationNickName}</span>
+                                                        </div>
+                                                    ) : (
+                                                            <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
+                                                                <img src={item.headImg} className="head-img" />
+                                                                <span className="nickname">{item.collocationNickName}</span>
+                                                            </Link>
+                                                        )
+                                                }
                                                 <div className="zan">
                                                     {item.agreeValue === 1 ? <span className="icon icon-heart-selected"></span> : <span className="icon icon-heart"></span>}
                                                     {item.agreeNum}

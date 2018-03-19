@@ -3,8 +3,13 @@
  */
 import { ToolDps } from 'ToolDps';
 //common  start------
+// 上传图片
 export const UploadImg = (formdata) => ToolDps.post('/wx/upload/images', formdata, { 'Content-Type': "multipart/form-data" });
+//所有门店
+export const storeList = () => ToolDps.get('/wx/requirement/store');
 //common  end------
+//用户信息
+export const userInfo = () => ToolDps.get('/wx/user/info');
 //用户商品评价
 export const UserGoodsComment = (data) => ToolDps.post('/wx/goods/order/comment', data, { 'Content-Type': "application/json" });
 //时尚圈分类
@@ -30,4 +35,12 @@ export const deleteShopCart = (cartIdArr) => ToolDps.post('/wx/cart/delete', { c
 //我关注的搭配师列表
 export const myWatchDpsList = () => ToolDps.get('/wx/concern/getMy');
 //关注或者取消关注
-export const watchOrCancel = (collocationId) => ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId })
+export const watchOrCancel = (collocationId) => ToolDps.post('/wx/concern/doAddOrDel', { collocationId: collocationId });
+//服务start
+//线上咨询
+export const onlineServer = (data) => ToolDps.post('/wx/requirement/online', data);
+//线下体验
+export const offlineServer = (data) => ToolDps.post('/wx/requirement/offline', data);
+//服务end
+//发布时尚圈
+export const publishFashion = (data) => ToolDps.post('/wx/fashion/add', data);

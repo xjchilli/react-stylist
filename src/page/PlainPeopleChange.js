@@ -7,6 +7,8 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import merged from 'obj-merged';
 import { ToolDps } from '../ToolDps';
+import { offlineServer, userInfo } from 'ToolAjax';
+import { storeList } from 'ToolAjax';
 import action from '../Action/Index';
 import classNames from 'classnames';
 import { Msg, City, PreviewImg, Loading, DataLoad, Button, MyDate } from '../Component/index';
@@ -25,12 +27,10 @@ class BaseInfo extends Component {
         }
     }
     componentDidMount() {
+        let self = this;
         let ageIndex = Number(this.state.data.age) - 1; //年龄
         let heighIndex = Number(this.state.data.heigh) - 145; //身高
         let weightIndex = Number(this.state.data.weight) - 35; //体重
-        // let chestIndex = Number(this.state.data.chest) - 50; //胸围
-        // let waistIndex = Number(this.state.data.waist) - 50; //腰围
-        // let hipIndex = Number(this.state.data.hip) - 50; //臀围
         //年龄
         this.age = new Swiper('.J-age', {
             initialSlide: ageIndex || 23,
@@ -38,19 +38,22 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let age = swiper.slides[swiper.clickedIndex].textContent.trim();
-                let copyData = merged(this.state.data);
-                copyData.age = age;
-                this.props.setPlainChange(copyData);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let age = swiper.slides[swiper.activeIndex].textContent.trim();
-                let copyData = merged(this.state.data);
-                copyData.age = age;
-                this.props.setPlainChange(copyData);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let age = this.slides[this.clickedIndex].textContent.trim();
+                    let copyData = merged(self.state.data);
+                    copyData.age = age;
+                    self.props.setPlainChange(copyData);
+                },
+                transitionEnd: function () { //slide改变
+                    let age = this.slides[this.activeIndex].textContent.trim();
+                    let copyData = merged(self.state.data);
+                    copyData.age = age;
+                    self.props.setPlainChange(copyData);
+                }
             }
+
         });
         //身高
         this.height = new Swiper('.J-height', {
@@ -59,19 +62,22 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let heigh = swiper.slides[swiper.clickedIndex].textContent.trim();
-                let copyData = merged(this.state.data);
-                copyData.heigh = heigh;
-                this.props.setPlainChange(copyData);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let heigh = swiper.slides[swiper.activeIndex].textContent.trim();
-                let copyData = merged(this.state.data);
-                copyData.heigh = heigh;
-                this.props.setPlainChange(copyData);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let heigh = this.slides[this.clickedIndex].textContent.trim();
+                    let copyData = merged(self.state.data);
+                    copyData.heigh = heigh;
+                    self.props.setPlainChange(copyData);
+                },
+                transitionEnd: function () { //slide改变
+                    let heigh = this.slides[this.activeIndex].textContent.trim();
+                    let copyData = merged(self.state.data);
+                    copyData.heigh = heigh;
+                    self.props.setPlainChange(copyData);
+                }
             }
+
         });
         //体重
         this.weight = new Swiper('.J-weight', {
@@ -80,83 +86,23 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let weight = swiper.slides[swiper.clickedIndex].textContent;
-                let copyData = merged(this.state.data);
-                copyData.weight = weight;
-                this.props.setPlainChange(copyData);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let weight = swiper.slides[swiper.activeIndex].textContent;
-                let copyData = merged(this.state.data);
-                copyData.weight = weight;
-                this.props.setPlainChange(copyData);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let weight = this.slides[this.clickedIndex].textContent;
+                    let copyData = merged(self.state.data);
+                    copyData.weight = weight;
+                    self.props.setPlainChange(copyData);
+                },
+                transitionEnd: function () { //slide改变
+                    let weight = this.slides[this.activeIndex].textContent;
+                    let copyData = merged(self.state.data);
+                    copyData.weight = weight;
+                    self.props.setPlainChange(copyData);
+                }
             }
+
         });
-        //胸围
-        // this.chest = new Swiper('.J-chest', {
-        //     initialSlide: chestIndex || 30,
-        //     slidesPerView: 5,
-        //     centeredSlides: true,
-        //     // freeMode: true,
-        //     freeModeSticky: true,
-        //     onTap: (swiper) => {
-        //         swiper.slideTo(swiper.clickedIndex, 100, false);
-        //         let chest = swiper.slides[swiper.clickedIndex].textContent.trim();
-        //         let copyData = merged(this.state.data);
-        //         copyData.chest = chest;
-        //         this.props.setPlainChange(copyData);
-        //     },
-        //     onTransitionEnd: (swiper) => { //slide改变
-        //         let chest = swiper.slides[swiper.activeIndex].textContent.trim();
-        //         let copyData = merged(this.state.data);
-        //         copyData.chest = chest;
-        //         this.props.setPlainChange(copyData);
-        //     }
-        // });
-        // //腰围
-        // this.waist = new Swiper('.J-waist', {
-        //     initialSlide: waistIndex || 20,
-        //     slidesPerView: 5,
-        //     centeredSlides: true,
-        //     // freeMode: true,
-        //     freeModeSticky: true,
-        //     onTap: (swiper) => {
-        //         swiper.slideTo(swiper.clickedIndex, 100, false);
-        //         let waist = swiper.slides[swiper.clickedIndex].textContent.trim();
-        //         let copyData = merged(this.state.data);
-        //         copyData.waist = waist;
-        //         this.props.setPlainChange(copyData);
-        //     },
-        //     onTransitionEnd: (swiper) => { //slide改变
-        //         let waist = swiper.slides[swiper.activeIndex].textContent.trim();
-        //         let copyData = merged(this.state.data);
-        //         copyData.waist = waist;
-        //         this.props.setPlainChange(copyData);
-        //     }
-        // });
-        // //臀围
-        // this.hip = new Swiper('.J-hip', {
-        //     initialSlide: hipIndex || 40,
-        //     slidesPerView: 5,
-        //     centeredSlides: true,
-        //     // freeMode: true,
-        //     freeModeSticky: true,
-        //     onTap: (swiper) => {
-        //         swiper.slideTo(swiper.clickedIndex, 100, false);
-        //         let hip = swiper.slides[swiper.clickedIndex].textContent.trim();
-        //         let copyData = merged(this.state.data);
-        //         copyData.hip = hip;
-        //         this.props.setPlainChange(copyData);
-        //     },
-        //     onTransitionEnd: (swiper) => { //slide改变
-        //         let hip = swiper.slides[swiper.activeIndex].textContent.trim();
-        //         let copyData = merged(this.state.data);
-        //         copyData.hip = hip;
-        //         this.props.setPlainChange(copyData);
-        //     }
-        // });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -183,21 +129,6 @@ class BaseInfo extends Component {
             weightArr.push(<div className="swiper-slide" key={i}>{35 + i}</div>);
         }
 
-        //胸围
-        // let chesthArr = [];
-        // for (let i = 0; i <= 100; i++) {
-        //     chesthArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
-        // }
-        // //腰围
-        // let waistArr = [];
-        // for (let i = 0; i <= 100; i++) {
-        //     waistArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
-        // }
-        // //臀围
-        // let hipArr = [];
-        // for (let i = 0; i <= 100; i++) {
-        //     hipArr.push(<div className="swiper-slide" key={i}>{50 + i}</div>);
-        // }
         return (
             <ul className="baseInfo-area">
                 <li className="item">
@@ -236,228 +167,10 @@ class BaseInfo extends Component {
                         <i className="swiper-next-btn" onClick={() => { this.weight.slideNext() }}></i>
                     </div>
                 </li>
-                {/* <li className="item">
-                    <h4 className="form-title">胸围（cm）</h4>
-                    <div className="swiper-area">
-                        <i className="swiper-pre-btn" onClick={() => { this.chest.slidePrev() }}></i>
-                        <div className="swiper-container J-chest">
-                            <div className="swiper-wrapper">
-                                {chesthArr}
-                            </div>
-                        </div>
-                        <i className="swiper-next-btn" onClick={() => { this.chest.slideNext() }}></i>
-                    </div>
-                </li>
-                <li className="item">
-                    <h4 className="form-title">腰围（cm）</h4>
-                    <div className="swiper-area">
-                        <i className="swiper-pre-btn" onClick={() => { this.waist.slidePrev() }}></i>
-                        <div className="swiper-container J-waist">
-                            <div className="swiper-wrapper">
-                                {waistArr}
-                            </div>
-                        </div>
-                        <i className="swiper-next-btn" onClick={() => { this.waist.slideNext() }}></i>
-                    </div>
-                </li>
-                <li className="item">
-                    <h4 className="form-title">臀围（cm）</h4>
-                    <div className="swiper-area">
-                        <i className="swiper-pre-btn" onClick={() => { this.hip.slidePrev() }}></i>
-                        <div className="swiper-container J-hip">
-                            <div className="swiper-wrapper">
-                                {hipArr}
-                            </div>
-                        </div>
-                        <i className="swiper-next-btn" onClick={() => { this.hip.slideNext() }}></i>
-                    </div>
-                </li> */}
             </ul>
         )
     }
 }
-
-//肤色和体型
-// class Type extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             isSkin: false,
-//             isBody: false,
-//             skinNames: ['晶莹白皙', '自然红润', '自然偏黄', '活力小麦'],//肤色名字
-//             bodyNamesGirl: ['沙漏形', '梨形', '苹果形', '直筒形', '倒三角'],//男：体型名字
-//             bodyNamesBoy: ['梯形', '正三角', '矩形', '倒三角', '椭圆形']//女：体型名字
-//         }
-//     }
-//     render() {
-//         let { sex } = this.props.data;//1：男  2：女
-//         let skinName = "选择肤色";
-//         let bodyName = "选择体型";
-//         if (this.props.data.colorofskin != "") {
-//             skinName = this.state.skinNames[Number(this.props.data.colorofskin) - 1];
-//         }
-//         if (this.props.data.bodySize != "") {
-//             if (sex === 1) {
-//                 bodyName = this.state.bodyNamesBoy[Number(this.props.data.bodySize) - 1];
-//             } else {
-//                 bodyName = this.state.bodyNamesGirl[Number(this.props.data.bodySize) - 1];
-//             }
-
-//         }
-
-//         return (
-//             <div className="body-area">
-//                 <h2 className="form-title">选择肤色和体型 *</h2>
-//                 <ul className="type-select-area">
-//                     <li>
-//                         <div className={this.props.data.colorofskin != "" ? "box active" : "box"} onClick={() => { this.setState({ isSkin: true }) }}>
-//                             <img src={sex === 1 ? "/assets/img/suit/skin-icon-2.jpg" : "/assets/img/suit/skin-icon.jpg"} />
-//                             <span className="title">{skinName}</span>
-//                             <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
-//                         </div>
-//                     </li>
-//                     <li>
-//                         <div className={this.props.data.bodySize != "" ? "box active" : "box"} onClick={() => { this.setState({ isBody: true }) }}>
-//                             <img src={sex === 1 ? "/assets/img/suit/body-icon-2.jpg" : "/assets/img/suit/body-icon.jpg"} />
-//                             <span className="title">{bodyName}</span>
-//                             <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
-//                         </div>
-//                     </li>
-//                 </ul>
-//                 {/* 肤色 */}
-//                 {this.state.isSkin ? <Skin {...this.props} data={this.props.data} close={() => { this.setState({ isSkin: false }) }} /> : null}
-//                 {/* 体型 */}
-//                 {this.state.isBody ? <Body {...this.props} data={this.props.data} close={() => { this.setState({ isBody: false }) }} /> : null}
-//             </div>
-//         )
-//     }
-// }
-
-
-// //肤色
-// class Skin extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             girlSkin: [{ name: '晶莹白皙', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-1.jpg?s=2' }, { name: '自然红润', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-2.jpg?s=2' }, { name: '自然偏黄', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-3.jpg?s=2' }, { name: '活力小麦', url: 'https://file.dapeis.com/resources/config/requirement/skin-2-4.jpg?s=2' }],
-//             boySkin: [{ name: '晶莹白皙', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-1.jpg?s=1' }, { name: '自然红润', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-2.jpg?s=1' }, { name: '自然偏黄', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-3.jpg?s=1' }, { name: '活力小麦', url: 'https://file.dapeis.com/resources/config/requirement/skin-1-4.jpg?s=1' }],
-//             data: props.data, //肤色
-//         }
-//     }
-
-//     componentWillReceiveProps(nextProps) {
-//         this.setState({
-//             data: nextProps.data
-//         });
-//     }
-
-
-//     //选择肤色
-//     select(skin) {
-//         let copyData = merged(this.state.data);
-//         copyData.colorofskin = skin;
-//         this.props.setPlainChange(copyData);
-//         this.props.close();
-//     }
-//     render() {
-//         let { sex } = this.state.data;
-//         let skins = [];
-//         if (sex === 1) {//男
-//             skins = this.state.boySkin;
-//         } else {//女
-//             skins = this.state.girlSkin;
-//         }
-//         return (
-//             <div className="fixed face-select-area">
-//                 <div className="box">
-//                     <h3>选择肤色</h3>
-//                     <span className="close" onClick={this.props.close}></span>
-//                     <ul className="flex-box img-list">
-//                         {
-//                             skins.map((item, index) => {
-//                                 return (
-//                                     <li className="item-2" key={index}>
-//                                         <div className={this.state.data.colorofskin == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
-//                                             <img src={item.url} />
-//                                             <span className="img-title">
-//                                                 {item.name}
-//                                                 <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
-//                                             </span>
-//                                         </div>
-//                                     </li>
-//                                 )
-//                             })
-//                         }
-//                     </ul>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
-
-// //体型
-// class Body extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             girlBody: [{ name: '沙漏形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-1.jpg?s=2' }, { name: '梨形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-2.jpg?s=2' }, { name: '苹果形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-3.jpg?s=2' }, { name: '直筒形', url: 'https://file.dapeis.com/resources/config/requirement/body-2-4.jpg?s=2' }, { name: '倒三角', url: 'https://file.dapeis.com/resources/config/requirement/body-2-5.jpg?s=2' }],
-//             boyBody: [{ name: '梯形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-1.jpg?s=1' }, { name: '正三角', url: 'https://file.dapeis.com/resources/config/requirement/body-1-2.jpg?s=1' }, { name: '矩形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-3.jpg?s=1' }, { name: '倒三角', url: 'https://file.dapeis.com/resources/config/requirement/body-1-4.jpg?s=1' }, { name: '椭圆形', url: 'https://file.dapeis.com/resources/config/requirement/body-1-5.jpg?s=1' }],
-//             data: props.data, //体型
-//         }
-
-//     }
-
-//     componentWillReceiveProps(nextProps) {
-//         this.setState({
-//             data: nextProps.data
-//         });
-//     }
-
-
-//     //选择体型
-//     select(body) {
-//         let copyData = merged(this.state.data);
-//         copyData.bodySize = body;
-//         this.props.setPlainChange(copyData);
-//         this.props.close();
-//     }
-//     render() {
-//         let { sex } = this.state.data;
-//         let bodys = [];
-//         if (sex === 1) {//男
-//             bodys = this.state.boyBody;
-//         } else {//女
-//             bodys = this.state.girlBody;
-//         }
-
-//         return (
-//             <div className="fixed face-select-area">
-//                 <div className="box face-box">
-//                     <h3>选择体型</h3>
-//                     <span className="close" onClick={this.props.close}></span>
-//                     <ul className="flex-box img-list">
-//                         {
-//                             bodys.map((item, index) => {
-//                                 return (
-//                                     <li className="item-2" key={index}>
-//                                         <div className={this.state.data.bodySize == index + 1 ? "img-box active" : "img-box"} onClick={this.select.bind(this, index + 1 + '')}>
-//                                             <img src={item.url} />
-//                                             <span className="img-title">
-//                                                 {item.name}
-//                                                 <span className="icon icon-gou2"><span className="path1"></span><span className="path2"></span></span>
-//                                             </span>
-
-//                                         </div>
-//                                     </li>
-//                                 )
-//                             })
-//                         }
-//                     </ul>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
 
 
 //风格
@@ -526,123 +239,29 @@ class Style extends Component {
     }
 }
 
-//生活照
-// class LifePhoto extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             msgShow: false,
-//             msgText: '', //提示内容
-//             imgLoding: false,//正脸照上传loading图
-//             imgLoding2: false,//全身照上传loading图
-//             data: props.data || null
-//         }
-//     }
-//     componentWillReceiveProps(nextProps) {
-//         this.setState({
-//             data: nextProps.data
-//         });
-//     }
-
-
-//     selectImg(type, e) {
-//         let files = e.target.files;
-//         if (files && files[0]) {
-//             let readFile = new FileReader();
-//             readFile.onload = () => {
-//                 this.upload(type, files[0]);
-//             }
-//             readFile.readAsDataURL(files[0]);
-//         }
-//     }
-
-//     upload(type, file) {
-//         if (type == "face") {
-//             this.setState({
-//                 imgLoding: true
-//             });
-//         } else if (type == "all") {
-//             this.setState({
-//                 imgLoding2: true
-//             });
-//         }
-//         let formdata = new FormData();
-//         formdata.append('type', type);
-//         formdata.append('img', file);
-//         ToolDps.post('/wx/user/uploadPrestigeImg', formdata, {
-//             'Content-Type': 'multipart/form-data'
-//         }).then((res) => {
-//             if (res.succ) {
-//                 if (type == "face") {
-//                     let copyData = merged(this.state.data);
-//                     copyData.faceLifeImg = res.img;
-//                     copyData.faceLifeImgPara = res.imgPara;
-//                     this.props.setPlainChange(copyData);
-//                     this.setState({
-//                         imgLoding: false
-//                     });
-//                 } else if (type == "all") {
-//                     let copyData = merged(this.state.data);
-//                     copyData.bodyLifeImg = res.img;
-//                     copyData.bodyLifeImgPara = res.imgPara;
-//                     this.props.setPlainChange(copyData);
-//                     this.setState({
-//                         imgLoding2: false,
-//                     });
-//                 }
-//             } else {
-//                 this.setState({
-//                     msgShow: true,
-//                     msgText: '上传图片失败',
-//                 });
-//             }
-//         });
-//     }
-
-//     render() {
-//         return (
-//             <div className="lifePhoto-area">
-//                 <h2 className="form-title">添加照片 *</h2>
-//                 <ul className="flex-box upload-control-area">
-//                     <li className="item-2">
-//                         <div className={this.state.data.faceLifeImg ? "upload-area active" : "upload-area"} >
-//                             <span className="icon icon-camera"></span>
-//                             <p>添加一张正脸照片</p>
-//                             <div className="img-show" style={{ backgroundImage: 'url(' + this.state.data.faceLifeImg + ')' }} ></div>
-//                             <input type="file" accept="image/*" className="upload-file" onChange={this.selectImg.bind(this, 'face')} />
-//                             {
-//                                 this.state.imgLoding ? <Loading /> : null
-//                             }
-//                         </div>
-//                     </li>
-//                     <li className="item-2">
-//                         <div className={this.state.data.bodyLifeImg ? "upload-area active" : "upload-area"}>
-//                             <span className="icon icon-camera"></span>
-//                             <p>添加近期全身照</p>
-//                             <div className="img-show" style={{ backgroundImage: 'url(' + this.state.data.bodyLifeImg + ')' }} ></div>
-//                             <input type="file" accept="image/*" className="upload-file" onChange={this.selectImg.bind(this, 'all')} />
-//                             {
-//                                 this.state.imgLoding2 ? <Loading /> : null
-//                             }
-//                         </div>
-//                     </li>
-//                 </ul>
-//                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
-//             </div>
-//         )
-//     }
-// }
 
 //其他信息
 class OtherInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            storeList: [],//所有门店
             startDate: this.getSevenDayForDate(),
             timeShow: false,//时间窗口显示
             data: props.data || null,
         }
         this._time = 0;
+    }
+
+    componentDidMount() {
+        //获取所有门店
+        storeList().then((res) => {
+            if (res.succ) {
+                this.setState({
+                    storeList: res.data
+                });
+            }
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -660,17 +279,6 @@ class OtherInfo extends Component {
         startDate.setDate(d + 7);
         return startDate;
     }
-
-    /**
-     * 获取职业
-     * */
-    // getProfessional(e) {
-    //     let copyData = merged(this.state.data);
-    //     copyData.professional = e.target.value;
-    //     this.props.setPlainChange(copyData);
-    // }
-
-
 
 
     //预期花费
@@ -697,14 +305,6 @@ class OtherInfo extends Component {
     }
 
 
-    //改善需求
-    // remarks(e) {
-    //     let copyData = merged(this.state.data);
-    //     copyData.remarks = e.target.value;
-    //     this.props.setPlainChange(copyData);
-    // }
-
-
     render() {
         return (
             <div className="otherInfo-area">
@@ -721,7 +321,6 @@ class OtherInfo extends Component {
                 <h3 className="form-title">预约时间 *</h3>
                 <div className="birthDate" onClick={() => { this.setState({ timeShow: true }) }}>
                     {this.state.data.time}
-                    {/* {this.state.timeShow ? <Time closeTimeWindow={() => { this.setState({ timeShow: false }) }} initDate={this.state.data.time} getDate={this.getDate.bind(this)} /> : null} */}
                 </div>
                 {
                     this.state.timeShow ? <MyDate option={{
@@ -735,13 +334,13 @@ class OtherInfo extends Component {
                 <h3 className="form-title">预约门店 *</h3>
                 <select className="sex" onChange={this.store.bind(this)} value={this.state.data.mendian}>
                     <option value="">请选择需要预约的门店</option>
-                    <option value="1">华彩国际店</option>
+                    {
+                        this.state.storeList.map((item, index) => {
+                            return <option value={item.id} key={index}>{item.name}</option>
+                        })
+                    }
                 </select>
                 {this.state.data.mendian == "1" ? <p className="address">杭州市西湖区三墩镇华彩国际3幢8楼902室</p> : null}
-                {/* <h3 className="form-title">职业</h3>
-                <input type="text" maxLength={10} value={this.state.data.professional} onChange={this.getProfessional.bind(this)} />
-                <h3 className="form-title">改造需求</h3>
-                <textarea placeholder="您对此次改造有何期望，比如想参加什么场合、掩盖什么身材缺点，或者喜欢的造型特点等！" value={this.state.data.remarks} onChange={this.remarks.bind(this)}></textarea> */}
                 <h3 className="form-title">温馨提示</h3>
                 <p className="note">搭配师将在1-2个工作日内给您答复。如有任何疑问，可关注“Ms 搭配师”微信公众号，联系我们。</p>
             </div>
@@ -793,7 +392,8 @@ class Main extends Component {
 
 
     componentDidMount() {
-        ToolDps.get('/wx/user/info').then((res) => {
+        //获取用户信息
+        userInfo().then((res) => {
             let copyData = merged(this.state.data);
             if (res.succ) {
                 let { info } = res;
@@ -837,9 +437,7 @@ class Main extends Component {
 class PlainPeopleChange extends Component {
     constructor(props) {
         super(props);
-        let { projectId } = qs.parse(props.location.search);//项目ID，需求类型
         this.state = {
-            projectId: Number(projectId) || 1,
             previewBigImg: false,//是否预览大图
             bigImgUrl: '',//大图url
             data: props.data || null,
@@ -851,12 +449,7 @@ class PlainPeopleChange extends Component {
     }
 
     componentDidMount() {
-        document.title = "素人改造";
-        ToolDps.get('/wx/project/' + this.state.projectId + '/detail').then((res) => {
-            if (res.succ) {
-                document.title = res.data.title;
-            }
-        });
+        document.title = "线下体验";
     }
 
     componentWillReceiveProps(nextProps) {
@@ -888,40 +481,21 @@ class PlainPeopleChange extends Component {
             age,//年龄
             heigh, //身高
             weight, //体重
-            // chest,//胸围
-            // waist,//腰围
-            // hip,//臀围
-            // colorofskin, //肤色
-            // bodySize, //体型
             style, //风格
-            // faceLifeImgPara,//正脸照上传参数
-            // bodyLifeImgPara,//全身照上传参数
             costCode,//预期花费
             time,//预约时间，格式 yyyy-mm-dd HH:mm
             mendian,//门店
-            // professional, //职业
-            // remarks//改造需求
         } = this.state.data;
 
         let data = {
-            projectId: this.state.projectId,
             sex: sex,
             age: age,
             heigh: heigh,
             weight: weight,
-            // chest: chest,
-            // waist: waist,
-            // hip: hip,
-            // colorofskin: colorofskin,
-            // bodySize: bodySize,
             style: style,
-            // faceLifeImg: faceLifeImgPara,
-            // bodyLifeImg: bodyLifeImgPara,
             costCode: costCode,
             time: time,
             mendian: mendian,
-            // professional: professional,
-            // remarks: remarks
         }
         //分享用户id
         let sourceUserId = ToolDps.sessionItem('sourceUserId');
@@ -933,7 +507,7 @@ class PlainPeopleChange extends Component {
             btnText: '提交中...'
         });
 
-        ToolDps.post('/wx/requirement/add_prestige', data).then((res) => {
+        offlineServer(data).then((res) => {
             if (res.succ) {
                 this.showMsg(true, '提交成功');
                 this._time = setTimeout(() => {
@@ -950,35 +524,15 @@ class PlainPeopleChange extends Component {
 
     tips(data) {
         let {
-            // colorofskin, //肤色
-            // bodySize, //体型
             style, //风格
-            // faceLifeImgPara,//正脸照
-            // bodyLifeImgPara, //全身照
             costCode,//预期花费
             time,//预约时间
             mendian,//门店
         } = data;
-        // if (colorofskin == "") {
-        //     this.showMsg(true, '请选择肤色');
-        //     return false;
-        // }
-        // if (bodySize == "") {
-        //     this.showMsg(true, '请选择体型');
-        //     return false;
-        // }
         if (style.length == 0) {
             this.showMsg(true, '请选择喜欢的穿衣风格');
             return false;
         }
-        // if (faceLifeImgPara == "") {
-        //     this.showMsg(true, '请上传正脸照片');
-        //     return false;
-        // }
-        // if (bodyLifeImgPara == "") {
-        //     this.showMsg(true, '请上传全身照');
-        //     return false;
-        // }
         if (costCode == "") {
             this.showMsg(true, '请选择预期花费');
             return false;
@@ -997,8 +551,6 @@ class PlainPeopleChange extends Component {
     changeSex(sex) {
         let copyData = merged(this.state.data);
         copyData.sex = sex;
-        // copyData.colorofskin = '';
-        // copyData.bodySize = '';
         copyData.style = [];
         this.props.setPlainChange(copyData);
     }
@@ -1012,12 +564,9 @@ class PlainPeopleChange extends Component {
                     <option value="2">女</option>
                 </select>
                 <BaseInfo setPlainChange={this.props.setPlainChange} data={this.state.data} />
-                {/* <Type setPlainChange={this.props.setPlainChange} data={this.state.data} /> */}
                 <Style setPlainChange={this.props.setPlainChange} data={this.state.data} />
-                {/* <LifePhoto setPlainChange={this.props.setPlainChange} data={this.state.data} /> */}
                 <OtherInfo setPlainChange={this.props.setPlainChange} data={this.state.data} />
                 <Button className="btn send-btn" onClick={this.sendForm.bind(this)} shineColor="#1a1a1a" >{this.state.btnText}</Button>
-                {/* <button className="btn send-btn" onClick={this.sendForm.bind(this)} >{this.state.btnText}</button> */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
                 {this.state.previewBigImg ? <PreviewImg url={this.state.bigImgUrl} hidePreviewBigImg={() => { this.setState({ previewBigImg: false }) }} /> : null}
             </section >

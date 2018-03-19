@@ -47,7 +47,7 @@ class Server extends React.Component{
                         </Link>
                     </li>
                     <li className='item-2'>
-                        <Link className='entry' to='/plainPeopleChange?projectId=5'>
+                        <Link className='entry' to='/plainPeopleChange'>
                             <img src='/assets/img/needMatch/offline-experience.jpg'/>
                             <span>线下体验</span>
                         </Link>

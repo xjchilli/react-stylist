@@ -3,8 +3,9 @@
  */
 import React from 'react';
 import Quill from 'quill';
+import PropTypes from 'prop-types';
 import { UploadImg } from 'ToolAjax';
-import { ToolDps } from 'ToolDps';
+import { publishFashion } from 'ToolAjax';
 import { Msg } from "../Component/index";
 
 
@@ -16,8 +17,10 @@ class PublishArticle extends React.Component {
             msgText: '', //提示内容
             toolbarShow: false,
             editorH: window.innerHeight - 49,//编辑区高度
+            planName: '',//标题
             text: '',//富文本内容
         }
+        this._time = 0;
         this.editorEvent = this.editorEvent.bind(this);
         this.toolbarEvent = this.toolbarEvent.bind(this);
         this.toolbarShow = this.toolbarShow.bind(this);
@@ -64,6 +67,7 @@ class PublishArticle extends React.Component {
         qlEditorEle.removeEventListener('touchmove', this.toolbarHide);
         qlEditorEle.removeEventListener('focus', this.toolbarShow);
         qlEditorEle.removeEventListener('blur', this.editorBlur);
+        clearTimeout(this._time);
     }
 
     /**
@@ -117,6 +121,7 @@ class PublishArticle extends React.Component {
     editorImgUpload(e) {
         let files = e.target.files;
         let formdata = new FormData();
+        formdata.append('cos', 'uploadServer');//当传递任何值时，图片会上传到COS服务器
         if (files && files.length > 0) {
             for (let i = 0; i < files.length; i++) {
                 formdata.append('file', files[i]);
@@ -136,7 +141,15 @@ class PublishArticle extends React.Component {
      * 发布
      */
     publish() {
+        let { planName, text } = this.state;
         let imgArr = document.querySelectorAll('.editor img');
+        if (planName === '') {
+            this.setState({
+                msgShow: true,
+                msgText: '请填写标题' //提示内容
+            });
+            return;
+        }
         if (imgArr.length === 0) {
             this.setState({
                 msgShow: true,
@@ -144,13 +157,29 @@ class PublishArticle extends React.Component {
             });
             return;
         }
+        let data = {
+            planName: planName,
+            content: text,
+            masterImage: imgArr[0].getAttribute('src')
+        }
 
+        publishFashion(data).then((res) => {
+            if (res.succ) {
+                this.setState({
+                    msgShow: true,
+                    msgText: '发布成功' //提示内容
+                });
+                this._time = setTimeout(function () {
+                    this.context.router.history.push('/myPublish?'+new Date().getTime());
+                }.bind(this), 1500);
+            }
+        });
     }
 
     render() {
         return (
             <section className='publish-article-page'>
-                <input className='title' placeholder='请输入标题' />
+                <input className='title' placeholder='请输入标题' onChange={(e) => { this.setState({ planName: e.target.value }) }} />
                 <section className='editor-area' ref={(el) => { this.editorBox = el }}>
                     <input type='file' accept="image/*" ref={(el) => { this.imgUpload = el }} multiple className='custom-img-upload' onChange={this.editorImgUpload.bind(this)} />
                     <section ref={(el) => { this.toolbar = el }} id='toolbar' className={this.state.toolbarShow ? 'ql-toolbar ql-snow active' : 'ql-toolbar ql-snow'}>
@@ -183,6 +212,10 @@ class PublishArticle extends React.Component {
             </section>
         )
     }
+}
+
+PublishArticle.contextTypes = {
+    router: PropTypes.object.isRequired
 }
 
 export default PublishArticle;

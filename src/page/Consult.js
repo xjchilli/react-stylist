@@ -10,7 +10,7 @@ import Category from "./component/Category";
 import MyWardrobe from "./component/MyWardrobe";
 import MatchScene from "./component/MatchScene";
 import { Msg } from "../Component/index";
-import { ToolDps } from '../ToolDps';
+import { onlineServer } from 'ToolAjax';
 import { DataLoad, GetData, Button } from '../Component/index';
 
 
@@ -25,13 +25,9 @@ class Consult extends Component {
             btn: '发布需求',
             msgShow: false,
             msgText: '', //提示内容
-            // myWardrobe: false, //我的衣橱
             sex: props.data.info.sex || 2, //性别
             scene: [], //场景
-            // shop: [], //商品
             costCode: '1', //预期花费价格
-            // remark: '', //需求描述
-            // garderobeArr: [], //选择的服装
         }
         this._time = 0;
     }
@@ -61,14 +57,6 @@ class Consult extends Component {
         });
     }
 
-    /**
-     * 获取选择场景的值
-     */
-    // getShop(shopArr) {
-    //     this.setState({
-    //         shop: shopArr
-    //     })
-    // }
 
     /**
      * 发布
@@ -81,43 +69,12 @@ class Consult extends Component {
             });
             return;
         }
-        // if (this.state.shop.length === 0) {
-        //     this.setState({
-        //         msgShow: true,
-        //         msgText: '请选择商品', //提示内容
-        //     });
-        //     return;
-        // }
-
-
-        // if (this.state.remark === "") {
-        //     this.setState({
-        //         msgShow: true,
-        //         msgText: '请填写需求描述', //提示内容
-        //     });
-        //     return;
-        // }
-
-        // if (this.state.garderobeArr.length === 0) {
-        //     this.setState({
-        //         msgShow: true,
-        //         msgText: '请选择搭配物品', //提示内容
-        //     });
-        //     return;
-        // }
-
-        // let garderobe_ids = [];
-        // this.state.garderobeArr.forEach((item) => {
-        //     garderobe_ids.push(item.id);
-        // });
+       
 
         let data = {
-            // remark: this.state.remark, //需求描述
             costCode: this.state.costCode,
             scene: this.state.scene,
             sex: this.state.sex,
-            // shop: this.state.shop,
-            // garderobe_ids: garderobe_ids
         }
         if (this.state.serverId) {
             data['shopId'] = this.state.serverId;
@@ -126,11 +83,7 @@ class Consult extends Component {
         this.setState({
             btn: '发布中...'
         });
-        ToolDps.ajax({
-            url: '/wx/requirement/add_cons',
-            type: 'post',
-            data: data
-        }).then((res) => {
+        onlineServer(data).then((res)=>{
             if (res.succ) {
                 this.setState({
                     btn: '发布',
@@ -150,31 +103,6 @@ class Consult extends Component {
         });
     }
 
-    /**
-     * 添加选择的服装
-     */
-    // addCloth(cloths) {
-    //     this.setState({
-    //         garderobeArr: cloths,
-    //         myWardrobe: false
-    //     });
-    // }
-
-    /**
-     * 删除服装
-     * */
-    deleteCloth(id) {
-        let newGarderobeArr = Array.prototype.slice.apply(this.state.garderobeArr);
-        for (let i = 0; i < newGarderobeArr.length; i++) {
-            if (newGarderobeArr[i].id == id) {
-                newGarderobeArr.splice(i, 1);
-            }
-        }
-        this.setState({
-            garderobeArr: newGarderobeArr
-        });
-    }
-
     render() {
         return (
             <section className='matchService'>
@@ -190,10 +118,6 @@ class Consult extends Component {
                     <h3>搭配场景</h3>
                     <MatchScene sex={this.state.sex} getScene={this.getScene.bind(this)} />
                 </section>
-                {/* <section className="box shop-area">
-                    <h3>商品选择</h3>
-                    <Category sex={this.state.sex} getShop={this.getShop.bind(this)} />
-                </section> */}
                 <section className="box other-area">
                     <h3 className="title">预期花费</h3>
                     <div className="expect-fare-area">
@@ -206,34 +130,8 @@ class Consult extends Component {
                             <option value="6">不限</option>
                         </select>
                     </div>
-                    {/* <h3>需求描述</h3>
-                    <textarea className="word-describe" placeholder="您描述的越仔细，搭配师能给您更精准的服务哦 ~" onChange={(e) => { this.setState({ remark: e.target.value }) }}></textarea> */}
-                    {/* <h3>搭配物品</h3>
-                    <ul className="flex-box matchGoods-area">
-                        {
-                            this.state.garderobeArr.map((item, index) => {
-                                return (
-                                    <li className="item-3" key={index}>
-                                        <div className="goods-img-show" style={{ backgroundImage: 'url(' + item.url + ')' }}>
-                                            <span className="icon icon-fault" onClick={this.deleteCloth.bind(this, item.id)}><span className="path1"></span><span className="path2"></span></span>
-                                        </div>
-                                    </li>
-                                )
-                            })
-                        }
-
-                        {
-                            this.state.garderobeArr.length == 0 ? (
-                                <li className="item-3">
-                                    <div className="goods-img-show add-btn" onClick={() => { this.setState({ myWardrobe: true }) }}></div>
-                                </li>
-                            ) : null
-                        }
-                    </ul> */}
                     <Button className="btn publishBtn" onClick={this.publish.bind(this)}  shineColor="#1a1a1a" >{this.state.btn}</Button>
                 </section>
-
-                {/* {this.state.myWardrobe ? <MyWardrobe sex={this.state.sex} garderobeArr={this.state.garderobeArr} addCloth={this.addCloth.bind(this)} closeMyWardrobe={() => { this.setState({ myWardrobe: false }) }} /> : null} */}
                 {this.state.msgShow ? <Msg msgShow={() => { this.setState({ msgShow: false }) }} text={this.state.msgText} /> : null}
             </section>
         );
