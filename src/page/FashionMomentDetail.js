@@ -614,7 +614,6 @@ class Main extends Component {
         this.state = {
             isMe: isMe || false
         }
-        console.log(isMe);
     }
 
 

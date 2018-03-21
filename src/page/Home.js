@@ -193,7 +193,7 @@ class Home extends Component {
                                             </Link>
                                             <div className="dps-info">
                                                 <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                                    <img src={item.collocationHeadImg} className="head-img" />
+                                                    <img src={item.headImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
                                                 <div className="zan">
@@ -221,7 +221,7 @@ class Home extends Component {
                                             </Link>
                                             <div className="dps-info">
                                                 <Link to={"/dpsProfile?collocationId=" + item.collocationId}>
-                                                    <img src={item.collocationHeadImg} className="head-img" />
+                                                    <img src={item.headImg} className="head-img" />
                                                     <span className="nickname">{item.collocationNickName}</span>
                                                 </Link>
                                                 <div className="zan">

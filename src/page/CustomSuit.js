@@ -7,10 +7,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ToolDps } from '../ToolDps';
 import { Msg, City, DataLoad, GetData, PreviewImg, Loading } from '../Component/index';
-// var FastClick = require('fastclick');
-// import { is, fromJS } from 'immutable';
-// import flatpickr from 'flatpickr';
-// const zh = require("flatpickr/dist/l10n/zh.js").zh;
 
 /**
  * 性别
@@ -1056,6 +1052,7 @@ class StyleBoy extends Component {
 class BaseInfo extends Component {
     componentDidMount() {
         document.title = "基础信息";
+        let self = this;
         //身高
         this.height = new Swiper('.J-height', {
             initialSlide: 20,
@@ -1063,15 +1060,18 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let heigh = swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.props.changeHeight(heigh);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let heigh = swiper.slides[swiper.activeIndex].textContent.trim();
-                this.props.changeHeight(heigh);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let heigh = this.slides[this.clickedIndex].textContent.trim();
+                    self.props.changeHeight(heigh);
+                },
+                transitionEnd: function () { //slide改变
+                    let heigh = this.slides[this.activeIndex].textContent.trim();
+                    self.props.changeHeight(heigh);
+                }
             }
+
         });
         //体重
         this.weight = new Swiper('.J-weight', {
@@ -1080,15 +1080,18 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let weight = swiper.slides[swiper.clickedIndex].textContent;
-                this.props.changeWeight(weight);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let weight = swiper.slides[swiper.activeIndex].textContent;
-                this.props.changeWeight(weight);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let weight = this.slides[this.clickedIndex].textContent;
+                    self.props.changeWeight(weight);
+                },
+                transitionEnd: function () { //slide改变
+                    let weight = this.slides[this.activeIndex].textContent;
+                    self.props.changeWeight(weight);
+                }
             }
+
         });
         //胸围
         this.chest = new Swiper('.J-chest', {
@@ -1097,15 +1100,18 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let chest = swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.props.changeChest(chest);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let chest = swiper.slides[swiper.activeIndex].textContent.trim();
-                this.props.changeChest(chest);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let chest = this.slides[this.clickedIndex].textContent.trim();
+                    self.props.changeChest(chest);
+                },
+                transitionEnd: function () { //slide改变
+                    let chest = this.slides[this.activeIndex].textContent.trim();
+                    self.props.changeChest(chest);
+                }
             }
+
         });
         //腰围
         this.waist = new Swiper('.J-waist', {
@@ -1114,14 +1120,16 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let waist = swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.props.changeWaist(waist);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let waist = swiper.slides[swiper.activeIndex].textContent.trim();
-                this.props.changeWaist(waist);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let waist = this.slides[this.clickedIndex].textContent.trim();
+                    self.props.changeWaist(waist);
+                },
+                transitionEnd: function () { //slide改变
+                    let waist = this.slides[this.activeIndex].textContent.trim();
+                    self.props.changeWaist(waist);
+                }
             }
         });
         //臀围
@@ -1131,15 +1139,18 @@ class BaseInfo extends Component {
             centeredSlides: true,
             // freeMode: true,
             freeModeSticky: true,
-            onTap: (swiper) => {
-                swiper.slideTo(swiper.clickedIndex, 100, false);
-                let hip = swiper.slides[swiper.clickedIndex].textContent.trim();
-                this.props.changeHip(hip);
-            },
-            onTransitionEnd: (swiper) => { //slide改变
-                let hip = swiper.slides[swiper.activeIndex].textContent.trim();
-                this.props.changeHip(hip);
+            on: {
+                tap: function () {
+                    this.slideTo(this.clickedIndex, 100, false);
+                    let hip = this.slides[this.clickedIndex].textContent.trim();
+                    self.props.changeHip(hip);
+                },
+                transitionEnd: function () { //slide改变
+                    let hip = this.slides[this.activeIndex].textContent.trim();
+                    self.props.changeHip(hip);
+                }
             }
+
         });
     }
 
@@ -1343,7 +1354,7 @@ class CustomSuit extends Component {
             age: '',//年龄
             professional: '',//职业
             countyCode: '',//区
-            progress:1//进度
+            progress: 1//进度
         };
         this._time = 0;
     }

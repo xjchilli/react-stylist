@@ -44,3 +44,5 @@ export const offlineServer = (data) => ToolDps.post('/wx/requirement/offline', d
 //服务end
 //发布时尚圈
 export const publishFashion = (data) => ToolDps.post('/wx/fashion/add', data);
+//vip开通(续费)
+export const vipOpenUp = (vipId) => ToolDps.post('/wx/vip/create', { vipId: vipId });

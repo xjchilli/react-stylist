@@ -49,9 +49,10 @@
     // 轮播start
     .swiper-container {
         position: absolute;
-        top: 22px;
+        top: 0;
         left: 0;
         width: 100%;
+        padding-top: 22px;
         padding-bottom: 24px;
     }
     .swiper-slide {
@@ -59,14 +60,16 @@
         background-size: cover;
         width: 300px;
         height: 165px;
-        background: red;
         color: @white;
-        border-radius: 10px;
+        border-radius: 13px;
         box-shadow: 0 0 27px rgba(76, 70, 66, 0.74);
         background-size: cover;
     }
     .swiper-container-horizontal > .swiper-pagination-bullets {
         bottom: 0;
+    }
+    .swiper-container-3d .swiper-slide-shadow-left, .swiper-container-3d .swiper-slide-shadow-right {
+        border-radius: 13px;
     }
     .swiper-pagination-bullet {
         opacity: 1;
@@ -188,18 +191,33 @@
     .vip-discribe {
         background: #fafafa;
         height: 90px;
-        line-height: 90px;
         font-size: 13px;
         color: #333333;
         font-weight: 500;
         padding: 0 13px;
-        >img {
+        li {
+            position: relative;
+            &:nth-of-type(1) {
+                flex: 0 1 30px;
+            }
+            &:nth-of-type(2) {
+                flex: 1 0 auto;
+            }
+        }
+        img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             display: inline-block;
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 15px;
+        }
+        .text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding-left: 15px;
         }
     }
     .vip-package-list {

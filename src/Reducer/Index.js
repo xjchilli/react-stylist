@@ -118,9 +118,14 @@ const MyWatch = DB('MyWatch', {
 const MyPublish = DB('MyPublish', {
   data: null
 });//我的发布
+const ServeredToMe = DB('ServeredToMe', {
+  data: null
+});//服务过我的搭配师
+const VipMember = DB('VipMember', {
+  data: null
+});//会员信息
 //支付订单
 const PayOrder = DB('PayOrder');
-
 //我的资产
 const MyAsset = DB('MyAsset', {
   data: null
@@ -169,6 +174,8 @@ const reducers = combineReducers({
   PayOrder,
   MyWatch,
   MyPublish,
+  ServeredToMe,
+  VipMember,
   MyAsset,
   HotDpsList,
   FashionMoment,

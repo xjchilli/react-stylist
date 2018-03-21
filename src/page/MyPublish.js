@@ -79,7 +79,7 @@ class List extends React.Component {
 class MyPublish extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        // console.log(props);
         this.state = {
             list: props.data || []
         }
